@@ -33,7 +33,6 @@ class AppRouter {
           builder: (context, state) => const HomeScreen(),
         ),
       ],
-      // Unknown URLs fall back to the splash screen (same as before).
       errorBuilder: (context, state) => const SplashScreen(),
     );
   }

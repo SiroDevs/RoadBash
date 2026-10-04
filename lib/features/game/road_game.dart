@@ -14,8 +14,6 @@ class RoadGame extends FlameGame with KeyboardEvents {
   late final RoadRenderer road;
   late final RiderComponent rider;
 
-  // Inputs from keyboard and touch are tracked separately so they don't
-  // cancel each other out.
   double _keySteer = 0;
   double _touchSteer = 0;
   bool _keyBrake = false;
@@ -33,10 +31,9 @@ class RoadGame extends FlameGame with KeyboardEvents {
     final s = _keySteer + _touchSteer;
     road.steer = s > 1 ? 1 : (s < -1 ? -1 : s);
     road.brake = _keyBrake || _touchBrake;
-    road.throttle = !road.brake; // auto-accelerate
+    road.throttle = !road.brake;
   }
 
-  // ---- Touch API (used by HomeScreen overlay) ----
   void setTouchSteer(double v) {
     _touchSteer = v;
     _applyInput();
@@ -47,7 +44,6 @@ class RoadGame extends FlameGame with KeyboardEvents {
     _applyInput();
   }
 
-  // ---- Keyboard ----
   @override
   KeyEventResult onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keys) {
     final left = keys.contains(LogicalKeyboardKey.arrowLeft) ||

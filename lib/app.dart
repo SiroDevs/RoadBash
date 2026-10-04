@@ -22,10 +22,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => const AppView();
 }
 
-/// Sets up the providers, theming, localization and routing.
-///
-/// Pass a [router] to start somewhere other than the splash screen
-/// (handy in tests).
 class AppView extends StatefulWidget {
   final GoRouter? router;
   const AppView({super.key, this.router});
@@ -39,7 +35,6 @@ class AppViewState extends State<AppView> {
 
   @override
   void dispose() {
-    // Only dispose a router we created ourselves.
     if (widget.router == null) _router.dispose();
     super.dispose();
   }

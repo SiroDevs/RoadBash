@@ -5,10 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "RoadRush",
+            "name": "rb",
             "request": "launch",
             "type": "dart",
-            "deviceId": "macos"
+            "deviceId": "macos",
+            "env": {
+                "LANG": "en_US.UTF-8",
+                "LC_ALL": "en_US.UTF-8"
+            }
         },
     ]
 }

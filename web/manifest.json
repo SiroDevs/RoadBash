@@ -1,6 +1,6 @@
 {
-    "name": "roadbash",
-    "short_name": "roadbash",
+    "name": "RoadBash",
+    "short_name": "RoadBash",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

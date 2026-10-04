@@ -65,7 +65,7 @@ class AppDropdownState<T> extends State<AppDropdown<T>> {
       contentPadding: EdgeInsets.symmetric(horizontal: Sizes.sm),
     );
     var fieldWidget = DropdownButtonFormField<T>(
-      value: selectedValue,
+      initialValue: selectedValue,
       isExpanded: !widget.inline,
       decoration: widget.inline ? inlineDecoration : null,
       items: widget.items.map<DropdownMenuItem<T>>((value) {

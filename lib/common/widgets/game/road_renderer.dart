@@ -19,7 +19,6 @@ class _Pt {
 /// Segments are drawn near-to-far with a "highest line so far" clip, which
 /// gives correct hills and occlusion.
 class RoadRenderer extends PositionComponent {
-  // ---- Rider state (written by RoadGame, read by RiderComponent) ----------
   double trkPosition = 0; // distance along the track
   double playerX = 0; // -1 .. +1 is on the tarmac
   double speed = 0;
@@ -56,7 +55,7 @@ class RoadRenderer extends PositionComponent {
     _backdrop.resize(size);
   }
 
-  // ---- Simulation ---------------------------------------------------------
+  // Simulation
   @override
   void update(double dt) {
     final seg = track.at(trkPosition + RoadConfig.playerZ);
@@ -85,7 +84,7 @@ class RoadRenderer extends PositionComponent {
     _backdrop.scroll += seg.curve * sp * dt * 40;
   }
 
-  // ---- Rendering ----------------------------------------------------------
+  // Rendering
   void _project(_Pt p, double wy, double wz, double camX, double camY,
       double camZ) {
     final cz = wz - camZ;

@@ -1,0 +1,12 @@
+{
+    "@@locale": "en",
+    "feedback": "Feedback",
+    "@feedback": {
+        "description": "Label for feedback section or button"
+    },
+
+    "appName": "RoadBash",
+    "@appName": {
+        "description": "The name of the application"
+    }
+}

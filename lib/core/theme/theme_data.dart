@@ -1,8 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
+import '../../common/constants/app_constants.dart';
 import '../../domain/repos/prefs_repo.dart';
 import '../di/injectable.dart';
-import '../../common/constants/app_constants.dart';
 import '../utils/app_util.dart';
 import 'theme_colors.dart';
 

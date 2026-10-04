@@ -1,6 +1,10 @@
-import 'package:flame/game.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:flame/game.dart';
+
+// Project imports:
 import '../game/road_game.dart';
 
 class HomeScreen extends StatefulWidget {

@@ -10,11 +10,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+// Package imports:
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
-import 'package:roadrush/core/di/injectable.dart' as _i838;
-import 'package:roadrush/domain/repos/prefs_repo.dart' as _i518;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
+
+// Project imports:
+import 'package:roadbash/core/di/injectable.dart' as _i838;
+import 'package:roadbash/domain/repos/prefs_repo.dart' as _i518;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt

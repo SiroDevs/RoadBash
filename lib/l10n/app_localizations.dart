@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
+import 'app_localizations_sw.dart';
 
 // ignore_for_file: type=lint
 
@@ -92,19 +93,22 @@ abstract class AppLocalizations {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('sw'),
+  ];
 
-  /// No description provided for @feedback.
+  /// Label for feedback section or button
   ///
   /// In en, this message translates to:
   /// **'Feedback'**
   String get feedback;
 
-  /// No description provided for @misc.
+  /// The name of the application
   ///
   /// In en, this message translates to:
-  /// **'misc'**
-  String get misc;
+  /// **'ChurchLib'**
+  String get appName;
 }
 
 class _AppLocalizationsDelegate
@@ -118,7 +122,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en'].contains(locale.languageCode);
+      <String>['en', 'sw'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -129,6 +133,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'en':
       return AppLocalizationsEn();
+    case 'sw':
+      return AppLocalizationsSw();
   }
 
   throw FlutterError(

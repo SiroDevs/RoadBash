@@ -1,8 +1,11 @@
+// Dart imports:
 import 'dart:math' as math;
 import 'dart:ui';
 
+// Package imports:
 import 'package:flame/components.dart';
 
+// Project imports:
 import 'road_renderer.dart';
 
 /// Motorbike + rider seen from behind, drawn with plain canvas shapes

@@ -1,11 +1,15 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:developer' as logging show log;
+import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:intl/intl.dart';
 
 bool isDesktop = Platform.isWindows || Platform.isLinux || Platform.isMacOS;

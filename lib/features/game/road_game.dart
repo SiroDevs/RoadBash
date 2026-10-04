@@ -1,8 +1,12 @@
-import 'package:flame/game.dart';
-import 'package:flame/input.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:flame/game.dart';
+import 'package:flame/input.dart';
+
+// Project imports:
 import '../../common/widgets/game/rider_component.dart';
 import '../../common/widgets/game/road_renderer.dart';
 

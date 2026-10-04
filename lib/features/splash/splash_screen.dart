@@ -1,9 +1,14 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:go_router/go_router.dart';
 import 'package:styled_widget/styled_widget.dart';
 
+// Project imports:
+import '../../common/app_router/route_names.dart';
 import '../../common/constants/app_constants.dart';
-import '../../core/navigator/route_names.dart';
 import '../../core/theme/theme_colors.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,11 +28,7 @@ class SplashScreenState extends State<SplashScreen> {
   Future<void> _goToNextScreen(BuildContext context) async {
     await Future<void>.delayed(const Duration(seconds: 3));
     if (!context.mounted) return;
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      RouteNames.home,
-      (route) => false,
-    );
+    context.goNamed(RouteNames.home);
   }
 
   @override

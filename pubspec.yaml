@@ -1,4 +1,4 @@
-name: roadrush
+name: roadbash
 description: An original pseudo-3D combat racer built with Flutter + Flame, inspired by classic 16-bit road-combat racers.
 publish_to: 'none'
 version: 1.0.0+1
@@ -15,6 +15,7 @@ dependencies:
   flame: ^1.33.0
   flame_audio: ^2.11.11
   flutter_bloc: ^9.1.1
+  go_router: ^18.0.2
   flutter_localizations:
     sdk: flutter 
   connectivity_plus: ^7.0.0
@@ -32,6 +33,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  import_sorter:
+    git:
+      url: https://github.com/SiroDevs/import_sorter
   flutter_lints: ^5.0.0
   build_runner: ^2.10.1
   injectable_generator: ^2.9.0
@@ -39,4 +43,5 @@ dev_dependencies:
   json_serializable: ^6.11.1
 
 flutter:
+  generate: true
   uses-material-design: true

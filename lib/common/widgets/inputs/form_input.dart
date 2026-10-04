@@ -1,7 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:styled_widget/styled_widget.dart';
 
+// Project imports:
 import '../../../core/theme/theme_colors.dart';
 import '../../../core/theme/theme_styles.dart';
 

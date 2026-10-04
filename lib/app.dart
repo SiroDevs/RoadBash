@@ -1,74 +1,66 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_router/go_router.dart';
 
+// Project imports:
+import 'common/app_router/app_router.dart';
+import 'common/widgets/text_scale_factor.dart';
 import 'core/di/injectable.dart';
-import 'domain/repos/prefs_repo.dart';
-import 'l10n/app_localizations.dart';
-import 'core/navigator/main_navigator.dart';
 import 'core/theme/bloc/theme_bloc.dart';
 import 'core/theme/theme_data.dart';
+import 'domain/repos/prefs_repo.dart';
+import 'l10n/app_localizations.dart';
 
-class MyApp extends StatefulWidget {
-  final Widget? home;
-  const MyApp({super.key, this.home});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => MyAppState();
+  Widget build(BuildContext context) => const AppView();
 }
 
-class MyAppState extends State<MyApp> {
-  final navigatorKey = MainNavigatorState.navigationKey;
-  NavigatorState get navigator =>
-      MainNavigatorState.navigationKey.currentState!;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const AppView();
-  }
-}
-
-/// A widget that builds the main view of the application. It sets up the
-/// necessary providers and handles navigation and theming.
+/// Sets up the providers, theming, localization and routing.
 ///
-/// The [AppView] widget can optionally take a [home] widget to display as the
-/// initial screen.
+/// Pass a [router] to start somewhere other than the splash screen
+/// (handy in tests).
 class AppView extends StatefulWidget {
-  final Widget? home;
-  const AppView({super.key, this.home});
+  final GoRouter? router;
+  const AppView({super.key, this.router});
 
   @override
   State<AppView> createState() => AppViewState();
 }
 
 class AppViewState extends State<AppView> {
-  final navigatorKey = MainNavigatorState.navigationKey;
-  NavigatorState get navigator =>
-      MainNavigatorState.navigationKey.currentState!;
+  late final GoRouter _router = widget.router ?? AppRouter.create();
+
+  @override
+  void dispose() {
+    // Only dispose a router we created ourselves.
+    if (widget.router == null) _router.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var prefsRepo = getIt<PrefsRepo>();
+    final prefsRepo = getIt<PrefsRepo>();
 
     return BlocProvider(
       create: (context) => ThemeBloc(),
       child: BlocBuilder<ThemeBloc, ThemeMode>(
         builder: (context, themeMode) {
-          return MaterialApp(
-            home: widget.home,
+          return MaterialApp.router(
+            routerConfig: _router,
             themeMode: prefsRepo.getThemeMode(),
             theme: AppTheme.lightTheme(),
             darkTheme: AppTheme.darkTheme(),
             supportedLocales: const [Locale('en'), Locale('sw')],
             debugShowCheckedModeBanner: false,
-            navigatorKey: navigatorKey,
-            initialRoute: MainNavigatorState.initialRoute,
-            onGenerateRoute: MainNavigatorState.onGenerateRoute,
+            builder: (context, child) =>
+                TextScaleFactor(child: child ?? const SizedBox.shrink()),
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,

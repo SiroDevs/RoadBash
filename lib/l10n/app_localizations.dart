@@ -98,17 +98,17 @@ abstract class AppLocalizations {
     Locale('sw'),
   ];
 
-  /// Label for feedback section or button
+  /// The name of the application
+  ///
+  /// In en, this message translates to:
+  /// **'RoadBash'**
+  String get appName;
+
+  /// Label for the feedback section or button
   ///
   /// In en, this message translates to:
   /// **'Feedback'**
   String get feedback;
-
-  /// The name of the application
-  ///
-  /// In en, this message translates to:
-  /// **'ChurchLib'**
-  String get appName;
 }
 
 class _AppLocalizationsDelegate

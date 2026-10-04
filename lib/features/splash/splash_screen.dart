@@ -8,6 +8,7 @@ import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
 import '../../common/app_router/route_names.dart';
+import '../../common/constants/app_assets.dart';
 import '../../common/constants/app_constants.dart';
 import '../../core/theme/theme_colors.dart';
 
@@ -39,7 +40,7 @@ class SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Spacer(),
-            // Image.asset(AppAssets.appIcon, height: 200, width: 200),
+            Image.asset(AppAssets.appIcon, height: 200, width: 200),
             const SizedBox(height: 10),
             AnimatedTextKit(
               animatedTexts: [

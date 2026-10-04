@@ -9,8 +9,8 @@ class AppLocalizationsSw extends AppLocalizations {
   AppLocalizationsSw([String locale = 'sw']) : super(locale);
 
   @override
-  String get feedback => 'Feedback';
+  String get appName => 'RoadBash';
 
   @override
-  String get appName => 'ChurchLib';
+  String get feedback => 'Feedback';
 }

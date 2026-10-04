@@ -1,0 +1,42 @@
+name: roadrush
+description: An original pseudo-3D combat racer built with Flutter + Flame, inspired by classic 16-bit road-combat racers.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.0
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  animated_text_kit: ^4.3.0
+  flame: ^1.33.0
+  flame_audio: ^2.11.11
+  flutter_bloc: ^9.1.1
+  flutter_localizations:
+    sdk: flutter 
+  connectivity_plus: ^7.0.0
+  get_it: ^8.2.0
+  http: ^1.5.0
+  injectable: ^2.5.2
+  bloc: ^9.1.0
+  intl: ^0.20.2
+  freezed_annotation: ^3.1.0
+  shared_preferences: ^2.5.3
+  styled_widget: ^0.4.1
+  textstyle_extensions: ^2.0.0-nullsafety
+  loading_indicator: ^3.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.10.1
+  injectable_generator: ^2.9.0
+  freezed: ^3.2.3
+  json_serializable: ^6.11.1
+
+flutter:
+  uses-material-design: true

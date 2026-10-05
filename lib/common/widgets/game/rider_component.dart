@@ -6,12 +6,14 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
+import 'dash_layout.dart';
 import 'road_renderer.dart';
 
 /// Motorbike + rider seen from behind, drawn with plain canvas shapes
 /// (no assets needed). Swap [render] for a Sprite later.
 class RiderComponent extends PositionComponent {
-  RiderComponent(this.road) : super(anchor: Anchor.bottomCenter);
+  RiderComponent(this.road)
+      : super(anchor: Anchor.bottomCenter, priority: 1);
 
   final RoadRenderer road;
 
@@ -26,9 +28,11 @@ class RiderComponent extends PositionComponent {
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
-    final h = math.min(size.y * 0.32, size.x * 0.7 * _dh / _dw);
-    this.size = Vector2(h * _dw / _dh, h);
-    position = Vector2(size.x / 2, size.y * 0.94);
+    // Fit the bike inside one lane, standing on the road just above the dash.
+    final lane = DashLayout.lanePx(size, road.theme.lanes);
+    final w = math.min(lane * 0.55, size.y * 0.30 * _dw / _dh);
+    this.size = Vector2(w, w * _dh / _dw);
+    position = Vector2(size.x / 2, DashLayout.groundY(size));
   }
 
   @override

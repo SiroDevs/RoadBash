@@ -14,6 +14,7 @@ dependencies:
   animated_text_kit: ^4.3.0
   flame: ^1.33.0
   flame_audio: ^2.11.11
+  audioplayers: ^6.2.0
   flutter_bloc: ^9.1.1
   go_router: ^18.0.2
   flutter_localizations:
@@ -29,6 +30,7 @@ dependencies:
   styled_widget: ^0.4.1
   textstyle_extensions: ^2.0.0-nullsafety
   loading_indicator: ^3.1.1
+  froom: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +43,7 @@ dev_dependencies:
   injectable_generator: ^2.9.0
   freezed: ^3.2.3
   json_serializable: ^6.11.1
+  froom_generator: ^4.0.0
 
 flutter:
   generate: true
@@ -49,3 +52,4 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/images/
+    - assets/audio/

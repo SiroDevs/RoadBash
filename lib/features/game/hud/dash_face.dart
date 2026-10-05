@@ -1,0 +1,104 @@
+// Dart imports:
+import 'dart:math' as math;
+import 'dart:ui';
+
+// Project imports:
+import '../../../common/widgets/game/canvas_text.dart';
+import '../../../common/widgets/game/dash_layout.dart';
+
+/// The parts of the dashboard that never change (housing, dial faces, tick
+/// marks, numbers). Recorded once into a [Picture] and replayed every frame.
+class DashFace {
+  DashFace._();
+
+  static Picture build(DashLayout l) {
+    final rec = PictureRecorder();
+    final c = Canvas(rec);
+    _housing(c, l);
+    _dial(c, l.speedC, l.speedR,
+        max: 240, major: 40, minors: 4, unit: 'KM/H');
+    _dial(c, l.rpmC, l.rpmR,
+        max: 12, major: 3, minors: 3, unit: 'RPM x1000', redFrom: 10);
+    _centre(c, l);
+    return rec.endRecording();
+  }
+
+  static void _housing(Canvas c, DashLayout l) {
+    final r = Rect.fromLTWH(l.left, l.top, l.pw, l.ph);
+    final dome = Radius.elliptical(l.pw * 0.5, l.ph * 0.8);
+    final rr = RRect.fromRectAndCorners(r, topLeft: dome, topRight: dome);
+    c.drawRRect(
+      rr,
+      Paint()
+        ..shader = Gradient.linear(r.topCenter, r.bottomCenter,
+            const [Color(0xFF30303A), Color(0xFF0B0B10)]),
+    );
+    c.drawRRect(
+      rr,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = const Color(0x44FFFFFF),
+    );
+  }
+
+  static Offset _pt(Offset ctr, double angle, double radius) => Offset(
+      ctr.dx + math.cos(angle) * radius, ctr.dy + math.sin(angle) * radius);
+
+  static void _dial(
+    Canvas c,
+    Offset ctr,
+    double r, {
+    required int max,
+    required int major,
+    required int minors,
+    required String unit,
+    int? redFrom,
+  }) {
+    c.drawCircle(ctr, r * 1.07, Paint()..color = const Color(0xFF050507));
+    c.drawCircle(ctr, r, Paint()..color = const Color(0xFFEDE3C8));
+
+    if (redFrom != null) {
+      c.drawArc(
+        Rect.fromCircle(center: ctr, radius: r * 0.9),
+        DashLayout.dialStart + DashLayout.dialSweep * redFrom / max,
+        DashLayout.dialSweep * (max - redFrom) / max,
+        false,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = r * 0.07
+          ..color = const Color(0xFFC0301F),
+      );
+    }
+
+    final tick = Paint()
+      ..color = const Color(0xFF3A3224)
+      ..strokeWidth = math.max(1.0, r * 0.02)
+      ..strokeCap = StrokeCap.round;
+    final steps = (max ~/ major) * minors;
+    for (var i = 0; i <= steps; i++) {
+      final isMajor = i % minors == 0;
+      final a = DashLayout.dialStart + DashLayout.dialSweep * i / steps;
+      c.drawLine(_pt(ctr, a, r * 0.86),
+          _pt(ctr, a, r * (isMajor ? 0.70 : 0.78)), tick);
+      if (isMajor) {
+        paintText(c, '${(i ~/ minors) * major}', _pt(ctr, a, r * 0.54),
+            r * 0.16, const Color(0xFF3A3224));
+      }
+    }
+    paintText(c, unit, Offset(ctr.dx, ctr.dy + r * 0.50), r * 0.13,
+        const Color(0xFF3A3224));
+  }
+
+  static void _centre(Canvas c, DashLayout l) {
+    final rr = RRect.fromRectAndRadius(l.centre, Radius.circular(l.ph * 0.04));
+    c.drawRRect(rr, Paint()..color = const Color(0xFF0B0B10));
+    c.drawRRect(
+      rr,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = const Color(0x66FFFFFF),
+    );
+  }
+}

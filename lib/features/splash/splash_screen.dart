@@ -1,17 +1,20 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:go_router/go_router.dart';
-import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
 import '../../common/app_router/route_names.dart';
-import '../../common/constants/app_assets.dart';
 import '../../common/constants/app_constants.dart';
-import '../../core/theme/theme_colors.dart';
+import '../../common/widgets/retro/logo_mark.dart';
+import '../../common/widgets/retro/retro_style.dart';
+import '../game/game_settings.dart';
 
+/// Title screen: studio line, logo, tagline, copyright. Tap to skip.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -20,50 +23,59 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> {
+  Timer? _timer;
+
   @override
   void initState() {
     super.initState();
-    _goToNextScreen(context);
+    GameSettings.instance.load();
+    _timer = Timer(const Duration(seconds: 3), _next);
   }
 
-  Future<void> _goToNextScreen(BuildContext context) async {
-    await Future<void>.delayed(const Duration(seconds: 3));
-    if (!context.mounted) return;
-    context.goNamed(RouteNames.home);
+  void _next() {
+    _timer?.cancel();
+    if (!mounted) return;
+    context.goNamed(RouteNames.notice);
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Spacer(),
-            Image.asset(AppAssets.appIcon, height: 200, width: 200),
-            const SizedBox(height: 10),
-            AnimatedTextKit(
-              animatedTexts: [
-                TyperAnimatedText(
-                  AppConstants.appTitle,
-                  textStyle: Theme.of(context).textTheme.displayLarge?.copyWith(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: ThemeColors.primary,
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: _next,
+        child: RetroBackdrop(
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  Text('${AppConstants.appCredits.replaceFirst('© ', '')} presents',
+                      style: retroBody(size: 22)),
+                  const Spacer(),
+                  TweenAnimationBuilder<double>(
+                    tween: Tween(begin: 0, end: 1),
+                    duration: const Duration(milliseconds: 900),
+                    curve: Curves.easeOutBack,
+                    builder: (_, v, child) =>
+                        Opacity(opacity: v.clamp(0.0, 1.0), child: Transform.scale(scale: 0.8 + 0.2 * v, child: child)),
+                    child: const RoadBashLogo(size: 72),
                   ),
-                  speed: const Duration(milliseconds: 110),
-                ),
-              ],
-              totalRepeatCount: 1,
-              pause: const Duration(milliseconds: 0),
-              displayFullTextOnTap: true,
-              stopPauseOnTap: true,
+                  const SizedBox(height: 16),
+                  Text(AppConstants.appTagline, style: retroBody(size: 20, color: Retro.yellow)),
+                  const Spacer(),
+                  Text('${AppConstants.appCredits}. All rights reserved.',
+                      style: retroBody(size: 14, color: Retro.dim)),
+                ],
+              ),
             ),
-            const Spacer(),
-            const Divider().padding(horizontal: 30),
-            const Text(AppConstants.appCredits, style: TextStyle(fontSize: 14)),
-            const SizedBox(height: 20),
-          ],
+          ),
         ),
       ),
     );

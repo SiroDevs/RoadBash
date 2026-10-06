@@ -7,6 +7,7 @@ import 'package:styled_widget/styled_widget.dart';
 // Project imports:
 import '../../../core/theme/theme_colors.dart';
 import '../../../core/theme/theme_styles.dart';
+import 'labeled_field.dart';
 
 class AppDropdown<T> extends StatefulWidget {
   final List<T> items;
@@ -45,16 +46,6 @@ class AppDropdownState<T> extends State<AppDropdown<T>> {
 
   @override
   Widget build(BuildContext context) {
-    var labelWidget = Text(
-      widget.label,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: const TextStyle(
-        color: ThemeColors.blackText,
-        fontWeight: FontWeight.bold,
-      ),
-    ).padding(top: Sizes.sm);
-
     var inlineDecoration = InputDecoration(
       labelText: widget.label,
       border: OutlineInputBorder(
@@ -91,24 +82,11 @@ class AppDropdownState<T> extends State<AppDropdown<T>> {
       },
     );
 
-    if (widget.inline) {
-      return fieldWidget;
-    } else {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (widget.label.isNotEmpty) ...[labelWidget],
-          const SizedBox(height: 5),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(widget.borderRadius),
-              border: Border.all(color: ThemeColors.darkGray, width: 1),
-            ),
-            child: fieldWidget,
-          ),
-        ],
-      );
-    }
+    return LabeledField(
+      label: widget.label,
+      field: fieldWidget,
+      borderRadius: BorderRadius.circular(widget.borderRadius),
+      inline: widget.inline,
+    );
   }
 }

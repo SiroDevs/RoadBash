@@ -16,11 +16,48 @@ class AppTheme {
     return getThemeModeString(prefRepo.getThemeMode());
   }
 
-  static ThemeData lightTheme() {
+  static ThemeData _build({
+    required Color scaffold,
+    required ColorScheme scheme,
+    required Color appBar,
+    required double appBarElevation,
+    required Color navBackground,
+    required Color navForeground,
+    required CardThemeData card,
+    required Color dialog,
+  }) {
+    const family = AppConstants.kFontFamily;
     return ThemeData(
-      scaffoldBackgroundColor: ThemeColors.lightGray,
-      fontFamily: AppConstants.kFontFamily,
-      colorScheme: const ColorScheme.light(
+      scaffoldBackgroundColor: scaffold,
+      fontFamily: family,
+      colorScheme: scheme,
+      appBarTheme: AppBarTheme(
+        backgroundColor: appBar,
+        foregroundColor: Colors.white,
+        elevation: appBarElevation,
+        iconTheme: const IconThemeData(color: Colors.white),
+        actionsIconTheme: const IconThemeData(color: Colors.white),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: navBackground,
+        indicatorColor: ThemeColors.accent,
+        elevation: 3,
+        iconTheme: WidgetStateProperty.all(IconThemeData(color: navForeground)),
+        labelTextStyle: WidgetStateProperty.all(
+          TextStyle(color: navForeground, fontFamily: family),
+        ),
+      ),
+      cardTheme: card,
+      dialogTheme: DialogThemeData(
+        backgroundColor: dialog,
+        surfaceTintColor: dialog,
+      ),
+    );
+  }
+
+  static ThemeData lightTheme() => _build(
+        scaffold: ThemeColors.lightGray,
+        scheme: const ColorScheme.light(
         primary: ThemeColors.primary,
         onPrimary: Colors.white,
         primaryContainer: ThemeColors.primary,
@@ -49,40 +86,22 @@ class AppTheme {
         inversePrimary: ThemeColors.primaryDark2,
         scrim: Color(0x52000000),
       ),
-      appBarTheme: const AppBarTheme(
-        backgroundColor: ThemeColors.primary,
-        foregroundColor: Colors.white,
-        elevation: 3,
-        iconTheme: IconThemeData(color: Colors.white),
-        actionsIconTheme: IconThemeData(color: Colors.white),
-      ),
-      navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: Colors.white,
-        indicatorColor: ThemeColors.accent,
-        elevation: 3,
-        iconTheme: MaterialStateProperty.all(const IconThemeData(color: ThemeColors.primary)),
-        labelTextStyle: MaterialStateProperty.all(
-          const TextStyle(color: ThemeColors.primary, fontFamily: AppConstants.kFontFamily),
+        appBar: ThemeColors.primary,
+        appBarElevation: 3,
+        navBackground: Colors.white,
+        navForeground: ThemeColors.primary,
+        card: CardThemeData(
+          color: Colors.white,
+          surfaceTintColor: Colors.white,
+          shadowColor: Colors.black,
+          elevation: 2,
         ),
-      ),
-      cardTheme: CardThemeData(
-        color: Colors.white,
-        surfaceTintColor: Colors.white,
-        shadowColor: Colors.black,
-        elevation: 2,
-      ),
-      dialogTheme: DialogThemeData(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-      ),
-    );
-  }
+        dialog: Colors.white,
+      );
 
-  static ThemeData darkTheme() {
-    return ThemeData(
-      scaffoldBackgroundColor: Colors.black,
-      fontFamily: AppConstants.kFontFamily,
-      colorScheme: const ColorScheme.dark(
+  static ThemeData darkTheme() => _build(
+        scaffold: Colors.black,
+        scheme: const ColorScheme.dark(
         primary: ThemeColors.primary2,
         onPrimary: ThemeColors.primaryDark1,
         primaryContainer: ThemeColors.primaryDark,
@@ -111,31 +130,15 @@ class AppTheme {
         inversePrimary: ThemeColors.accent1,
         scrim: Color(0x52000000),
       ),
-      appBarTheme: const AppBarTheme(
-        backgroundColor: ThemeColors.primaryDark2,
-        foregroundColor: Colors.white,
-        elevation: 1,
-        iconTheme: IconThemeData(color: Colors.white),
-        actionsIconTheme: IconThemeData(color: Colors.white),
-      ),
-      navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: ThemeColors.primaryDark,
-        indicatorColor: ThemeColors.accent,
-        elevation: 3,
-        iconTheme: MaterialStateProperty.all(const IconThemeData(color: Colors.white)),
-        labelTextStyle: MaterialStateProperty.all(
-          const TextStyle(color: Colors.white, fontFamily: AppConstants.kFontFamily),
+        appBar: ThemeColors.primaryDark2,
+        appBarElevation: 1,
+        navBackground: ThemeColors.primaryDark,
+        navForeground: Colors.white,
+        card: CardThemeData(
+          color: ThemeColors.primaryDark1,
+          surfaceTintColor: ThemeColors.primaryDark1,
+          shadowColor: ThemeColors.primaryDark,
         ),
-      ),
-      cardTheme: CardThemeData(
-        color: ThemeColors.primaryDark1,
-        surfaceTintColor: ThemeColors.primaryDark1,
-        shadowColor: ThemeColors.primaryDark,
-      ),
-      dialogTheme: DialogThemeData(
-        backgroundColor: ThemeColors.primaryDark,
-        surfaceTintColor: ThemeColors.primaryDark,
-      ),
-    );
-  }  
+        dialog: ThemeColors.primaryDark,
+      );
 }

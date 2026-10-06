@@ -13,6 +13,9 @@ import 'core/di/injectable.dart';
 import 'core/theme/bloc/theme_bloc.dart';
 import 'core/theme/theme_data.dart';
 import 'domain/repos/prefs_repo.dart';
+import 'features/audio/cubit/audio_cubit.dart';
+import 'features/progress/cubit/progress_cubit.dart';
+import 'features/settings/cubit/settings_cubit.dart';
 import 'l10n/app_localizations.dart';
 
 class MyApp extends StatelessWidget {
@@ -43,8 +46,13 @@ class AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     final prefsRepo = getIt<PrefsRepo>();
 
-    return BlocProvider(
-      create: (context) => ThemeBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ThemeBloc()),
+        BlocProvider.value(value: getIt<SettingsCubit>()),
+        BlocProvider.value(value: getIt<ProgressCubit>()),
+        BlocProvider.value(value: getIt<AudioCubit>()),
+      ],
       child: BlocBuilder<ThemeBloc, ThemeMode>(
         builder: (context, themeMode) {
           return MaterialApp.router(

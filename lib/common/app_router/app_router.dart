@@ -1,19 +1,24 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import '../../features/game/race_result.dart';
+import '../../core/di/injectable.dart';
+import '../../domain/models/scene_id.dart';
+import '../../features/menu/cubit/menu_cubit.dart';
 import '../../features/menu/menu_screen.dart';
 import '../../features/notice/notice_screen.dart';
+import '../../features/race/cubit/race_cubit.dart';
 import '../../features/race/race_screen.dart';
+import '../../features/reception/cubit/reception_cubit.dart';
 import '../../features/reception/reception_screen.dart';
 import '../../features/results/results_screen.dart';
+import '../../features/splash/cubit/splash_cubit.dart';
 import '../../features/splash/splash_screen.dart';
-import '../widgets/game/road_theme.dart';
 import 'route_names.dart';
 
 class AppRouter {
@@ -21,6 +26,9 @@ class AppRouter {
 
   static final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: 'root');
+
+  static Widget _provide<C extends Cubit<Object?>>(Widget child) =>
+      BlocProvider<C>(create: (_) => getIt<C>(), child: child);
 
   static GoRouter create({String initialLocation = RoutePaths.splash}) {
     return GoRouter(
@@ -31,7 +39,8 @@ class AppRouter {
         GoRoute(
           path: RoutePaths.splash,
           name: RouteNames.splash,
-          builder: (context, state) => const SplashScreen(),
+          builder: (context, state) =>
+              _provide<SplashCubit>(const SplashScreen()),
         ),
         GoRoute(
           path: RoutePaths.notice,
@@ -41,16 +50,15 @@ class AppRouter {
         GoRoute(
           path: RoutePaths.menu,
           name: RouteNames.menu,
-          builder: (context, state) => const MenuScreen(),
+          builder: (context, state) => _provide<MenuCubit>(const MenuScreen()),
         ),
         GoRoute(
           path: RoutePaths.race,
           name: RouteNames.race,
           builder: (context, state) {
             final id = SceneId.values.asNameMap()[state.pathParameters['scene']];
-            return RaceScreen(
-              key: ValueKey(id),
-              scene: id ?? SceneId.city,
+            return _provide<RaceCubit>(
+              RaceScreen(key: ValueKey(id), scene: id ?? SceneId.city),
             );
           },
         ),
@@ -58,19 +66,21 @@ class AppRouter {
           path: RoutePaths.results,
           name: RouteNames.results,
           builder: (context, state) {
-            final result = state.extra;
-            return result is RaceResult
-                ? ResultsScreen(result: result)
-                : const MenuScreen();
+            final outcome = state.extra;
+            return outcome is RaceOutcome
+                ? ResultsScreen(outcome: outcome)
+                : _provide<MenuCubit>(const MenuScreen());
           },
         ),
         GoRoute(
           path: RoutePaths.reception,
           name: RouteNames.reception,
-          builder: (context, state) => const ReceptionScreen(),
+          builder: (context, state) =>
+              _provide<ReceptionCubit>(const ReceptionScreen()),
         ),
       ],
-      errorBuilder: (context, state) => const SplashScreen(),
+      errorBuilder: (context, state) =>
+          _provide<SplashCubit>(const SplashScreen()),
     );
   }
 }

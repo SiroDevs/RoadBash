@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:textstyle_extensions/textstyle_extensions.dart';
 
+// Project imports:
+import '../../common/constants/app_constants.dart';
+
 class ThemeFonts {
 
-  static const themeFonts = 'TrebuchetMS';
+  static const themeFonts = AppConstants.kFontFamily;
 
   static const title = themeFonts;
   static const body = themeFonts;

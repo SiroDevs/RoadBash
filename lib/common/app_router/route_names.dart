@@ -7,8 +7,6 @@ class RouteNames {
   static const race = 'race';
   static const results = 'results';
   static const reception = 'reception';
-  static const profile = 'profile';
-  static const settings = 'settings';
 }
 
 class RoutePaths {

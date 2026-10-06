@@ -1,3 +1,239 @@
 {
-  "@@locale": "sw"
+  "@@locale": "sw",
+  "appName": "RoadBash",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  "feedback": "Maoni",
+  "@feedback": {
+    "description": "Feedback label"
+  },
+  "splashPresents": "{studio} wanawasilisha",
+  "@splashPresents": {
+    "description": "Studio line on the title screen",
+    "placeholders": {
+      "studio": {
+        "type": "String"
+      }
+    }
+  },
+  "splashTagline": "Rudisha vibe za zamani",
+  "@splashTagline": {
+    "description": "Tagline on the title screen"
+  },
+  "splashRights": "{credits}. Haki zote zimehifadhiwa.",
+  "@splashRights": {
+    "description": "Copyright line on the title screen",
+    "placeholders": {
+      "credits": {
+        "type": "String"
+      }
+    }
+  },
+  "noticeTitle": "Ni mchezo tu",
+  "@noticeTitle": {
+    "description": "Heading of the ride-safe notice"
+  },
+  "noticeFun": "RoadBash imetengenezwa kwa burudani. Mashindano, ajali na vituko vyote ni vya kubuni, na hakuna kinachoonyesha jinsi uendeshaji halisi ulivyo.",
+  "@noticeFun": {
+    "description": "First notice paragraph"
+  },
+  "noticeWarning": "Barabarani, kasi na uendeshaji hatari huumiza watu: wewe na wote wanaokuzunguka. Shindana tu kwenye uwanja uliofungwa, vaa vifaa kamili vya kujilinda na endesha ndani ya uwezo wako. Tumia akili.",
+  "@noticeWarning": {
+    "description": "Safety warning paragraph"
+  },
+  "tapToContinue": "Gusa kuendelea",
+  "@tapToContinue": {
+    "description": "Hint to continue"
+  },
+  "sceneCity": "Jiji",
+  "@sceneCity": {
+    "description": "Name of the city scene"
+  },
+  "sceneSuburbs": "Vitongoji",
+  "@sceneSuburbs": {
+    "description": "Name of the suburbs scene"
+  },
+  "receptionTitle": "Mapokezi",
+  "@receptionTitle": {
+    "description": "Name of the settings desk"
+  },
+  "blurbCity": "Mitaa ya katikati ya jiji, milima mikali na kuta za vioo. Shikilia njia yako kati ya kingo.",
+  "@blurbCity": {
+    "description": "City description"
+  },
+  "blurbSuburbs": "Vilima vinavyopinda na mikunjo mipana pembezoni mwa mji. Kasi, mtiririko, na ni rahisi kutoka nje ya njia.",
+  "@blurbSuburbs": {
+    "description": "Suburbs description"
+  },
+  "blurbReception": "Njoo uweke jina la mwendeshaji, rekebisha sauti na uangalie vidhibiti.",
+  "@blurbReception": {
+    "description": "Reception description"
+  },
+  "lengthLabel": "Urefu: km {km}, mizunguko {laps}",
+  "@lengthLabel": {
+    "description": "Race length",
+    "placeholders": {
+      "km": {
+        "type": "String"
+      },
+      "laps": {
+        "type": "int"
+      }
+    }
+  },
+  "levelLabel": "Ngazi {level}",
+  "@levelLabel": {
+    "description": "Player level",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "bestTimeLabel": "Bora {time}",
+  "@bestTimeLabel": {
+    "description": "Best time on a scene",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "noTimeYet": "Bado hakuna muda",
+  "@noTimeYet": {
+    "description": "Shown before the first race"
+  },
+  "racesWinsLabel": "Mashindano {races}, ushindi {wins}",
+  "@racesWinsLabel": {
+    "description": "Race and win counts",
+    "placeholders": {
+      "races": {
+        "type": "int"
+      },
+      "wins": {
+        "type": "int"
+      }
+    }
+  },
+  "startRace": "Anza shindano",
+  "@startRace": {
+    "description": "Start button"
+  },
+  "enterLabel": "Ingia",
+  "@enterLabel": {
+    "description": "Enter button"
+  },
+  "defaultPlayerName": "Mchezaji 1",
+  "@defaultPlayerName": {
+    "description": "Name used until the player sets one"
+  },
+  "resultsTitle": "Matokeo ya Shindano",
+  "@resultsTitle": {
+    "description": "Results heading"
+  },
+  "raceAgain": "Shindana tena",
+  "@raceAgain": {
+    "description": "Race again button"
+  },
+  "backToMenu": "Menyu",
+  "@backToMenu": {
+    "description": "Back to menu button"
+  },
+  "newBestTime": "Muda mpya bora!",
+  "@newBestTime": {
+    "description": "Shown on a personal best"
+  },
+  "receptionName": "Jina la Mchezaji",
+  "@receptionName": {
+    "description": "Reception item"
+  },
+  "receptionSound": "Mchanganyiko wa Sauti",
+  "@receptionSound": {
+    "description": "Reception item"
+  },
+  "receptionControls": "Vidhibiti",
+  "@receptionControls": {
+    "description": "Reception item"
+  },
+  "receptionDone": "Maliza",
+  "@receptionDone": {
+    "description": "Reception item"
+  },
+  "nameHint": "Chagua jina litakaloonekana kwenye dashibodi na kwenye matokeo.",
+  "@nameHint": {
+    "description": "Name editor hint"
+  },
+  "volumeMaster": "Jumla",
+  "@volumeMaster": {
+    "description": "Volume slider"
+  },
+  "volumeMusic": "Muziki",
+  "@volumeMusic": {
+    "description": "Volume slider"
+  },
+  "volumeEngine": "Injini",
+  "@volumeEngine": {
+    "description": "Volume slider"
+  },
+  "volumeEffects": "Athari",
+  "@volumeEffects": {
+    "description": "Volume slider"
+  },
+  "controlsHelp": "Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini, S au Space hufunga breki.\n\nKwa kugusa: tumia mishale ya kushoto kuongoza, na kanyagio za mafuta na breki kulia.",
+  "@controlsHelp": {
+    "description": "Controls help text"
+  },
+  "hudGo": "ANZA!",
+  "@hudGo": {
+    "description": "Race start banner"
+  },
+  "hudFinish": "MWISHO!",
+  "@hudFinish": {
+    "description": "Race finish banner"
+  },
+  "hudHoldGas": "Shikilia mafuta kuendesha",
+  "@hudHoldGas": {
+    "description": "Hint when stopped"
+  },
+  "hudLap": "MZUNGUKO {lap}/{laps}",
+  "@hudLap": {
+    "description": "Lap counter",
+    "placeholders": {
+      "lap": {
+        "type": "int"
+      },
+      "laps": {
+        "type": "int"
+      }
+    }
+  },
+  "hudSpeedUnit": "KM/H",
+  "@hudSpeedUnit": {
+    "description": "Speedometer unit"
+  },
+  "hudRpmUnit": "RPM x1000",
+  "@hudRpmUnit": {
+    "description": "Rev counter unit"
+  },
+  "quitRace": "Acha shindano",
+  "@quitRace": {
+    "description": "Close button label"
+  },
+  "touchLeft": "Elekea kushoto",
+  "@touchLeft": {
+    "description": "Touch control label"
+  },
+  "touchRight": "Elekea kulia",
+  "@touchRight": {
+    "description": "Touch control label"
+  },
+  "touchGas": "Mafuta",
+  "@touchGas": {
+    "description": "Touch control label"
+  },
+  "touchBrake": "Breki",
+  "@touchBrake": {
+    "description": "Touch control label"
+  }
 }

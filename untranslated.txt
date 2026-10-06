@@ -1,6 +1,1 @@
-{
-  "sw": [
-    "appName",
-    "feedback"
-  ]
-}
+{}

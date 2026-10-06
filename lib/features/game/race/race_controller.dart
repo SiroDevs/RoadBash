@@ -2,18 +2,18 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../../common/widgets/game/road_config.dart';
-import '../../common/widgets/game/road_theme.dart';
+import '../../../domain/models/scene_id.dart';
+import '../road/road_config.dart';
 import 'race_result.dart';
 
-/// A computer rider. It has no sprite yet: its progress is a simple formula,
-/// which is enough to drive the HUD position and the gap timer.
+/// A computer rider. It has no sprite yet: its progress is a formula, which
+/// is enough to drive the HUD position and the gap timer.
 class Rival {
   const Rival(this.name, this.pace, this.phase);
 
   final String name;
-  final double pace; // fraction of top speed it averages
-  final double phase; // offsets its surges so riders swap places
+  final double pace;
+  final double phase;
 }
 
 /// Countdown, race clock, rival progress, position and finishing.
@@ -34,8 +34,8 @@ class RaceController {
     Rival('Achieng', 0.66, 5.6),
   ];
 
-  static const double _surgeAmp = 2500; // world units
-  static const double _surgeFreq = 0.35; // rad / s
+  static const double _surgeAmp = 2500;
+  static const double _surgeFreq = 0.35;
 
   final SceneId scene;
   final int laps;
@@ -47,11 +47,11 @@ class RaceController {
   double elapsed = 0;
   bool finished = false;
   double finishTime = 0;
-  double progress = 0; // 0..1 of the whole race
+  double progress = 0;
   int lap = 1;
   int position = 1;
-  Rival? nearest; // rival closest to you right now
-  bool playerAhead = true; // are you in front of [nearest]?
+  Rival? nearest;
+  bool playerAhead = true;
   double gapSeconds = 0;
 
   double get raceLength => lapLength * laps;
@@ -61,7 +61,7 @@ class RaceController {
       r.pace * RoadConfig.maxSpeed * t +
       _surgeAmp * (math.sin(_surgeFreq * t + r.phase) - math.sin(r.phase));
 
-  /// Time at which [r] crosses the line (found by bisection).
+  /// Time at which [r] crosses the line, found by bisection.
   double rivalFinishTime(Rival r) {
     var lo = 0.0;
     var hi = raceLength / (r.pace * RoadConfig.maxSpeed) + 20;

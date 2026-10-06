@@ -11,7 +11,8 @@ class RoadBashLogo extends StatelessWidget {
   final double size;
 
   Widget _plate(String text, Color bg, Color fg) => Container(
-        padding: EdgeInsets.symmetric(horizontal: size * 0.25, vertical: size * 0.08),
+        padding: EdgeInsets.symmetric(
+            horizontal: size * 0.25, vertical: size * 0.08),
         decoration: BoxDecoration(
           color: bg,
           border: Border.all(color: Colors.black, width: size * 0.06),
@@ -20,8 +21,8 @@ class RoadBashLogo extends StatelessWidget {
           text,
           style: TextStyle(
             color: fg,
+            fontFamily: AppConstants.displayFont,
             fontSize: size,
-            fontWeight: FontWeight.w900,
             letterSpacing: 2,
             height: 1,
           ),

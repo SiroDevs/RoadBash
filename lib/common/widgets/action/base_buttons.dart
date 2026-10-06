@@ -94,44 +94,26 @@ class AppButtonState extends State<AppButton> {
       fontWeight: FontWeight.bold,
     );
 
-    var withIcon = widget.alignHorizontally
-        ? Row(
-            mainAxisAlignment: widget.centered
-                ? MainAxisAlignment.center
-                : MainAxisAlignment.start,
-            crossAxisAlignment: widget.centered
-                ? CrossAxisAlignment.center
-                : CrossAxisAlignment.start,
-            children: [
-              widget.prefix,
-              const SizedBox(width: 5),
-              Text(
-                widget.label,
-                style: txtStyle,
-                textAlign: TextAlign.center,
-              ),
-              widget.centered ? const SizedBox() : const Spacer(),
-              widget.suffix,
-            ],
-          )
-        : Column(
-            mainAxisAlignment: widget.centered
-                ? MainAxisAlignment.center
-                : MainAxisAlignment.start,
-            crossAxisAlignment: widget.centered
-                ? CrossAxisAlignment.center
-                : CrossAxisAlignment.start,
-            children: [
-              widget.prefix,
-              const SizedBox(width: 5),
-              Text(widget.label, style: txtStyle, textAlign: TextAlign.center),
-              widget.suffix,
-            ],
-          );
+    final label = Text(widget.label, style: txtStyle, textAlign: TextAlign.center);
+    final centered = widget.centered;
+    final withIcon = Flex(
+      direction: widget.alignHorizontally ? Axis.horizontal : Axis.vertical,
+      mainAxisAlignment:
+          centered ? MainAxisAlignment.center : MainAxisAlignment.start,
+      crossAxisAlignment:
+          centered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      children: [
+        widget.prefix,
+        const SizedBox(width: 5),
+        label,
+        if (widget.alignHorizontally) centered ? const SizedBox() : const Spacer(),
+        widget.suffix,
+      ],
+    );
 
     var childWidget = widget.showIcon
         ? withIcon
-        : Text(widget.label, style: txtStyle, textAlign: TextAlign.center);
+        : label;
 
     return Container(
       width: widget.width,

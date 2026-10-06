@@ -2,12 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
-import 'package:styled_widget/styled_widget.dart';
-
 // Project imports:
 import '../../../core/theme/theme_colors.dart';
 import '../../../core/theme/theme_styles.dart';
+import 'labeled_field.dart';
 
 class FormInput extends StatefulWidget {
   final String label;
@@ -101,16 +99,6 @@ class FormInputState extends State<FormInput> {
   @override
   Widget build(BuildContext context) {
     Color foreColor = widget.isLight! ? Colors.white : ThemeColors.blackText;
-    var labelWidget = Text(
-      widget.label,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: const TextStyle(
-        color: ThemeColors.blackText,
-        fontWeight: FontWeight.bold,
-      ),
-    ).padding(top: Sizes.sm);
-
     var inlineDecoration = InputDecoration(
       labelText: widget.label,
       prefixIcon: widget.prefix,
@@ -180,24 +168,11 @@ class FormInputState extends State<FormInput> {
       onFieldSubmitted: widget.onSubmitted,
     );
 
-    if (widget.inline) {
-      return fieldWidget;
-    } else {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (widget.label.isNotEmpty) ...[labelWidget],
-          const SizedBox(height: 5),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: widget.borderRadius,
-              border: Border.all(color: ThemeColors.darkGray, width: 1),
-            ),
-            child: fieldWidget,
-          ),
-        ],
-      );
-    }
+    return LabeledField(
+      label: widget.label,
+      field: fieldWidget,
+      borderRadius: widget.borderRadius,
+      inline: widget.inline,
+    );
   }
 }

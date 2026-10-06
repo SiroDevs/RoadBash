@@ -1,7 +1,7 @@
 // Project imports:
-import '../../common/widgets/game/road_theme.dart';
+import '../../../domain/models/scene_id.dart';
 
-/// Formats seconds as `m:ss.s`, or just `ss.s` when [short] and under a minute.
+/// Seconds as `m:ss.s`, or just `ss.s` when [short] and under a minute.
 String formatTime(double seconds, {bool short = false}) {
   final tenths = (seconds * 10).round();
   final m = tenths ~/ 600;
@@ -28,7 +28,7 @@ class RaceResult {
   const RaceResult({required this.scene, required this.rows});
 
   final SceneId scene;
-  final List<ResultRow> rows; // already sorted, best first
+  final List<ResultRow> rows;
 
   ResultRow get player => rows.firstWhere((r) => r.isPlayer);
 }

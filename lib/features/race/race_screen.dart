@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
 import 'package:flame/game.dart';
@@ -7,28 +8,50 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../common/app_router/route_names.dart';
-import '../../common/widgets/game/road_theme.dart';
-import '../game/race_result.dart';
+import '../../core/di/injectable.dart';
+import '../../core/utils/app_util.dart';
+import '../../domain/models/scene_id.dart';
+import '../../l10n/l10n_extension.dart';
+import '../audio/audio_catalog.dart';
+import '../audio/audio_service.dart';
+import '../audio/music_scope.dart';
+import '../game/hud/hud_strings.dart';
+import '../game/input/touch_controls.dart';
 import '../game/road_game.dart';
+import '../settings/cubit/settings_cubit.dart';
+import 'cubit/race_cubit.dart';
 
-/// Hosts the race plus the touch zones: left / right half steers, the middle
-/// strip brakes. Throttle is automatic.
 class RaceScreen extends StatefulWidget {
   const RaceScreen({super.key, required this.scene});
 
   final SceneId scene;
 
   @override
-  State<RaceScreen> createState() => RaceScreenState();
+  State<RaceScreen> createState() => _RaceScreenState();
 }
 
-class RaceScreenState extends State<RaceScreen> {
-  late final RoadGame _game =
-      RoadGame(scene: widget.scene, onFinished: _onFinished);
+class _RaceScreenState extends State<RaceScreen> {
+  late final RoadGame _game = _buildGame();
 
-  void _onFinished(RaceResult result) {
-    if (!mounted) return;
-    context.goNamed(RouteNames.results, extra: result);
+  RoadGame _buildGame() {
+    final l10n = context.l10n;
+    final profile = context.read<SettingsCubit>().state.profile;
+    final race = context.read<RaceCubit>();
+    return RoadGame(
+      scene: widget.scene,
+      mix: profile,
+      audio: getIt<AudioService>(),
+      playerName: profile.displayName(l10n),
+      onFinished: race.finish,
+      strings: HudStrings(
+        go: l10n.hudGo,
+        finish: l10n.hudFinish,
+        holdGas: l10n.hudHoldGas,
+        speedUnit: l10n.hudSpeedUnit,
+        rpmUnit: l10n.hudRpmUnit,
+        lap: l10n.hudLap,
+      ),
+    );
   }
 
   @override
@@ -37,52 +60,40 @@ class RaceScreenState extends State<RaceScreen> {
     super.dispose();
   }
 
-  Widget _zone(int flex, IconData icon, VoidCallback down, VoidCallback up) {
-    return Expanded(
-      flex: flex,
-      child: Listener(
-        behavior: HitTestBehavior.translucent,
-        onPointerDown: (_) => down(),
-        onPointerUp: (_) => up(),
-        onPointerCancel: (_) => up(),
-        child: Align(
-          alignment: const Alignment(0, 0.45),
-          child: Icon(icon, size: 48, color: Colors.white24),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          GameWidget(game: _game),
-          Positioned.fill(
-            child: Row(
-              children: [
-                _zone(4, Icons.chevron_left, () => _game.setTouchSteer(-1),
-                    () => _game.setTouchSteer(0)),
-                _zone(2, Icons.pan_tool_alt_outlined,
-                    () => _game.setTouchBrake(true),
-                    () => _game.setTouchBrake(false)),
-                _zone(4, Icons.chevron_right, () => _game.setTouchSteer(1),
-                    () => _game.setTouchSteer(0)),
-              ],
-            ),
-          ),
-          SafeArea(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: const Icon(Icons.close, color: Colors.white70),
-                onPressed: () => context.goNamed(RouteNames.menu),
+    return MusicScope(
+      track: MusicTrack.forScene(widget.scene),
+      child: BlocListener<RaceCubit, RaceOutcome?>(
+        listener: (context, outcome) {
+          if (outcome != null) {
+            context.goNamed(RouteNames.results, extra: outcome);
+          }
+        },
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: Stack(
+            children: [
+              GameWidget(game: _game),
+              if (isMobile)
+                TouchControls(
+                  onSteer: _game.setTouchSteer,
+                  onThrottle: _game.setTouchThrottle,
+                  onBrake: _game.setTouchBrake,
+                ),
+              SafeArea(
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    tooltip: context.l10n.quitRace,
+                    icon: const Icon(Icons.close, color: Colors.white70),
+                    onPressed: () => context.goNamed(RouteNames.menu),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

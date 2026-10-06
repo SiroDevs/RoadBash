@@ -1,13 +1,239 @@
 {
   "@@locale": "en",
-
   "appName": "RoadBash",
   "@appName": {
     "description": "The name of the application"
   },
-
   "feedback": "Feedback",
   "@feedback": {
-    "description": "Label for the feedback section or button"
+    "description": "Feedback label"
+  },
+  "splashPresents": "{studio} presents",
+  "@splashPresents": {
+    "description": "Studio line on the title screen",
+    "placeholders": {
+      "studio": {
+        "type": "String"
+      }
+    }
+  },
+  "splashTagline": "Bring back the vibes",
+  "@splashTagline": {
+    "description": "Tagline on the title screen"
+  },
+  "splashRights": "{credits}. All rights reserved.",
+  "@splashRights": {
+    "description": "Copyright line on the title screen",
+    "placeholders": {
+      "credits": {
+        "type": "String"
+      }
+    }
+  },
+  "noticeTitle": "Just a game",
+  "@noticeTitle": {
+    "description": "Heading of the ride-safe notice"
+  },
+  "noticeFun": "RoadBash is made for fun. The races, the pile-ups and the stunts are all invented, and none of it shows how real riding works.",
+  "@noticeFun": {
+    "description": "First notice paragraph"
+  },
+  "noticeWarning": "On real roads, speed and risky riding hurt people: you and everyone around you. Race only on a closed track, wear full protective gear and ride within your limits. Use your head.",
+  "@noticeWarning": {
+    "description": "Safety warning paragraph"
+  },
+  "tapToContinue": "Tap to continue",
+  "@tapToContinue": {
+    "description": "Hint to continue"
+  },
+  "sceneCity": "City",
+  "@sceneCity": {
+    "description": "Name of the city scene"
+  },
+  "sceneSuburbs": "Suburbs",
+  "@sceneSuburbs": {
+    "description": "Name of the suburbs scene"
+  },
+  "receptionTitle": "Reception",
+  "@receptionTitle": {
+    "description": "Name of the settings desk"
+  },
+  "blurbCity": "Downtown streets, steep hills and walls of glass. Hold your line between the kerbs.",
+  "@blurbCity": {
+    "description": "City description"
+  },
+  "blurbSuburbs": "Rolling hills and sweeping bends at the edge of town. Fast, flowing and easy to run wide.",
+  "@blurbSuburbs": {
+    "description": "Suburbs description"
+  },
+  "blurbReception": "Pop in to set your rider name, mix the sound and check the controls.",
+  "@blurbReception": {
+    "description": "Reception description"
+  },
+  "lengthLabel": "Length: {km} km, {laps} laps",
+  "@lengthLabel": {
+    "description": "Race length",
+    "placeholders": {
+      "km": {
+        "type": "String"
+      },
+      "laps": {
+        "type": "int"
+      }
+    }
+  },
+  "levelLabel": "Level {level}",
+  "@levelLabel": {
+    "description": "Player level",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "bestTimeLabel": "Best {time}",
+  "@bestTimeLabel": {
+    "description": "Best time on a scene",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "noTimeYet": "No time yet",
+  "@noTimeYet": {
+    "description": "Shown before the first race"
+  },
+  "racesWinsLabel": "{races} races, {wins} wins",
+  "@racesWinsLabel": {
+    "description": "Race and win counts",
+    "placeholders": {
+      "races": {
+        "type": "int"
+      },
+      "wins": {
+        "type": "int"
+      }
+    }
+  },
+  "startRace": "Start race",
+  "@startRace": {
+    "description": "Start button"
+  },
+  "enterLabel": "Enter",
+  "@enterLabel": {
+    "description": "Enter button"
+  },
+  "defaultPlayerName": "Player 1",
+  "@defaultPlayerName": {
+    "description": "Name used until the player sets one"
+  },
+  "resultsTitle": "Race Results",
+  "@resultsTitle": {
+    "description": "Results heading"
+  },
+  "raceAgain": "Race again",
+  "@raceAgain": {
+    "description": "Race again button"
+  },
+  "backToMenu": "Menu",
+  "@backToMenu": {
+    "description": "Back to menu button"
+  },
+  "newBestTime": "New best time!",
+  "@newBestTime": {
+    "description": "Shown on a personal best"
+  },
+  "receptionName": "Player Name",
+  "@receptionName": {
+    "description": "Reception item"
+  },
+  "receptionSound": "Sound Mix",
+  "@receptionSound": {
+    "description": "Reception item"
+  },
+  "receptionControls": "Controls",
+  "@receptionControls": {
+    "description": "Reception item"
+  },
+  "receptionDone": "Done",
+  "@receptionDone": {
+    "description": "Reception item"
+  },
+  "nameHint": "Pick the name shown on your dashboard and in the results.",
+  "@nameHint": {
+    "description": "Name editor hint"
+  },
+  "volumeMaster": "Master",
+  "@volumeMaster": {
+    "description": "Volume slider"
+  },
+  "volumeMusic": "Music",
+  "@volumeMusic": {
+    "description": "Volume slider"
+  },
+  "volumeEngine": "Engine",
+  "@volumeEngine": {
+    "description": "Volume slider"
+  },
+  "volumeEffects": "Effects",
+  "@volumeEffects": {
+    "description": "Volume slider"
+  },
+  "controlsHelp": "Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down, S or Space brakes.\n\nTouch: use the arrows on the left to steer, and the gas and brake pedals on the right.",
+  "@controlsHelp": {
+    "description": "Controls help text"
+  },
+  "hudGo": "GO!",
+  "@hudGo": {
+    "description": "Race start banner"
+  },
+  "hudFinish": "FINISH!",
+  "@hudFinish": {
+    "description": "Race finish banner"
+  },
+  "hudHoldGas": "Hold the gas to ride",
+  "@hudHoldGas": {
+    "description": "Hint when stopped"
+  },
+  "hudLap": "LAP {lap}/{laps}",
+  "@hudLap": {
+    "description": "Lap counter",
+    "placeholders": {
+      "lap": {
+        "type": "int"
+      },
+      "laps": {
+        "type": "int"
+      }
+    }
+  },
+  "hudSpeedUnit": "KM/H",
+  "@hudSpeedUnit": {
+    "description": "Speedometer unit"
+  },
+  "hudRpmUnit": "RPM x1000",
+  "@hudRpmUnit": {
+    "description": "Rev counter unit"
+  },
+  "quitRace": "Quit race",
+  "@quitRace": {
+    "description": "Close button label"
+  },
+  "touchLeft": "Steer left",
+  "@touchLeft": {
+    "description": "Touch control label"
+  },
+  "touchRight": "Steer right",
+  "@touchRight": {
+    "description": "Touch control label"
+  },
+  "touchGas": "Gas",
+  "@touchGas": {
+    "description": "Touch control label"
+  },
+  "touchBrake": "Brake",
+  "@touchBrake": {
+    "description": "Touch control label"
   }
 }

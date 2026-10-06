@@ -104,11 +104,287 @@ abstract class AppLocalizations {
   /// **'RoadBash'**
   String get appName;
 
-  /// Label for the feedback section or button
+  /// Feedback label
   ///
   /// In en, this message translates to:
   /// **'Feedback'**
   String get feedback;
+
+  /// Studio line on the title screen
+  ///
+  /// In en, this message translates to:
+  /// **'{studio} presents'**
+  String splashPresents(String studio);
+
+  /// Tagline on the title screen
+  ///
+  /// In en, this message translates to:
+  /// **'Bring back the vibes'**
+  String get splashTagline;
+
+  /// Copyright line on the title screen
+  ///
+  /// In en, this message translates to:
+  /// **'{credits}. All rights reserved.'**
+  String splashRights(String credits);
+
+  /// Heading of the ride-safe notice
+  ///
+  /// In en, this message translates to:
+  /// **'Just a game'**
+  String get noticeTitle;
+
+  /// First notice paragraph
+  ///
+  /// In en, this message translates to:
+  /// **'RoadBash is made for fun. The races, the pile-ups and the stunts are all invented, and none of it shows how real riding works.'**
+  String get noticeFun;
+
+  /// Safety warning paragraph
+  ///
+  /// In en, this message translates to:
+  /// **'On real roads, speed and risky riding hurt people: you and everyone around you. Race only on a closed track, wear full protective gear and ride within your limits. Use your head.'**
+  String get noticeWarning;
+
+  /// Hint to continue
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to continue'**
+  String get tapToContinue;
+
+  /// Name of the city scene
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get sceneCity;
+
+  /// Name of the suburbs scene
+  ///
+  /// In en, this message translates to:
+  /// **'Suburbs'**
+  String get sceneSuburbs;
+
+  /// Name of the settings desk
+  ///
+  /// In en, this message translates to:
+  /// **'Reception'**
+  String get receptionTitle;
+
+  /// City description
+  ///
+  /// In en, this message translates to:
+  /// **'Downtown streets, steep hills and walls of glass. Hold your line between the kerbs.'**
+  String get blurbCity;
+
+  /// Suburbs description
+  ///
+  /// In en, this message translates to:
+  /// **'Rolling hills and sweeping bends at the edge of town. Fast, flowing and easy to run wide.'**
+  String get blurbSuburbs;
+
+  /// Reception description
+  ///
+  /// In en, this message translates to:
+  /// **'Pop in to set your rider name, mix the sound and check the controls.'**
+  String get blurbReception;
+
+  /// Race length
+  ///
+  /// In en, this message translates to:
+  /// **'Length: {km} km, {laps} laps'**
+  String lengthLabel(String km, int laps);
+
+  /// Player level
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level}'**
+  String levelLabel(int level);
+
+  /// Best time on a scene
+  ///
+  /// In en, this message translates to:
+  /// **'Best {time}'**
+  String bestTimeLabel(String time);
+
+  /// Shown before the first race
+  ///
+  /// In en, this message translates to:
+  /// **'No time yet'**
+  String get noTimeYet;
+
+  /// Race and win counts
+  ///
+  /// In en, this message translates to:
+  /// **'{races} races, {wins} wins'**
+  String racesWinsLabel(int races, int wins);
+
+  /// Start button
+  ///
+  /// In en, this message translates to:
+  /// **'Start race'**
+  String get startRace;
+
+  /// Enter button
+  ///
+  /// In en, this message translates to:
+  /// **'Enter'**
+  String get enterLabel;
+
+  /// Name used until the player sets one
+  ///
+  /// In en, this message translates to:
+  /// **'Player 1'**
+  String get defaultPlayerName;
+
+  /// Results heading
+  ///
+  /// In en, this message translates to:
+  /// **'Race Results'**
+  String get resultsTitle;
+
+  /// Race again button
+  ///
+  /// In en, this message translates to:
+  /// **'Race again'**
+  String get raceAgain;
+
+  /// Back to menu button
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get backToMenu;
+
+  /// Shown on a personal best
+  ///
+  /// In en, this message translates to:
+  /// **'New best time!'**
+  String get newBestTime;
+
+  /// Reception item
+  ///
+  /// In en, this message translates to:
+  /// **'Player Name'**
+  String get receptionName;
+
+  /// Reception item
+  ///
+  /// In en, this message translates to:
+  /// **'Sound Mix'**
+  String get receptionSound;
+
+  /// Reception item
+  ///
+  /// In en, this message translates to:
+  /// **'Controls'**
+  String get receptionControls;
+
+  /// Reception item
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get receptionDone;
+
+  /// Name editor hint
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the name shown on your dashboard and in the results.'**
+  String get nameHint;
+
+  /// Volume slider
+  ///
+  /// In en, this message translates to:
+  /// **'Master'**
+  String get volumeMaster;
+
+  /// Volume slider
+  ///
+  /// In en, this message translates to:
+  /// **'Music'**
+  String get volumeMusic;
+
+  /// Volume slider
+  ///
+  /// In en, this message translates to:
+  /// **'Engine'**
+  String get volumeEngine;
+
+  /// Volume slider
+  ///
+  /// In en, this message translates to:
+  /// **'Effects'**
+  String get volumeEffects;
+
+  /// Controls help text
+  ///
+  /// In en, this message translates to:
+  /// **'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down, S or Space brakes.\n\nTouch: use the arrows on the left to steer, and the gas and brake pedals on the right.'**
+  String get controlsHelp;
+
+  /// Race start banner
+  ///
+  /// In en, this message translates to:
+  /// **'GO!'**
+  String get hudGo;
+
+  /// Race finish banner
+  ///
+  /// In en, this message translates to:
+  /// **'FINISH!'**
+  String get hudFinish;
+
+  /// Hint when stopped
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the gas to ride'**
+  String get hudHoldGas;
+
+  /// Lap counter
+  ///
+  /// In en, this message translates to:
+  /// **'LAP {lap}/{laps}'**
+  String hudLap(int lap, int laps);
+
+  /// Speedometer unit
+  ///
+  /// In en, this message translates to:
+  /// **'KM/H'**
+  String get hudSpeedUnit;
+
+  /// Rev counter unit
+  ///
+  /// In en, this message translates to:
+  /// **'RPM x1000'**
+  String get hudRpmUnit;
+
+  /// Close button label
+  ///
+  /// In en, this message translates to:
+  /// **'Quit race'**
+  String get quitRace;
+
+  /// Touch control label
+  ///
+  /// In en, this message translates to:
+  /// **'Steer left'**
+  String get touchLeft;
+
+  /// Touch control label
+  ///
+  /// In en, this message translates to:
+  /// **'Steer right'**
+  String get touchRight;
+
+  /// Touch control label
+  ///
+  /// In en, this message translates to:
+  /// **'Gas'**
+  String get touchGas;
+
+  /// Touch control label
+  ///
+  /// In en, this message translates to:
+  /// **'Brake'**
+  String get touchBrake;
 }
 
 class _AppLocalizationsDelegate

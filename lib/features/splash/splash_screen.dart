@@ -1,8 +1,6 @@
-// Dart imports:
-import 'dart:async';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
 import 'package:go_router/go_router.dart';
@@ -11,71 +9,56 @@ import 'package:go_router/go_router.dart';
 import '../../common/app_router/route_names.dart';
 import '../../common/constants/app_constants.dart';
 import '../../common/widgets/retro/logo_mark.dart';
+import '../../common/widgets/retro/retro_scaffold.dart';
 import '../../common/widgets/retro/retro_style.dart';
-import '../game/game_settings.dart';
+import '../../l10n/l10n_extension.dart';
+import 'cubit/splash_cubit.dart';
 
-/// Title screen: studio line, logo, tagline, copyright. Tap to skip.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  SplashScreenState createState() => SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class SplashScreenState extends State<SplashScreen> {
-  Timer? _timer;
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    GameSettings.instance.load();
-    _timer = Timer(const Duration(seconds: 3), _next);
-  }
-
-  void _next() {
-    _timer?.cancel();
-    if (!mounted) return;
-    context.goNamed(RouteNames.notice);
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
+    context.read<SplashCubit>().start();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: _next,
-        child: RetroBackdrop(
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  Text('${AppConstants.appCredits.replaceFirst('© ', '')} presents',
-                      style: retroBody(size: 22)),
-                  const Spacer(),
-                  TweenAnimationBuilder<double>(
-                    tween: Tween(begin: 0, end: 1),
-                    duration: const Duration(milliseconds: 900),
-                    curve: Curves.easeOutBack,
-                    builder: (_, v, child) =>
-                        Opacity(opacity: v.clamp(0.0, 1.0), child: Transform.scale(scale: 0.8 + 0.2 * v, child: child)),
-                    child: const RoadBashLogo(size: 72),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(AppConstants.appTagline, style: retroBody(size: 20, color: Retro.yellow)),
-                  const Spacer(),
-                  Text('${AppConstants.appCredits}. All rights reserved.',
-                      style: retroBody(size: 14, color: Retro.dim)),
-                ],
+    final l10n = context.l10n;
+    final studio = AppConstants.appCredits.replaceFirst('© ', '');
+    return BlocListener<SplashCubit, bool>(
+      listener: (context, ready) {
+        if (ready) context.goNamed(RouteNames.notice);
+      },
+      child: RetroScaffold(
+        onTap: context.read<SplashCubit>().skip,
+        child: Column(
+          children: [
+            Text(l10n.splashPresents(studio), style: retroBody(size: 24)),
+            const Spacer(),
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0, end: 1),
+              duration: const Duration(milliseconds: 900),
+              curve: Curves.easeOutBack,
+              builder: (_, v, child) => Opacity(
+                opacity: v.clamp(0.0, 1.0),
+                child: Transform.scale(scale: 0.8 + 0.2 * v, child: child),
               ),
+              child: const RoadBashLogo(size: 72),
             ),
-          ),
+            const SizedBox(height: 16),
+            Text(l10n.splashTagline,
+                style: retroBody(size: 22, color: Retro.yellow)),
+            const Spacer(),
+            Text(l10n.splashRights(AppConstants.appCredits),
+                style: retroBody(size: 16, color: Retro.dim)),
+          ],
         ),
       ),
     );

@@ -14,6 +14,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:roadbash/core/di/injectable.dart' as _i970;
 import 'package:roadbash/data/local/app_database.dart' as _i686;
+import 'package:roadbash/domain/repos/prefs_repo.dart' as _i805;
 import 'package:roadbash/domain/repos/profile_repo.dart' as _i624;
 import 'package:roadbash/domain/repos/race_repo.dart' as _i541;
 import 'package:roadbash/features/audio/audio_service.dart' as _i1063;
@@ -38,7 +39,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i303.MenuCubit>(() => _i303.MenuCubit());
     gh.factory<_i762.ReceptionCubit>(() => _i762.ReceptionCubit());
     await gh.singletonAsync<_i460.SharedPreferences>(
-      () => registerModule.prefsRepo(),
+      () => registerModule.sharedPrefs(),
       preResolve: true,
     );
     await gh.singletonAsync<_i686.AppDatabase>(
@@ -51,6 +52,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i541.RaceRepo>(
       () => _i541.RaceRepo(gh<_i686.AppDatabase>()),
+    );
+    gh.singleton<_i805.PrefsRepo>(
+      () => _i805.PrefsRepo(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i422.SettingsCubit>(
       () => _i422.SettingsCubit(gh<_i624.ProfileRepo>()),

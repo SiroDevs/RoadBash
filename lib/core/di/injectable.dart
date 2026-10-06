@@ -28,7 +28,7 @@ Future<void> configureDependencies(String environment) async {
 abstract class RegisterModule {
   @singleton
   @preResolve
-  Future<SharedPreferences> prefsRepo() => SharedPreferences.getInstance();
+  Future<SharedPreferences> sharedPrefs() => SharedPreferences.getInstance();
 
   @singleton
   @preResolve

@@ -11,8 +11,7 @@ import '../../common/constants/pref_constants.dart';
 @singleton
 abstract class PrefsRepo {
   @factoryMethod
-  factory PrefsRepo(SharedPreferences prefsRepository) =
-      PrefsRepoImp;
+  factory PrefsRepo(SharedPreferences prefsRepository) = PrefsRepoImp;
 
   ThemeMode getThemeMode();
 

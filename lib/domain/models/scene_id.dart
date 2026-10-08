@@ -1,0 +1,1 @@
+enum SceneId { city, suburbs }

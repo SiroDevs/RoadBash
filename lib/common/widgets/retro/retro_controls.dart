@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-// import '../../../core/audio/audio_catalog.dart';
-// import '../../../core/audio/cubit/audio_cubit.dart';
+import '../../../core/audio/audio_catalog.dart';
+import '../../../core/audio/cubit/audio_cubit.dart';
 import 'retro_style.dart';
 
-// void _click(BuildContext context) => context.read<AudioCubit>().sfx(Sfx.click);
+void _click(BuildContext context) => context.read<AudioCubit>().sfx(Sfx.click);
 
 class RetroButton extends StatelessWidget {
   const RetroButton(this.label, {super.key, required this.onTap});
@@ -19,7 +19,7 @@ class RetroButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilledButton(
       onPressed: () {
-        // _click(context);
+        _click(context);
         onTap();
       },
       style: FilledButton.styleFrom(
@@ -52,7 +52,7 @@ class RetroMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // _click(context);
+        _click(context);
         onTap();
       },
       child: Padding(

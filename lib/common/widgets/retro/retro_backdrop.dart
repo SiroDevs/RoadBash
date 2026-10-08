@@ -1,8 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-/// Dark indigo backdrop with speed stripes. Pass [asset] to lay your own
-/// artwork over it; a missing file just shows the gradient.
 class RetroBackdrop extends StatelessWidget {
   const RetroBackdrop({super.key, required this.child, this.asset});
 
@@ -16,9 +14,11 @@ class RetroBackdrop extends StatelessWidget {
       children: [
         const CustomPaint(painter: _BackdropPainter()),
         if (asset != null)
-          Image.asset(asset!,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const SizedBox.shrink()),
+          Image.asset(
+            asset!,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+          ),
         child,
       ],
     );

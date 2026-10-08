@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../common/app_router/route_names.dart';
+import '../../common/constants/app_assets.dart';
 import '../../common/constants/app_constants.dart';
 import '../../common/widgets/retro/logo_mark.dart';
 import '../../common/widgets/retro/retro_scaffold.dart';
@@ -38,9 +39,10 @@ class _SplashScreenState extends State<SplashScreen> {
       },
       child: RetroScaffold(
         onTap: context.read<SplashCubit>().skip,
+        asset: AppAssets.appSplash,
         child: Column(
           children: [
-            Text(l10n.splashPresents(studio), style: retroBody(size: 24)),
+            Text(l10n.splashPresents(studio), style: retroBody(size: 75)),
             const Spacer(),
             TweenAnimationBuilder<double>(
               tween: Tween(begin: 0, end: 1),
@@ -50,14 +52,18 @@ class _SplashScreenState extends State<SplashScreen> {
                 opacity: v.clamp(0.0, 1.0),
                 child: Transform.scale(scale: 0.8 + 0.2 * v, child: child),
               ),
-              child: const RoadBashLogo(size: 72),
+              child: const RoadBashLogo(size: 120),
             ),
             const SizedBox(height: 16),
-            Text(l10n.splashTagline,
-                style: retroBody(size: 22, color: Retro.yellow)),
+            Text(
+              l10n.splashTagline,
+              style: retroBody(size: 50, color: Retro.yellow),
+            ),
             const Spacer(),
-            Text(l10n.splashRights(AppConstants.appCredits),
-                style: retroBody(size: 16, color: Retro.dim)),
+            Text(
+              l10n.splashRights(AppConstants.appCredits),
+              style: retroBody(size: 30, color: Retro.dim),
+            ),
           ],
         ),
       ),

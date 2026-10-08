@@ -2,12 +2,11 @@
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:window_manager/window_manager.dart';
+// import 'package:window_manager/window_manager.dart';
 
 // Project imports:
 import '../utils/app_util.dart';
 
-/// Landscape and immersive on phones and tablets; full screen on desktop.
 Future<void> configureDisplay() async {
   if (isMobile) {
     await SystemChrome.setPreferredOrientations(const [
@@ -16,7 +15,7 @@ Future<void> configureDisplay() async {
     ]);
     await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   } else if (isDesktop) {
-    await windowManager.ensureInitialized();
-    await windowManager.setFullScreen(true);
+    // await windowManager.ensureInitialized();
+    // await windowManager.setFullScreen(true);
   }
 }

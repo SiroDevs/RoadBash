@@ -2,13 +2,15 @@
 import 'dart:async';
 
 // Package imports:
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
 import '../../domain/models/player_profile.dart';
 import '../../domain/repos/profile_repo.dart';
-import 'settings_state.dart';
+
+part 'settings_state.dart';
 
 @lazySingleton
 class SettingsCubit extends Cubit<SettingsState> {

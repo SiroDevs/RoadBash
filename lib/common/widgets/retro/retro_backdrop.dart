@@ -35,24 +35,13 @@ class _BackdropPainter extends CustomPainter {
       r,
       Paint()
         ..shader = const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF0A0A1F), Color(0xFF2B2A66), Color(0xFF3B4C9B)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF0A0A1F), Color(0xFFFFFFFF), Color(0xFF000000)],
         ).createShader(r),
     );
-    final stripe = Paint()..color = const Color(0x0DFFFFFF);
-    final step = size.shortestSide / 6;
-    for (var x = -size.height; x < size.width; x += step * 1.6) {
-      canvas.drawPath(
-        Path()
-          ..moveTo(x, size.height)
-          ..lineTo(x + step * 0.5, size.height)
-          ..lineTo(x + step * 0.5 + size.height, 0)
-          ..lineTo(x + size.height, 0)
-          ..close(),
-        stripe,
-      );
-    }
+    final stripe = Paint()..color = const Color(0xFFB86918);
+    canvas.drawPath(Path()..close(), stripe);
     canvas.drawRect(
       r,
       Paint()

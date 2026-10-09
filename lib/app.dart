@@ -9,13 +9,13 @@ import 'package:go_router/go_router.dart';
 // Project imports:
 import 'common/app_router/app_router.dart';
 import 'common/widgets/text_scale_factor.dart';
+import 'core/audio/cubit/audio_cubit.dart';
 import 'core/di/injectable.dart';
+import 'core/progress/progress_cubit.dart';
+import 'core/settings/settings_cubit.dart';
 import 'core/theme/bloc/theme_bloc.dart';
 import 'core/theme/theme_data.dart';
 import 'domain/repos/prefs_repo.dart';
-// import 'core/audio/cubit/audio_cubit.dart';
-// import 'features/progress/cubit/progress_cubit.dart';
-// import 'features/settings/cubit/settings_cubit.dart';
 import 'l10n/app_localizations.dart';
 
 class MyApp extends StatelessWidget {
@@ -49,9 +49,9 @@ class AppViewState extends State<AppView> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ThemeBloc()),
-        // BlocProvider.value(value: getIt<SettingsCubit>()),
-        // BlocProvider.value(value: getIt<ProgressCubit>()),
-        // BlocProvider.value(value: getIt<AudioCubit>()),
+        BlocProvider.value(value: getIt<SettingsCubit>()),
+        BlocProvider.value(value: getIt<ProgressCubit>()),
+        BlocProvider.value(value: getIt<AudioCubit>()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeMode>(
         builder: (context, themeMode) {

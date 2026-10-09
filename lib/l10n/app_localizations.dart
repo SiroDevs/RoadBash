@@ -131,19 +131,19 @@ abstract class AppLocalizations {
   /// Heading of the ride-safe notice
   ///
   /// In en, this message translates to:
-  /// **'Just a game'**
+  /// **'Road Bash™ PC\n© 2026 Siro Devs and Okiang\'o'**
   String get noticeTitle;
 
   /// First notice paragraph
   ///
   /// In en, this message translates to:
-  /// **'RoadBash is made for fun. The races, the pile-ups and the stunts are all invented, and none of it shows how real riding works.'**
+  /// **'I hope you find Road Bash as entertaining as I do. Games are a great way to act out fantasies in a virtual environment where no one gets hurt.\n\nThe game is meant for entertaining purposes only. Events in the game and in the video are fantasy and are not meant to model reality in any way.'**
   String get noticeFun;
 
   /// Safety warning paragraph
   ///
   /// In en, this message translates to:
-  /// **'On real roads, speed and risky riding hurt people: you and everyone around you. Race only on a closed track, wear full protective gear and ride within your limits. Use your head.'**
+  /// **'In the real world, if you run from the police you\'ll got to jail; if you ride recklessly and fall off your bike, you might not get back up. There\'s only one place for racing: a closed-circuit race track. There\'s only one way to ride: within the limits of your abilities and with full protective gear. Use your head.'**
   String get noticeWarning;
 
   /// Hint to continue

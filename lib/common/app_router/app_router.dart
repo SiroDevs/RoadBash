@@ -8,18 +8,11 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../core/di/injectable.dart';
-// import '../../domain/models/scene_id.dart';
+import '../../feature/menu/cubit/menu_cubit.dart';
+import '../../feature/menu/menu_screen.dart';
+import '../../feature/notice/notice_screen.dart';
 import '../../feature/splash/cubit/splash_cubit.dart';
 import '../../feature/splash/splash_screen.dart';
-// import '../../features/menu/cubit/menu_cubit.dart';
-// import '../../features/menu/menu_screen.dart';
-// import '../../features/notice/notice_screen.dart';
-// import '../../features/race/cubit/race_cubit.dart';
-// import '../../features/race/race_screen.dart';
-// import '../../features/reception/cubit/reception_cubit.dart';
-// import '../../features/reception/reception_screen.dart';
-// import '../../features/results/results_screen.dart';
-// import '../../features/splash/cubit/splash_cubit.dart';
 import 'route_names.dart';
 
 class AppRouter {
@@ -43,16 +36,16 @@ class AppRouter {
           builder: (context, state) =>
               _provide<SplashCubit>(const SplashScreen()),
         ),
-      //   GoRoute(
-      //     path: RoutePaths.notice,
-      //     name: RouteNames.notice,
-      //     builder: (context, state) => const NoticeScreen(),
-      //   ),
-      //   GoRoute(
-      //     path: RoutePaths.menu,
-      //     name: RouteNames.menu,
-      //     builder: (context, state) => _provide<MenuCubit>(const MenuScreen()),
-      //   ),
+        GoRoute(
+          path: RoutePaths.notice,
+          name: RouteNames.notice,
+          builder: (context, state) => const NoticeScreen(),
+        ),
+        GoRoute(
+          path: RoutePaths.menu,
+          name: RouteNames.menu,
+          builder: (context, state) => _provide<MenuCubit>(const MenuScreen()),
+        ),
       //   GoRoute(
       //     path: RoutePaths.race,
       //     name: RouteNames.race,

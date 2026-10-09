@@ -1,8 +1,4 @@
-// Package imports:
-import 'package:equatable/equatable.dart';
-
-// Project imports:
-import '../../domain/models/player_profile.dart';
+part of 'settings_cubit.dart';
 
 class SettingsState extends Equatable {
   const SettingsState({this.profile = const PlayerProfile(), this.loaded = false});

@@ -50,7 +50,7 @@ class RoadDecorPainter {
 
   // --------------------------------------------------------------- buildings
 
-  void drawBox(Canvas c, VisSeg near, VisSeg far, Prop p, Vector2 size) {
+  void drawBox(Canvas c, VisionSeg near, VisionSeg far, Prop p, Vector2 size) {
     final cx = size.x / 2;
     final horizonY = size.y * RoadConfig.horizonRatio;
     final outer = p.offset + p.width / RoadConfig.roadWidth;
@@ -89,7 +89,7 @@ class RoadDecorPainter {
 
   /// A grid of lit panes on the long face, stepped along the building in
   /// world depth so the rows converge with the building instead of sliding.
-  void _windows(Canvas c, VisSeg near, VisSeg far, Prop p, double cx,
+  void _windows(Canvas c, VisionSeg near, VisionSeg far, Prop p, double cx,
       double horizonY) {
     final storeys = p.detail.round().clamp(2, 10);
     final cols = (p.depth ~/ 3).clamp(2, 8);
@@ -117,12 +117,10 @@ class RoadDecorPainter {
 
   /// Road half-width in pixels at the depth whose vertical scale is [k].
   /// Both scale with 1/z, so the ratio is fixed along the span.
-  double _spanHalfWidth(VisSeg near, VisSeg far, double k) =>
+  double _spanHalfWidth(VisionSeg near, VisionSeg far, double k) =>
       k * (near.w1 / near.k1);
 
-  // -------------------------------------------------------------- billboards
-
-  void drawBillboard(Canvas c, VisSeg v, Prop p, Vector2 size) {
+  void drawBillboard(Canvas c, VisionSeg v, Prop p, Vector2 size) {
     final px = v.w1 / RoadConfig.roadWidth;
     final halfW = p.width * px;
     final x = v.x1 + p.side * v.w1 * p.offset;
@@ -151,14 +149,14 @@ class RoadDecorPainter {
     c.restore();
   }
 
-  void _contact(Canvas c, VisSeg v, double x, double y, double r) {
+  void _contact(Canvas c, VisionSeg v, double x, double y, double r) {
     if (r < 1.2) return;
     c.drawOval(
         Rect.fromCenter(center: Offset(x, y), width: r * 2.1, height: r * 0.62),
         fogged(_shadow, v.fog));
   }
 
-  void _broadleaf(Canvas c, VisSeg v, double x, double y, double w, double h) {
+  void _broadleaf(Canvas c, VisionSeg v, double x, double y, double w, double h) {
     _contact(c, v, x, y, w * 0.9);
     final trunkW = math.max(1.0, w * 0.17);
     final trunkTop = y - h * 0.42;
@@ -178,7 +176,7 @@ class RoadDecorPainter {
         fogged(_leafLight, v.fog));
   }
 
-  void _pine(Canvas c, VisSeg v, double x, double y, double w, double h) {
+  void _pine(Canvas c, VisionSeg v, double x, double y, double w, double h) {
     _contact(c, v, x, y, w * 0.7);
     final trunkW = math.max(1.0, w * 0.13);
     c.drawRect(Rect.fromLTRB(x - trunkW, y - h * 0.22, x + trunkW, y + 1),
@@ -206,7 +204,7 @@ class RoadDecorPainter {
     c.drawPath(_path, fogged(_leafLight, v.fog));
   }
 
-  void _bush(Canvas c, VisSeg v, double x, double y, double w, double h) {
+  void _bush(Canvas c, VisionSeg v, double x, double y, double w, double h) {
     _contact(c, v, x, y, w * 0.8);
     c.drawOval(
         Rect.fromCenter(
@@ -221,7 +219,7 @@ class RoadDecorPainter {
   }
 
   void _lamp(
-      Canvas c, VisSeg v, double x, double y, double w, double h, int side) {
+      Canvas c, VisionSeg v, double x, double y, double w, double h, int side) {
     final poleW = math.max(1.0, w * 0.35);
     final paint = fogged(_pole, v.fog);
     c.drawRect(Rect.fromLTRB(x - poleW, y - h, x + poleW, y + 1), paint);
@@ -237,7 +235,7 @@ class RoadDecorPainter {
         fogged(_signFace, v.fog));
   }
 
-  void _sign(Canvas c, VisSeg v, double x, double y, double w, double h) {
+  void _sign(Canvas c, VisionSeg v, double x, double y, double w, double h) {
     final poleW = math.max(1.0, w * 0.17);
     c.drawRect(
         Rect.fromLTRB(x - poleW, y - h, x + poleW, y + 1), fogged(_pole, v.fog));

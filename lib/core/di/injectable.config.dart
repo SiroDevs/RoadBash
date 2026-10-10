@@ -22,6 +22,8 @@ import 'package:roadbash/domain/repos/prefs_repo.dart' as _i805;
 import 'package:roadbash/domain/repos/profile_repo.dart' as _i624;
 import 'package:roadbash/domain/repos/race_repo.dart' as _i541;
 import 'package:roadbash/feature/menu/cubit/menu_cubit.dart' as _i158;
+import 'package:roadbash/feature/race/cubit/race_cubit.dart' as _i614;
+import 'package:roadbash/feature/reception/cubit/reception_cubit.dart' as _i899;
 import 'package:roadbash/feature/splash/cubit/splash_cubit.dart' as _i178;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
@@ -34,6 +36,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
     gh.factory<_i158.MenuCubit>(() => _i158.MenuCubit());
+    gh.factory<_i899.ReceptionCubit>(() => _i899.ReceptionCubit());
     await gh.singletonAsync<_i460.SharedPreferences>(
       () => registerModule.sharedPrefs(),
       preResolve: true,
@@ -57,6 +60,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i641.ProgressCubit>(
       () => _i641.ProgressCubit(gh<_i541.RaceRepo>()),
+    );
+    gh.factory<_i614.RaceCubit>(
+      () => _i614.RaceCubit(gh<_i641.ProgressCubit>()),
     );
     gh.factory<_i178.SplashCubit>(
       () => _i178.SplashCubit(

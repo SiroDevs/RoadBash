@@ -6,17 +6,14 @@ import '../../../domain/models/scene_id.dart';
 import '../road/road_config.dart';
 import 'race_result.dart';
 
-/// A computer rider. It has no sprite yet: its progress is a formula, which
-/// is enough to drive the HUD position and the gap timer.
-class Rival {
-  const Rival(this.name, this.pace, this.phase);
+class RiderRival {
+  const RiderRival(this.name, this.pace, this.phase);
 
   final String name;
   final double pace;
   final double phase;
 }
 
-/// Countdown, race clock, rival progress, position and finishing.
 class RaceController {
   RaceController({
     required this.scene,
@@ -26,12 +23,12 @@ class RaceController {
     this.rivals = defaultRivals,
   });
 
-  static const List<Rival> defaultRivals = [
-    Rival('Mike', 0.86, 0.0),
-    Rival('Bose', 0.82, 1.7),
-    Rival('Sam', 0.78, 3.1),
-    Rival('Kamau', 0.72, 4.4),
-    Rival('Achieng', 0.66, 5.6),
+  static const List<RiderRival> defaultRivals = [
+    RiderRival('Mike', 0.86, 0.0),
+    RiderRival('Bose', 0.82, 1.7),
+    RiderRival('Sam', 0.78, 3.1),
+    RiderRival('Kamau', 0.72, 4.4),
+    RiderRival('Brayo', 0.66, 5.6),
   ];
 
   static const double _surgeAmp = 2500;
@@ -41,7 +38,7 @@ class RaceController {
   final int laps;
   final double lapLength;
   final String playerName;
-  final List<Rival> rivals;
+  final List<RiderRival> rivals;
 
   double countdown = 3.0;
   double elapsed = 0;
@@ -50,19 +47,18 @@ class RaceController {
   double progress = 0;
   int lap = 1;
   int position = 1;
-  Rival? nearest;
+  RiderRival? nearest;
   bool playerAhead = true;
   double gapSeconds = 0;
 
   double get raceLength => lapLength * laps;
   bool get running => countdown <= 0 && !finished;
 
-  double rivalDistance(Rival r, double t) =>
+  double rivalDistance(RiderRival r, double t) =>
       r.pace * RoadConfig.maxSpeed * t +
       _surgeAmp * (math.sin(_surgeFreq * t + r.phase) - math.sin(r.phase));
 
-  /// Time at which [r] crosses the line, found by bisection.
-  double rivalFinishTime(Rival r) {
+  double rivalFinishTime(RiderRival r) {
     var lo = 0.0;
     var hi = raceLength / (r.pace * RoadConfig.maxSpeed) + 20;
     for (var i = 0; i < 40; i++) {
@@ -89,7 +85,7 @@ class RaceController {
     var ahead = 0;
     var bestDiff = double.infinity;
     var bestSigned = 0.0;
-    Rival? best;
+    RiderRival? best;
     for (final r in rivals) {
       final signed = rivalDistance(r, elapsed) - playerDistance;
       if (signed > 0) ahead++;

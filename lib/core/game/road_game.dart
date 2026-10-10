@@ -70,7 +70,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
     if (_shutDown) return;
     final ride = RideAudio(mix: mix, service: audio, road: road, race: race);
     _ride = ride;
-    unawaited(ride.start());
+    // unawaited(ride.start());
   }
 
   @override
@@ -79,7 +79,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
     if (!isLoaded) return;
 
     road.locked = race.countdown > 0;
-    _keyThrottle = true;
+    // _keyThrottle = true;
     _applyInput();
     race.update(dt, road.fullDistance, road.speed);
 
@@ -125,8 +125,11 @@ class RoadGame extends FlameGame with KeyboardEvents {
   }
 
   @override
-  KeyEventResult onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keys) {
-    bool any(List<LogicalKeyboardKey> list) => list.any(keys.contains);
+  KeyEventResult onKeyEvent(
+    KeyEvent event,
+    Set<LogicalKeyboardKey> keysPressed,
+  ) {
+    bool any(List<LogicalKeyboardKey> list) => list.any(keysPressed.contains);
     _keySteer = (any(_right) ? 1.0 : 0.0) - (any(_left) ? 1.0 : 0.0);
     _keyThrottle = any(_up);
     _keyBrake = any(_down);
@@ -135,7 +138,10 @@ class RoadGame extends FlameGame with KeyboardEvents {
   }
 
   static final _left = [LogicalKeyboardKey.arrowLeft, LogicalKeyboardKey.keyA];
-  static final _right = [LogicalKeyboardKey.arrowRight, LogicalKeyboardKey.keyD];
+  static final _right = [
+    LogicalKeyboardKey.arrowRight,
+    LogicalKeyboardKey.keyD,
+  ];
   static final _up = [LogicalKeyboardKey.arrowUp, LogicalKeyboardKey.keyW];
   static final _down = [
     LogicalKeyboardKey.arrowDown,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Project imports:
 import '../../../l10n/l10n_extension.dart';
 
-/// On-screen steering arrows (left) and gas / brake pedals (right).
 class TouchControls extends StatelessWidget {
   const TouchControls({
     super.key,

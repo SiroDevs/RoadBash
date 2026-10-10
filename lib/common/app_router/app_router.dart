@@ -8,9 +8,15 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../core/di/injectable.dart';
+import '../../domain/models/scene_id.dart';
 import '../../feature/menu/cubit/menu_cubit.dart';
 import '../../feature/menu/menu_screen.dart';
 import '../../feature/notice/notice_screen.dart';
+import '../../feature/race/cubit/race_cubit.dart';
+import '../../feature/race/race_screen.dart';
+import '../../feature/reception/cubit/reception_cubit.dart';
+import '../../feature/reception/reception_screen.dart';
+import '../../feature/results/results_screen.dart';
 import '../../feature/splash/cubit/splash_cubit.dart';
 import '../../feature/splash/splash_screen.dart';
 import 'route_names.dart';
@@ -24,7 +30,7 @@ class AppRouter {
   static Widget _provide<C extends Cubit<Object?>>(Widget child) =>
       BlocProvider<C>(create: (_) => getIt<C>(), child: child);
 
-  static GoRouter create({String initialLocation = '/race/city'}) {
+  static GoRouter create({String initialLocation = RouteNames.splash}) {
     return GoRouter(
       navigatorKey: rootNavigatorKey,
       initialLocation: initialLocation,
@@ -46,32 +52,32 @@ class AppRouter {
           name: RouteNames.menu,
           builder: (context, state) => _provide<MenuCubit>(const MenuScreen()),
         ),
-      //   GoRoute(
-      //     path: RoutePaths.race,
-      //     name: RouteNames.race,
-      //     builder: (context, state) {
-      //       final id = SceneId.values.asNameMap()[state.pathParameters['scene']];
-      //       return _provide<RaceCubit>(
-      //         RaceScreen(key: ValueKey(id), scene: id ?? SceneId.city),
-      //       );
-      //     },
-      //   ),
-      //   GoRoute(
-      //     path: RoutePaths.results,
-      //     name: RouteNames.results,
-      //     builder: (context, state) {
-      //       final outcome = state.extra;
-      //       return outcome is RaceOutcome
-      //           ? ResultsScreen(outcome: outcome)
-      //           : _provide<MenuCubit>(const MenuScreen());
-      //     },
-      //   ),
-      //   GoRoute(
-      //     path: RoutePaths.reception,
-      //     name: RouteNames.reception,
-      //     builder: (context, state) =>
-      //         _provide<ReceptionCubit>(const ReceptionScreen()),
-      //   ),
+        GoRoute(
+          path: RoutePaths.race,
+          name: RouteNames.race,
+          builder: (context, state) {
+            final id = SceneId.values.asNameMap()[state.pathParameters['scene']];
+            return _provide<RaceCubit>(
+              RaceScreen(key: ValueKey(id), scene: id ?? SceneId.city),
+            );
+          },
+        ),
+        GoRoute(
+          path: RoutePaths.results,
+          name: RouteNames.results,
+          builder: (context, state) {
+            final outcome = state.extra;
+            return outcome is RaceOutcome
+                ? ResultsScreen(outcome: outcome)
+                : _provide<MenuCubit>(const MenuScreen());
+          },
+        ),
+        GoRoute(
+          path: RoutePaths.reception,
+          name: RouteNames.reception,
+          builder: (context, state) =>
+              _provide<ReceptionCubit>(const ReceptionScreen()),
+        ),
       ],
       errorBuilder: (context, state) =>
           _provide<SplashCubit>(const SplashScreen()),

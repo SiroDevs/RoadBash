@@ -6,7 +6,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
-import '../hud/dash_layout.dart';
+import '../hud/dashboard_layout.dart';
 import 'road_backdrop.dart';
 import 'road_config.dart';
 import 'road_decor_painter.dart';
@@ -16,14 +16,12 @@ import 'road_segment_painter.dart';
 import 'road_theme.dart';
 import 'road_track.dart';
 
-/// Pseudo-3D road. Pass 1 projects segments near-to-far and paints the road;
-/// pass 2 paints roadside scenery far-to-near so nearer objects cover farther.
 class RoadRenderer extends PositionComponent {
   RoadRenderer(this.theme)
-      : track = RoadTrack(theme.id),
-        _backdrop = RoadBackdrop(theme),
-        _roads = RoadSegmentPainter(theme),
-        _decor = RoadDecorPainter(theme) {
+    : track = RoadTrack(theme.id),
+      _backdrop = RoadBackdrop(theme),
+      _roads = RoadSegmentPainter(theme),
+      _decor = RoadDecorPainter(theme) {
     props = RoadProps(theme, track.count);
   }
 
@@ -34,24 +32,15 @@ class RoadRenderer extends PositionComponent {
   final RoadSegmentPainter _roads;
   final RoadDecorPainter _decor;
 
-  double trkPosition = 0;
-  double fullDistance = 0;
-  double playerX = 0.25;
-  double speed = 0;
+  double trkPosition = 0, fullDistance = 0;
+  double playerX = 0.25, speed = 0;
 
-  /// Raw input, -1 to 1. [appliedSteer] is what the bike actually does.
-  double steer = 0;
-  double appliedSteer = 0;
-  bool throttle = false;
-  bool brake = false;
-  bool locked = true;
-  bool skidding = false;
-  double rpm = 0.16;
+  double steer = 0, appliedSteer = 0, rpm = 0.16;
+  bool throttle = false, brake = false;
+  bool locked = true, skidding = false;
   int gear = 1;
   double playerZ = RoadConfig.cameraHeight * RoadConfig.cameraDepth;
 
-  /// Curve of the segment under the bike, smoothed. Drives the rider's lean
-  /// and the backdrop drift so neither snaps at a corner entry.
   double curveFelt = 0;
 
   double get speedPercent => speed / RoadConfig.maxSpeed;
@@ -61,21 +50,23 @@ class RoadRenderer extends PositionComponent {
   bool get restingOnFoot => stopped && !throttle;
   double get engineLoad => brake ? 0.3 : (throttle ? 1.0 : 0.5);
 
-  final List<VisSeg> _vis =
-      List.generate(RoadConfig.drawDistance, (_) => VisSeg());
-  final List<VisSeg?> _byN = List.filled(RoadConfig.drawDistance, null);
+  final List<VisionSeg> _vis = List.generate(
+    RoadConfig.drawDistance,
+    (_) => VisionSeg(),
+  );
+  final List<VisionSeg?> _byN = List.filled(RoadConfig.drawDistance, null);
   int _visCount = 0;
   int _firstN = 0;
   int _lastN = 0;
-  final _p1 = ProjPoint();
-  final _p2 = ProjPoint();
+  final _p1 = ProjectionPoint();
+  final _p2 = ProjectionPoint();
 
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
     this.size = size;
     _backdrop.resize(size);
-    playerZ = DashLayout.playerZ(size);
+    playerZ = DashboardLayout.cameraDistance(size);
   }
 
   @override
@@ -116,7 +107,8 @@ class RoadRenderer extends PositionComponent {
     playerX = math.max(-edge, math.min(edge, playerX));
     speed = math.max(0.0, math.min(RoadConfig.maxSpeed, speed));
 
-    skidding = speed > RoadConfig.maxSpeed * 0.3 &&
+    skidding =
+        speed > RoadConfig.maxSpeed * 0.3 &&
         (brake ||
             (appliedSteer.abs() > 0.4 && sp > 0.8 && seg.curve.abs() > 2.5));
     _updateEngine(dt, sp);
@@ -144,8 +136,14 @@ class RoadRenderer extends PositionComponent {
     _settleRpm(dt * 1.25, stopped && !throttle ? 0.16 : 0.28 + 0.72 * inGear);
   }
 
-  void _project(ProjPoint p, double wy, double wz, double camX, double camY,
-      double camZ) {
+  void _project(
+    ProjectionPoint p,
+    double wy,
+    double wz,
+    double camX,
+    double camY,
+    double camZ,
+  ) {
     final cz = wz - camZ;
     final scale = RoadConfig.cameraDepth / cz;
     p.z = cz;
@@ -246,8 +244,7 @@ class RoadRenderer extends PositionComponent {
     final limit = math.min(RoadConfig.decorDistance, _lastN + 1);
 
     for (var n = limit - 1; n >= -RoadConfig.maxPropDepth; n--) {
-      final list =
-          props.at((baseIdx + n + track.count * 2) % track.count);
+      final list = props.at((baseIdx + n + track.count * 2) % track.count);
       if (list.isEmpty) continue;
 
       // Props behind the camera hang off the first segment still on screen.
@@ -270,7 +267,7 @@ class RoadRenderer extends PositionComponent {
 
   /// Nearest projected segment at or before [n], for props whose back face
   /// landed on a segment that was culled.
-  VisSeg? _findBack(int n) {
+  VisionSeg? _findBack(int n) {
     for (var i = n; i >= _firstN; i--) {
       final v = _byN[i];
       if (v != null) return v;

@@ -6,7 +6,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
-import '../hud/dash_layout.dart';
+import '../hud/dashboard_layout.dart';
 import '../road/road_config.dart';
 import '../road/road_renderer.dart';
 import 'rider_painter.dart';
@@ -23,16 +23,14 @@ class RiderComponent extends PositionComponent {
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
-    final lane = DashLayout.lanePx(size, road.theme.lanes);
+    final lane = DashboardLayout.lanePx(size, road.theme.lanes);
     final w = math.min(
       lane * 0.62,
       size.y * 0.30 * RiderPainter.width / RiderPainter.height,
     );
     final h = w * RiderPainter.height / RiderPainter.width;
     this.size = Vector2(w, h);
-    // Drop the box so the contact patch, not its bottom edge, sits on the
-    // road line the projection puts the bike on.
-    position = Vector2(size.x / 2, DashLayout.groundY(size) + h * 0.024);
+    position = Vector2(size.x / 2, DashboardLayout.riderTyresGround(size) + h * 0.024);
   }
 
   @override
@@ -46,8 +44,6 @@ class RiderComponent extends PositionComponent {
     p.steer += (road.appliedSteer - p.steer) * ease;
     p.braking = road.brake;
 
-    // Apparent wheel rotation saturates early: past that the tread would
-    // alias into a strobe, so it blurs out instead.
     final spin = math.min(road.speed, RoadConfig.maxSpeed * 0.2);
     p.phase = (p.phase + spin * dt / 900) % 1;
 

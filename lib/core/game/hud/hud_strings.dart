@@ -1,4 +1,3 @@
-/// Text drawn on the canvas by the game; built from the localizations.
 class HudStrings {
   const HudStrings({
     required this.go,

@@ -9,8 +9,6 @@ import '../../audio/loop_player.dart';
 import '../race/race_controller.dart';
 import '../road/road_renderer.dart';
 
-/// Engine, tyre, gravel and wind loops plus the race one-shots (countdown,
-/// gear shifts, foot down, finish). Audio is optional: failures stay silent.
 class RideAudio {
   RideAudio({
     required this.mix,
@@ -41,6 +39,7 @@ class RideAudio {
   double get _fx => mix.master * mix.effects;
 
   Future<void> start() =>
+      // Future.wait([_skid, _gravel, _wind].map((p) => p.start()));
       Future.wait([_engine, _skid, _gravel, _wind].map((p) => p.start()));
 
   void update(double dt) {
@@ -73,7 +72,9 @@ class RideAudio {
       _wentGo = true;
       service.playSfx(Sfx.go, _fx);
     }
-    if (road.gear > _gear && !road.locked) service.playSfx(Sfx.shift, _fx * 0.6);
+    if (road.gear > _gear && !road.locked) {
+      service.playSfx(Sfx.shift, _fx * 0.6);
+    }
     _gear = road.gear;
 
     if (race.finished && !_wasFinished) service.playSfx(Sfx.finish, _fx);

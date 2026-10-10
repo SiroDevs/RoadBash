@@ -2,9 +2,9 @@
 import '../../domain/models/scene_id.dart';
 
 enum MusicTrack {
-  menu('audio/music/menu.wav', 1.0),
-  city('audio/music/city.wav', 0.55),
-  suburbs('audio/music/suburbs.wav', 0.55);
+  menu('audio/music/menu.mp3', 1.0),
+  city('audio/music/city.mp3', 0.55),
+  suburbs('audio/music/suburbs.mp3', 0.55);
 
   const MusicTrack(this.asset, this.gain);
 

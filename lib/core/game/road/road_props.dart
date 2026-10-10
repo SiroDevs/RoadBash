@@ -4,10 +4,7 @@ import 'road_config.dart';
 import 'road_theme.dart';
 
 enum PropKind {
-  /// A box standing along the road, [depth] segments long.
   building,
-
-  /// Flat billboards anchored to a single segment.
   broadleaf,
   pine,
   bush,

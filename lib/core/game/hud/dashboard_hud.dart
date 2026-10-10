@@ -13,13 +13,10 @@ import '../road/road_config.dart';
 import '../road/road_renderer.dart';
 import '../utils/canvas_text.dart';
 import '../utils/paint_utils.dart';
-import 'dash_face.dart';
-import 'dash_layout.dart';
+import 'dashboard_face.dart';
+import 'dashboard_layout.dart';
 import 'hud_strings.dart';
 
-/// Bike dashboard over the bottom of the screen: speedo, rev counter, race
-/// position, progress bar, clock, names and the gap to the nearest rival
-/// (green when you lead, red when you trail).
 class DashboardHud extends PositionComponent {
   DashboardHud(this.road, this.race, this.strings) : super(priority: 10);
 
@@ -27,7 +24,7 @@ class DashboardHud extends PositionComponent {
   final RaceController race;
   final HudStrings strings;
 
-  DashLayout? _l;
+  DashboardLayout? _layout;
   Picture? _face;
 
   static const _white = Color(0xFFFFFFFF);
@@ -47,94 +44,151 @@ class DashboardHud extends PositionComponent {
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
     this.size = size;
-    final l = DashLayout(size);
-    _l = l;
+    final layout = DashboardLayout(size);
+    _layout = layout;
     _face?.dispose();
-    _face = DashFace.build(l, strings);
+    _face = DashboardFace.build(layout, strings);
   }
 
   @override
   void render(Canvas canvas) {
-    final l = _l;
+    final layout = _layout;
     final face = _face;
-    if (l == null || face == null) return;
+    if (layout == null || face == null) return;
     canvas.drawPicture(face);
-    _needleAt(canvas, l.speedC, l.speedR, road.speedKmh / RoadConfig.topSpeedKmh);
-    _needleAt(canvas, l.rpmC, l.rpmR, road.rpm);
-    _progress(canvas, l);
-    _readouts(canvas, l);
+    _needleAt(
+      canvas,
+      layout.speedOffset,
+      layout.speedRadius,
+      road.speedKmh / RoadConfig.topSpeedKmh,
+    );
+    _needleAt(canvas, layout.rpmOffset, layout.rpmRadius, road.rpm);
+    _progress(canvas, layout);
+    _readouts(canvas, layout);
     _banner(canvas);
   }
 
-  void _needleAt(Canvas c, Offset ctr, double r, double fraction) {
+  void _needleAt(Canvas canva, Offset ctr, double r, double fraction) {
     _needle.strokeWidth = math.max(2.0, r * 0.045);
-    c.drawLine(ctr,
-        DashLayout.polar(ctr, DashLayout.dialAngle(fraction), r * 0.8), _needle);
-    c.drawCircle(ctr, r * 0.09, _hub);
+    canva.drawLine(
+      ctr,
+      DashboardLayout.polar(ctr, DashboardLayout.dialAngle(fraction), r * 0.8),
+      _needle,
+    );
+    canva.drawCircle(ctr, r * 0.09, _hub);
   }
 
-  void _progress(Canvas c, DashLayout l) {
-    final w = l.pw * 0.2;
+  /// Progress indicator
+  void _progress(Canvas canva, DashboardLayout layout) {
+    final width = layout.pw * 0.25;
     final bar = Rect.fromLTWH(
-        l.left + l.pw * 0.5 - w / 2, l.top + l.ph * 0.17, w, l.ph * 0.05);
-    c.drawRect(bar, _barBg);
-    c.save();
-    c.clipRect(Rect.fromLTWH(bar.left, bar.top, bar.width * race.progress, bar.height));
+      layout.left + layout.pw * 0.5 - width / 2,
+      layout.top + layout.ph * 0.12,
+      width,
+      layout.ph * 0.05,
+    );
+    canva.drawRect(bar, _barBg);
+    canva.save();
+    canva.clipRect(
+      Rect.fromLTWH(bar.left, bar.top, bar.width * race.progress, bar.height),
+    );
     for (final (from, to, paint) in [
       (0.0, 0.15, _zoneRed),
       (0.15, 0.5, _zoneAmber),
       (0.5, 1.0, _zoneGreen),
     ]) {
-      c.drawRect(
-          Rect.fromLTRB(bar.left + bar.width * from, bar.top,
-              bar.left + bar.width * to, bar.bottom),
-          paint);
+      canva.drawRect(
+        Rect.fromLTRB(
+          bar.left + bar.width * from,
+          bar.top,
+          bar.left + bar.width * to,
+          bar.bottom,
+        ),
+        paint,
+      );
     }
-    c.restore();
+    canva.restore();
   }
 
-  void _readouts(Canvas c, DashLayout l) {
+  /// Dashboard texts
+  void _readouts(Canvas canva, DashboardLayout layout) {
     Offset at(double fx, double fy) =>
-        Offset(l.left + l.pw * fx, l.top + l.ph * fy);
-    final small = l.ph * 0.13;
+        Offset(layout.left + layout.pw * fx, layout.top + layout.ph * fy);
+    final small = layout.ph * 0.13;
 
-    paintText(c, '${race.position}', l.centre.center, l.ph * 0.2, _white,
-        fontFamily: AppConstants.displayFont, weight: FontWeight.w400);
-    paintText(c, formatTime(race.elapsed, short: true), at(0.5, 0.93),
-        l.ph * 0.14, _white);
-    paintText(c, race.playerName, at(0.13, 0.90), small, _white);
+    // Race position
+    paintText(
+      canva,
+      '${race.position}',
+      layout.centre.center,
+      layout.ph * 0.16,
+      _white,
+      fontFamily: AppConstants.displayFont,
+    );
 
+    // Elapsed time
+    paintText(
+      canva,
+      formatTime(race.elapsed, short: true),
+      at(0.5, 0.62),
+      layout.ph * 0.14,
+      _white,
+    );
+
+    // Laps
+    paintText(
+      canva,
+      strings.lap(race.lap, race.laps),
+      at(0.16, 0.40),
+      size.y * 0.04,
+      _white,
+    );
+
+    // Current player name
+    paintText(canva, race.playerName, at(0.13, 0.60), small, _white);
+
+    // Rival player name
     final rival = race.nearest;
     if (rival == null || !race.running) return;
-    paintText(c, rival.name, at(0.87, 0.90), small, _white);
+    paintText(canva, rival.name, at(0.87, 0.60), small, _white);
     final ahead = race.playerAhead;
     paintText(
-      c,
+      canva,
       '${ahead ? '▼' : '▲'} ${race.gapSeconds.toStringAsFixed(3)}',
-      at(0.62, 0.12),
-      l.ph * 0.14,
+      at(0.84, 0.40),
+      layout.ph * 0.14,
       ahead ? _green : _red,
     );
   }
 
-  void _banner(Canvas c) {
+  void _banner(Canvas canva) {
     final big = size.y * 0.16;
-    final centre = Offset(size.x / 2, size.y * 0.28);
+    final centre = Offset(size.x / 2, size.y * 0.12);
     final text = race.countdown > 0
         ? '${race.countdown.ceil()}'
         : race.finished
-            ? strings.finish
-            : (race.elapsed < 0.9 ? strings.go : null);
+        ? strings.finish
+        : (race.elapsed < 0.9 ? strings.go : null);
     if (text != null) {
-      paintText(c, text, centre, big, _gold,
-          fontFamily: AppConstants.displayFont,
-          weight: FontWeight.w400,
-          shadow: true);
+      paintText(
+        canva,
+        text,
+        centre,
+        big,
+        _gold,
+        fontFamily: AppConstants.displayFont,
+        weight: FontWeight.w400,
+        shadow: true,
+      );
     } else if (race.running && road.stopped && !road.throttle) {
-      paintText(c, strings.holdGas, centre, size.y * 0.06, _white, shadow: true);
+      paintText(
+        canva,
+        strings.holdGas,
+        centre,
+        size.y * 0.06,
+        _white,
+        shadow: true,
+      );
     }
-    paintText(c, strings.lap(race.lap, race.laps),
-        Offset(size.x / 2, size.y * 0.035), size.y * 0.04, _white,
-        shadow: true);
   }
 }

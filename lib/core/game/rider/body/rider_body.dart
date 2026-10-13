@@ -1,9 +1,5 @@
-// Dart imports:
-import 'dart:ui';
-
 // Project imports:
-import 'rider_painter.dart';
-import 'rider_pose.dart';
+part of '../rider_painter.dart';
 
 /// Everything the rider wears: legs, torso, arms and helmet.
 class RiderBody extends RiderPartPainter {
@@ -68,17 +64,17 @@ class RiderBody extends RiderPartPainter {
     canva.drawPath(scratch, ink);
 
     // Spine panel.
-    // quad(canva, _suitPanel, [
-    //   Offset(52, 40 + tuck),
-    //   Offset(68, 40 + tuck),
-    //   Offset(70, 60 + tuck * 0.4),
-    //   Offset(50, 60 + tuck * 0.4),
-    // ]);
+    quad(canva, _suitPanel, [
+      Offset(52, 40 + tuck),
+      Offset(68, 40 + tuck),
+      Offset(70, 60 + tuck * 0.4),
+      Offset(50, 60 + tuck * 0.4),
+    ]);
 
     // Shoulder armour.
-    // fill(canva, Rect.fromLTRB(30, 32 + tuck, 49, 20 + tuck), _suitTrim, 9);
-    // fill(canva, Rect.fromLTRB(70, 32 + tuck, 93, 20 + tuck), _suitTrim, 9);
-    // fill(canva, Rect.fromLTRB(42, 30 + tuck, 76, 22 + tuck), _suitMain, 7);
+    fill(canva, Rect.fromLTRB(30, 32 + tuck, 49, 20 + tuck), _suitTrim, 9);
+    fill(canva, Rect.fromLTRB(70, 32 + tuck, 93, 20 + tuck), _suitTrim, 9);
+    fill(canva, Rect.fromLTRB(42, 30 + tuck, 76, 22 + tuck), _suitMain, 7);
   }
 
   /// Sleeves and gloves, reaching for the grips [RiderBike] draws over them.

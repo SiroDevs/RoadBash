@@ -3,11 +3,12 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
-import 'rider_bike.dart';
-import 'rider_body.dart';
 import 'rider_pose.dart';
+part 'body/rider_body.dart';
+part 'bike/bike_panel.dart';
+part 'bike/tail_parts.dart';
+part 'bike/rider_bike.dart';
 
-/// Draws the whole rider by sequencing [RiderBike] and [RiderBody].
 class RiderPainter {
   static const double width = RiderPartPainter.canvasWidth;
   static const double height = RiderPartPainter.canvasHeight;
@@ -17,26 +18,35 @@ class RiderPainter {
 
   final RiderBike _bike = RiderBike();
   final RiderBody _body = RiderBody();
+  final BikePanels _bikePanels = BikePanels();
+  final TailParts _tailParts = TailParts();
 
-  void paint(Canvas c, RiderPose p) {
-    _bike.paintShadow(c, p);
+  final Paint _paint = Paint()
+    ..isAntiAlias = true
+    ..strokeCap = StrokeCap.round
+    ..strokeJoin = StrokeJoin.round;
+  final Path _path = Path();
 
-    c.save();
-    c.translate(RiderPartPainter.midX + p.shake, RiderPartPainter.groundY);
-    c.rotate(p.lean);
-    c.translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + p.bob);
+  void paint(Canvas canva, RiderPose pose) {
+    _bike.paintShadow(canva, pose);
 
-    // _bike.paintRearEnd(c, p);
-    // _body.paintLegs(c, p);
-    _body.paintTorso(c, p);
-    // _body.paintArms(c, p);
-    // _bike.paintBarEnds(c, p);
-    // _body.paintHead(c, p);
-    c.restore();
+    canva.save();
+    canva.translate(RiderPartPainter.midX + pose.shake, RiderPartPainter.groundY);
+    canva.rotate(pose.lean);
+    canva.translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
+
+    _bike.paintBike(_paint, _path, canva, pose);
+    _bikePanels.paintPanels(_paint, _path, canva, pose);
+    _tailParts.paintTail(_paint, _path, canva, pose);
+    // _body.paintLegs(canva, pose);
+    // _body.paintTorso(canva, pose);
+    // _body.paintArms(canva, pose);
+    // _bike.paintBarEnds(canva, pose);
+    // _body.paintHead(canva, pose);
+    canva.restore();
   }
 }
 
-/// Shared drawing kit for [RiderBike] and [RiderBody].
 abstract class RiderPartPainter {
   static const double canvasWidth = 120;
   static const double canvasHeight = 170;
@@ -49,31 +59,31 @@ abstract class RiderPartPainter {
   final Path scratch = Path();
 
   /// Tucking at speed drops and broadens the back.
-  double tuckOf(RiderPose p) => p.speed * 5;
+  double tuckOf(RiderPose pose) => pose.speed * 5;
 
   /// Braking lifts the tail toward the camera; power squats it down.
-  double tailLift(RiderPose p) => -p.pitch * 3.5;
+  double tailLift(RiderPose pose) => -pose.pitch * 3.5;
 
   /// Where a hand meets the grip. [side] is -1 for left and 1 for right.
   /// The bars turn with the input, so the hands are not quite level.
-  Offset handOf(int side, RiderPose p) =>
-      Offset(midX + side * 40, 65 + tuckOf(p) + side * p.steer * 4);
+  Offset handOf(int side, RiderPose pose) =>
+      Offset(midX + side * 40, 65 + tuckOf(pose) + side * pose.steer * 4);
 
-  void fill(Canvas c, Rect r, Color color, [double radius = 3]) {
+  void fill(Canvas canva, Rect r, Color color, [double radius = 3]) {
     ink
       ..style = PaintingStyle.fill
       ..color = color;
-    c.drawRRect(RRect.fromRectXY(r, radius, radius), ink);
+    canva.drawRRect(RRect.fromRectXY(r, radius, radius), ink);
   }
 
-  void oval(Canvas c, Rect r, Color color) {
+  void oval(Canvas canva, Rect r, Color color) {
     ink
       ..style = PaintingStyle.fill
       ..color = color;
-    c.drawOval(r, ink);
+    canva.drawOval(r, ink);
   }
 
-  void quad(Canvas c, Color color, List<Offset> pts) {
+  void quad(Canvas canva, Color color, List<Offset> pts) {
     ink
       ..style = PaintingStyle.fill
       ..color = color;
@@ -83,16 +93,16 @@ abstract class RiderPartPainter {
       scratch.lineTo(pts[i].dx, pts[i].dy);
     }
     scratch.close();
-    c.drawPath(scratch, ink);
+    canva.drawPath(scratch, ink);
   }
 
-  void limb(Canvas c, Offset a, Offset b, double w, Color color) {
+  void limb(Canvas canva, Offset a, Offset b, double w, Color color) {
     ink
       ..style = PaintingStyle.stroke
       ..strokeWidth = w
       ..strokeCap = StrokeCap.round
       ..color = color;
-    c.drawLine(a, b, ink);
+    canva.drawLine(a, b, ink);
     ink.style = PaintingStyle.fill;
   }
 }

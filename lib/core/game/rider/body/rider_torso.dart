@@ -2,7 +2,7 @@
 part of '../rider_painter.dart';
 
 /// Everything the rider wears: legs, torso, arms and helmet.
-class RiderBody extends RiderPartPainter {
+class RiderTorso extends RiderPartPainter {
   static const _helmetShell = Color(0xFFF2C21C);
   static const _helmetShade = Color(0xFFC79A0F);
   static const _helmetGloss = Color(0x66FFFFFF);

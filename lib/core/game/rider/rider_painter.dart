@@ -4,10 +4,12 @@ import 'dart:ui';
 
 // Project imports:
 import 'rider_pose.dart';
-part 'body/rider_body.dart';
 part 'bike/bike_panel.dart';
 part 'bike/tail_parts.dart';
 part 'bike/rider_bike.dart';
+part 'body/lower_body.dart';
+part 'body/rider_torso.dart';
+part 'body/upper_body.dart';
 
 class RiderPainter {
   static const double width = RiderPartPainter.canvasWidth;
@@ -16,8 +18,9 @@ class RiderPainter {
   /// Lean the painter will accept before the shadow maths stops behaving.
   static const double maxLean = math.pi / 7;
 
-  final RiderBike _bike = RiderBike();
-  final RiderBody _body = RiderBody();
+  final RiderBike _bikeFrame = RiderBike();
+  final UpperBody _upperBody = UpperBody();
+  final LowerBody _lowerBody = LowerBody();
   final BikePanels _bikePanels = BikePanels();
   final TailParts _tailParts = TailParts();
 
@@ -28,17 +31,18 @@ class RiderPainter {
   final Path _path = Path();
 
   void paint(Canvas canva, RiderPose pose) {
-    _bike.paintShadow(canva, pose);
+    _bikeFrame.paintShadow(canva, pose);
 
     canva.save();
     canva.translate(RiderPartPainter.midX + pose.shake, RiderPartPainter.groundY);
     canva.rotate(pose.lean);
     canva.translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
 
-    _bike.paintBike(_paint, _path, canva, pose);
-    _bikePanels.paintPanels(_paint, _path, canva, pose);
-    _tailParts.paintTail(_paint, _path, canva, pose);
-    // _body.paintLegs(canva, pose);
+    _bikeFrame.paint(_paint, _path, canva, pose);
+    _bikePanels.paint(_paint, _path, canva, pose);
+    _tailParts.paint(_paint, _path, canva, pose);
+    _upperBody.paint(_paint, _path, canva, pose);
+    _lowerBody.paint(_paint, _path, canva, pose);
     // _body.paintTorso(canva, pose);
     // _body.paintArms(canva, pose);
     // _bike.paintBarEnds(canva, pose);

@@ -3,7 +3,7 @@ part of '../rider_painter.dart';
 
 /// Everything in the motorbike.
 class RiderBike extends RiderPartPainter {
-  void paintBike(Paint paint, Path path, Canvas canva, RiderPose pose) {
+  void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     _paintBody(paint, path, canva, pose);
   }
 

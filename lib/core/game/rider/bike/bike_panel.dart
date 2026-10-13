@@ -3,7 +3,7 @@ part of '../rider_painter.dart';
 
 /// Motorbike panels.
 class BikePanels extends RiderPartPainter {
-  void paintPanels(Paint paint, Path path, Canvas canva, RiderPose pose) {
+  void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final tail = tailLift(pose);
     _backSidePanels(paint, path, canva, pose, tail);
     _middlePanels(paint, path, canva, pose, tail);

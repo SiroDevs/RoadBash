@@ -107,14 +107,14 @@ class UpperBody extends RiderPartPainter {
     // Back Reflector 1
     path
       ..reset()
-      ..moveTo(36.0, -3.0)
-      ..lineTo(34.0, -11.0)
-      ..lineTo(43.0, -13.0)
-      ..lineTo(69.0, -12.0)
-      ..lineTo(79.0, -8.0)
-      ..lineTo(79.0, -1.0)
-      ..lineTo(71.0, -4.0)
-      ..lineTo(45.0, -5.0)
+      ..moveTo(39.0, -3.0)
+      ..lineTo(37.0, -11.0)
+      ..lineTo(46.0, -13.0)
+      ..lineTo(72.0, -12.0)
+      ..lineTo(82.0, -8.0)
+      ..lineTo(82.0, -1.0)
+      ..lineTo(74.0, -4.0)
+      ..lineTo(48.0, -5.0)
       ..close();
     paint
       ..style = PaintingStyle.fill
@@ -128,14 +128,14 @@ class UpperBody extends RiderPartPainter {
     // Back Reflector 2
     path
       ..reset()
-      ..moveTo(44.0, -4.0)
-      ..lineTo(41.0, 9.0)
-      ..lineTo(45.0, 20.0)
-      ..lineTo(53.0, 18.0)
-      ..lineTo(64.0, 18.0)
-      ..lineTo(71.0, 21.0)
-      ..lineTo(74.0, 9.0)
-      ..lineTo(71.0, -3.0)
+      ..moveTo(46.0, -4.0)
+      ..lineTo(43.0, 9.0)
+      ..lineTo(47.0, 20.0)
+      ..lineTo(55.0, 18.0)
+      ..lineTo(66.0, 18.0)
+      ..lineTo(73.0, 21.0)
+      ..lineTo(76.0, 9.0)
+      ..lineTo(73.0, -3.0)
       ..close();
     paint
       ..style = PaintingStyle.fill
@@ -181,10 +181,10 @@ class UpperBody extends RiderPartPainter {
     // Right Hand Reflector
     path
       ..reset()
-      ..moveTo(79.0, 0.0)
-      ..lineTo(96.0, 35.0)
-      ..lineTo(100.0, 35.0)
-      ..lineTo(80.0, -8.0)
+      ..moveTo(80.0, -2.0)
+      ..lineTo(100.0, 38.0)
+      ..lineTo(104.0, 35.0)
+      ..lineTo(83.0, -6.0)
       ..close();
     paint
       ..style = PaintingStyle.fill
@@ -222,10 +222,10 @@ class UpperBody extends RiderPartPainter {
     // Left Hand Reflector
     path
       ..reset()
-      ..moveTo(32.0, -10.0)
+      ..moveTo(38.0, -11.0)
       ..lineTo(11.0, 30.0)
       ..lineTo(15.0, 32.0)
-      ..lineTo(34.0, -3.0)
+      ..lineTo(38.0, -3.0)
       ..close();
     paint
       ..style = PaintingStyle.fill

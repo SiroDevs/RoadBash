@@ -28,18 +28,13 @@ class LowerBody extends RiderPartPainter {
       ..style = PaintingStyle.fill
       ..color = const Color(0xFFA349A4);
     canva.drawPath(path, paint);
-    paint
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.25
-      ..color = const Color(0xFF7F7F7F);
-    canva.drawPath(path, paint);
     // Left Thigh Reflector
     path
       ..reset()
-      ..moveTo(35.0, 24.0)
-      ..lineTo(14.0, 60.0)
-      ..lineTo(20.0, 63.0)
-      ..lineTo(38.0, 32.0)
+      ..moveTo(m(38.0,35.0), m(24.0,24.0))
+      ..lineTo(m(22.0,14.0), m(50.0,60.0))
+      ..lineTo(m(28.0,20.0), m(50.0,63.0))
+      ..lineTo(m(40.0,38.0), m(32.0,32.0))
       ..close();
     paint
       ..style = PaintingStyle.fill
@@ -71,10 +66,10 @@ class LowerBody extends RiderPartPainter {
     // Left Leg Reflector
     path
       ..reset()
-      ..moveTo(4.0, 95.0)
-      ..lineTo(17.0, 55.0)
-      ..lineTo(22.0, 60.0)
-      ..lineTo(7.0, 100.0)
+      ..moveTo(m(25.0, 4.0), m(80.0, 95.0))
+      ..lineTo(m(22.0, 17.0), m(50.0, 55.0))
+      ..lineTo(m(27.0, 22.0), m(52.0, 60.0))
+      ..lineTo(m(30.0, 7.0), m(80.0, 100.0))
       ..close();
     paint
       ..style = PaintingStyle.fill
@@ -153,10 +148,10 @@ class LowerBody extends RiderPartPainter {
     // Right Leg Reflector
     path
       ..reset()
-      ..moveTo(m(90.0, 100.0), m(83.0, 90.0))
-      ..lineTo(m(98.0, 107.0), m(50.0, 55.0))
-      ..lineTo(m(91.0, 106.0), m(55.0, 60.0))
-      ..lineTo(m(85.0, 92.0), m(83.0, 88.0))
+      ..moveTo(90.0, 83.0)
+      ..lineTo(98.0, 50.0)
+      ..lineTo(91.0, 55.0)
+      ..lineTo(85.0, 83.0)
       ..close();
     paint
       ..style = PaintingStyle.fill

@@ -29,15 +29,15 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get noticeTitle => 'Road Bash™ PC\n© 2026 Siro Devs and Okiang\'o';
+  String get noticeTitle => 'Road Bash™ PC\n© 2026 Siro Devs @SiroFromKe (X)';
 
   @override
   String get noticeFun =>
-      'I hope you find Road Bash as entertaining as I do. Games are a great way to act out fantasies in a virtual environment where no one gets hurt.\n\nThe game is meant for entertaining purposes only. Events in the game and in the video are fantasy and are not meant to model reality in any way.';
+      'I developed this game to recreate the childhood memories of the classic Road Rash Game by EA Sports specifically the 1991 version. Games like this are a great way to enjoy virtual realities without the risks of getting hurt.\n\nI hope you enjoy playing this game as I do both developing and playing it. Please share it with your family and friends so that you may not enjoy alone not unless you are greedy.';
 
   @override
   String get noticeWarning =>
-      'In the real world, if you run from the police you\'ll got to jail; if you ride recklessly and fall off your bike, you might not get back up. There\'s only one place for racing: a closed-circuit race track. There\'s only one way to ride: within the limits of your abilities and with full protective gear. Use your head.';
+      'This game is work in progress (WIP) and because of that it may not be a replica of the old game. If you have suggestions or complaints feel free to text me on X or email me on sirodevske@gmail.com.\n\nIf you are a developer feel free to head over to my Github @SiroDevs and clone the repo to start contributing. Use your head!';
 
   @override
   String get tapToContinue => 'Tap to continue';

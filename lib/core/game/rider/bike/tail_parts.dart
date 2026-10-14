@@ -8,6 +8,9 @@ class TailParts extends RiderPartPainter {
     _tailUnit(paint, path, canva, pose, tail);
     _tailCovers(paint, path, canva, pose, tail);
     _exhaustPanel(paint, path, canva, tail);
+  }
+
+  void paintWheel(Paint paint, Canvas canva, RiderPose pose) {
     _rearWheel(paint, canva, pose);
   }
   

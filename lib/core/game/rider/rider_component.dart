@@ -11,12 +11,19 @@ import '../road/road_config.dart';
 import '../road/road_renderer.dart';
 import 'rider_painter.dart';
 import 'rider_pose.dart';
+import 'rider_rig.dart';
 
 class RiderComponent extends PositionComponent {
-  RiderComponent(this.road) : super(anchor: Anchor.bottomCenter, priority: 1);
+  RiderComponent(this.road, {RiderRig? rig})
+      : rig = rig ?? RiderRig(),
+        super(
+          anchor: Anchor(0.5, RiderPartPainter.groundY / RiderPainter.height),
+          priority: 1,
+        );
 
   final RoadRenderer road;
-  final RiderPainter _painter = RiderPainter();
+  final RiderRig rig;
+  late final RiderPainter _painter = RiderPainter(rig);
   final RiderPose _pose = RiderPose();
   double _t = 0;
 
@@ -24,17 +31,17 @@ class RiderComponent extends PositionComponent {
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
     final lane = DashboardLayout.lanePx(size, road.theme.lanes);
-    final w = math.min(
-      lane * 0.62,
-      size.y * 0.30 * RiderPainter.width / RiderPainter.height,
+    final h = math.min(
+      lane * RiderRig.laneFill * RiderPainter.height / RiderPainter.width,
+      size.y * RiderRig.screenFill,
     );
-    final h = w * RiderPainter.height / RiderPainter.width;
-    this.size = Vector2(w, h);
-    position = Vector2(size.x / 2, DashboardLayout.riderTyresGround(size) + h * 0.024);
+    this.size = Vector2(h * RiderPainter.width / RiderPainter.height, h);
+    position = Vector2(size.x / 2, DashboardLayout.riderTyresGround(size));
   }
 
   @override
   void update(double dt) {
+    scale.setAll(rig.scale);
     _t += dt;
     final p = _pose;
     final sp = road.speedPercent;

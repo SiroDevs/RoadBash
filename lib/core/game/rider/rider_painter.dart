@@ -4,14 +4,18 @@ import 'dart:ui';
 
 // Project imports:
 import 'rider_pose.dart';
+import 'rider_rig.dart';
 part 'bike/bike_panel.dart';
 part 'bike/tail_parts.dart';
 part 'bike/rider_bike.dart';
 part 'body/lower_body.dart';
-part 'body/rider_torso.dart';
 part 'body/upper_body.dart';
 
 class RiderPainter {
+  RiderPainter(this.rig);
+
+  final RiderRig rig;
+
   static const double width = RiderPartPainter.canvasWidth;
   static const double height = RiderPartPainter.canvasHeight;
 
@@ -38,12 +42,25 @@ class RiderPainter {
     canva.rotate(pose.lean);
     canva.translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
 
+    canva.save();
+    canva.translate(0, -rig.bikeLift);
     _bikeFrame.handleBars(_paint, _path, canva, pose);
+    canva.restore();
+
+    canva.save();
+    canva.translate(0, -rig.riderLift);
     _upperBody.paint(_paint, _path, canva, pose);
     _lowerBody.paint(_paint, _path, canva, pose);
+    canva.restore();
+
+    canva.save();
+    canva.translate(0, -rig.bikeLift);
     _bikeFrame.paintBody(_paint, _path, canva, pose);
     _bikePanels.paint(_paint, _path, canva, pose);
     _tailParts.paint(_paint, _path, canva, pose);
+    canva.restore();
+
+    _tailParts.paintWheel(_paint, canva, pose);
     canva.restore();
   }
 }

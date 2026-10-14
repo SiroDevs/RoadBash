@@ -33,6 +33,23 @@ class LowerBody extends RiderPartPainter {
       ..strokeWidth = 0.25
       ..color = const Color(0xFF7F7F7F);
     canva.drawPath(path, paint);
+    // Left Thigh Reflector
+    path
+      ..reset()
+      ..moveTo(35.0, 24.0)
+      ..lineTo(14.0, 60.0)
+      ..lineTo(20.0, 63.0)
+      ..lineTo(38.0, 32.0)
+      ..close();
+    paint
+      ..style = PaintingStyle.fill
+      ..color = const Color(0xFF22B14C);
+    canva.drawPath(path, paint);
+    paint
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.0
+      ..color = const Color(0xFFB5E61D);
+    canva.drawPath(path, paint);
 
     // Left Leg
     path
@@ -51,6 +68,23 @@ class LowerBody extends RiderPartPainter {
       ..strokeWidth = 0.25
       ..color = const Color(0xFF7F7F7F);
     canva.drawPath(path, paint);
+    // Left Leg Reflector
+    path
+      ..reset()
+      ..moveTo(4.0, 95.0)
+      ..lineTo(17.0, 55.0)
+      ..lineTo(22.0, 60.0)
+      ..lineTo(7.0, 100.0)
+      ..close();
+    paint
+      ..style = PaintingStyle.fill
+      ..color = const Color(0xFF22B14C);
+    canva.drawPath(path, paint);
+    paint
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.0
+      ..color = const Color(0xFFB5E61D);
+    canva.drawPath(path, paint);
 
     // Left Boot
     path
@@ -66,11 +100,6 @@ class LowerBody extends RiderPartPainter {
     paint
       ..style = PaintingStyle.fill
       ..color = const Color(0xFF000000);
-    canva.drawPath(path, paint);
-    paint
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.25
-      ..color = const Color(0xFF7F7F7F);
     canva.drawPath(path, paint);
   }
 
@@ -92,30 +121,52 @@ class LowerBody extends RiderPartPainter {
       ..style = PaintingStyle.fill
       ..color = const Color(0xFFA349A4);
     canva.drawPath(path, paint);
+    // Right Thigh Reflector
+    path
+      ..reset()
+      ..moveTo(78.0, 30.0)
+      ..lineTo(95.0, 60.0)
+      ..lineTo(100.0, 55.0)
+      ..lineTo(80.0, 20.0)
+      ..close();
+    paint
+      ..style = PaintingStyle.fill
+      ..color = const Color(0xFF22B14C);
+    canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.25
-      ..color = const Color(0xFF7F7F7F);
+      ..strokeWidth = 3.0
+      ..color = const Color(0xFFB5E61D);
     canva.drawPath(path, paint);
-
     // Right Leg
     path
       ..reset()
-      ..moveTo(80.0, 88.0)
+      ..moveTo(80.0, 85.0)
       ..lineTo(m(88, 87), m(57, 55))
       ..lineTo(105.0, m(51, 50))
-      ..lineTo(94.0, 90.0)
+      ..lineTo(95.0, 85.0)
       ..close();
     paint
       ..style = PaintingStyle.fill
       ..color = const Color(0xFFA349A4);
     canva.drawPath(path, paint);
+    // Right Leg Reflector
+    path
+      ..reset()
+      ..moveTo(m(90.0, 100.0), m(83.0, 90.0))
+      ..lineTo(m(98.0, 107.0), m(50.0, 55.0))
+      ..lineTo(m(91.0, 106.0), m(55.0, 60.0))
+      ..lineTo(m(85.0, 92.0), m(83.0, 88.0))
+      ..close();
+    paint
+      ..style = PaintingStyle.fill
+      ..color = const Color(0xFF22B14C);
+    canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.25
-      ..color = const Color(0xFF7F7F7F);
+      ..strokeWidth = 3.0
+      ..color = const Color(0xFFB5E61D);
     canva.drawPath(path, paint);
-
     // Right Boot
     path
       ..reset()
@@ -130,11 +181,6 @@ class LowerBody extends RiderPartPainter {
     paint
       ..style = PaintingStyle.fill
       ..color = const Color(0xFF000000);
-    canva.drawPath(path, paint);
-    paint
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.25
-      ..color = const Color(0xFF7F7F7F);
     canva.drawPath(path, paint);
   }
 }

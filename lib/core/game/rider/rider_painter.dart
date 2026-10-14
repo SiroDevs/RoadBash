@@ -38,15 +38,12 @@ class RiderPainter {
     canva.rotate(pose.lean);
     canva.translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
 
-    _bikeFrame.paint(_paint, _path, canva, pose);
-    _bikePanels.paint(_paint, _path, canva, pose);
-    _tailParts.paint(_paint, _path, canva, pose);
+    _bikeFrame.handleBars(_paint, _path, canva, pose);
     _upperBody.paint(_paint, _path, canva, pose);
     _lowerBody.paint(_paint, _path, canva, pose);
-    // _body.paintTorso(canva, pose);
-    // _body.paintArms(canva, pose);
-    // _bike.paintBarEnds(canva, pose);
-    // _body.paintHead(canva, pose);
+    _bikeFrame.paintBody(_paint, _path, canva, pose);
+    _bikePanels.paint(_paint, _path, canva, pose);
+    _tailParts.paint(_paint, _path, canva, pose);
     canva.restore();
   }
 }

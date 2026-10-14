@@ -3,10 +3,6 @@ part of '../rider_painter.dart';
 
 /// Everything in the motorbike.
 class RiderBike extends RiderPartPainter {
-  void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
-    _paintBody(paint, path, canva, pose);
-  }
-
   /// Stays flat on the road while the bike banks over it.
   void paintShadow(Canvas canva, RiderPose pose) {
     final slip = pose.lean * 46;
@@ -26,31 +22,67 @@ class RiderBike extends RiderPartPainter {
   }
 
   /// Bar ends and mirrors poking past the gloves. Drawn after the arms.
-  void paintBarEnds(Canvas canva, RiderPose pose) {
-    for (final side in const [-1, 1]) {
-      final hand = handOf(side, pose);
-      final tip = Offset(hand.dx + side * 9, hand.dy - 2);
-      limb(canva, hand, tip, 5, Color(0xFF6E737B));
-      oval(
-        canva,
-        Rect.fromCenter(
-          center: Offset(tip.dx + side * 2, tip.dy - 13),
-          width: 13,
-          height: 9,
-        ),
-        RiderPartPainter.leather,
-      );
-      limb(
-        canva,
-        tip,
-        Offset(tip.dx + side * 2, tip.dy - 10),
-        3,
-        Color(0xFF6E737B),
-      );
-    }
+  void handleBars(Paint paint, Path path, Canvas canva, RiderPose pose) {
+    // Left Handle
+    path
+      ..reset()
+      ..moveTo(39.0, 38.0)
+      ..lineTo(29.0, 42.0)
+      ..lineTo(27.0, 41.0)
+      ..lineTo(27.0, 38.0)
+      ..lineTo(34.0, 37.0)
+      ..lineTo(40.0, 30.0)
+      ..lineTo(32.0, 28.0)
+      ..lineTo(25.0, 25.0)
+      ..lineTo(22.0, 27.0)
+      ..lineTo(20.0, 24.0)
+      ..lineTo(22.0, 21.0)
+      ..lineTo(40.0, 24.0)
+      ..lineTo(42.0, 26.0)
+      ..lineTo(44.0, 30.0)
+      ..lineTo(42.0, 33.0)
+      ..close();
+    paint
+      ..style = PaintingStyle.fill
+      ..color = const Color(0xFF000000);
+    canva.drawPath(path, paint);
+    paint
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.25
+      ..color = const Color(0xFF7F7F7F);
+    canva.drawPath(path, paint);
+    
+    // Right Handle
+    path
+      ..reset()
+      ..moveTo(87.0, 37.0)
+      ..lineTo(93.0, 40.0)
+      ..lineTo(95.0, 38.0)
+      ..lineTo(87.0, 33.0)
+      ..lineTo(84.0, 29.0)
+      ..lineTo(82.0, 27.0)
+      ..lineTo(90.0, 24.0)
+      ..lineTo(96.0, 21.0)
+      ..lineTo(99.0, 23.0)
+      ..lineTo(100.0, 20.0)
+      ..lineTo(98.0, 17.0)
+      ..lineTo(81.0, 20.0)
+      ..lineTo(79.0, 23.0)
+      ..lineTo(78.0, 27.0)
+      ..lineTo(82.0, 33.0)
+      ..close();
+    paint
+      ..style = PaintingStyle.fill
+      ..color = const Color(0xFF000000);
+    canva.drawPath(path, paint);
+    paint
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.25
+      ..color = const Color(0xFF7F7F7F);
+    canva.drawPath(path, paint);
   }
 
-  void _paintBody(Paint paint, Path path, Canvas canva, RiderPose pose) {
+  void paintBody(Paint paint, Path path, Canvas canva, RiderPose pose) {
     path
       ..reset()
       ..moveTo(46.0, 32.0)

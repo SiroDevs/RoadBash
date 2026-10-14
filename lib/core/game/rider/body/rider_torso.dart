@@ -9,9 +9,9 @@ class RiderTorso extends RiderPartPainter {
   static const _suitMain = Color(0xFFC63F96);
   static const _suitPanel = Color(0xFFE9E3F0);
   static const _suitTrim = Color(0xFFF2C21C);
-  static const _suitLower = Color(0xFFE8551D);
+  // static const _suitLower = Color(0xFFE8551D);
   static const _boot = Color(0xFF131316);
-  static const _glove = Color(0xFF191A1E);
+  // static const _glove = Color(0xFF191A1E);
 
   static const double _mid = RiderPartPainter.midX;
 

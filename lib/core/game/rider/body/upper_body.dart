@@ -11,12 +11,12 @@ class UpperBody extends RiderPartPainter {
 
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     _helmet(canva, pose);
-    _torso(paint, path, canva);
-    _arms(paint, path, canva);
+    _torso(paint, path, canva, pose);
+    _arms(paint, path, canva, pose);
   }
 
   void _helmet(Canvas canva, RiderPose pose) {
-    final neckY = tuckOf(pose);
+    final neckY = 15 + tuckOf(pose);
 
     fill(
       canva,
@@ -33,18 +33,18 @@ class UpperBody extends RiderPartPainter {
     final cy = neckY - 45;
     oval(
       canva,
-      Rect.fromCenter(center: Offset(_mid, cy), width: 35, height: 38),
+      Rect.fromCenter(center: Offset(_mid, cy), width: 30, height: 32),
       _helmetShell,
     );
     quad(canva, _helmetShade, [
-      Offset(_mid - 15, cy + 8),
-      Offset(_mid + 15, cy + 8),
-      Offset(_mid + 10, cy + 15),
-      Offset(_mid - 10, cy + 15),
+      Offset(_mid - 13, cy + 8),
+      Offset(_mid + 13, cy + 8),
+      Offset(_mid + 8, cy + 15),
+      Offset(_mid - 8, cy + 15),
     ]);
     fill(
       canva,
-      Rect.fromLTRB(_mid - 5, cy - 13, _mid + 12, cy - 5),
+      Rect.fromLTRB(_mid - 5, cy - 13, _mid + 10, cy - 5),
       _helmetShade,
       5,
     );
@@ -56,25 +56,32 @@ class UpperBody extends RiderPartPainter {
     canva.restore();
   }
 
-  void _torso(Paint paint, Path path, Canvas canva) {
+  void _torso(Paint paint, Path path, Canvas canva, RiderPose pose) {
+    final f = pose.foot.clamp(0.0, 1.0);
+
+    double m(double moving, double stopped) => moving + (stopped - moving) * f;
+
     path
       ..reset()
-      ..moveTo(41.0, 35.0)
-      ..lineTo(51.0, 30.0)
-      ..lineTo(61.0, 29.0)
-      ..lineTo(72.0, 32.0)
-      ..lineTo(80.0, 36.0)
-      ..lineTo(89.0, 22.0)
-      ..lineTo(91.0, -25.0)
-      ..lineTo(75.0, -32.0)
-      ..lineTo(60.0, -34.0)
-      ..lineTo(43.0, -33.0)
-      ..lineTo(30.0, -27.0)
-      ..lineTo(30.0, 23.0)
+      ..moveTo(m(46, 41), m(34, 35))
+      ..lineTo(m(36, 32), m(16, 17))
+      ..lineTo(36.0, 5.0)
+      ..lineTo(31.0, -11.0)
+      ..lineTo(38.0, -17.0)
+      ..lineTo(46.0, -18.0)
+      ..lineTo(62.0, -16.0)
+      ..lineTo(76.0, -17.0)
+      ..lineTo(m(83, 84), m(-14, -15))
+      ..lineTo(m(88, 89), m(-9, -10))
+      ..lineTo(m(85, 81), m(7, 6))
+      ..lineTo(m(85, 82), m(15, 16))
+      ..lineTo(m(77, 73), m(34, 33))
+      ..lineTo(67.0, 30.0)
+      ..lineTo(55.0, 30.0)
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFC63F96);
+      ..color = const Color(0xFFA349A4);
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -84,39 +91,52 @@ class UpperBody extends RiderPartPainter {
   }
 
   /// Sleeves and gloves, reaching for the grips [RiderBike] draws over them.
-  void _arms(Paint paint, Path path, Canvas canva) {
+  void _arms(Paint paint, Path path, Canvas canva, RiderPose pose) {
+    final f = pose.foot.clamp(0.0, 1.0);
+
+    // Blends one coordinate: f = 0 gives the moving value, f = 1 gives the stopped value.
+    double m(double moving, double stopped) => moving + (stopped - moving) * f;
+
     // Right Hand
     path
       ..reset()
-      ..moveTo(91.0, -24.0)
-      ..lineTo(113.0, 20.0)
-      ..lineTo(112.0, 30.0)
-      ..lineTo(101.0, 35.0)
-      ..lineTo(84.0, 11.0)
-      ..lineTo(84.0, -10.0)
+      ..moveTo(m(85, 81), m(15, 12))
+      ..lineTo(97.0, 38.0)
+      ..lineTo(106.0, 38.0)
+      ..lineTo(111.0, 35.0)
+      ..lineTo(111.0, 26.0)
+      ..lineTo(110.0, 22.0)
+      ..lineTo(106.0, 22.0)
+      ..lineTo(95.0, -3.0)
+      ..lineTo(m(88, 89), m(-9, -10))
+      ..lineTo(m(85, 81), m(7, 2))
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFC63F96);
+      ..color = const Color(0xFFA349A4);
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.25
       ..color = const Color(0xFF7F7F7F);
     canva.drawPath(path, paint);
+
     // Left Hand
     path
       ..reset()
-      ..moveTo(30.0, -26.0)
-      ..lineTo(9.0, 25.0)
-      ..lineTo(13.0, 36.0)
-      ..lineTo(25.0, 37.0)
-      ..lineTo(37.0, 10.0)
-      ..lineTo(37.0, -12.0)
+      ..moveTo(m(36, 33), 16.0)
+      ..lineTo(m(27, 24), 30.0)
+      ..lineTo(m(19, 16), 34.0)
+      ..lineTo(m(11, 8), 31.0)
+      ..lineTo(m(10, 7), 20.0)
+      ..lineTo(m(12, 9), 16.0)
+      ..lineTo(m(17, 14), 14.0)
+      ..lineTo(31.0, m(-11, -10))
+      ..lineTo(36.0, 5.0)
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFC63F96);
+      ..color = const Color(0xFFA349A4);
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke

@@ -70,7 +70,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
     if (_shutDown) return;
     final ride = RideAudio(mix: mix, service: audio, road: road, race: race);
     _ride = ride;
-    // unawaited(ride.start());
+    unawaited(ride.start());
   }
 
   @override

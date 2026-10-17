@@ -6,6 +6,7 @@ import '../../../domain/models/player_profile.dart';
 import '../../audio/audio_catalog.dart';
 import '../../audio/audio_service.dart';
 import '../../audio/loop_player.dart';
+import '../../audio/synth/engine_synth.dart';
 import '../race/race_controller.dart';
 import '../road/road_renderer.dart';
 
@@ -15,6 +16,7 @@ class RideAudio {
     required this.service,
     required this.road,
     required this.race,
+    this.useAssetLoops = false,
   });
 
   final PlayerProfile mix;
@@ -22,7 +24,11 @@ class RideAudio {
   final RoadRenderer road;
   final RaceController race;
 
-  final _engine = LoopPlayer(LoopSound.engine.asset);
+  /// Skid, gravel and wind still come from audio/loops/*.wav. Leave this off
+  /// until those files exist; the engine never needs them.
+  final bool useAssetLoops;
+
+  final _engine = EngineSynth();
   final _skid = LoopPlayer(LoopSound.skid.asset);
   final _gravel = LoopPlayer(LoopSound.gravel.asset);
   final _wind = LoopPlayer(LoopSound.wind.asset);
@@ -38,12 +44,26 @@ class RideAudio {
 
   double get _fx => mix.master * mix.effects;
 
-  Future<void> start() =>
-      // Future.wait([_skid, _gravel, _wind].map((p) => p.start()));
-      Future.wait([_engine, _skid, _gravel, _wind].map((p) => p.start()));
+  List<LoopPlayer> get _loops => [_skid, _gravel, _wind];
+
+  Future<void> start() => Future.wait([
+        _engine.start(),
+        if (useAssetLoops) ..._loops.map((p) => p.start()),
+      ]);
 
   void update(double dt) {
     _events();
+    _engine.update(
+      dt,
+      volume: mix.master * mix.engine,
+      rpm: road.rpm,
+      gear: road.gear,
+      throttle: road.throttle,
+      brake: road.brake,
+      locked: road.locked,
+      stopped: road.stopped,
+    );
+
     final k = math.min(1.0, dt * 12);
     _skidLevel += ((road.skidding ? 1.0 : 0.0) - _skidLevel) * k;
     _gravelLevel += ((road.offRoad ? 1.0 : 0.0) - _gravelLevel) * k;
@@ -52,10 +72,6 @@ class RideAudio {
     if (_acc < 0.07) return;
     _acc = 0;
     final sp = road.speedPercent;
-    _engine.set(
-      volume: _clamp(mix.master * mix.engine * (0.35 + 0.65 * road.engineLoad)),
-      rate: 0.6 + 1.3 * road.rpm,
-    );
     _skid.set(volume: _clamp(_fx * _skidLevel));
     _gravel.set(volume: _clamp(_fx * _gravelLevel * math.min(1.0, sp * 2)));
     _wind.set(volume: _clamp(_fx * sp * 0.5), rate: 0.8 + 0.5 * sp);
@@ -88,17 +104,21 @@ class RideAudio {
   static double _clamp(double v) => math.min(1.0, math.max(0.0, v));
 
   void pause() {
-    for (final p in [_engine, _skid, _gravel, _wind]) {
+    _engine.pause();
+    for (final p in _loops) {
       p.pause();
     }
   }
 
   void resume() {
-    for (final p in [_engine, _skid, _gravel, _wind]) {
+    _engine.resume();
+    for (final p in _loops) {
       p.resume();
     }
   }
 
-  Future<void> dispose() =>
-      Future.wait([_engine, _skid, _gravel, _wind].map((p) => p.dispose()));
+  Future<void> dispose() => Future.wait([
+        _engine.dispose(),
+        ..._loops.map((p) => p.dispose()),
+      ]);
 }

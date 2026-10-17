@@ -3,8 +3,8 @@ import '../../domain/models/scene_id.dart';
 
 enum MusicTrack {
   menu('audio/music/menu.mp3', 1.0),
-  city('audio/music/city.mp3', 0.55),
-  suburbs('audio/music/suburbs.mp3', 0.55);
+  city('audio/music/city.mp3', 0.25),
+  suburbs('audio/music/suburbs.mp3', 0.25);
 
   const MusicTrack(this.asset, this.gain);
 
@@ -26,7 +26,6 @@ enum Sfx {
 }
 
 enum LoopSound {
-  engine,
   skid,
   gravel,
   wind;

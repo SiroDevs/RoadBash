@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "rb",
+            "name": "bash",
             "request": "launch",
             "type": "dart",
             "deviceId": "macos",

@@ -1,35 +1,50 @@
 // Dart imports:
 import 'dart:math' as math;
 
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// Package imports:
+import 'package:flutter_soloud/flutter_soloud.dart';
+
 // Project imports:
-import '../loop_player.dart';
 import 'engine_voice.dart';
 import 'engine_wave.dart';
+import 'soloud_loop.dart';
 
-/// The synthesized engine: three generated loops played together, with their
-/// volume and pitch driven by [EngineVoice].
+/// The synthesized engine: three generated loops played together through
+/// SoLoud, with their volume and pitch driven by [EngineVoice].
 class EngineSynth {
   EngineSynth() {
     final loops = EngineWave.loops;
     _voice = EngineVoice([for (final l in loops) l.baseHz]);
-    _players = [
+    _layers = [
       for (final l in loops)
-        LoopPlayer.bytes(l.wav, volumeStep: 0.015, rateStep: 0.006),
+        SoloudLoop('engine-${l.baseHz.round()}hz.wav', l.wav),
     ];
   }
 
-  /// Seconds between pushes to the audio players. Keeps platform calls down.
-  static const double _tick = 0.033;
+  /// Seconds between updates. SoLoud calls are cheap, so this can be short.
+  static const double _tick = 0.02;
 
   /// Extra gain on top of the engine slider, so the engine sits above the
-  /// music. Each player still clamps at full volume.
+  /// music. Each layer is still clamped at full volume.
   static const double boost = 1.6;
 
   late final EngineVoice _voice;
-  late final List<LoopPlayer> _players;
+  late final List<SoloudLoop> _layers;
   double _acc = 0;
+  double _logClock = 0;
 
-  Future<void> start() => Future.wait(_players.map((p) => p.start()));
+  Future<void> start() async {
+    try {
+      if (!SoLoud.instance.isInitialized) await SoLoud.instance.init();
+    } catch (e) {
+      debugPrint('[engine] SoLoud init failed: $e');
+      return;
+    }
+    await Future.wait(_layers.map((l) => l.start()));
+  }
 
   void update(
     double dt, {
@@ -54,28 +69,37 @@ class EngineSynth {
       locked: locked,
       stopped: stopped,
     );
-    for (var i = 0; i < _players.length; i++) {
-      _players[i].set(
+    if (kDebugMode && (_logClock += step) >= 1.0) {
+      _logClock = 0;
+      debugPrint(
+        '[engine] in=${volume.toStringAsFixed(2)} thr=$throttle '
+        'rpm=${rpm.toStringAsFixed(2)} gear=$gear '
+        'vol=${_voice.volumes.map((v) => v.toStringAsFixed(2))} '
+        'speed=${_voice.rates.map((r) => r.toStringAsFixed(2))}',
+      );
+    }
+    for (var i = 0; i < _layers.length; i++) {
+      _layers[i].set(
         volume: math.min(
           1.0,
           math.max(0.0, volume * boost * _voice.volumes[i]),
         ),
-        rate: _voice.rates[i],
+        speed: _voice.rates[i],
       );
     }
   }
 
   void pause() {
-    for (final p in _players) {
-      p.pause();
+    for (final l in _layers) {
+      l.pause();
     }
   }
 
   void resume() {
-    for (final p in _players) {
-      p.resume();
+    for (final l in _layers) {
+      l.resume();
     }
   }
 
-  Future<void> dispose() => Future.wait(_players.map((p) => p.dispose()));
+  Future<void> dispose() => Future.wait(_layers.map((l) => l.dispose()));
 }

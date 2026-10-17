@@ -33,6 +33,7 @@ dependencies:
   equatable: ^2.0.7
   audioplayers: ^6.2.0
   window_manager: ^0.5.1
+  flutter_soloud: ^5.2.1
 
 dev_dependencies:
   flutter_test:

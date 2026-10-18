@@ -1,6 +1,9 @@
 // Package imports:
 import 'package:equatable/equatable.dart';
 
+// Project imports:
+import 'engine_flavour.dart';
+
 class PlayerProfile extends Equatable {
   const PlayerProfile({
     this.name = '',
@@ -8,6 +11,7 @@ class PlayerProfile extends Equatable {
     this.music = 0.7,
     this.engine = 0.8,
     this.effects = 0.8,
+    this.flavour = EngineFlavour.classic,
   });
 
   final String name;
@@ -15,6 +19,7 @@ class PlayerProfile extends Equatable {
   final double music;
   final double engine;
   final double effects;
+  final EngineFlavour flavour;
 
   PlayerProfile copyWith({
     String? name,
@@ -22,6 +27,7 @@ class PlayerProfile extends Equatable {
     double? music,
     double? engine,
     double? effects,
+    EngineFlavour? flavour,
   }) =>
       PlayerProfile(
         name: name ?? this.name,
@@ -29,8 +35,9 @@ class PlayerProfile extends Equatable {
         music: music ?? this.music,
         engine: engine ?? this.engine,
         effects: effects ?? this.effects,
+        flavour: flavour ?? this.flavour,
       );
 
   @override
-  List<Object?> get props => [name, master, music, engine, effects];
+  List<Object?> get props => [name, master, music, engine, effects, flavour];
 }

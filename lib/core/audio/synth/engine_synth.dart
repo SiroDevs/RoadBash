@@ -8,6 +8,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_soloud/flutter_soloud.dart';
 
 // Project imports:
+import '../../../domain/models/engine_flavour.dart';
+import 'engine_tunes.dart';
 import 'engine_voice.dart';
 import 'engine_wave.dart';
 import 'soloud_loop.dart';
@@ -15,12 +17,14 @@ import 'soloud_loop.dart';
 /// The synthesized engine: three generated loops played together through
 /// SoLoud, with their volume and pitch driven by [EngineVoice].
 class EngineSynth {
-  EngineSynth() {
-    final loops = EngineWave.loops;
-    _voice = EngineVoice([for (final l in loops) l.baseHz]);
+  EngineSynth(EngineFlavour flavour) {
+    final loops = EngineWave.loopsFor(flavour);
+    _voice = EngineVoice([
+      for (final l in loops) l.baseHz,
+    ], EngineTunes.of(flavour));
     _layers = [
       for (final l in loops)
-        SoloudLoop('engine-${l.baseHz.round()}hz.wav', l.wav),
+        SoloudLoop('engine-${flavour.id}-${l.baseHz.round()}hz.wav', l.wav),
     ];
   }
 

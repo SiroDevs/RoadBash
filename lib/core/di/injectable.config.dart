@@ -46,14 +46,14 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.lazySingleton<_i257.AudioService>(() => _i257.AudioService());
-    gh.lazySingleton<_i624.ProfileRepo>(
-      () => _i624.ProfileRepo(gh<_i291.AppDatabase>()),
-    );
     gh.lazySingleton<_i541.RaceRepo>(
       () => _i541.RaceRepo(gh<_i291.AppDatabase>()),
     );
     gh.singleton<_i805.PrefsRepo>(
       () => _i805.PrefsRepo(gh<_i460.SharedPreferences>()),
+    );
+    gh.lazySingleton<_i624.ProfileRepo>(
+      () => _i624.ProfileRepo(gh<_i291.AppDatabase>(), gh<_i805.PrefsRepo>()),
     );
     gh.lazySingleton<_i550.SettingsCubit>(
       () => _i550.SettingsCubit(gh<_i624.ProfileRepo>()),

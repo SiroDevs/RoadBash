@@ -12,4 +12,5 @@ class PrefConstants {
   static const masterVolKey = 'vol_master';
   static const engineVolKey = 'vol_engine';
   static const tyreVolKey = 'vol_tyres';
+  static const engineFlavourKey = 'engine_flavour';
 }

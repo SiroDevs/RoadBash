@@ -1,28 +1,25 @@
 // Dart imports:
 import 'dart:math' as math;
 
+// Project imports:
+import 'engine_tune.dart';
+
 /// Turns the bike's state into a volume and playback rate for each engine
 /// layer. Pure maths with no audio calls, so it is easy to unit test.
 class EngineVoice {
-  EngineVoice(this.baseHz)
+  EngineVoice(this.baseHz, this.tune)
     : volumes = List.filled(baseHz.length, 0.0),
       rates = List.filled(baseHz.length, 1.0),
       _weights = List.filled(baseHz.length, 0.0);
 
-  /// Firing frequency in Hz at rpm 0, and how much rpm 1 adds to it.
-  static const double fireMin = 26;
-  static const double fireSpan = 190;
-
   /// Loudness when stopped with no throttle. 0 = silent until you hit gas.
   static const double idleLoad = 0.0;
 
-  static const double _shiftUpSecs = 0.15;
-  static const double _shiftDownSecs = 0.1;
-  static const double _limiterHz = 17;
   static const double _minRate = 0.5;
   static const double _maxRate = 2.0;
 
   final List<double> baseHz;
+  final EngineTune tune;
   final List<double> volumes;
   final List<double> rates;
   final List<double> _weights;
@@ -30,7 +27,7 @@ class EngineVoice {
   double _rpm = 0.16;
   double _load = 0;
   double _shift = 0;
-  double _shiftLen = _shiftUpSecs;
+  double _shiftLen = 0.15;
   double _clock = 0;
   int _gear = 1;
 
@@ -48,7 +45,7 @@ class EngineVoice {
     // A shift is a short throttle lift: the sound ducks, then swells back.
     // The pitch drop (up) or rev-match jump (down) comes from the rpm model.
     if (gear != _gear && !locked) {
-      _shiftLen = gear > _gear ? _shiftUpSecs : _shiftDownSecs;
+      _shiftLen = gear > _gear ? tune.shiftUp : tune.shiftDown;
       _shift = _shiftLen;
     }
     _gear = gear;
@@ -57,24 +54,23 @@ class EngineVoice {
 
     // Flat out in top gear the engine bounces off its rev limiter.
     final limiter = throttle && !locked && _rpm > 0.97;
-    var fire = fireMin + fireSpan * _rpm;
-    if (limiter) {
-      fire *= 1 + 0.018 * math.sin(_clock * 2 * math.pi * _limiterHz);
-    }
+    final flutter = math.sin(_clock * 2 * math.pi * tune.limiterHz);
+    var fire = tune.fireMin + tune.fireSpan * _rpm;
+    if (limiter) fire *= 1 + tune.limiterDepth * flutter;
 
     final target = (stopped && !throttle)
         ? idleLoad
-        : (brake ? 0.3 : (throttle ? 1.0 : 0.5));
+        : (brake ? 0.3 : (throttle ? 1.0 : tune.coastLoad));
     _load += (target - _load) * math.min(1.0, dt * 9);
 
     var duck = 1.0;
     if (_shift > 0) {
       final p = 1 - _shift / _shiftLen;
-      duck = 0.35 + 0.65 * p * p;
+      duck = tune.duckDepth + (1 - tune.duckDepth) * p * p;
     }
-    var gain = _load * duck * (0.55 + 0.45 * _rpm);
+    var gain = _load * duck * (0.55 + 0.45 * _rpm) * tune.trim;
     if (limiter) {
-      gain *= 0.9 + 0.1 * math.sin(_clock * 2 * math.pi * _limiterHz + 1.3);
+      gain *= 0.9 + 0.1 * math.sin(_clock * 2 * math.pi * tune.limiterHz + 1.3);
     }
 
     _crossfade(fire);

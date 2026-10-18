@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
+import '../../domain/models/engine_flavour.dart';
 import '../../domain/models/player_profile.dart';
 import '../../domain/repos/profile_repo.dart';
 
@@ -27,6 +28,8 @@ class SettingsCubit extends Cubit<SettingsState> {
   void setMusic(double v) => _update(state.profile.copyWith(music: v));
   void setEngine(double v) => _update(state.profile.copyWith(engine: v));
   void setEffects(double v) => _update(state.profile.copyWith(effects: v));
+  void setFlavour(EngineFlavour v) =>
+      _update(state.profile.copyWith(flavour: v));
 
   /// Emits at once but writes to the database after the user stops dragging.
   void _update(PlayerProfile profile) {

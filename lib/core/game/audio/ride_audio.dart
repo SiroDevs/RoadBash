@@ -28,7 +28,7 @@ class RideAudio {
   /// until those files exist; the engine never needs them.
   final bool useAssetLoops;
 
-  final _engine = EngineSynth();
+  late final _engine = EngineSynth(mix.flavour);
   final _skid = LoopPlayer(LoopSound.skid.asset);
   final _gravel = LoopPlayer(LoopSound.gravel.asset);
   final _wind = LoopPlayer(LoopSound.wind.asset);

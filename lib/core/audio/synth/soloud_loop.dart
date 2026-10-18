@@ -4,9 +4,6 @@ import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:flutter_soloud/flutter_soloud.dart';
 
-/// One generated WAV loop played through SoLoud. Unlike a plain file player,
-/// SoLoud loops gaplessly and lets the pitch (play speed) and volume change
-/// instantly, with no limit on the speed range.
 class SoloudLoop {
   SoloudLoop(this.name, this.wav);
 

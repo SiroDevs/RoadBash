@@ -43,8 +43,8 @@ class AudioCubit extends Cubit<AudioState> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState lifecycle) {
-    if (lifecycle == AppLifecycleState.resumed) {
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
       _audio.resume();
     } else {
       _audio.pause();

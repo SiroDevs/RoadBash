@@ -24,12 +24,8 @@ class EngineSynth {
     ];
   }
 
-  /// Seconds between updates. SoLoud calls are cheap, so this can be short.
   static const double _tick = 0.02;
-
-  /// Extra gain on top of the engine slider, so the engine sits above the
-  /// music. Each layer is still clamped at full volume.
-  static const double boost = 1.6;
+  static const double boost = .8;
 
   late final EngineVoice _voice;
   late final List<SoloudLoop> _layers;
@@ -71,12 +67,6 @@ class EngineSynth {
     );
     if (kDebugMode && (_logClock += step) >= 1.0) {
       _logClock = 0;
-      debugPrint(
-        '[engine] in=${volume.toStringAsFixed(2)} thr=$throttle '
-        'rpm=${rpm.toStringAsFixed(2)} gear=$gear '
-        'vol=${_voice.volumes.map((v) => v.toStringAsFixed(2))} '
-        'speed=${_voice.rates.map((r) => r.toStringAsFixed(2))}',
-      );
     }
     for (var i = 0; i < _layers.length; i++) {
       _layers[i].set(

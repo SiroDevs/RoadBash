@@ -5,9 +5,9 @@ import 'dart:math' as math;
 /// layer. Pure maths with no audio calls, so it is easy to unit test.
 class EngineVoice {
   EngineVoice(this.baseHz)
-      : volumes = List.filled(baseHz.length, 0.0),
-        rates = List.filled(baseHz.length, 1.0),
-        _weights = List.filled(baseHz.length, 0.0);
+    : volumes = List.filled(baseHz.length, 0.0),
+      rates = List.filled(baseHz.length, 1.0),
+      _weights = List.filled(baseHz.length, 0.0);
 
   /// Firing frequency in Hz at rpm 0, and how much rpm 1 adds to it.
   static const double fireMin = 26;
@@ -16,8 +16,8 @@ class EngineVoice {
   /// Loudness when stopped with no throttle. 0 = silent until you hit gas.
   static const double idleLoad = 0.0;
 
-  static const double _shiftUpSecs = 0.16;
-  static const double _shiftDownSecs = 0.09;
+  static const double _shiftUpSecs = 0.15;
+  static const double _shiftDownSecs = 0.1;
   static const double _limiterHz = 17;
   static const double _minRate = 0.5;
   static const double _maxRate = 2.0;
@@ -99,7 +99,8 @@ class EngineVoice {
       while (fire >= baseHz[i + 1]) {
         i++;
       }
-      final f = (math.log(fire) - math.log(baseHz[i])) /
+      final f =
+          (math.log(fire) - math.log(baseHz[i])) /
           (math.log(baseHz[i + 1]) - math.log(baseHz[i]));
       _weights[i] = math.cos(f * math.pi / 2);
       _weights[i + 1] = math.sin(f * math.pi / 2);

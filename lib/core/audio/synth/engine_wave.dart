@@ -25,36 +25,36 @@ class EngineLoop {
 /// Builds the engine sound in code, so no engine audio asset is needed.
 ///
 /// Three loops (low, mid, high) are rendered once. At run time the game
-/// plays them at a rate that puts their pulses exactly at the engine's
+/// plays them at a rate that puts their pulses exactly at the engine'spec
 /// firing frequency, and crossfades between them, so the tone gets brighter
 /// as the revs climb instead of just getting higher.
 abstract final class EngineWave {
   static const int sampleRate = 22050;
-  static const double _loopSeconds = 0.7;
+  static const double _loopSeconds = 0.5;
 
   /// Average loudness each loop is scaled to before soft-clipping.
   static const double _targetRms = 0.32;
 
-  static const List<EngineLayerSpec> layers = [
+  static const List<EngineLayerSpec> layerSpec = [
     EngineLayerSpec(48, 0.15, 7),
-    EngineLayerSpec(88, 0.55, 8),
+    EngineLayerSpec(88, 0.8, 8),
     EngineLayerSpec(160, 0.95, 9),
   ];
 
   static List<EngineLoop>? _loops;
 
-  static List<EngineLoop> get loops => _loops ??= layers.map(_render).toList();
+  static List<EngineLoop> get loops => _loops ??= layerSpec.map(_render).toList();
 
-  static EngineLoop _render(EngineLayerSpec s) {
-    final period = (sampleRate / s.fireHz).round();
-    final pulses = (_loopSeconds * s.fireHz).round();
+  static EngineLoop _render(EngineLayerSpec spec) {
+    final period = (sampleRate / spec.fireHz).round();
+    final pulses = (_loopSeconds * spec.fireHz).round();
     final length = period * pulses;
-    final rng = math.Random(s.seed);
+    final rng = math.Random(spec.seed);
 
-    final decay = 5.0 + 22.0 * s.bright;
-    final ring = 1.6 + 6.0 * s.bright;
-    final noiseDecay = 14.0 + 30.0 * s.bright;
-    final noiseGain = 0.20 + 0.40 * s.bright;
+    final decay = 5.0 + 25.0 * spec.bright;
+    final ring = 1.6 + 8.0 * spec.bright;
+    final noiseDecay = 20.0 + 30.0 * spec.bright;
+    final noiseGain = 0.20 + 0.40 * spec.bright;
 
     // Every other pulse is a little weaker, like a twin, plus a touch of
     // jitter so it does not sound like a perfect machine.
@@ -75,7 +75,7 @@ abstract final class EngineWave {
 
     // One-pole low-pass, run twice over the loop so its end flows into its
     // start. Only the second pass is kept.
-    final a = 0.18 + 0.78 * s.bright;
+    final a = 0.18 + 0.78 * spec.bright;
     final f = Float64List(length);
     var y = 0.0;
     for (var pass = 0; pass < 2; pass++) {
@@ -100,15 +100,15 @@ abstract final class EngineWave {
 
     // Pulse trains have tall peaks but little average energy, so they sound
     // quiet next to music. Scale by RMS (average loudness) and soft-clip the
-    // peaks, which makes all three layers equally loud and a lot fuller.
-    final drive = (1.5 + 1.0 * s.bright) * _targetRms / rms;
+    // peaks, which makes all three layerSpec equally loud and a lot fuller.
+    final drive = (1.5 + 1.0 * spec.bright) * _targetRms / rms;
     var peak = 1e-9;
     for (var i = 0; i < length; i++) {
       f[i] = _tanh(drive * f[i]);
       peak = math.max(peak, f[i].abs());
     }
 
-    // 9-bit steps: the Mega Drive's DAC resolution, for a bit of grit.
+    // 9-bit steps: the Mega Drive'spec DAC resolution, for a bit of grit.
     final pcm = Int16List(length);
     for (var i = 0; i < length; i++) {
       final q = (0.95 * f[i] / peak * 255).round() / 255;
@@ -125,9 +125,9 @@ abstract final class EngineWave {
   static Uint8List _wav(Int16List pcm) {
     final data = pcm.lengthInBytes;
     final b = ByteData(44 + data);
-    void tag(int at, String s) {
+    void tag(int at, String spec) {
       for (var i = 0; i < 4; i++) {
-        b.setUint8(at + i, s.codeUnitAt(i));
+        b.setUint8(at + i, spec.codeUnitAt(i));
       }
     }
 

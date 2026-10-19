@@ -11,23 +11,26 @@ class RoadBashLogo extends StatelessWidget {
   final double size;
 
   Widget _plate(String text, Color bg, Color fg) => Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: size * 0.25, vertical: size * 0.08),
-        decoration: BoxDecoration(
-          color: bg,
-          border: Border.all(color: Colors.black, width: size * 0.06),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: fg,
-            fontFamily: AppConstants.displayFont,
-            fontSize: size,
-            letterSpacing: 2,
-            height: 1,
-          ),
-        ),
-      );
+    padding: EdgeInsets.symmetric(
+      horizontal: size * 0.25,
+      vertical: size * 0.08,
+    ),
+    decoration: BoxDecoration(
+      color: bg,
+      border: Border.all(color: Colors.black, width: size * 0.06),
+    ),
+    child: Text(
+      text,
+      style: TextStyle(
+        color: fg,
+        fontFamily: AppConstants.kFontFamily,
+        fontSize: size,
+        letterSpacing: 2,
+        fontWeight: FontWeight.bold,
+        height: 1,
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +43,13 @@ class RoadBashLogo extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _plate(title.substring(0, cut), Colors.black, const Color(0xFFE53935)),
-            Icon(Icons.bolt, size: size * 1.1, color: const Color(0xFFFFC857)),
-            _plate(title.substring(cut), const Color(0xFFE53935), Colors.black),
+            _plate(
+              title.substring(0, cut),
+              const Color(0xFFF57C00),
+              const Color(0xFFFFFFFF),
+            ),
+            Icon(Icons.bolt, size: size * 1.1, color: Color(0xFFF57C00)),
+            _plate(title.substring(cut), Colors.black, const Color(0xFFF57C00)),
           ],
         ),
       ),

@@ -29,7 +29,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get noticeTitle => 'Road Bash™ PC\n© 2026 Siro Devs @SiroFromKe (X)';
+  String get noticeTitle => 'Road Bash™ Game 2026';
 
   @override
   String get noticeFun =>
@@ -37,16 +37,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noticeWarning =>
-      'This game is work in progress (WIP) and because of that it may not be a replica of the old game. If you have suggestions or complaints feel free to text me on X or email me on sirodevske@gmail.com.\n\nIf you are a developer feel free to head over to my Github @SiroDevs and clone the repo to start contributing. Use your head!';
+      'This game is work in progress and because of that it may be having a shitty UI and controls. If you have suggestions or complaints feel free to text me on X or email me on sirodevske@gmail.com.\n\nIf you are a developer head over to my Github @SiroDevs and start contributing. Use your head!';
 
   @override
   String get tapToContinue => 'Tap to continue';
 
   @override
-  String get sceneCity => 'City';
+  String get sceneCity => 'The City';
 
   @override
-  String get sceneSuburbs => 'Suburbs';
+  String get sceneSuburbs => 'The Suburbs';
 
   @override
   String get receptionTitle => 'Reception';

@@ -1,18 +1,19 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../common/app_router/route_names.dart';
+import '../../common/constants/app_assets.dart';
 import '../../common/widgets/retro/retro_controls.dart';
 import '../../common/widgets/retro/retro_scaffold.dart';
 import '../../common/widgets/retro/retro_style.dart';
-import '../../l10n/l10n_extension.dart';
 import '../../core/audio/audio_catalog.dart';
 import '../../core/audio/music_scope.dart';
+import '../../l10n/l10n_extension.dart';
 import 'cubit/reception_cubit.dart';
 import 'widgets/name_editor.dart';
 import 'widgets/sound_mix.dart';
@@ -32,6 +33,7 @@ class ReceptionScreen extends StatelessWidget {
     return MusicScope(
       track: MusicTrack.menu,
       child: RetroScaffold(
+        asset: AppAssets.appMain,
         child: BlocBuilder<ReceptionCubit, ReceptionTab>(
           builder: (context, tab) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,

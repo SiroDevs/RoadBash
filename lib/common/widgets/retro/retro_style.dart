@@ -7,6 +7,7 @@ import '../../constants/app_constants.dart';
 class Retro {
   Retro._();
 
+  static const red = Color(0xFFFF0000);
   static const orange = Color(0xFFF07B3F);
   static const yellow = Color(0xFFFFE066);
   static const dim = Color(0xFFB9B9C9);

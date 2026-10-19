@@ -30,7 +30,7 @@
       }
     }
   },
-  "noticeTitle": "Road Bash™ PC\n© 2026 Siro Devs @SiroFromKe (X)",
+  "noticeTitle": "Road Bash™ Game 2026",
   "@noticeTitle": {
     "description": "Heading of the ride-safe notice"
   },
@@ -38,7 +38,7 @@
   "@noticeFun": {
     "description": "First notice paragraph"
   },
-  "noticeWarning": "This game is work in progress (WIP) and because of that it may not be a replica of the old game. If you have suggestions or complaints feel free to text me on X or email me on sirodevske@gmail.com.\n\nIf you are a developer feel free to head over to my Github @SiroDevs and clone the repo to start contributing. Use your head!",
+  "noticeWarning": "This game is work in progress and because of that it may be having a shitty UI and controls. If you have suggestions or complaints feel free to text me on X or email me on sirodevske@gmail.com.\n\nIf you are a developer head over to my Github @SiroDevs and start contributing. Use your head!",
   "@noticeWarning": {
     "description": "Safety warning paragraph"
   },
@@ -46,11 +46,11 @@
   "@tapToContinue": {
     "description": "Hint to continue"
   },
-  "sceneCity": "City",
+  "sceneCity": "The City",
   "@sceneCity": {
     "description": "Name of the city scene"
   },
-  "sceneSuburbs": "Suburbs",
+  "sceneSuburbs": "The Suburbs",
   "@sceneSuburbs": {
     "description": "Name of the suburbs scene"
   },

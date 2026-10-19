@@ -10,8 +10,12 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+// Package imports:
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
+
+// Project imports:
 import 'package:roadbash/core/audio/audio_service.dart' as _i257;
 import 'package:roadbash/core/audio/cubit/audio_cubit.dart' as _i683;
 import 'package:roadbash/core/di/injectable.dart' as _i970;
@@ -25,7 +29,6 @@ import 'package:roadbash/feature/menu/cubit/menu_cubit.dart' as _i158;
 import 'package:roadbash/feature/race/cubit/race_cubit.dart' as _i614;
 import 'package:roadbash/feature/reception/cubit/reception_cubit.dart' as _i899;
 import 'package:roadbash/feature/splash/cubit/splash_cubit.dart' as _i178;
-import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt

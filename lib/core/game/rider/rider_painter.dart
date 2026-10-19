@@ -5,6 +5,7 @@ import 'dart:ui';
 // Project imports:
 import 'rider_pose.dart';
 import 'rider_rig.dart';
+
 part 'bike/bike_panel.dart';
 part 'bike/tail_parts.dart';
 part 'bike/rider_bike.dart';

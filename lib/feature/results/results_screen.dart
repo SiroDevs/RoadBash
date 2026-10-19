@@ -6,14 +6,15 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../common/app_router/route_names.dart';
+import '../../common/constants/app_assets.dart';
 import '../../common/constants/app_constants.dart';
 import '../../common/widgets/retro/retro_controls.dart';
 import '../../common/widgets/retro/retro_scaffold.dart';
 import '../../common/widgets/retro/retro_style.dart';
-import '../../core/game/race/race_result.dart';
-import '../../l10n/l10n_extension.dart';
 import '../../core/audio/audio_catalog.dart';
 import '../../core/audio/music_scope.dart';
+import '../../core/game/race/race_result.dart';
+import '../../l10n/l10n_extension.dart';
 import '../race/cubit/race_cubit.dart';
 
 class ResultsScreen extends StatelessWidget {
@@ -32,6 +33,7 @@ class ResultsScreen extends StatelessWidget {
     return MusicScope(
       track: MusicTrack.menu,
       child: RetroScaffold(
+        asset: AppAssets.appMain,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

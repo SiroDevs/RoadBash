@@ -21,7 +21,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get splashTagline => 'Rudisha vibe za zamani';
+  String get splashTagline => 'Rudisha vibe za kitambo';
 
   @override
   String splashRights(String credits) {

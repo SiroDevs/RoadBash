@@ -1,17 +1,21 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
 import '../../common/app_router/route_names.dart';
+import '../../common/constants/app_assets.dart';
 import '../../common/widgets/retro/retro_controls.dart';
 import '../../common/widgets/retro/retro_scaffold.dart';
 import '../../common/widgets/retro/retro_style.dart';
 import '../../common/widgets/retro/scene_preview.dart';
+import '../../core/audio/audio_catalog.dart';
+import '../../core/audio/music_scope.dart';
 import '../../core/game/road/road_config.dart';
 import '../../core/game/road/road_theme.dart';
 import '../../core/game/road/road_track.dart';
@@ -20,8 +24,6 @@ import '../../core/settings/settings_cubit.dart';
 import '../../domain/models/scene_id.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/l10n_extension.dart';
-import '../../core/audio/audio_catalog.dart';
-import '../../core/audio/music_scope.dart';
 import 'cubit/menu_cubit.dart';
 import 'widgets/scene_info.dart';
 
@@ -60,14 +62,18 @@ class _MenuScreenState extends State<MenuScreen> {
       track: MusicTrack.menu,
       child: CallbackShortcuts(
         bindings: {
-          const SingleActivator(LogicalKeyboardKey.arrowLeft): () => menu.move(2),
-          const SingleActivator(LogicalKeyboardKey.arrowRight): () => menu.move(1),
-          const SingleActivator(LogicalKeyboardKey.enter): () => _go(menu.state),
+          const SingleActivator(LogicalKeyboardKey.arrowLeft): () =>
+              menu.move(2),
+          const SingleActivator(LogicalKeyboardKey.arrowRight): () =>
+              menu.move(1),
+          const SingleActivator(LogicalKeyboardKey.enter): () =>
+              _go(menu.state),
         },
         child: Focus(
           autofocus: true,
           child: BlocBuilder<MenuCubit, int>(
             builder: (context, index) => RetroScaffold(
+              asset: AppAssets.appMain,
               padding: const EdgeInsets.fromLTRB(24, 16, 24, 12),
               child: _content(context, menu, index),
             ),
@@ -83,27 +89,24 @@ class _MenuScreenState extends State<MenuScreen> {
     final info = SceneInfo(scene: id, km: id == null ? 0 : _km[id]!);
     final card = id == null
         ? const Icon(Icons.support_agent, size: 120, color: Retro.orange)
-        : ScenePreview(SceneTheme.of(id));
+        : ScenePreview(id);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         RetroTitle(_label(l10n, id)),
         const SizedBox(height: 8),
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, box) => box.maxWidth > 700
-                ? Row(children: [
-                    Expanded(child: info),
+        LayoutBuilder(
+          builder: (context, box) => box.maxWidth > 700
+              ? Row(
+                  children: [
+                    info.expanded(),
                     const SizedBox(width: 24),
-                    Expanded(child: Center(child: card)),
-                  ])
-                : Column(children: [
-                    Expanded(child: Center(child: card)),
-                    info,
-                  ]),
-          ),
-        ),
+                    card.expanded().center(),
+                  ],
+                )
+              : Column(children: [card.expanded().center(), info]),
+        ).expanded(),
         const SizedBox(height: 8),
         _riderBar(context),
         const SizedBox(height: 6),
@@ -112,14 +115,12 @@ class _MenuScreenState extends State<MenuScreen> {
           child: Row(
             children: [
               for (var i = 0; i < MenuCubit.entries; i++)
-                Expanded(
-                  child: RetroMenuItem(
-                    center: true,
-                    selected: i == index,
-                    label: _label(l10n, _scene(i)),
-                    onTap: () => _tap(menu, i),
-                  ),
-                ),
+                RetroMenuItem(
+                  center: true,
+                  selected: i == index,
+                  label: _label(l10n, _scene(i)),
+                  onTap: () => _tap(menu, i),
+                ).expanded(),
             ],
           ),
         ),

@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
@@ -21,31 +23,42 @@ class SceneInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final id = scene;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(id == null ? l10n.blurbReception : l10n.sceneBlurb(id),
-            style: retroBody(size: 24)),
-        if (id != null) ...[
-          const SizedBox(height: 14),
-          Text(l10n.lengthLabel(km.toStringAsFixed(1), SceneTheme.of(id).laps),
-              style: retroBody(size: 22, color: Retro.yellow)),
-          BlocBuilder<ProgressCubit, ProgressState>(
-            builder: (context, progress) {
-              final stats = progress.statsFor(id);
-              final best = stats.bestMs;
-              final time = best == null
-                  ? l10n.noTimeYet
-                  : l10n.bestTimeLabel(formatTime(best / 1000));
-              return Text(
-                '$time  |  ${l10n.racesWinsLabel(stats.races, stats.wins)}',
-                style: retroBody(size: 20, color: Retro.dim),
-              );
-            },
+    return Container(
+      padding: const EdgeInsets.all(28),
+      decoration: BoxDecoration(
+        color: const Color(0x99000000),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            id == null ? l10n.blurbReception : l10n.sceneBlurb(id),
+            style: retroBody(size: 24),
           ),
+          if (id != null) ...[
+            const SizedBox(height: 14),
+            Text(
+              l10n.lengthLabel(km.toStringAsFixed(1), SceneTheme.of(id).laps),
+              style: retroBody(size: 22, color: Retro.yellow),
+            ),
+            BlocBuilder<ProgressCubit, ProgressState>(
+              builder: (context, progress) {
+                final stats = progress.statsFor(id);
+                final best = stats.bestMs;
+                final time = best == null
+                    ? l10n.noTimeYet
+                    : l10n.bestTimeLabel(formatTime(best / 1000));
+                return Text(
+                  '$time  |  ${l10n.racesWinsLabel(stats.races, stats.wins)}',
+                  style: retroBody(size: 20, color: Retro.dim),
+                );
+              },
+            ),
+          ],
         ],
-      ],
+      ),
     );
   }
 }

@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 16),
             Text(
               l10n.splashTagline,
-              style: retroBody(size: 50, color: Retro.yellow),
+              style: retroBody(size: 50, color: Retro.orange),
             ),
             const Spacer(),
             Text(

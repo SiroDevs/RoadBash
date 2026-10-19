@@ -1,11 +1,12 @@
 // Flutter imports:
 import 'package:flutter/services.dart';
 
+// Project imports:
+import '../utils/app_util.dart';
+
 // Package imports:
 // import 'package:window_manager/window_manager.dart';
 
-// Project imports:
-import '../utils/app_util.dart';
 
 Future<void> configureDisplay() async {
   if (isMobile) {

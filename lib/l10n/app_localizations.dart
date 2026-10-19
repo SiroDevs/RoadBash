@@ -131,7 +131,7 @@ abstract class AppLocalizations {
   /// Heading of the ride-safe notice
   ///
   /// In en, this message translates to:
-  /// **'Road Bash™ PC\n© 2026 Siro Devs @SiroFromKe (X)'**
+  /// **'Road Bash™ Game 2026'**
   String get noticeTitle;
 
   /// First notice paragraph
@@ -143,7 +143,7 @@ abstract class AppLocalizations {
   /// Safety warning paragraph
   ///
   /// In en, this message translates to:
-  /// **'This game is work in progress (WIP) and because of that it may not be a replica of the old game. If you have suggestions or complaints feel free to text me on X or email me on sirodevske@gmail.com.\n\nIf you are a developer feel free to head over to my Github @SiroDevs and clone the repo to start contributing. Use your head!'**
+  /// **'This game is work in progress and because of that it may be having a shitty UI and controls. If you have suggestions or complaints feel free to text me on X or email me on sirodevske@gmail.com.\n\nIf you are a developer head over to my Github @SiroDevs and start contributing. Use your head!'**
   String get noticeWarning;
 
   /// Hint to continue
@@ -155,13 +155,13 @@ abstract class AppLocalizations {
   /// Name of the city scene
   ///
   /// In en, this message translates to:
-  /// **'City'**
+  /// **'The City'**
   String get sceneCity;
 
   /// Name of the suburbs scene
   ///
   /// In en, this message translates to:
-  /// **'Suburbs'**
+  /// **'The Suburbs'**
   String get sceneSuburbs;
 
   /// Name of the settings desk

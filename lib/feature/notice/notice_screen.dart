@@ -10,9 +10,9 @@ import '../../common/app_router/route_names.dart';
 import '../../common/constants/app_assets.dart';
 import '../../common/widgets/retro/retro_scaffold.dart';
 import '../../common/widgets/retro/retro_style.dart';
-import '../../l10n/l10n_extension.dart';
 import '../../core/audio/audio_catalog.dart';
 import '../../core/audio/music_scope.dart';
+import '../../l10n/l10n_extension.dart';
 
 class NoticeScreen extends StatefulWidget {
   const NoticeScreen({super.key});
@@ -95,14 +95,14 @@ class _NoticeScreenState extends State<NoticeScreen> {
                           const SizedBox(height: 10),
                           Text(
                             l10n.noticeTitle,
-                            style: retroBody(size: 65, color: Retro.yellow),
+                            style: retroBody(size: 65, color: Retro.orange),
                           ),
                           const SizedBox(height: 40),
                           Text(l10n.noticeFun, style: retroBody(size: 40)),
                           const SizedBox(height: 75),
                           Text(
                             l10n.noticeWarning,
-                            style: retroBody(size: 40, color: Retro.orange),
+                            style: retroBody(size: 40, color: Retro.red),
                           ),
                           const SizedBox(height: 75),
                         ],

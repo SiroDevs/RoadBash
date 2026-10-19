@@ -10,9 +10,9 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 
 // Project imports:
+import '../../core/audio/audio_service.dart';
 import '../../domain/models/player_profile.dart';
 import '../../domain/models/scene_id.dart';
-import '../../core/audio/audio_service.dart';
 import 'audio/ride_audio.dart';
 import 'hud/dashboard_hud.dart';
 import 'hud/hud_strings.dart';
@@ -79,7 +79,6 @@ class RoadGame extends FlameGame with KeyboardEvents {
     if (!isLoaded) return;
 
     road.locked = race.countdown > 0;
-    // _keyThrottle = true;
     _applyInput();
     race.update(dt, road.fullDistance, road.speed);
 

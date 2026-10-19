@@ -1,13 +1,16 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
 import 'package:flame/game.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../common/app_router/route_names.dart';
+import '../../core/audio/audio_catalog.dart';
+import '../../core/audio/audio_service.dart';
+import '../../core/audio/music_scope.dart';
 import '../../core/di/injectable.dart';
 import '../../core/game/hud/hud_strings.dart';
 import '../../core/game/input/touch_controls.dart';
@@ -16,9 +19,6 @@ import '../../core/settings/settings_cubit.dart';
 import '../../core/utils/app_util.dart';
 import '../../domain/models/scene_id.dart';
 import '../../l10n/l10n_extension.dart';
-import '../../core/audio/audio_catalog.dart';
-import '../../core/audio/audio_service.dart';
-import '../../core/audio/music_scope.dart';
 import 'cubit/race_cubit.dart';
 
 class RaceScreen extends StatefulWidget {
@@ -87,7 +87,7 @@ class _RaceScreenState extends State<RaceScreen> {
                   alignment: Alignment.topLeft,
                   child: IconButton(
                     tooltip: context.l10n.quitRace,
-                    icon: const Icon(Icons.close, color: Colors.white70),
+                    icon: const Icon(Icons.home, color: Colors.white70),
                     onPressed: () => context.goNamed(RouteNames.menu),
                   ),
                 ),

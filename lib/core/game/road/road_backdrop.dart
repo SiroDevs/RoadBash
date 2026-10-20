@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
-import '../utils/city_scape.dart';
 import '../utils/paint_utils.dart';
 import '../utils/scenery_shapes.dart';
 import 'road_config.dart';
@@ -23,10 +22,8 @@ class RoadBackdrop {
   final Color _farHaze, _nearHaze;
   final Paint _sky = Paint();
   final Paint _ground = Paint()..isAntiAlias = false;
-
   final Paint _cloud = fillPaint(const Color(0xB3FFFFFF));
   final Path _path = Path();
-  final CityScape _cityScape = CityScape();
 
   /// Horizontal scroll of the scenery; grows as the road bends.
   double scroll = 0;
@@ -56,7 +53,7 @@ class RoadBackdrop {
     _clouds(canvas, w, horizon);
     
     if (theme.backdrop == BackdropKind.skyline) {
-      _cityScape.paint(
+      drawCityScape(
         canvas,
         width: w,
         baseY: horizon,
@@ -64,7 +61,7 @@ class RoadBackdrop {
         scroll: scroll * 0.25 + 90 * k,
         haze: _farHaze,
       );
-      _cityScape.paint(
+      drawCityScape(
         canvas,
         width: w,
         baseY: horizon,

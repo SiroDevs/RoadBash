@@ -87,9 +87,15 @@ class _MenuScreenState extends State<MenuScreen> {
     final l10n = context.l10n;
     final id = _scene(index);
     final info = SceneInfo(scene: id, km: id == null ? 0 : _km[id]!);
+    String sceneImg = AppAssets.appMain;
+    if (id == SceneId.city) {
+      sceneImg = AppAssets.sceneCity;
+    } else if (id == SceneId.suburbs) {
+      sceneImg = AppAssets.sceneSuburbs;
+    }
     final card = id == null
-        ? const Icon(Icons.support_agent, size: 120, color: Retro.orange)
-        : ScenePreview(id);
+        ? ScenePreview(AppAssets.restroom)
+        : ScenePreview(sceneImg);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

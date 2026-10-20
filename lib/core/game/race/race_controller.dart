@@ -40,15 +40,11 @@ class RaceController {
   final String playerName;
   final List<RiderRival> rivals;
 
-  double countdown = 3.0;
-  double elapsed = 0;
-  bool finished = false;
-  double finishTime = 0;
-  double progress = 0;
-  int lap = 1;
-  int position = 1;
+  double countdown = 3.0, elapsed = 0;
+  double finishTime = 0, progress = 0;
+  int lap = 1, position = 1;
   RiderRival? nearest;
-  bool playerAhead = true;
+  bool finished = false, playerAhead = true;
   double gapSeconds = 0;
 
   double get raceLength => lapLength * laps;

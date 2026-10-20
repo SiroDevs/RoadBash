@@ -47,8 +47,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
   bool _keyThrottle = false, _touchThrottle = false;
   bool _keyBrake = false, _touchBrake = false;
 
-  bool _finishing = false;
-  bool _notified = false;
+  bool _finishing = false, _notified = false;
   bool _shutDown = false;
   double _finishDelay = 2.4;
 

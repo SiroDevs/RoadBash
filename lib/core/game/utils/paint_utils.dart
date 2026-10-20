@@ -14,11 +14,6 @@ Color shade(Color c, double amount) => Color.lerp(
   amount.abs(),
 )!;
 
-/// Paints for one colour pre-blended toward [fog] across the draw distance.
-///
-/// Blending per segment would allocate a Color and a Paint for every one of
-/// the couple of hundred segments drawn each frame; this builds the whole
-/// ramp once and the render loop just indexes it.
 List<Paint> fogRamp(Color base, Color fog, {bool antiAlias = false}) =>
     List.generate(RoadConfig.fogSteps, (i) {
       final t = i / (RoadConfig.fogSteps - 1);

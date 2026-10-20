@@ -7,6 +7,7 @@ class AppAssets {
 
   static const imgZeroState = 'assets/images/empty.png';
   static const appMain = 'assets/images/main.jpg';
+  static const restroom = 'assets/images/restroom.jpg';
 
   static const sceneCity = 'assets/images/scenes/city.png';
   static const sceneSuburbs = 'assets/images/scenes/suburbs.png';

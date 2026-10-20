@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
 import '../../common/app_router/route_names.dart';
@@ -18,7 +19,6 @@ import 'cubit/reception_cubit.dart';
 import 'widgets/name_editor.dart';
 import 'widgets/sound_mix.dart';
 
-/// The settings desk: pick an item on the left, edit it on the right.
 class ReceptionScreen extends StatelessWidget {
   const ReceptionScreen({super.key});
 
@@ -40,42 +40,34 @@ class ReceptionScreen extends StatelessWidget {
             children: [
               RetroTitle(l10n.receptionTitle),
               const SizedBox(height: 16),
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          for (final entry in labels.entries)
-                            RetroMenuItem(
-                              label: entry.value,
-                              selected: entry.key == tab,
-                              onTap: () =>
-                                  context.read<ReceptionCubit>().open(entry.key),
-                            ),
-                          RetroMenuItem(
-                            label: l10n.receptionDone,
-                            selected: false,
-                            onTap: () => context.goNamed(RouteNames.menu),
-                          ),
-                        ],
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (final entry in labels.entries)
+                        RetroMenuItem(
+                          label: entry.value,
+                          selected: entry.key == tab,
+                          onTap: () =>
+                              context.read<ReceptionCubit>().open(entry.key),
+                        ),
+                      RetroMenuItem(
+                        label: l10n.receptionDone,
+                        selected: false,
+                        onTap: () => context.goNamed(RouteNames.menu),
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        color: Retro.panel,
-                        padding: const EdgeInsets.all(16),
-                        child: SingleChildScrollView(child: _detail(context, tab)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                    ],
+                  ).expanded(flex: 2),
+                  const SizedBox(width: 16),
+                  Container(
+                    color: Retro.panel,
+                    padding: const EdgeInsets.all(16),
+                    child: SingleChildScrollView(child: _detail(context, tab)),
+                  ).expanded(flex: 3),
+                ],
+              ).expanded(),
             ],
           ),
         ),
@@ -84,9 +76,11 @@ class ReceptionScreen extends StatelessWidget {
   }
 
   Widget _detail(BuildContext context, ReceptionTab tab) => switch (tab) {
-        ReceptionTab.name => const NameEditor(),
-        ReceptionTab.sound => const SoundMix(),
-        ReceptionTab.controls =>
-          Text(context.l10n.controlsHelp, style: retroBody()),
-      };
+    ReceptionTab.name => const NameEditor(),
+    ReceptionTab.sound => const SoundMix(),
+    ReceptionTab.controls => Text(
+      context.l10n.controlsHelp,
+      style: retroBody(),
+    ),
+  };
 }

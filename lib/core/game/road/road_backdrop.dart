@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
+import '../utils/city_scape.dart';
 import '../utils/paint_utils.dart';
 import '../utils/scenery_shapes.dart';
 import 'road_config.dart';
@@ -12,8 +13,8 @@ import 'road_theme.dart';
 
 class RoadBackdrop {
   RoadBackdrop(this.theme)
-      : _far = fillPaint(Color.lerp(theme.backFar, theme.fog, 0.35)!),
-        _near = fillPaint(Color.lerp(theme.backNear, theme.fog, 0.18)!);
+    : _far = fillPaint(Color.lerp(theme.backFar, theme.fog, 0.35)!),
+      _near = fillPaint(Color.lerp(theme.backNear, theme.fog, 0.18)!);
 
   final SceneTheme theme;
   final Paint _far, _near;
@@ -21,6 +22,7 @@ class RoadBackdrop {
   final Paint _ground = Paint()..isAntiAlias = false;
   final Paint _cloud = fillPaint(const Color(0xB3FFFFFF));
   final Path _path = Path();
+  final CityScape _cityScape = CityScape();
 
   /// Horizontal scroll of the scenery; grows as the road bends.
   double scroll = 0;
@@ -30,11 +32,10 @@ class RoadBackdrop {
 
   void resize(Vector2 size) {
     final horizon = size.y * RoadConfig.horizonRatio;
-    _sky.shader = Gradient.linear(
-      Offset.zero,
-      Offset(0, horizon),
-      [theme.skyTop, theme.skyHorizon],
-    );
+    _sky.shader = Gradient.linear(Offset.zero, Offset(0, horizon), [
+      theme.skyTop,
+      theme.skyHorizon,
+    ]);
     _ground.shader = Gradient.linear(
       Offset(0, horizon),
       Offset(0, horizon + size.y * 0.16),
@@ -49,31 +50,45 @@ class RoadBackdrop {
 
     canvas.drawRect(Rect.fromLTWH(0, 0, w, horizon + 1), _sky);
     _clouds(canvas, w, horizon);
+
     if (theme.backdrop == BackdropKind.skyline) {
-      drawSkyline(canvas,
-          width: w,
-          baseY: horizon,
-          block: 38 * k,
-          minHeight: 40 * k,
-          maxHeight: 170 * k,
-          scroll: scroll * 0.5,
-          a: _far,
-          b: _near);
+      _cityScape.paint(
+        canvas,
+        width: w,
+        baseY: horizon,
+        height: 110 * k,
+        scroll: scroll * 0.25 + 90 * k,
+        fill: _far,
+      );
+      _cityScape.paint(
+        canvas,
+        width: w,
+        baseY: horizon,
+        height: 170 * k,
+        scroll: scroll * 0.5,
+        fill: _near,
+      );
     } else {
-      drawHills(canvas, _path,
-          width: w,
-          baseY: horizon,
-          amplitude: 46 * k,
-          frequency: 0.007,
-          scroll: scroll * 0.6,
-          paint: _far);
-      drawHills(canvas, _path,
-          width: w,
-          baseY: horizon,
-          amplitude: 30 * k,
-          frequency: 0.012,
-          scroll: scroll,
-          paint: _near);
+      drawHills(
+        canvas,
+        _path,
+        width: w,
+        baseY: horizon,
+        amplitude: 46 * k,
+        frequency: 0.007,
+        scroll: scroll * 0.6,
+        paint: _far,
+      );
+      drawHills(
+        canvas,
+        _path,
+        width: w,
+        baseY: horizon,
+        amplitude: 30 * k,
+        frequency: 0.012,
+        scroll: scroll,
+        paint: _near,
+      );
     }
     canvas.drawRect(Rect.fromLTRB(0, horizon, w, size.y), _ground);
   }
@@ -85,14 +100,17 @@ class RoadBackdrop {
       final y = horizon * _cloudY[i];
       final s = horizon * (0.10 + 0.02 * (i % 3));
       c.drawOval(
-          Rect.fromCenter(center: Offset(x, y), width: s * 3.2, height: s),
-          _cloud);
+        Rect.fromCenter(center: Offset(x, y), width: s * 3.2, height: s),
+        _cloud,
+      );
       c.drawOval(
-          Rect.fromCenter(
-              center: Offset(x + s * 0.7, y - s * 0.25),
-              width: s * 2.0,
-              height: s * 0.9),
-          _cloud);
+        Rect.fromCenter(
+          center: Offset(x + s * 0.7, y - s * 0.25),
+          width: s * 2.0,
+          height: s * 0.9,
+        ),
+        _cloud,
+      );
     }
   }
 }

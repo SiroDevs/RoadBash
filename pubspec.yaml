@@ -63,7 +63,7 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/images/
-    - assets/images/scenes
+    - assets/images/scenes/
     - assets/audio/music/
     - assets/audio/sfx/
     - assets/audio/loops/

@@ -1,5 +1,5 @@
 // Project imports:
-import '../utils/pseudo_random.dart';
+import '../utils/scenery_shapes.dart';
 import 'road_config.dart';
 import 'road_theme.dart';
 
@@ -13,10 +13,6 @@ enum PropKind {
 }
 
 /// One piece of roadside scenery, pinned to a segment for the whole race.
-///
-/// Everything a prop needs is decided once, at track build time. Nothing is
-/// derived from the segment the camera happens to be on, so a prop never
-/// changes size, colour or height while you drive past it.
 class Prop {
   const Prop({
     required this.kind,

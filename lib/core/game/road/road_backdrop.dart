@@ -14,12 +14,16 @@ import 'road_theme.dart';
 class RoadBackdrop {
   RoadBackdrop(this.theme)
     : _far = fillPaint(Color.lerp(theme.backFar, theme.fog, 0.35)!),
-      _near = fillPaint(Color.lerp(theme.backNear, theme.fog, 0.18)!);
+      _near = fillPaint(Color.lerp(theme.backNear, theme.fog, 0.18)!),
+      _farHaze = theme.fog.withAlpha(150),
+      _nearHaze = theme.fog.withAlpha(45);
 
   final SceneTheme theme;
   final Paint _far, _near;
+  final Color _farHaze, _nearHaze;
   final Paint _sky = Paint();
   final Paint _ground = Paint()..isAntiAlias = false;
+
   final Paint _cloud = fillPaint(const Color(0xB3FFFFFF));
   final Path _path = Path();
   final CityScape _cityScape = CityScape();
@@ -50,7 +54,7 @@ class RoadBackdrop {
 
     canvas.drawRect(Rect.fromLTWH(0, 0, w, horizon + 1), _sky);
     _clouds(canvas, w, horizon);
-
+    
     if (theme.backdrop == BackdropKind.skyline) {
       _cityScape.paint(
         canvas,
@@ -58,7 +62,7 @@ class RoadBackdrop {
         baseY: horizon,
         height: 110 * k,
         scroll: scroll * 0.25 + 90 * k,
-        fill: _far,
+        haze: _farHaze,
       );
       _cityScape.paint(
         canvas,
@@ -66,7 +70,7 @@ class RoadBackdrop {
         baseY: horizon,
         height: 170 * k,
         scroll: scroll * 0.5,
-        fill: _near,
+        haze: _nearHaze,
       );
     } else {
       drawHills(

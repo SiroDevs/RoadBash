@@ -37,4 +37,37 @@ void drawImBuilding(Canvas canva, Paint paint) {
     color00A2E8,
     1,
   );
+
+  drawLines(
+    canva,
+    paint,
+    const [
+      133,
+      50,
+      133,
+      90,
+      132,
+      50,
+      132,
+      90,
+      134,
+      50,
+      134,
+      90,
+      135,
+      50,
+      135,
+      90,
+      138,
+      53,
+      138,
+      90,
+      129,
+      53,
+      129,
+      90,
+    ],
+    colorC3C3C3,
+    0.25,
+  );
 }

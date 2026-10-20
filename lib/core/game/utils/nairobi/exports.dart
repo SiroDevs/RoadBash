@@ -2,6 +2,7 @@ export '88.dart';
 export 'britam.dart';
 export 'building1.dart';
 export 'building2.dart';
+export 'building3.dart';
 export 'coop.dart';
 export 'cbd_buildings.dart';
 export 'dome.dart';

@@ -70,12 +70,12 @@ void drawOval(Canvas canva, Paint paint, Rect r, Color color) {
   fillContainer(canva, paint, color);
 }
 
-void drawLines(Canvas canva, Paint paint, List<double> s, Color color, [double w = 0.25]) {
+void drawLines(Canvas canva, Paint paint, List<double> lines, Color color, [double w = 0.25]) {
   path.reset();
-  for (var i = 0; i < s.length; i += 4) {
+  for (var i = 0; i < lines.length; i += 4) {
     path
-      ..moveTo(s[i], s[i + 1])
-      ..lineTo(s[i + 2], s[i + 3]);
+      ..moveTo(lines[i], lines[i + 1])
+      ..lineTo(lines[i + 2], lines[i + 3]);
   }
   drawEdge(canva, paint, color, w);
 }
@@ -112,18 +112,19 @@ void drawCityScape(
       ..translate(-cityLeft, -cityBaseline);
       
     const List<CityPart> cityBuildings = [
-      // drawTimesTower,
-      // drawCoopBuilding,
-      // drawKicc,
-      // drawParliament,
-      // drawImBuilding,
-      // drawDomeBuilding,
-      // draw88Tower,
-      // drawBritam,
-      // drawBuilding1,
-      drawBuilding2,
       drawCbdBuildings,
       drawOtherBuildings,
+      drawCoopBuilding,
+      drawDomeBuilding,
+      draw88Tower,
+      drawBuilding1,
+      drawBuilding2,
+      drawTimesTower,
+      drawBritam,
+      drawParliament,
+      drawImBuilding,
+      drawBuilding3,
+      drawKicc,
     ];
 
     for (final building in cityBuildings) {

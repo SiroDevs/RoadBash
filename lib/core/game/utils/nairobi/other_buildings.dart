@@ -66,6 +66,22 @@ void drawOtherBuildings(Canvas canva, Paint paint) {
     65,
     90,
   ], color3F48CC);
+
+  drawPoly(canva, paint, const [
+    43,
+    46,
+    43,
+    90,
+    30,
+    90,
+    30,
+    45,
+    34,
+    45,
+    34,
+    46,
+  ], color00A2E8);
+
   drawPoly(canva, paint, const [
     20,
     90,
@@ -84,19 +100,4 @@ void drawOtherBuildings(Canvas canva, Paint paint) {
     25,
     90,
   ], colorB97A57);
-
-  drawPoly(canva, paint, const [
-    43,
-    46,
-    43,
-    90,
-    30,
-    90,
-    30,
-    45,
-    34,
-    45,
-    34,
-    46,
-  ], color00A2E8);
 }

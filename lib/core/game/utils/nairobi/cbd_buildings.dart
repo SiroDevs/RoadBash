@@ -24,26 +24,6 @@ void drawCbdBuildings(Canvas canva, Paint paint) {
     90,
   ], color00A2E8);
   drawPoly(canva, paint, const [
-    156,
-    90,
-    156,
-    83,
-    154,
-    83,
-    154,
-    79,
-    135,
-    79,
-    135,
-    81,
-    134,
-    81,
-    133,
-    83,
-    133,
-    90,
-  ], colorFF7F27);
-  drawPoly(canva, paint, const [
     96,
     90,
     96,

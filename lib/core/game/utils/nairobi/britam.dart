@@ -68,7 +68,7 @@ void drawBritam(Canvas canva, Paint paint) {
       74,
       90,
     ],
-    colorC3C3C3,
+    color00A2E8,
     edge: color7F7F7F,
   );
   drawLines(canva, paint, const [58, 49, 63, 90, 67, 45, 63, 90], color7F7F7F);

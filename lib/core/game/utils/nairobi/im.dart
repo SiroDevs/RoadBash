@@ -29,6 +29,7 @@ void drawImBuilding(Canvas canva, Paint paint) {
     139,
     90,
   ], color000000);
+
   drawLines(
     canva,
     paint,

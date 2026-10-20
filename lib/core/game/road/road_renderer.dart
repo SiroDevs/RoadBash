@@ -188,8 +188,8 @@ class RoadRenderer extends PositionComponent {
       final camZ = trkPosition - (looped ? track.length : 0);
 
       final camX2 = camX - dx;
-      _project(_p1, seg.y1, seg.index * len, camX, camY, camZ);
-      _project(_p2, seg.y2, (seg.index + 1) * len, camX2, camY, camZ);
+      // _project(_p1, seg.y1, seg.index * len, camX, camY, camZ);
+      // _project(_p2, seg.y2, (seg.index + 1) * len, camX2, camY, camZ);
       x += dx;
       dx += seg.curve;
 
@@ -236,9 +236,6 @@ class RoadRenderer extends PositionComponent {
 
   /// Walks the visible segments far-to-near and draws the props anchored on
   /// each, so nearer scenery paints over farther scenery.
-  ///
-  /// The scan starts behind the camera because a building you are level with
-  /// is anchored on a segment you have already passed.
   void _drawDecor(Canvas canvas, int baseIdx) {
     final near = _byN[_firstN]!;
     final limit = math.min(RoadConfig.decorDistance, _lastN + 1);

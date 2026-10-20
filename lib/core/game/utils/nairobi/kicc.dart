@@ -55,24 +55,32 @@ void drawKicc(Canvas canva, Paint paint) {
   }
   fillContainer(canva, paint, color7F7F7F);
   drawLines(canva, paint, const [102, 39, 117, 39], colorB97A57);
-  drawLines(canva, paint, const [102, 39, 117, 39, 105, 38, 114.5, 38], color7F7F7F);
+  drawLines(canva, paint, const [
+    102,
+    39,
+    117,
+    39,
+    105,
+    38,
+    114.5,
+    38,
+  ], color7F7F7F);
+
+  // smaller cone in Kicc
+  drawPoly(canva, paint, const [
+    114,
+    90,
+    114,
+    88,
+    106,
+    84,
+    118,
+    73,
+    129,
+    84,
+    121,
+    88,
+    121,
+    90,
+  ], colorFF7F27);
 }
-
-
-void drawKicc2(Canvas canva, Paint paint) => drawPoly(canva, paint, const [
-  114,
-  90,
-  114,
-  88,
-  106,
-  84,
-  118,
-  73,
-  129,
-  84,
-  121,
-  88,
-  121,
-  90,
-], colorFF7F27);
-

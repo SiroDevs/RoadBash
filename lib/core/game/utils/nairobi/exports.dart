@@ -1,9 +1,12 @@
 export '88.dart';
 export 'britam.dart';
+export 'building1.dart';
+export 'building2.dart';
 export 'coop.dart';
+export 'cbd_buildings.dart';
 export 'dome.dart';
 export 'im.dart';
 export 'kicc.dart';
+export 'other_buildings.dart';
 export 'parliament.dart';
 export 'tt.dart';
-export 'others.dart';

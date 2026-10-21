@@ -188,8 +188,8 @@ class RoadRenderer extends PositionComponent {
       final camZ = trkPosition - (looped ? track.length : 0);
 
       final camX2 = camX - dx;
-      // _project(_p1, seg.y1, seg.index * len, camX, camY, camZ);
-      // _project(_p2, seg.y2, (seg.index + 1) * len, camX2, camY, camZ);
+      _project(_p1, seg.y1, seg.index * len, camX, camY, camZ);
+      _project(_p2, seg.y2, (seg.index + 1) * len, camX2, camY, camZ);
       x += dx;
       dx += seg.curve;
 

@@ -83,4 +83,26 @@ void drawKicc(Canvas canva, Paint paint) {
     121,
     90,
   ], colorFF7F27);
+  drawLines(
+    canva,
+    paint,
+    const [114, 88, 121, 88, 107, 84, 128, 84, 124, 79.5, 111.5, 79.5],
+    colorB97A57,
+    0.5,
+  );
+  drawPoly(canva, paint, const [118.0, 74, 117.5, 84, 118.5, 84], colorB97A57);
+  drawPoly(canva, paint, const [115.5, 84, 118.0, 74, 114.5, 84], colorB97A57);
+  drawPoly(canva, paint, const [112.5, 84, 118.0, 74, 111.5, 84], colorB97A57);
+  drawPoly(canva, paint, const [118.0, 74, 120.0, 84, 121.5, 84], colorB97A57);
+  drawPoly(canva, paint, const [118.0, 74, 108.5, 84, 109.5, 84], colorB97A57);
+  drawPoly(canva, paint, const [118.0, 74, 123.0, 84, 124.0, 84], colorB97A57);
+  drawPoly(canva, paint, const [118.0, 74, 125.5, 84, 126.5, 84], colorB97A57);
+
+  drawPoly(canva, paint, const [118.5, 84, 118.0, 89, 117.5, 84], colorB97A57);
+  drawPoly(canva, paint, const [118.0, 89, 120.0, 84, 120.5, 84], colorB97A57);
+  drawPoly(canva, paint, const [118.5, 89, 115.0, 84, 114.5, 84], colorB97A57);
+  drawPoly(canva, paint, const [118.5, 89, 112.0, 84, 111.5, 84], colorB97A57);
+  drawPoly(canva, paint, const [118.0, 89, 123.0, 84, 123.5, 84], colorB97A57);
+  drawPoly(canva, paint, const [118.0, 89, 109.5, 84, 108.5, 84], colorB97A57);
+  drawPoly(canva, paint, const [118.0, 89, 125.5, 84, 126.5, 84], colorB97A57);
 }

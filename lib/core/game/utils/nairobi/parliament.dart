@@ -27,6 +27,25 @@ void drawParliament(Canvas canva, Paint paint) {
     67,
     90,
   ], colorFF7F27);
+  drawRect(
+    canva,
+    paint,
+    const Rect.fromLTRB(66.5, 54.5, 69.5, 55.0),
+    color000000,
+  );
+  drawRect(
+    canva,
+    paint,
+    const Rect.fromLTRB(66.5, 55.5, 69.5, 56.0),
+    colorED1C24,
+  );
+  drawRect(
+    canva,
+    paint,
+    const Rect.fromLTRB(66.5, 55.5, 69.5, 55.0),
+    color22B14C,
+  );
+
   drawPoly(canva, paint, const [
     78,
     68,

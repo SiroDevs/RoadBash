@@ -20,6 +20,10 @@ const Color colorC3C3C3 = Color(0xFFC3C3C3);
 const Color color000000 = Color(0xFF000000);
 const Color colorFF7F27 = Color(0xFFFF7F27);
 const Color color880015 = Color(0xFF880015);
+const Color color22B14C = Color(0xFF22B14C);
+const Color colorED1C24 = Color(0xFFED1C24);
+const Color colorFFFFFF = Color(0xFFFFFFFF);
+const Color color42493E = Color(0xFF42493E);
 
 typedef CityPart = void Function(Canvas canvas, Paint paint);
 
@@ -50,7 +54,13 @@ void drawEdge(Canvas canva, Paint paint, Color color, [double width = 0.25]) {
   canva.drawPath(path, paint);
 }
 
-void drawPoly(Canvas canva, Paint paint, List<double> pts, Color color, {Color? edge}) {
+void drawPoly(
+  Canvas canva,
+  Paint paint,
+  List<double> pts,
+  Color color, {
+  Color? edge,
+}) {
   tracePoints(pts);
   fillContainer(canva, paint, color);
   if (edge != null) drawEdge(canva, paint, edge);
@@ -70,7 +80,13 @@ void drawOval(Canvas canva, Paint paint, Rect r, Color color) {
   fillContainer(canva, paint, color);
 }
 
-void drawLines(Canvas canva, Paint paint, List<double> lines, Color color, [double w = 0.25]) {
+void drawLines(
+  Canvas canva,
+  Paint paint,
+  List<double> lines,
+  Color color, [
+  double w = 0.25,
+]) {
   path.reset();
   for (var i = 0; i < lines.length; i += 4) {
     path
@@ -110,7 +126,7 @@ void drawCityScape(
       ..translate(i * tile - scroll, baseY)
       ..scale(s)
       ..translate(-cityLeft, -cityBaseline);
-      
+
     const List<CityPart> cityBuildings = [
       drawCbdBuildings,
       drawOtherBuildings,

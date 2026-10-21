@@ -53,14 +53,14 @@ class RoadBackdrop {
     _clouds(canvas, w, horizon);
     
     if (theme.backdrop == BackdropKind.skyline) {
-      // drawCityScape(
-      //   canvas,
-      //   width: w,
-      //   baseY: horizon,
-      //   height: 110 * k,
-      //   scroll: scroll * 0.25 + 90 * k,
-      //   haze: _farHaze,
-      // );
+      drawCityScape(
+        canvas,
+        width: w,
+        baseY: horizon,
+        height: 110 * k,
+        scroll: scroll * 0.25 + 90 * k,
+        haze: _farHaze,
+      );
       drawCityScape(
         canvas,
         width: w,

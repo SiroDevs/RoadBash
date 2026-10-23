@@ -1,0 +1,89 @@
+name: Deploy RoadBash to Vercel
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vercel-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    # Forked pull requests do not receive repository secrets.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Show Flutter version
+        run: flutter --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build Flutter Web
+        run: flutter build web --release
+
+      - name: Prepare Vercel output
+        shell: bash
+        run: |
+          mkdir -p .vercel/output/static
+
+          cp -R build/web/. .vercel/output/static/
+
+          cat > .vercel/output/config.json <<'EOF'
+          {
+            "version": 3,
+            "routes": [
+              {
+                "src": "/(.*)",
+                "dest": "/index.html"
+              }
+            ]
+          }
+          EOF
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel
+
+      - name: Validate deployment configuration
+        shell: bash
+        run: |
+          if [ -z "$VERCEL_TOKEN" ] || \
+             [ -z "$VERCEL_ORG_ID" ] || \
+             [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "::error::Configure VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID in GitHub repository secrets."
+            exit 1
+          fi
+
+      - name: Deploy to Vercel Preview
+        if: github.event_name == 'pull_request'
+        run: vercel deploy --prebuilt --yes
+
+      - name: Deploy to Vercel Production
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: vercel deploy --prebuilt --prod --yes

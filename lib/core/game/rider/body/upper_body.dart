@@ -104,7 +104,7 @@ class UpperBody extends RiderPartPainter {
       ..color = const Color(0xFFA349A4);
     canva.drawPath(path, paint);
 
-    // Back Reflector 1
+    // Back Reflector
     path
       ..reset()
       ..moveTo(39.0, -3.0)
@@ -114,28 +114,14 @@ class UpperBody extends RiderPartPainter {
       ..lineTo(82.0, -8.0)
       ..lineTo(82.0, -1.0)
       ..lineTo(74.0, -4.0)
-      ..lineTo(48.0, -5.0)
-      ..close();
-    paint
-      ..style = PaintingStyle.fill
-      ..color = const Color(0xFF22B14C);
-    canva.drawPath(path, paint);
-    paint
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0
-      ..color = const Color(0xFFB5E61D);
-    canva.drawPath(path, paint);
-    // Back Reflector 2
-    path
-      ..reset()
-      ..moveTo(46.0, -4.0)
-      ..lineTo(43.0, 9.0)
-      ..lineTo(47.0, 20.0)
-      ..lineTo(55.0, 18.0)
-      ..lineTo(66.0, 18.0)
-      ..lineTo(73.0, 21.0)
-      ..lineTo(76.0, 9.0)
       ..lineTo(73.0, -3.0)
+      ..lineTo(76.0, 9.0)
+      ..lineTo(73.0, 21.0)
+      ..lineTo(66.0, 18.0)
+      ..lineTo(55.0, 18.0)
+      ..lineTo(47.0, 20.0)
+      ..lineTo(43.0, 9.0)
+      ..lineTo(46.0, -4.0)
       ..close();
     paint
       ..style = PaintingStyle.fill

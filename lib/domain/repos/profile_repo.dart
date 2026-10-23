@@ -3,46 +3,38 @@ import 'package:injectable/injectable.dart';
 
 // Project imports:
 import '../../common/constants/pref_constants.dart';
-import '../../data/app_database.dart';
-import '../../data/entities/profile_entity.dart';
 import '../models/engine_flavour.dart';
 import '../models/player_profile.dart';
 import 'prefs_repo.dart';
 
 @lazySingleton
 class ProfileRepo {
-  ProfileRepo(this._db, this._prefs);
+  ProfileRepo(this._prefs);
 
-  final AppDatabase _db;
   final PrefsRepo _prefs;
 
-  Future<PlayerProfile> load() async {
-    final flavour = EngineFlavour.fromId(
-      _prefs.getPrefString(PrefConstants.engineFlavourKey),
-    );
-    final e = await _db.profileDao.find();
-    if (e == null) return PlayerProfile(flavour: flavour);
-    return PlayerProfile(
-      name: e.name,
-      master: e.master / 100,
-      music: e.music / 100,
-      engine: e.engine / 100,
-      effects: e.effects / 100,
-      flavour: flavour,
-    );
+  Future<PlayerProfile> load() async => PlayerProfile(
+        name: _prefs.getPrefString(PrefConstants.playerNameKey),
+        master: _readVolume(PrefConstants.masterVolKey, 1.0),
+        music: _readVolume(PrefConstants.tyreVolKey, 0.7),
+        engine: _readVolume(PrefConstants.engineVolKey, 0.8),
+        effects: _readVolume('vol_effects', 0.8),
+        flavour: EngineFlavour.fromId(
+          _prefs.getPrefString(PrefConstants.engineFlavourKey),
+        ),
+      );
+
+  double _readVolume(String key, double fallback) {
+    if (!_prefs.keyExists(key)) return fallback;
+    return (_prefs.getPrefInt(key) / 100).clamp(0.0, 1.0).toDouble();
   }
 
-  Future<void> save(PlayerProfile p) async {
-    _prefs.setPrefString(PrefConstants.engineFlavourKey, p.flavour.id);
-    await _db.profileDao.save(
-      ProfileEntity(
-        1,
-        p.name,
-        (p.master * 100).round(),
-        (p.music * 100).round(),
-        (p.engine * 100).round(),
-        (p.effects * 100).round(),
-      ),
-    );
+  Future<void> save(PlayerProfile profile) async {
+    _prefs.setPrefString(PrefConstants.playerNameKey, profile.name);
+    _prefs.setPrefInt(PrefConstants.masterVolKey, (profile.master * 100).round());
+    _prefs.setPrefInt(PrefConstants.tyreVolKey, (profile.music * 100).round());
+    _prefs.setPrefInt(PrefConstants.engineVolKey, (profile.engine * 100).round());
+    _prefs.setPrefInt('vol_effects', (profile.effects * 100).round());
+    _prefs.setPrefString(PrefConstants.engineFlavourKey, profile.flavour.id);
   }
 }

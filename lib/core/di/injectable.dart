@@ -10,8 +10,6 @@ import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import '../../common/constants/app_constants.dart';
-import '../../data/app_database.dart';
 import '../utils/app_util.dart';
 import 'injectable.config.dart';
 
@@ -30,10 +28,6 @@ abstract class RegisterModule {
   @preResolve
   Future<SharedPreferences> sharedPrefs() => SharedPreferences.getInstance();
 
-  @singleton
-  @preResolve
-  Future<AppDatabase> appDatabase() =>
-      $FroomAppDatabase.databaseBuilder(AppConstants.databaseFile).build();
 }
 
 dynamic _parseAndDecode(String response) => jsonDecode(response);

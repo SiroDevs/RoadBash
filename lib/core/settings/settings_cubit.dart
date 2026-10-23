@@ -31,7 +31,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   void setFlavour(EngineFlavour v) =>
       _update(state.profile.copyWith(flavour: v));
 
-  /// Emits at once but writes to the database after the user stops dragging.
+  /// Emits immediately and saves preferences after the user stops dragging.
   void _update(PlayerProfile profile) {
     emit(SettingsState(profile: profile, loaded: state.loaded));
     _saveTimer?.cancel();

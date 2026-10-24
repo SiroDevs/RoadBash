@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 // Project imports:
 import '../domain/models/player_profile.dart';
 import '../domain/models/scene_id.dart';
-import 'app_localizations.dart';
+import 'gen/app_localizations.dart';
 
 extension L10nContext on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this)!;

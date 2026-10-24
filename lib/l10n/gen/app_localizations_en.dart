@@ -29,7 +29,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get noticeTitle => 'Road Bash™ Game 2026';
+  String get noticeTitle => 'Road Bash™ 2026';
 
   @override
   String get noticeFun =>
@@ -137,7 +137,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get controlsHelp =>
-      'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down, S or Space brakes.\n\nTouch: use the arrows on the left to steer, and the gas and brake pedals on the right.';
+      'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nTouch: use the arrows on the left to steer, and the gas and brake pedals on the right.';
 
   @override
   String get hudGo => 'GO!';

@@ -137,7 +137,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get controlsHelp =>
-      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini, S au Space hufunga breki.\n\nKwa kugusa: tumia mishale ya kushoto kuongoza, na kanyagio za mafuta na breki kulia.';
+      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nKwa kugusa: tumia mishale ya kushoto kuongoza, na kanyagio za mafuta na breki kulia.';
 
   @override
   String get hudGo => 'ANZA!';

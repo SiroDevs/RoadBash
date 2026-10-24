@@ -42,6 +42,7 @@ class RoadRenderer extends PositionComponent {
   double playerZ = RoadConfig.cameraHeight * RoadConfig.cameraDepth;
 
   double curveFelt = 0;
+  double _spread = 1;
 
   double get speedPercent => speed / RoadConfig.maxSpeed;
   double get speedKmh => speedPercent * RoadConfig.topSpeedKmh;
@@ -67,6 +68,7 @@ class RoadRenderer extends PositionComponent {
     this.size = size;
     _backdrop.resize(size);
     playerZ = DashboardLayout.cameraDistance(size);
+    _spread = DashboardLayout.roadSpread(size);
   }
 
   @override
@@ -147,10 +149,11 @@ class RoadRenderer extends PositionComponent {
     final cz = wz - camZ;
     final scale = RoadConfig.cameraDepth / cz;
     p.z = cz;
-    p.x = size.x / 2 + scale * (0 - camX) * size.x / 2;
-    p.y = size.y * RoadConfig.horizonRatio - scale * (wy - camY) * size.y / 2;
-    p.w = scale * RoadConfig.roadWidth * size.x / 2;
-    p.k = scale * size.y / 2;
+    final unit = size.y / 2;
+    p.x = size.x / 2 + scale * (0 - camX) * unit * _spread;
+    p.y = size.y * RoadConfig.horizonRatio - scale * (wy - camY) * unit;
+    p.w = scale * RoadConfig.roadWidth * unit * _spread;
+    p.k = scale * unit;
   }
 
   static double _fogAt(int n) {

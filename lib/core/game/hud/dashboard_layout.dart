@@ -100,12 +100,27 @@ class DashboardLayout {
     return Rect.fromLTWH((s.x - w) / 2, s.y - visible, w, visible);
   }
 
-  static double riderTyresGround(Vector2 s) =>
-      math.min(s.y - heightFor(s) * _tyreShare, s.y * _tyreMaxY);
+  static const double _portraitReach = 0.4;
+  static const double _roadFill = 0.62;
+  static const double _maxSpread = 1.8;
+
+  static double horizonY(Vector2 s) => s.y * RoadConfig.horizonRatio;
+
+  static double riderTyresGround(Vector2 s) {
+    final ground = math.min(s.y - heightFor(s) * _tyreShare, s.y * _tyreMaxY);
+    if (!isPortrait(s)) return ground;
+    return math.min(ground, horizonY(s) + s.x * _portraitReach);
+  }
+
+  static double roadSpread(Vector2 s) {
+    final below = riderTyresGround(s) - horizonY(s);
+    if (below < 1) return 1;
+    return (s.x * _roadFill / (2 * below)).clamp(1.0, _maxSpread).toDouble();
+  }
 
   static double cameraDistance(Vector2 s) {
     final base = RoadConfig.cameraHeight * RoadConfig.cameraDepth;
-    final below = riderTyresGround(s) - s.y * RoadConfig.horizonRatio;
+    final below = riderTyresGround(s) - horizonY(s);
     return below < 1 ? base : base * s.y * 0.5 / below;
   }
 
@@ -113,7 +128,8 @@ class DashboardLayout {
       RoadConfig.cameraDepth /
       cameraDistance(s) *
       RoadConfig.roadWidth *
-      s.x /
+      s.y *
+      roadSpread(s) /
       lanes;
 
   static Offset polar(Offset c, double angle, double radius) =>

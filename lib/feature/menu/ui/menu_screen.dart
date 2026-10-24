@@ -25,7 +25,7 @@ import '../../../core/game/road/road_track.dart';
 import '../../../core/progress/progress_cubit.dart';
 import '../../../core/settings/settings_cubit.dart';
 import '../../../domain/models/scene_id.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/gen/app_localizations.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../cubit/menu_cubit.dart';
 import 'widgets/scene_info.dart';

@@ -30,6 +30,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
     required this.strings,
     required this.playerName,
     required this.onFinished,
+    this.onPauseKey,
   });
 
   final SceneId scene;
@@ -38,6 +39,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
   final HudStrings strings;
   final String playerName;
   final ValueChanged<RaceResult> onFinished;
+  final VoidCallback? onPauseKey;
 
   late final RoadRenderer road;
   late final RaceController race;
@@ -162,6 +164,10 @@ class RoadGame extends FlameGame with KeyboardEvents {
     KeyEvent event,
     Set<LogicalKeyboardKey> keysPressed,
   ) {
+    if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.space) {
+      onPauseKey?.call();
+      return KeyEventResult.handled;
+    }
     bool any(List<LogicalKeyboardKey> list) => list.any(keysPressed.contains);
     _keySteer = (any(_right) ? 1.0 : 0.0) - (any(_left) ? 1.0 : 0.0);
     _keyThrottle = any(_up);
@@ -179,7 +185,6 @@ class RoadGame extends FlameGame with KeyboardEvents {
   static final _down = [
     LogicalKeyboardKey.arrowDown,
     LogicalKeyboardKey.keyS,
-    LogicalKeyboardKey.space,
   ];
 
   @override

@@ -18,7 +18,7 @@ import 'app_localizations_sw.dart';
 /// `supportedLocales` list. For example:
 ///
 /// ```dart
-/// import 'l10n/app_localizations.dart';
+/// import 'gen/app_localizations.dart';
 ///
 /// return MaterialApp(
 ///   localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -131,7 +131,7 @@ abstract class AppLocalizations {
   /// Heading of the ride-safe notice
   ///
   /// In en, this message translates to:
-  /// **'Road Bash™ Game 2026'**
+  /// **'Road Bash™ 2026'**
   String get noticeTitle;
 
   /// First notice paragraph
@@ -317,7 +317,7 @@ abstract class AppLocalizations {
   /// Controls help text
   ///
   /// In en, this message translates to:
-  /// **'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down, S or Space brakes.\n\nTouch: use the arrows on the left to steer, and the gas and brake pedals on the right.'**
+  /// **'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nTouch: use the arrows on the left to steer, and the gas and brake pedals on the right.'**
   String get controlsHelp;
 
   /// Race start banner

@@ -53,12 +53,11 @@ class RoadDecorPainter {
   void drawBox(Canvas c, VisionSeg near, VisionSeg far, Prop p, Vector2 size) {
     final cx = size.x / 2;
     final horizonY = size.y * RoadConfig.horizonRatio;
-    final outer = p.offset + p.width / RoadConfig.roadWidth;
 
     final xi1 = near.x1 + p.side * near.w1 * p.offset;
-    final xo1 = near.x1 + p.side * near.w1 * outer;
+    final xo1 = xi1 + p.side * p.width * near.k1;
     final xi2 = far.x1 + p.side * far.w1 * p.offset;
-    final xo2 = far.x1 + p.side * far.w1 * outer;
+    final xo2 = xi2 + p.side * p.width * far.k1;
 
     final lo = math.min(math.min(xi1, xo1), math.min(xi2, xo2));
     final hi = math.max(math.max(xi1, xo1), math.max(xi2, xo2));
@@ -121,8 +120,7 @@ class RoadDecorPainter {
       k * (near.w1 / near.k1);
 
   void drawBillboard(Canvas c, VisionSeg v, Prop p, Vector2 size) {
-    final px = v.w1 / RoadConfig.roadWidth;
-    final halfW = p.width * px;
+    final halfW = p.width * v.k1;
     final x = v.x1 + p.side * v.w1 * p.offset;
     if (x + halfW * 2 < 0 || x - halfW * 2 > size.x) return;
 

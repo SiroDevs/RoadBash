@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
 import '../../../common/app_router/route_names.dart';
 import '../../../common/layout/retro_sizes.dart';
 import '../../../common/strings/controls_strings.dart';
-import '../../../common/widgets/retro/retro_style.dart';
 import '../../../core/audio/audio_catalog.dart';
 import '../../../core/audio/audio_service.dart';
 import '../../../core/audio/music_scope.dart';
@@ -44,6 +44,7 @@ class _RaceScreenState extends State<RaceScreen> {
   /// that was down when the menu appeared never reports its release.
   int _inputEpoch = 0;
   bool _menuOpen = false;
+  bool _paused = false;
 
   RoadGame _buildGame() {
     final l10n = context.l10n;
@@ -55,6 +56,7 @@ class _RaceScreenState extends State<RaceScreen> {
       audio: getIt<AudioService>(),
       playerName: profile.displayName(l10n),
       onFinished: race.finish,
+      onPauseKey: _togglePause,
       strings: HudStrings(
         go: l10n.hudGo,
         finish: l10n.hudFinish,
@@ -84,15 +86,31 @@ class _RaceScreenState extends State<RaceScreen> {
     }
   }
 
+  void _togglePause() {
+    if (_menuOpen) return;
+    final pausing = !_paused;
+    setState(() {
+      _paused = pausing;
+      _inputEpoch++;
+    });
+    _tilt.setPaused(pausing);
+    if (pausing) {
+      _game.pauseRace();
+    } else {
+      _game.resumeRace();
+    }
+  }
+
   Future<void> _openControls() async {
     if (_menuOpen) return;
     _menuOpen = true;
+    final wasPaused = _paused;
     _game.pauseRace();
     _tilt.setPaused(true);
     setState(() => _inputEpoch++);
     await showRaceControlsMenu(context);
     _menuOpen = false;
-    if (!mounted) return;
+    if (!mounted || wasPaused) return;
     _tilt.setPaused(false);
     _game.resumeRace();
     setState(() => _inputEpoch++);
@@ -129,7 +147,11 @@ class _RaceScreenState extends State<RaceScreen> {
         ],
         child: Scaffold(
           backgroundColor: Colors.black,
-          body: Stack(
+          body: Listener(
+            onPointerUp: (_) {
+              if (_tilt.needsPermission.value) _tilt.requestPermission();
+            },
+            child: Stack(
             children: [
               GameWidget(game: _game),
               if (isTouchDevice)
@@ -146,30 +168,20 @@ class _RaceScreenState extends State<RaceScreen> {
                     ),
                   ),
                 ),
-              // iOS Safari only: motion data needs one tap to allow.
-              ValueListenableBuilder<bool>(
-                valueListenable: _tilt.needsPermission,
-                builder: (context, needs, _) => needs
-                    ? SafeArea(
-                        child: Align(
-                          alignment: const Alignment(0, -0.3),
-                          child: FilledButton.icon(
-                            onPressed: _tilt.requestPermission,
-                            icon: const Icon(Icons.screen_rotation),
-                            label: Text(t.enableTilt),
-                            style: FilledButton.styleFrom(
-                              backgroundColor: Retro.orange,
-                              foregroundColor: Retro.ink,
-                              textStyle: TextStyle(
-                                fontSize: context.sizes.buttonText,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-              ),
+              if (_paused)
+                Positioned.fill(
+                  child: Text(
+                    t.paused,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Anton',
+                      fontSize: context.sizes.title,
+                    ),
+                  )
+                      .alignment(Alignment.center)
+                      .backgroundColor(Colors.black54)
+                      .gestures(onTap: _togglePause),
+                ),
               SafeArea(
                 child: Align(
                   alignment: Alignment.topCenter,
@@ -181,6 +193,31 @@ class _RaceScreenState extends State<RaceScreen> {
                         onPressed: () => context.goNamed(RouteNames.menu),
                       ),
                       const Spacer(),
+                      if (isTouchDevice) ...[
+                        BlocBuilder<SettingsCubit, SettingsState>(
+                          buildWhen: (a, b) => a.profile.mute != b.profile.mute,
+                          builder: (context, state) {
+                            final muted = state.profile.mute;
+                            return IconButton(
+                              tooltip: muted ? t.unmute : t.muteSound,
+                              icon: Icon(
+                                muted ? Icons.volume_off : Icons.volume_up,
+                                color: Colors.white70,
+                              ),
+                              onPressed: () =>
+                                  context.read<SettingsCubit>().setMute(!muted),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          tooltip: _paused ? t.resume : t.pause,
+                          icon: Icon(
+                            _paused ? Icons.play_arrow : Icons.pause,
+                            color: Colors.white70,
+                          ),
+                          onPressed: _togglePause,
+                        ),
+                      ],
                       IconButton(
                         tooltip: t.title,
                         icon: const Icon(Icons.tune, color: Colors.white70),
@@ -191,6 +228,7 @@ class _RaceScreenState extends State<RaceScreen> {
                 ),
               ),
             ],
+            ),
           ),
         ),
       ),

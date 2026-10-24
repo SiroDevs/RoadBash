@@ -38,8 +38,8 @@ class ControlsStrings {
     'Geuza kushoto na kulia ikiwa kuinamisha kunahisi kinyume',
   );
 
-  String get enableTilt =>
-      _t('Tap to enable tilt steering', 'Gusa kuwasha uelekezaji wa kuinamisha');
+  String get pause => _t('Pause', 'Simamisha');
+  String get unmute => _t('Unmute', 'Washa Sauti');
 
   /// Replaces the old "Touch: ..." paragraph of the Controls help text.
   String get touchHelp => _t(

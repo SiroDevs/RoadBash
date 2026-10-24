@@ -16,7 +16,7 @@ import 'core/settings/settings_cubit.dart';
 import 'core/theme/bloc/theme_bloc.dart';
 import 'core/theme/theme_data.dart';
 import 'domain/repos/prefs_repo.dart';
-import 'l10n/app_localizations.dart';
+import 'l10n/gen/app_localizations.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

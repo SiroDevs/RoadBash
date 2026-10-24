@@ -33,7 +33,7 @@ class RoadRenderer extends PositionComponent {
   final RoadDecorPainter _decor;
 
   double trkPosition = 0, fullDistance = 0;
-  double playerX = 0.25, speed = 0;
+  double playerX = -0.25, speed = 0;
 
   double steer = 0, appliedSteer = 0, rpm = 0.16;
   bool throttle = false, brake = false;

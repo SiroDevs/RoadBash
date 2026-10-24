@@ -18,6 +18,7 @@ class PlayerProfile extends Equatable {
     this.effectsOn = true,
     this.engineOn = true,
     this.invertTilt = false,
+    this.language = '',
   });
 
   final String name;
@@ -38,6 +39,7 @@ class PlayerProfile extends Equatable {
 
   /// Flips the tilt direction, in case a device reports it the other way round.
   final bool invertTilt;
+  final String language;
 
   /// Volumes after the switches are applied. Use these for playback; the plain
   /// [master], [music], [engine] and [effects] are the slider positions.
@@ -59,6 +61,7 @@ class PlayerProfile extends Equatable {
     bool? effectsOn,
     bool? engineOn,
     bool? invertTilt,
+    String? language,
   }) => PlayerProfile(
     name: name ?? this.name,
     master: master ?? this.master,
@@ -72,6 +75,7 @@ class PlayerProfile extends Equatable {
     effectsOn: effectsOn ?? this.effectsOn,
     engineOn: engineOn ?? this.engineOn,
     invertTilt: invertTilt ?? this.invertTilt,
+    language: language ?? this.language,
   );
 
   @override
@@ -88,5 +92,6 @@ class PlayerProfile extends Equatable {
     effectsOn,
     engineOn,
     invertTilt,
+    language,
   ];
 }

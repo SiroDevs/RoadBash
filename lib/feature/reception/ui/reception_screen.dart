@@ -20,6 +20,8 @@ import '../../../core/audio/audio_catalog.dart';
 import '../../../core/audio/music_scope.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../cubit/reception_cubit.dart';
+import 'widgets/exit_panel.dart';
+import 'widgets/language_picker.dart';
 import 'widgets/name_editor.dart';
 import 'widgets/sound_mix.dart';
 
@@ -29,10 +31,13 @@ class ReceptionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final t = ControlsStrings.of(context);
     final labels = {
       ReceptionTab.name: l10n.receptionName,
       ReceptionTab.sound: l10n.receptionSound,
       ReceptionTab.controls: l10n.receptionControls,
+      ReceptionTab.language: t.language,
+      ReceptionTab.exit: t.exit,
     };
     final s = context.sizes;
     return MusicScope(
@@ -117,6 +122,8 @@ class ReceptionScreen extends StatelessWidget {
   Widget _detail(BuildContext context, ReceptionTab tab) => switch (tab) {
     ReceptionTab.name => const NameEditor(),
     ReceptionTab.sound => const SoundMix(),
+    ReceptionTab.language => const LanguagePicker(),
+    ReceptionTab.exit => const ExitPanel(),
     ReceptionTab.controls => Text(
       _controlsHelp(context),
       style: retroBody(size: context.sizes.small),

@@ -125,7 +125,7 @@ class RoadProps {
       slots[i].add(Prop(
         kind: PropKind.sign,
         anchor: i,
-        side: 1,
+        side: -1,
         offset: 1.24,
         width: 300,
         height: 1180,
@@ -166,7 +166,7 @@ class RoadProps {
       slots[i].add(Prop(
         kind: PropKind.sign,
         anchor: i,
-        side: (i ~/ 61).isEven ? 1 : -1,
+        side: -1,
         offset: 1.3,
         width: 260,
         height: 1050,

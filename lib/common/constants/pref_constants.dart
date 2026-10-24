@@ -20,4 +20,5 @@ class PrefConstants {
   static const effectsOnKey = 'opt_effects_on';
   static const engineOnKey = 'opt_engine_on';
   static const invertTiltKey = 'opt_invert_tilt';
+  static const languageKey = 'opt_language';
 }

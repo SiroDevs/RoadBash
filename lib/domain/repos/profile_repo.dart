@@ -28,6 +28,7 @@ class ProfileRepo {
     effectsOn: _readFlag(PrefConstants.effectsOnKey, true),
     engineOn: _readFlag(PrefConstants.engineOnKey, true),
     invertTilt: _readFlag(PrefConstants.invertTiltKey, false),
+    language: _prefs.getPrefString(PrefConstants.languageKey),
   );
 
   double _readVolume(String key, double fallback) {
@@ -58,5 +59,6 @@ class ProfileRepo {
     _writeFlag(PrefConstants.effectsOnKey, profile.effectsOn);
     _writeFlag(PrefConstants.engineOnKey, profile.engineOn);
     _writeFlag(PrefConstants.invertTiltKey, profile.invertTilt);
+    _prefs.setPrefString(PrefConstants.languageKey, profile.language);
   }
 }

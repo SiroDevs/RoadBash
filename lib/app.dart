@@ -55,7 +55,11 @@ class AppViewState extends State<AppView> {
       ],
       child: BlocBuilder<ThemeBloc, ThemeMode>(
         builder: (context, themeMode) {
+          final language = context.select<SettingsCubit, String>(
+            (c) => c.state.profile.language,
+          );
           return MaterialApp.router(
+            locale: language.isEmpty ? null : Locale(language),
             routerConfig: _router,
             themeMode: prefsRepo.getThemeMode(),
             theme: AppTheme.lightTheme(),

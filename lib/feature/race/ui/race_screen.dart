@@ -40,11 +40,14 @@ class _RaceScreenState extends State<RaceScreen> {
   late final RoadGame _game = _buildGame();
   late final TiltController _tilt = TiltController(onSteer: _game.setTouchSteer);
 
-  /// Bumped when the menu opens or closes so the pedals start fresh: a finger
-  /// that was down when the menu appeared never reports its release.
   int _inputEpoch = 0;
   bool _menuOpen = false;
   bool _paused = false;
+
+  late final Stream<int> _laps = Stream.periodic(
+    const Duration(milliseconds: 250),
+    (_) => _game.isLoaded ? _game.race.lap : 1,
+  ).distinct();
 
   RoadGame _buildGame() {
     final l10n = context.l10n;
@@ -76,7 +79,6 @@ class _RaceScreenState extends State<RaceScreen> {
     });
   }
 
-  /// Tilt steers on phones and tablets unless "Use Screentouch" is on.
   void _syncTilt(PlayerProfile profile) {
     _tilt.invert = profile.invertTilt;
     if (isTouchDevice && !profile.useScreenTouch) {
@@ -126,6 +128,10 @@ class _RaceScreenState extends State<RaceScreen> {
   @override
   Widget build(BuildContext context) {
     final t = ControlsStrings.of(context);
+    final screenTouch = context.select<SettingsCubit, bool>(
+      (c) => c.state.profile.useScreenTouch,
+    );
+    final showTouchUi = isTouchDevice || screenTouch;
     return MusicScope(
       track: MusicTrack.forScene(widget.scene),
       child: MultiBlocListener(
@@ -137,7 +143,6 @@ class _RaceScreenState extends State<RaceScreen> {
               }
             },
           ),
-          // Sound switches and the steering mode apply live, mid-race.
           BlocListener<SettingsCubit, SettingsState>(
             listener: (context, state) {
               _game.updateMix(state.profile);
@@ -154,7 +159,7 @@ class _RaceScreenState extends State<RaceScreen> {
             child: Stack(
             children: [
               GameWidget(game: _game),
-              if (isTouchDevice)
+              if (showTouchUi)
                 Positioned.fill(
                   child: BlocBuilder<SettingsCubit, SettingsState>(
                     buildWhen: (a, b) =>
@@ -192,8 +197,24 @@ class _RaceScreenState extends State<RaceScreen> {
                         icon: const Icon(Icons.home, color: Colors.white70),
                         onPressed: () => context.goNamed(RouteNames.menu),
                       ),
+                      StreamBuilder<int>(
+                        stream: _laps,
+                        builder: (context, snap) => Text(
+                          _game.isLoaded
+                              ? context.l10n.hudLap(
+                                  _game.race.lap,
+                                  _game.race.laps,
+                                )
+                              : '',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontFamily: 'Anton',
+                            fontSize: context.sizes.body,
+                          ),
+                        ).padding(left: 4),
+                      ),
                       const Spacer(),
-                      if (isTouchDevice) ...[
+                      if (showTouchUi) ...[
                         BlocBuilder<SettingsCubit, SettingsState>(
                           buildWhen: (a, b) => a.profile.mute != b.profile.mute,
                           builder: (context, state) {

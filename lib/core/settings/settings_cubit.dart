@@ -39,6 +39,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   void setEngineOn(bool v) => _update(state.profile.copyWith(engineOn: v));
   void setInvertTilt(bool v) =>
       _update(state.profile.copyWith(invertTilt: v));
+  void setLanguage(String v) => _update(state.profile.copyWith(language: v));
 
   /// Emits immediately and saves preferences after the user stops dragging.
   void _update(PlayerProfile profile) {

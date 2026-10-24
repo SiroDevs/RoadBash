@@ -38,6 +38,17 @@ class ControlsStrings {
     'Geuza kushoto na kulia ikiwa kuinamisha kunahisi kinyume',
   );
 
+  String get language => _t('Language', 'Lugha');
+  String get languageHint => _t(
+    'Pick the language the game is shown in',
+    'Chagua lugha ya kuonyesha mchezo',
+  );
+  String get exit => _t('Exit', 'Toka');
+  String get exitHint => _t(
+    'Wimp out and go home',
+    'Kimbia kama mwoga na urudi nyumbani',
+  );
+
   String get pause => _t('Pause', 'Simamisha');
   String get unmute => _t('Unmute', 'Washa Sauti');
 

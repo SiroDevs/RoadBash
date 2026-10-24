@@ -1,17 +1,25 @@
 // Dart imports:
-import 'dart:async';
 import 'dart:developer' as logging show log;
-import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart'
+    show kIsWeb, defaultTargetPlatform, TargetPlatform;
 
-bool isDesktop = Platform.isWindows || Platform.isLinux || Platform.isMacOS;
-bool isMobile = Platform.isAndroid || Platform.isIOS || Platform.isFuchsia;
+bool get isDesktop =>
+    !kIsWeb &&
+    (defaultTargetPlatform == TargetPlatform.windows ||
+        defaultTargetPlatform == TargetPlatform.linux ||
+        defaultTargetPlatform == TargetPlatform.macOS);
+
+bool get isMobile =>
+    !kIsWeb &&
+    (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.fuchsia);
 
 void logger(String message) {
   return logging.log('''
@@ -35,17 +43,6 @@ String getThemeModeString(ThemeMode themeMode) {
 String dateNow() {
   return DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
 }
-
-Future<bool> _hostResolves(String host) async {
-  try {
-    final result = await InternetAddress.lookup(host);
-    return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
-  } catch (_) {
-    return false;
-  }
-}
-
-Future<bool> isConnected() => _hostResolves('google.com');
 
 String extractMessage(String error) {
   final regex = RegExp(r'AuthException\(message:\s*(.*?),\s*statusCode:');
@@ -79,15 +76,4 @@ List<String> generateDropDownItems({
     }
   }
   return items;
-}
-
-Future<bool> isConnectedToInternet() async {
-  try {
-    final result = await Connectivity().checkConnectivity();
-    // ignore: unrelated_type_equality_checks
-    if (result == ConnectivityResult.none) return false;
-  } catch (_) {
-    return false;
-  }
-  return _hostResolves('example.com');
 }

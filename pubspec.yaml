@@ -10,7 +10,6 @@ dependencies:
   animated_text_kit: ^4.3.0
   audioplayers: ^6.2.0
   bloc: ^9.1.0
-  connectivity_plus: ^7.0.0
   equatable: ^2.0.7
   flame: ^1.33.0
   flutter:

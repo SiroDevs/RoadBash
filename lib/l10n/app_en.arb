@@ -180,7 +180,7 @@
   "@volumeEffects": {
     "description": "Volume slider"
   },
-  "controlsHelp": "Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nTouch: use the arrows on the left to steer, and the gas and brake pedals on the right.",
+  "controlsHelp": "Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold the gas pedal (bottom right) to ride and the brake pedal (bottom left) to stop. Tilt the device like a steering wheel to turn, or switch on Use Screentouch in the race controls menu (top right) to steer with on-screen arrows.",
   "@controlsHelp": {
     "description": "Controls help text"
   },
@@ -235,5 +235,73 @@
   "touchBrake": "Brake",
   "@touchBrake": {
     "description": "Touch control label"
+  },
+  "controlsTitle": "Controls",
+  "@controlsTitle": {
+    "description": "Controls menu title"
+  },
+  "racePaused": "Race paused",
+  "@racePaused": {
+    "description": "Shown while the race is paused"
+  },
+  "raceResume": "Resume",
+  "@raceResume": {
+    "description": "Resume button label"
+  },
+  "useScreenTouch": "Use Screentouch",
+  "@useScreenTouch": {
+    "description": "Switch label for on-screen steering"
+  },
+  "useScreenTouchHint": "Steer with on-screen arrows instead of tilting (phones and tablets)",
+  "@useScreenTouchHint": {
+    "description": "Hint under the screentouch switch"
+  },
+  "muteSound": "Mute Sound",
+  "@muteSound": {
+    "description": "Mute switch label"
+  },
+  "unmuteSound": "Unmute",
+  "@unmuteSound": {
+    "description": "Unmute button tooltip"
+  },
+  "playMusic": "Play Music",
+  "@playMusic": {
+    "description": "Music switch label"
+  },
+  "soundEffects": "Sound Effects",
+  "@soundEffects": {
+    "description": "Sound effects switch label"
+  },
+  "engineSound": "Engine Sound",
+  "@engineSound": {
+    "description": "Engine sound switch label"
+  },
+  "invertTilt": "Invert Tilt",
+  "@invertTilt": {
+    "description": "Invert tilt switch label"
+  },
+  "invertTiltHint": "Flip left and right if tilt steering feels reversed",
+  "@invertTiltHint": {
+    "description": "Hint under the invert tilt switch"
+  },
+  "languageTitle": "Language",
+  "@languageTitle": {
+    "description": "Language tab label"
+  },
+  "languageHint": "Pick the language the game is shown in",
+  "@languageHint": {
+    "description": "Language tab hint"
+  },
+  "exitLabel": "Exit",
+  "@exitLabel": {
+    "description": "Exit tab and button label"
+  },
+  "exitHint": "Wimp out and go home",
+  "@exitHint": {
+    "description": "Exit tab description"
+  },
+  "pauseRace": "Pause",
+  "@pauseRace": {
+    "description": "Pause button tooltip"
   }
 }

@@ -12,7 +12,6 @@ import '../../../common/constants/app_assets.dart';
 import '../../../common/layout/responsive_layout_builder.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
-import '../../../common/strings/controls_strings.dart';
 import '../../../common/widgets/retro/retro_controls.dart';
 import '../../../common/widgets/retro/retro_scaffold.dart';
 import '../../../common/widgets/retro/retro_style.dart';
@@ -31,13 +30,12 @@ class ReceptionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final t = ControlsStrings.of(context);
     final labels = {
       ReceptionTab.name: l10n.receptionName,
       ReceptionTab.sound: l10n.receptionSound,
       ReceptionTab.controls: l10n.receptionControls,
-      ReceptionTab.language: t.language,
-      ReceptionTab.exit: t.exit,
+      ReceptionTab.language: l10n.languageTitle,
+      ReceptionTab.exit: l10n.exitLabel,
     };
     final s = context.sizes;
     return MusicScope(
@@ -125,17 +123,8 @@ class ReceptionScreen extends StatelessWidget {
     ReceptionTab.language => const LanguagePicker(),
     ReceptionTab.exit => const ExitPanel(),
     ReceptionTab.controls => Text(
-      _controlsHelp(context),
+      context.l10n.controlsHelp,
       style: retroBody(size: context.sizes.small),
     ),
   };
-
-  /// The keyboard paragraphs from the l10n text, followed by the up-to-date
-  /// touch paragraph (the l10n one still describes the old arrow layout).
-  String _controlsHelp(BuildContext context) {
-    final parts = context.l10n.controlsHelp.split('\n\n');
-    if (parts.length > 2) parts.removeLast();
-    parts.add(ControlsStrings.of(context).touchHelp);
-    return parts.join('\n\n');
-  }
 }

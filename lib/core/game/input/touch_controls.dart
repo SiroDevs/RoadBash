@@ -12,15 +12,6 @@ import 'package:flame/components.dart' show Vector2;
 import '../../../l10n/l10n_extension.dart';
 import '../hud/dashboard_layout.dart';
 
-/// On-screen controls for phones and tablets.
-///
-///  * gas pedal, bottom right, just above the dashboard;
-///  * brake pedal, bottom left, just above the dashboard;
-///  * steering arrows above the brake pedal, only when [showSteering] is on
-///    (otherwise the device is tilted to steer).
-///
-/// Sizes come from the screen and from the dashboard's footprint, so they
-/// follow the window live in portrait and landscape.
 class TouchControls extends StatelessWidget {
   const TouchControls({
     super.key,
@@ -44,15 +35,12 @@ class TouchControls extends StatelessWidget {
         final pad = MediaQuery.paddingOf(context);
         final unit = math.min(box.maxWidth, box.maxHeight);
 
-        final gasW = (unit * 0.2).clamp(58.0, 124.0).toDouble();
-        final gasH = gasW * 1.4;
-        final brakeW = gasW * 1.2;
-        final brakeH = gasW * 0.95;
-        final arrow = gasW * 0.74;
+        final pedalW = (unit * 0.2).clamp(40.0, 75.0).toDouble();
+        final pedalH = pedalW * 1.2;
+        final arrow = pedalW * 0.74;
 
         final edge = math.max(10.0, unit * 0.025);
-        // Sit just above the part of the dashboard that is on screen.
-        final floor = DashboardLayout.footprint(screen).height + edge;
+        final floor = DashboardLayout.footprint(screen).height * 0.65;
 
         return Stack(
           children: [
@@ -61,8 +49,8 @@ class TouchControls extends StatelessWidget {
               bottom: floor,
               child: _Pedal(
                 label: l10n.touchGas,
-                width: gasW,
-                height: gasH,
+                width: pedalW,
+                height: pedalH,
                 accent: const Color(0xFF3DBB5A),
                 icon: Icons.keyboard_double_arrow_up,
                 ridges: _Ridges.bars,
@@ -74,8 +62,8 @@ class TouchControls extends StatelessWidget {
               bottom: floor,
               child: _Pedal(
                 label: l10n.touchBrake,
-                width: brakeW,
-                height: brakeH,
+                width: pedalW,
+                height: pedalH,
                 accent: const Color(0xFFE5483A),
                 icon: Icons.stop_circle_outlined,
                 ridges: _Ridges.dots,
@@ -85,7 +73,7 @@ class TouchControls extends StatelessWidget {
             if (showSteering)
               Positioned(
                 left: pad.left + edge,
-                bottom: floor + brakeH + edge,
+                bottom: floor + pedalH + edge,
                 child: _SteerPad(
                   size: arrow,
                   gap: edge,
@@ -101,8 +89,6 @@ class TouchControls extends StatelessWidget {
   }
 }
 
-/// Reports whether any finger is on it. Tracks every pointer so a second
-/// finger landing and lifting does not let go early.
 class _Hold extends StatefulWidget {
   const _Hold({required this.onChanged, required this.builder});
 

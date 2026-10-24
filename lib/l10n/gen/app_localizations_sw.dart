@@ -137,7 +137,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get controlsHelp =>
-      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nKwa kugusa: tumia mishale ya kushoto kuongoza, na kanyagio za mafuta na breki kulia.';
+      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: shikilia pedali ya mafuta (chini kulia) kuendesha na pedali ya breki (chini kushoto) kusimama. Inamisha kifaa kama usukani kugeuka, au washa Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa mishale ya skrini.';
 
   @override
   String get hudGo => 'ANZA!';
@@ -173,4 +173,57 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get touchBrake => 'Breki';
+
+  @override
+  String get controlsTitle => 'Vidhibiti';
+
+  @override
+  String get racePaused => 'Shindano limesimamishwa';
+
+  @override
+  String get raceResume => 'Endelea';
+
+  @override
+  String get useScreenTouch => 'Tumia Mguso wa Skrini';
+
+  @override
+  String get useScreenTouchHint =>
+      'Elekeza kwa mishale ya skrini badala ya kuinamisha (simu na tableti)';
+
+  @override
+  String get muteSound => 'Nyamazisha Sauti';
+
+  @override
+  String get unmuteSound => 'Washa Sauti';
+
+  @override
+  String get playMusic => 'Cheza Muziki';
+
+  @override
+  String get soundEffects => 'Athari za Sauti';
+
+  @override
+  String get engineSound => 'Sauti ya Injini';
+
+  @override
+  String get invertTilt => 'Geuza Mwelekeo wa Kuinamisha';
+
+  @override
+  String get invertTiltHint =>
+      'Geuza kushoto na kulia ikiwa kuinamisha kunahisi kinyume';
+
+  @override
+  String get languageTitle => 'Lugha';
+
+  @override
+  String get languageHint => 'Chagua lugha ya kuonyesha mchezo';
+
+  @override
+  String get exitLabel => 'Toka';
+
+  @override
+  String get exitHint => 'Kimbia kama mwoga na urudi nyumbani';
+
+  @override
+  String get pauseRace => 'Simamisha';
 }

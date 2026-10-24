@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
 import '../../../../common/layout/retro_sizes.dart';
-import '../../../../common/strings/controls_strings.dart';
 import '../../../../common/widgets/retro/retro_controls.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../../../core/settings/settings_cubit.dart';
 
 class LanguagePicker extends StatelessWidget {
@@ -18,12 +18,12 @@ class LanguagePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = ControlsStrings.of(context);
+    final l10n = context.l10n;
     final current = Localizations.localeOf(context).languageCode;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(t.languageHint, style: retroBody(size: context.sizes.small)),
+        Text(l10n.languageHint, style: retroBody(size: context.sizes.small)),
         SizedBox(height: context.sizes.gap * 0.75),
         for (final entry in _options.entries)
           RetroMenuItem(

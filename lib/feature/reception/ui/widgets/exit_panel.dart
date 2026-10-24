@@ -12,9 +12,9 @@ import 'package:go_router/go_router.dart';
 // Project imports:
 import '../../../../common/app_router/route_names.dart';
 import '../../../../common/layout/retro_sizes.dart';
-import '../../../../common/strings/controls_strings.dart';
 import '../../../../common/widgets/retro/retro_controls.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../../../core/utils/app_util.dart';
 
 class ExitPanel extends StatelessWidget {
@@ -32,13 +32,13 @@ class ExitPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = ControlsStrings.of(context);
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(t.exitHint, style: retroBody(size: context.sizes.small)),
+        Text(l10n.exitHint, style: retroBody(size: context.sizes.small)),
         SizedBox(height: context.sizes.gap),
-        RetroButton(t.exit, onTap: () => _exit(context)),
+        RetroButton(l10n.exitLabel, onTap: () => _exit(context)),
       ],
     );
   }

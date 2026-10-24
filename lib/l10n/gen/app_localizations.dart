@@ -317,7 +317,7 @@ abstract class AppLocalizations {
   /// Controls help text
   ///
   /// In en, this message translates to:
-  /// **'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nTouch: use the arrows on the left to steer, and the gas and brake pedals on the right.'**
+  /// **'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold the gas pedal (bottom right) to ride and the brake pedal (bottom left) to stop. Tilt the device like a steering wheel to turn, or switch on Use Screentouch in the race controls menu (top right) to steer with on-screen arrows.'**
   String get controlsHelp;
 
   /// Race start banner
@@ -385,6 +385,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Brake'**
   String get touchBrake;
+
+  /// Controls menu title
+  ///
+  /// In en, this message translates to:
+  /// **'Controls'**
+  String get controlsTitle;
+
+  /// Shown while the race is paused
+  ///
+  /// In en, this message translates to:
+  /// **'Race paused'**
+  String get racePaused;
+
+  /// Resume button label
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get raceResume;
+
+  /// Switch label for on-screen steering
+  ///
+  /// In en, this message translates to:
+  /// **'Use Screentouch'**
+  String get useScreenTouch;
+
+  /// Hint under the screentouch switch
+  ///
+  /// In en, this message translates to:
+  /// **'Steer with on-screen arrows instead of tilting (phones and tablets)'**
+  String get useScreenTouchHint;
+
+  /// Mute switch label
+  ///
+  /// In en, this message translates to:
+  /// **'Mute Sound'**
+  String get muteSound;
+
+  /// Unmute button tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Unmute'**
+  String get unmuteSound;
+
+  /// Music switch label
+  ///
+  /// In en, this message translates to:
+  /// **'Play Music'**
+  String get playMusic;
+
+  /// Sound effects switch label
+  ///
+  /// In en, this message translates to:
+  /// **'Sound Effects'**
+  String get soundEffects;
+
+  /// Engine sound switch label
+  ///
+  /// In en, this message translates to:
+  /// **'Engine Sound'**
+  String get engineSound;
+
+  /// Invert tilt switch label
+  ///
+  /// In en, this message translates to:
+  /// **'Invert Tilt'**
+  String get invertTilt;
+
+  /// Hint under the invert tilt switch
+  ///
+  /// In en, this message translates to:
+  /// **'Flip left and right if tilt steering feels reversed'**
+  String get invertTiltHint;
+
+  /// Language tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageTitle;
+
+  /// Language tab hint
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the language the game is shown in'**
+  String get languageHint;
+
+  /// Exit tab and button label
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get exitLabel;
+
+  /// Exit tab description
+  ///
+  /// In en, this message translates to:
+  /// **'Wimp out and go home'**
+  String get exitHint;
+
+  /// Pause button tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get pauseRace;
 }
 
 class _AppLocalizationsDelegate

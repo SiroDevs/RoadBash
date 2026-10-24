@@ -114,8 +114,6 @@ class DashboardHud extends PositionComponent {
   void _readouts(Canvas canva, DashboardLayout layout) {
     Offset at(double fx, double fy) =>
         Offset(layout.left + layout.pw * fx, layout.top + layout.ph * fy);
-    // On narrow screens the name slots are close to the edges, so cap the size
-    // by the housing width too (never bites on landscape).
     final small = math.max(
       9.0,
       math.min(layout.ph * 0.13, layout.pw * 0.035),
@@ -144,8 +142,8 @@ class DashboardHud extends PositionComponent {
     paintText(
       canva,
       strings.lap(race.lap, race.laps),
-      at(0.16, 0.40),
-      layout.ph * 0.125,
+      at(0.13, 0.4),
+      layout.ph * 0.1,
       _white,
     );
 
@@ -159,9 +157,9 @@ class DashboardHud extends PositionComponent {
     final ahead = race.playerAhead;
     paintText(
       canva,
-      '${ahead ? '▼' : '▲'} ${race.gapSeconds.toStringAsFixed(3)}',
-      at(0.84, 0.40),
-      layout.ph * 0.14,
+      '${ahead ? '▼' : '▲'} ${race.gapSeconds.toStringAsFixed(2)}',
+      at(0.87, 0.4),
+      layout.ph * 0.1,
       ahead ? _green : _red,
     );
   }

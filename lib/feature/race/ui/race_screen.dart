@@ -10,7 +10,6 @@ import 'package:styled_widget/styled_widget.dart';
 // Project imports:
 import '../../../common/app_router/route_names.dart';
 import '../../../common/layout/retro_sizes.dart';
-import '../../../common/strings/controls_strings.dart';
 import '../../../core/audio/audio_catalog.dart';
 import '../../../core/audio/audio_service.dart';
 import '../../../core/audio/music_scope.dart';
@@ -127,7 +126,7 @@ class _RaceScreenState extends State<RaceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final t = ControlsStrings.of(context);
+    final l10n = context.l10n;
     final screenTouch = context.select<SettingsCubit, bool>(
       (c) => c.state.profile.useScreenTouch,
     );
@@ -176,7 +175,7 @@ class _RaceScreenState extends State<RaceScreen> {
               if (_paused)
                 Positioned.fill(
                   child: Text(
-                    t.paused,
+                    l10n.racePaused,
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Anton',
@@ -220,7 +219,7 @@ class _RaceScreenState extends State<RaceScreen> {
                           builder: (context, state) {
                             final muted = state.profile.mute;
                             return IconButton(
-                              tooltip: muted ? t.unmute : t.muteSound,
+                              tooltip: muted ? l10n.unmuteSound : l10n.muteSound,
                               icon: Icon(
                                 muted ? Icons.volume_off : Icons.volume_up,
                                 color: Colors.white70,
@@ -231,7 +230,7 @@ class _RaceScreenState extends State<RaceScreen> {
                           },
                         ),
                         IconButton(
-                          tooltip: _paused ? t.resume : t.pause,
+                          tooltip: _paused ? l10n.raceResume : l10n.pauseRace,
                           icon: Icon(
                             _paused ? Icons.play_arrow : Icons.pause,
                             color: Colors.white70,
@@ -240,7 +239,7 @@ class _RaceScreenState extends State<RaceScreen> {
                         ),
                       ],
                       IconButton(
-                        tooltip: t.title,
+                        tooltip: l10n.controlsTitle,
                         icon: const Icon(Icons.tune, color: Colors.white70),
                         onPressed: _openControls,
                       ),

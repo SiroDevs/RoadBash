@@ -180,7 +180,7 @@
   "@volumeEffects": {
     "description": "Volume slider"
   },
-  "controlsHelp": "Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nKwa kugusa: tumia mishale ya kushoto kuongoza, na kanyagio za mafuta na breki kulia.",
+  "controlsHelp": "Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: shikilia pedali ya mafuta (chini kulia) kuendesha na pedali ya breki (chini kushoto) kusimama. Inamisha kifaa kama usukani kugeuka, au washa Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa mishale ya skrini.",
   "@controlsHelp": {
     "description": "Controls help text"
   },
@@ -235,5 +235,73 @@
   "touchBrake": "Breki",
   "@touchBrake": {
     "description": "Touch control label"
+  },
+  "controlsTitle": "Vidhibiti",
+  "@controlsTitle": {
+    "description": "Controls menu title"
+  },
+  "racePaused": "Shindano limesimamishwa",
+  "@racePaused": {
+    "description": "Shown while the race is paused"
+  },
+  "raceResume": "Endelea",
+  "@raceResume": {
+    "description": "Resume button label"
+  },
+  "useScreenTouch": "Tumia Mguso wa Skrini",
+  "@useScreenTouch": {
+    "description": "Switch label for on-screen steering"
+  },
+  "useScreenTouchHint": "Elekeza kwa mishale ya skrini badala ya kuinamisha (simu na tableti)",
+  "@useScreenTouchHint": {
+    "description": "Hint under the screentouch switch"
+  },
+  "muteSound": "Nyamazisha Sauti",
+  "@muteSound": {
+    "description": "Mute switch label"
+  },
+  "unmuteSound": "Washa Sauti",
+  "@unmuteSound": {
+    "description": "Unmute button tooltip"
+  },
+  "playMusic": "Cheza Muziki",
+  "@playMusic": {
+    "description": "Music switch label"
+  },
+  "soundEffects": "Athari za Sauti",
+  "@soundEffects": {
+    "description": "Sound effects switch label"
+  },
+  "engineSound": "Sauti ya Injini",
+  "@engineSound": {
+    "description": "Engine sound switch label"
+  },
+  "invertTilt": "Geuza Mwelekeo wa Kuinamisha",
+  "@invertTilt": {
+    "description": "Invert tilt switch label"
+  },
+  "invertTiltHint": "Geuza kushoto na kulia ikiwa kuinamisha kunahisi kinyume",
+  "@invertTiltHint": {
+    "description": "Hint under the invert tilt switch"
+  },
+  "languageTitle": "Lugha",
+  "@languageTitle": {
+    "description": "Language tab label"
+  },
+  "languageHint": "Chagua lugha ya kuonyesha mchezo",
+  "@languageHint": {
+    "description": "Language tab hint"
+  },
+  "exitLabel": "Toka",
+  "@exitLabel": {
+    "description": "Exit tab and button label"
+  },
+  "exitHint": "Kimbia kama mwoga na urudi nyumbani",
+  "@exitHint": {
+    "description": "Exit tab description"
+  },
+  "pauseRace": "Simamisha",
+  "@pauseRace": {
+    "description": "Pause button tooltip"
   }
 }

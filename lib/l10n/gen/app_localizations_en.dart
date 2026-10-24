@@ -137,7 +137,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get controlsHelp =>
-      'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nTouch: use the arrows on the left to steer, and the gas and brake pedals on the right.';
+      'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold the gas pedal (bottom right) to ride and the brake pedal (bottom left) to stop. Tilt the device like a steering wheel to turn, or switch on Use Screentouch in the race controls menu (top right) to steer with on-screen arrows.';
 
   @override
   String get hudGo => 'GO!';
@@ -173,4 +173,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get touchBrake => 'Brake';
+
+  @override
+  String get controlsTitle => 'Controls';
+
+  @override
+  String get racePaused => 'Race paused';
+
+  @override
+  String get raceResume => 'Resume';
+
+  @override
+  String get useScreenTouch => 'Use Screentouch';
+
+  @override
+  String get useScreenTouchHint =>
+      'Steer with on-screen arrows instead of tilting (phones and tablets)';
+
+  @override
+  String get muteSound => 'Mute Sound';
+
+  @override
+  String get unmuteSound => 'Unmute';
+
+  @override
+  String get playMusic => 'Play Music';
+
+  @override
+  String get soundEffects => 'Sound Effects';
+
+  @override
+  String get engineSound => 'Engine Sound';
+
+  @override
+  String get invertTilt => 'Invert Tilt';
+
+  @override
+  String get invertTiltHint =>
+      'Flip left and right if tilt steering feels reversed';
+
+  @override
+  String get languageTitle => 'Language';
+
+  @override
+  String get languageHint => 'Pick the language the game is shown in';
+
+  @override
+  String get exitLabel => 'Exit';
+
+  @override
+  String get exitHint => 'Wimp out and go home';
+
+  @override
+  String get pauseRace => 'Pause';
 }

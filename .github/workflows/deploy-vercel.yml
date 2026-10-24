@@ -21,7 +21,6 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
 
-    # Forked pull requests do not receive repository secrets.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
 
     env:
@@ -59,10 +58,8 @@ jobs:
           {
             "version": 3,
             "routes": [
-              {
-                "src": "/(.*)",
-                "dest": "/index.html"
-              }
+              { "handle": "filesystem" },
+              { "src": "/(.*)", "dest": "/index.html" }
             ]
           }
           EOF

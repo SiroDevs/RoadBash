@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import '../../constants/app_constants.dart';
+import '../../layout/retro_sizes.dart';
 
 class Retro {
   Retro._();
@@ -26,24 +27,36 @@ TextStyle retroBody({double size = 20, Color color = Colors.white}) =>
       ],
     );
 
-/// Big orange heading with a hard drop shadow.
+/// Big orange heading with a hard drop shadow. Takes its size from the layout
+/// size and shrinks to fit rather than overflowing a narrow window.
 class RetroTitle extends StatelessWidget {
-  const RetroTitle(this.text, {super.key, this.size = 56});
+  const RetroTitle(this.text, {super.key, this.size});
 
   final String text;
-  final double size;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text.toUpperCase(),
-      style: TextStyle(
-        color: Retro.orange,
-        fontFamily: AppConstants.displayFont,
-        fontSize: size,
-        letterSpacing: 1,
-        height: 1,
-        shadows: const [Shadow(color: Colors.black, offset: Offset(4, 4))],
+    final fontSize = size ?? context.sizes.title;
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: Alignment.centerLeft,
+      child: Text(
+        text.toUpperCase(),
+        maxLines: 1,
+        style: TextStyle(
+          color: Retro.orange,
+          fontFamily: AppConstants.displayFont,
+          fontSize: fontSize,
+          letterSpacing: 1,
+          height: 1,
+          shadows: [
+            Shadow(
+              color: Colors.black,
+              offset: Offset(fontSize * 0.07, fontSize * 0.07),
+            ),
+          ],
+        ),
       ),
     );
   }

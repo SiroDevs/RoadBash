@@ -33,7 +33,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
   });
 
   final SceneId scene;
-  final PlayerProfile mix;
+  PlayerProfile mix;
   final AudioService audio;
   final HudStrings strings;
   final String playerName;
@@ -47,6 +47,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
   bool _keyThrottle = false, _touchThrottle = false;
   bool _keyBrake = false, _touchBrake = false;
 
+  bool _menuPaused = false;
   bool _finishing = false, _notified = false;
   bool _shutDown = false;
   double _finishDelay = 2.4;
@@ -107,6 +108,40 @@ class RoadGame extends FlameGame with KeyboardEvents {
     road.throttle = (_keyThrottle || _touchThrottle) && !road.brake;
   }
 
+  /// Called when a sound switch changes while the race is on.
+  void updateMix(PlayerProfile profile) {
+    mix = profile;
+    _ride?.mix = profile;
+  }
+
+  bool get menuPaused => _menuPaused;
+
+  /// Freezes the race (and the engine sound) while the controls menu is open.
+  void pauseRace() {
+    if (_menuPaused) return;
+    _menuPaused = true;
+    clearInput();
+    pauseEngine();
+    _ride?.pause();
+  }
+
+  void resumeRace() {
+    if (!_menuPaused) return;
+    _menuPaused = false;
+    resumeEngine();
+    _ride?.resume();
+  }
+
+  /// Lets go of every key and finger. A pedal that was held when the menu
+  /// opened never sees its release, so this stops it sticking.
+  void clearInput() {
+    _keySteer = 0;
+    _touchSteer = 0;
+    _keyThrottle = _touchThrottle = false;
+    _keyBrake = _touchBrake = false;
+    _applyInput();
+  }
+
   void setTouchSteer(double v) {
     _touchSteer = v;
     _applyInput();
@@ -150,6 +185,8 @@ class RoadGame extends FlameGame with KeyboardEvents {
   @override
   void lifecycleStateChange(AppLifecycleState state) {
     super.lifecycleStateChange(state);
+    // Menu open: the race stays frozen and silent whatever the app does.
+    if (_menuPaused) return;
     if (state == AppLifecycleState.resumed) {
       _ride?.resume();
     } else {

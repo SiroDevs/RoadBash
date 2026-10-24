@@ -31,6 +31,15 @@ class SettingsCubit extends Cubit<SettingsState> {
   void setFlavour(EngineFlavour v) =>
       _update(state.profile.copyWith(flavour: v));
 
+  void setUseScreenTouch(bool v) =>
+      _update(state.profile.copyWith(useScreenTouch: v));
+  void setMute(bool v) => _update(state.profile.copyWith(mute: v));
+  void setMusicOn(bool v) => _update(state.profile.copyWith(musicOn: v));
+  void setEffectsOn(bool v) => _update(state.profile.copyWith(effectsOn: v));
+  void setEngineOn(bool v) => _update(state.profile.copyWith(engineOn: v));
+  void setInvertTilt(bool v) =>
+      _update(state.profile.copyWith(invertTilt: v));
+
   /// Emits immediately and saves preferences after the user stops dragging.
   void _update(PlayerProfile profile) {
     emit(SettingsState(profile: profile, loaded: state.loaded));

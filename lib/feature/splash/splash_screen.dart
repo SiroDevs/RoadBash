@@ -9,6 +9,8 @@ import 'package:go_router/go_router.dart';
 import '../../common/app_router/route_names.dart';
 import '../../common/constants/app_assets.dart';
 import '../../common/constants/app_constants.dart';
+import '../../common/layout/responsive_scroll_body.dart';
+import '../../common/layout/retro_sizes.dart';
 import '../../common/widgets/retro/logo_mark.dart';
 import '../../common/widgets/retro/retro_scaffold.dart';
 import '../../common/widgets/retro/retro_style.dart';
@@ -32,6 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final s = context.sizes;
     final studio = AppConstants.appCredits.replaceFirst('© ', '');
     return BlocListener<SplashCubit, bool>(
       listener: (context, ready) {
@@ -40,31 +43,46 @@ class _SplashScreenState extends State<SplashScreen> {
       child: RetroScaffold(
         onTap: context.read<SplashCubit>().skip,
         asset: AppAssets.appSplash,
-        child: Column(
-          children: [
-            Text(l10n.splashPresents(studio), style: retroBody(size: 75)),
-            const Spacer(),
-            TweenAnimationBuilder<double>(
-              tween: Tween(begin: 0, end: 1),
-              duration: const Duration(milliseconds: 900),
-              curve: Curves.easeOutBack,
-              builder: (_, v, child) => Opacity(
-                opacity: v.clamp(0.0, 1.0),
-                child: Transform.scale(scale: 0.8 + 0.2 * v, child: child),
+        child: ResponsiveScrollBody(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                l10n.splashPresents(studio),
+                textAlign: TextAlign.center,
+                style: retroBody(size: s.presents),
               ),
-              child: const RoadBashLogo(size: 120),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              l10n.splashTagline,
-              style: retroBody(size: 50, color: Retro.orange),
-            ),
-            const Spacer(),
-            Text(
-              l10n.splashRights(AppConstants.appCredits),
-              style: retroBody(size: 30, color: Retro.dim),
-            ),
-          ],
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TweenAnimationBuilder<double>(
+                    tween: Tween(begin: 0, end: 1),
+                    duration: const Duration(milliseconds: 900),
+                    curve: Curves.easeOutBack,
+                    builder: (_, v, child) => Opacity(
+                      opacity: v.clamp(0.0, 1.0),
+                      child: Transform.scale(
+                        scale: 0.8 + 0.2 * v,
+                        child: child,
+                      ),
+                    ),
+                    child: RoadBashLogo(size: s.logo),
+                  ),
+                  SizedBox(height: s.gap),
+                  Text(
+                    l10n.splashTagline,
+                    textAlign: TextAlign.center,
+                    style: retroBody(size: s.tagline, color: Retro.orange),
+                  ),
+                ],
+              ),
+              Text(
+                l10n.splashRights(AppConstants.appCredits),
+                textAlign: TextAlign.center,
+                style: retroBody(size: s.rights, color: Retro.dim),
+              ),
+            ],
+          ),
         ),
       ),
     );

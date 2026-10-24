@@ -28,14 +28,14 @@ class AudioCubit extends Cubit<AudioState> with WidgetsBindingObserver {
 
   PlayerProfile get _mix => _settings.state.profile;
 
-  double _musicVolume(MusicTrack t) => _mix.master * _mix.music * t.gain;
+  double _musicVolume(MusicTrack t) => _mix.musicGain * t.gain;
 
   Future<void> playMusic(MusicTrack track) async {
     emit(AudioState(track: track));
     await _audio.playMusic(track, _musicVolume(track));
   }
 
-  void sfx(Sfx sfx) => _audio.playSfx(sfx, _mix.master * _mix.effects);
+  void sfx(Sfx sfx) => _audio.playSfx(sfx, _mix.effectsGain);
 
   void _applyVolume() {
     final track = state.track;

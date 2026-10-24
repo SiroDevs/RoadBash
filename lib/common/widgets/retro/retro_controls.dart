@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Project imports:
 import '../../../core/audio/audio_catalog.dart';
 import '../../../core/audio/cubit/audio_cubit.dart';
+import '../../layout/retro_sizes.dart';
 import 'retro_style.dart';
 
 void _click(BuildContext context) => context.read<AudioCubit>().sfx(Sfx.click);
@@ -19,6 +20,7 @@ class RetroButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.sizes;
     return FilledButton(
       onPressed: () {
         _click(context);
@@ -27,8 +29,8 @@ class RetroButton extends StatelessWidget {
       style: FilledButton.styleFrom(
         backgroundColor: Retro.orange,
         foregroundColor: Retro.ink,
-        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+        padding: EdgeInsets.symmetric(horizontal: s.buttonH, vertical: s.buttonV),
+        textStyle: TextStyle(fontSize: s.buttonText, fontWeight: FontWeight.w700),
       ),
       child: Text(label.toUpperCase()),
     );
@@ -52,23 +54,38 @@ class RetroMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = context.sizes;
     return InkWell(
       onTap: () {
         _click(context);
         onTap();
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: s.menuItemV),
         child: Row(
           mainAxisAlignment:
               center ? MainAxisAlignment.center : MainAxisAlignment.start,
           children: [
-            Icon(Icons.arrow_forward,
-                size: 20, color: selected ? Retro.yellow : Colors.transparent),
-            const SizedBox(width: 6),
-            Text(label,
-                style: retroBody(
-                    size: 24, color: selected ? Colors.white : Retro.dim)),
+            Icon(
+              Icons.arrow_forward,
+              size: s.icon,
+              color: selected ? Retro.yellow : Colors.transparent,
+            ),
+            SizedBox(width: s.gapSmall * 0.75),
+            // Shrinks long labels instead of overflowing a narrow cell.
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  style: retroBody(
+                    size: s.body,
+                    color: selected ? Colors.white : Retro.dim,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

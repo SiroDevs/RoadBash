@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 // Project imports:
 import '../../common/app_router/route_names.dart';
 import '../../common/constants/app_assets.dart';
+import '../../common/layout/retro_sizes.dart';
 import '../../common/widgets/retro/retro_scaffold.dart';
 import '../../common/widgets/retro/retro_style.dart';
 import '../../core/audio/audio_catalog.dart';
@@ -59,6 +60,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final s = context.sizes;
     return MusicScope(
       track: MusicTrack.menu,
       child: CallbackShortcuts(
@@ -71,7 +73,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
           child: RetroScaffold(
             onTap: _continue,
             asset: AppAssets.appSplash1,
-            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+            padding: EdgeInsets.symmetric(horizontal: s.pad, vertical: s.pad * 0.6),
             child: LayoutBuilder(
               builder: (context, box) => SingleChildScrollView(
                 controller: _scroll,
@@ -84,7 +86,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 1000),
                     child: Container(
-                      padding: const EdgeInsets.all(28),
+                      padding: EdgeInsets.all(s.infoPad),
                       decoration: BoxDecoration(
                         color: const Color(0x99000000),
                         borderRadius: BorderRadius.circular(16),
@@ -92,19 +94,28 @@ class _NoticeScreenState extends State<NoticeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 10),
+                          SizedBox(height: s.gap * 0.6),
                           Text(
                             l10n.noticeTitle,
-                            style: retroBody(size: 65, color: Retro.orange),
+                            style: retroBody(
+                              size: s.noticeTitle,
+                              color: Retro.orange,
+                            ),
                           ),
-                          const SizedBox(height: 40),
-                          Text(l10n.noticeFun, style: retroBody(size: 40)),
-                          const SizedBox(height: 75),
+                          SizedBox(height: s.noticeGap * 0.55),
+                          Text(
+                            l10n.noticeFun,
+                            style: retroBody(size: s.noticeBody),
+                          ),
+                          SizedBox(height: s.noticeGap),
                           Text(
                             l10n.noticeWarning,
-                            style: retroBody(size: 40, color: Retro.red),
+                            style: retroBody(
+                              size: s.noticeBody,
+                              color: Retro.red,
+                            ),
                           ),
-                          const SizedBox(height: 75),
+                          SizedBox(height: s.noticeGap),
                         ],
                       ),
                     ),

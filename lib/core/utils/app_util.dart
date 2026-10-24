@@ -15,6 +15,14 @@ bool get isDesktop =>
         defaultTargetPlatform == TargetPlatform.linux ||
         defaultTargetPlatform == TargetPlatform.macOS);
 
+/// Android or iOS, including a phone or tablet browser running the web build.
+/// On the web Flutter derives [defaultTargetPlatform] from the user agent.
+bool get isTouchDevice =>
+    defaultTargetPlatform == TargetPlatform.android ||
+    defaultTargetPlatform == TargetPlatform.iOS;
+
+/// Native Android / iOS app only (the web build is never "mobile" here, so
+/// SystemChrome calls stay off the browser).
 bool get isMobile =>
     !kIsWeb &&
     (defaultTargetPlatform == TargetPlatform.android ||

@@ -10,10 +10,8 @@ import '../utils/app_util.dart';
 
 Future<void> configureDisplay() async {
   if (isMobile) {
-    await SystemChrome.setPreferredOrientations(const [
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
+    // Portrait and landscape are both supported.
+    await SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   } else if (isDesktop) {
     // await windowManager.ensureInitialized();

@@ -114,7 +114,12 @@ class DashboardHud extends PositionComponent {
   void _readouts(Canvas canva, DashboardLayout layout) {
     Offset at(double fx, double fy) =>
         Offset(layout.left + layout.pw * fx, layout.top + layout.ph * fy);
-    final small = layout.ph * 0.13;
+    // On narrow screens the name slots are close to the edges, so cap the size
+    // by the housing width too (never bites on landscape).
+    final small = math.max(
+      9.0,
+      math.min(layout.ph * 0.13, layout.pw * 0.035),
+    );
 
     // Race position
     paintText(
@@ -140,7 +145,7 @@ class DashboardHud extends PositionComponent {
       canva,
       strings.lap(race.lap, race.laps),
       at(0.16, 0.40),
-      size.y * 0.04,
+      layout.ph * 0.125,
       _white,
     );
 
@@ -162,7 +167,7 @@ class DashboardHud extends PositionComponent {
   }
 
   void _banner(Canvas canva) {
-    final big = size.y * 0.16;
+    final big = math.min(size.y * 0.16, size.x * 0.2);
     final centre = Offset(size.x / 2, size.y * 0.12);
     final text = race.countdown > 0
         ? '${race.countdown.ceil()}'
@@ -185,7 +190,7 @@ class DashboardHud extends PositionComponent {
         canva,
         strings.holdGas,
         centre,
-        size.y * 0.06,
+        math.min(size.y * 0.06, size.x * 0.06),
         _white,
         shadow: true,
       );

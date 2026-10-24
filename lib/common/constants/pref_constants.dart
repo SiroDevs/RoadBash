@@ -13,4 +13,11 @@ class PrefConstants {
   static const engineVolKey = 'vol_engine';
   static const tyreVolKey = 'vol_tyres';
   static const engineFlavourKey = 'engine_flavour';
+
+  static const useScreenTouchKey = 'opt_screen_touch';
+  static const muteKey = 'opt_mute';
+  static const musicOnKey = 'opt_music_on';
+  static const effectsOnKey = 'opt_effects_on';
+  static const engineOnKey = 'opt_engine_on';
+  static const invertTiltKey = 'opt_invert_tilt';
 }

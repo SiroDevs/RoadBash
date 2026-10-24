@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
+import '../../layout/retro_sizes.dart';
 import 'retro_backdrop.dart';
 
 class RetroScaffold extends StatelessWidget {
@@ -9,13 +10,14 @@ class RetroScaffold extends StatelessWidget {
     super.key,
     required this.child,
     this.asset,
-    this.padding = const EdgeInsets.all(24),
+    this.padding,
     this.onTap,
   });
 
   final Widget child;
   final String? asset;
-  final EdgeInsets padding;
+  /// Defaults to the tier's padding.
+  final EdgeInsets? padding;
   final VoidCallback? onTap;
 
   @override
@@ -23,7 +25,10 @@ class RetroScaffold extends StatelessWidget {
     Widget body = RetroBackdrop(
       asset: asset,
       child: SafeArea(
-        child: Padding(padding: padding, child: child),
+        child: Padding(
+          padding: padding ?? EdgeInsets.all(context.sizes.pad),
+          child: child,
+        ),
       ),
     );
     if (onTap != null) {

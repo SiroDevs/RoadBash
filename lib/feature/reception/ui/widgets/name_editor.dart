@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import '../../../common/widgets/retro/retro_style.dart';
-import '../../../core/settings/settings_cubit.dart';
-import '../../../l10n/l10n_extension.dart';
+import '../../../../common/layout/retro_sizes.dart';
+import '../../../../common/widgets/retro/retro_style.dart';
+import '../../../../core/settings/settings_cubit.dart';
+import '../../../../l10n/l10n_extension.dart';
 
 class NameEditor extends StatefulWidget {
   const NameEditor({super.key});
@@ -32,12 +33,15 @@ class _NameEditorState extends State<NameEditor> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(context.l10n.nameHint, style: retroBody()),
-        const SizedBox(height: 12),
+        Text(
+          context.l10n.nameHint,
+          style: retroBody(size: context.sizes.small),
+        ),
+        SizedBox(height: context.sizes.gap * 0.75),
         TextField(
           controller: _controller,
           maxLength: 12,
-          style: const TextStyle(color: Colors.white, fontSize: 24),
+          style: TextStyle(color: Colors.white, fontSize: context.sizes.body),
           decoration: const InputDecoration(
             enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Retro.dim)),
             focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Retro.orange)),

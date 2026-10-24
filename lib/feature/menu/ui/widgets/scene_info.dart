@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import '../../../common/widgets/retro/retro_style.dart';
-import '../../../core/game/race/race_result.dart';
-import '../../../core/game/road/road_theme.dart';
-import '../../../core/progress/progress_cubit.dart';
-import '../../../domain/models/scene_id.dart';
-import '../../../l10n/l10n_extension.dart';
+import '../../../../common/layout/retro_sizes.dart';
+import '../../../../common/widgets/retro/retro_style.dart';
+import '../../../../core/game/race/race_result.dart';
+import '../../../../core/game/road/road_theme.dart';
+import '../../../../core/progress/progress_cubit.dart';
+import '../../../../domain/models/scene_id.dart';
+import '../../../../l10n/l10n_extension.dart';
 
 /// Description, race length and the player record for a scene.
 class SceneInfo extends StatelessWidget {
@@ -23,8 +24,9 @@ class SceneInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final id = scene;
+    final s = context.sizes;
     return Container(
-      padding: const EdgeInsets.all(28),
+      padding: EdgeInsets.all(s.infoPad),
       decoration: BoxDecoration(
         color: const Color(0x99000000),
         borderRadius: BorderRadius.circular(16),
@@ -35,13 +37,13 @@ class SceneInfo extends StatelessWidget {
         children: [
           Text(
             id == null ? l10n.blurbReception : l10n.sceneBlurb(id),
-            style: retroBody(size: 24),
+            style: retroBody(size: s.body),
           ),
           if (id != null) ...[
-            const SizedBox(height: 14),
+            SizedBox(height: s.gap * 0.9),
             Text(
               l10n.lengthLabel(km.toStringAsFixed(1), SceneTheme.of(id).laps),
-              style: retroBody(size: 22, color: Retro.yellow),
+              style: retroBody(size: s.small, color: Retro.yellow),
             ),
             BlocBuilder<ProgressCubit, ProgressState>(
               builder: (context, progress) {
@@ -52,7 +54,7 @@ class SceneInfo extends StatelessWidget {
                     : l10n.bestTimeLabel(formatTime(best / 1000));
                 return Text(
                   '$time  |  ${l10n.racesWinsLabel(stats.races, stats.wins)}',
-                  style: retroBody(size: 20, color: Retro.dim),
+                  style: retroBody(size: s.caption, color: Retro.dim),
                 );
               },
             ),

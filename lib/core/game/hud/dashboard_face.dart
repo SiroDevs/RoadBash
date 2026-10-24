@@ -100,7 +100,7 @@ class DashboardFace {
           canva,
           '${(i ~/ minors) * major}',
           DashboardLayout.polar(ctr, a, radius * 0.54),
-          radius * 0.18,
+          math.max(radius * 0.18, 8.0),
           _ink,
         );
       }
@@ -109,7 +109,7 @@ class DashboardFace {
       canva,
       unit,
       Offset(ctr.dx, ctr.dy + radius * 0.50),
-      radius * 0.14,
+      math.max(radius * 0.14, 7.0),
       _ink,
     );
   }

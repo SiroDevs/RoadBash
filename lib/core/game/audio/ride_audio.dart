@@ -19,7 +19,8 @@ class RideAudio {
     this.useAssetLoops = false,
   });
 
-  final PlayerProfile mix;
+  /// Replaced live when the player flips a sound switch mid-race.
+  PlayerProfile mix;
   final AudioService service;
   final RoadRenderer road;
   final RaceController race;
@@ -42,7 +43,7 @@ class RideAudio {
   bool _wasFinished = false;
   bool? _wasOnFoot;
 
-  double get _fx => mix.master * mix.effects;
+  double get _fx => mix.effectsGain;
 
   List<LoopPlayer> get _loops => [_skid, _gravel, _wind];
 
@@ -55,7 +56,7 @@ class RideAudio {
     _events();
     _engine.update(
       dt,
-      volume: mix.master * mix.engine,
+      volume: mix.engineGain,
       rpm: road.rpm,
       gear: road.gear,
       throttle: road.throttle,

@@ -515,7 +515,7 @@ abstract class AppLocalizations {
   /// Name field label
   ///
   /// In en, this message translates to:
-  /// **'Rider name'**
+  /// **'Your Name (Nickname)'**
   String get signInNameLabel;
 
   /// Name step hint

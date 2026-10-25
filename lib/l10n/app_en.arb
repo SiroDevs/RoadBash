@@ -320,7 +320,7 @@
   "@signInTitle": {
     "description": "Sign-in heading"
   },
-  "signInNameLabel": "Rider name",
+  "signInNameLabel": "Your Name (Nickname)",
   "@signInNameLabel": {
     "description": "Name field label"
   },

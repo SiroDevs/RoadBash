@@ -240,7 +240,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInTitle => 'Who\'s riding?';
 
   @override
-  String get signInNameLabel => 'Rider name';
+  String get signInNameLabel => 'Your Name (Nickname)';
 
   @override
   String get signInNameHint =>

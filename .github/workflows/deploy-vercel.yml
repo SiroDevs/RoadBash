@@ -1,59 +1,168 @@
-name: Deploy RoadBash to Vercel
+name: Build, Release & Deploy RoadBash
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
+    inputs:
+      force:
+        description: "Build and deploy even if the pubspec version is not newer"
+        type: boolean
+        default: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
 
-concurrency:
-  group: vercel-${{ github.ref }}
-  cancel-in-progress: true
+env:
+  FLUTTER_VERSION: "3.47.6"
+  FLUTTER_CHANNEL: stable
+  ENTRY: lib/main.dart
+  APP_NAME: RoadBash
 
 jobs:
-  deploy:
-    name: Build and Deploy
+
+# ============================================================
+# VERSION GATE
+# ============================================================
+
+  check-version:
+    name: Check version
     runs-on: ubuntu-latest
+    outputs:
+      should_release: ${{ steps.compare.outputs.should_release }}
+      version: ${{ steps.compare.outputs.version }}
 
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
+      - name: Compare pubspec version with latest release
+        id: compare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          set -euo pipefail
+
+          # 1.0.3+4 -> 1.0.3
+          VERSION=$(awk '/^version:/ {print $2; exit}' pubspec.yaml | tr -d "\"'\r")
+          VERSION="${VERSION%%+*}"
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Could not parse a x.y.z version from pubspec.yaml (got '$VERSION')"
+            exit 1
+          fi
+
+          # Highest version among all published (non-draft) releases, "v" prefix stripped
+          LATEST=$(gh release list --repo "$GITHUB_REPOSITORY" --limit 200 --exclude-drafts \
+                     --json tagName --jq '.[].tagName' | sed 's/^v//' | sort -V | tail -n1)
+
+          SHOULD_RELEASE=false
+          if [ -z "$LATEST" ]; then
+            SHOULD_RELEASE=true
+          elif [ "$VERSION" != "$LATEST" ] && \
+               [ "$(printf '%s\n%s\n' "$LATEST" "$VERSION" | sort -V | tail -n1)" = "$VERSION" ]; then
+            SHOULD_RELEASE=true
+          fi
+
+          if [ "${FORCE:-false}" = "true" ]; then
+            SHOULD_RELEASE=true
+          fi
+
+          echo "version=$VERSION"               >> "$GITHUB_OUTPUT"
+          echo "should_release=$SHOULD_RELEASE" >> "$GITHUB_OUTPUT"
+
+          {
+            echo "### Version check"
+            echo "- pubspec.yaml: \`$VERSION\`"
+            echo "- Latest release: \`${LATEST:-none}\`"
+            if [ "$SHOULD_RELEASE" = true ]; then
+              echo "- Result: ✅ building and releasing **v$VERSION**"
+            else
+              echo "- Result: ⏭️ not newer, skipping build and release"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+# ============================================================
+# BUILD + DEPLOY + RELEASE
+# ============================================================
+
+  build-and-release:
+    name: Build, Deploy & Release
+    needs: check-version
+    if: needs.check-version.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # needed to create the tag + release
+      pull-requests: read    # needed for release notes
     env:
+      VERSION: ${{ needs.check-version.outputs.version }}
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
+      - name: Validate configuration
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "::error::Add VERCEL_TOKEN, VERCEL_ORG_ID and VERCEL_PROJECT_ID to the repository secrets."
+            exit 1
+          fi
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_PUBLISHABLE_KEY" ]; then
+            echo "::warning::SUPABASE_URL / SUPABASE_PUBLISHABLE_KEY secrets are empty. The app will build but run without Supabase."
+          fi
+
+      # .env is gitignored but pubspec.yaml lists it as an asset, so the build
+      # fails on a clean checkout unless the file is created first.
+      - name: Create .env from secrets
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          {
+            echo "SUPABASE_URL=$SUPABASE_URL"
+            echo "SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY"
+          } > .env
+
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
           cache: true
 
-      - name: Show Flutter version
-        run: flutter --version
+      - name: Prepare
+        run: |
+          flutter --version
+          flutter pub get
+          flutter gen-l10n
 
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Generate code (build_runner)
+        run: dart run build_runner build --delete-conflicting-outputs
 
-      - name: Build Flutter Web
-        run: flutter build web --release
+      - name: Build Flutter web
+        run: flutter build web --release -t "$ENTRY" --no-tree-shake-icons
+
+      - name: Build release ZIP
+        run: |
+          mkdir -p dist
+          (cd build/web && zip -qr "$GITHUB_WORKSPACE/dist/${APP_NAME}_${VERSION}_web.zip" .)
+          ls -lh dist
 
       - name: Prepare Vercel output
-        shell: bash
         run: |
           mkdir -p .vercel/output/static
-
           cp -R build/web/. .vercel/output/static/
-
           cat > .vercel/output/config.json <<'EOF'
           {
             "version": 3,
@@ -67,20 +176,56 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel
 
-      - name: Validate deployment configuration
-        shell: bash
+      - name: Deploy to Vercel (production)
+        run: vercel deploy --prebuilt --prod --yes
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-web
+          path: dist/*
+          if-no-files-found: error
+
+      # The tag is created last, so a failed build or deploy never marks the
+      # version as released and the next push will retry it.
+      - name: Generate checksums
         run: |
-          if [ -z "$VERCEL_TOKEN" ] || \
-             [ -z "$VERCEL_ORG_ID" ] || \
-             [ -z "$VERCEL_PROJECT_ID" ]; then
-            echo "::error::Configure VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID in GitHub repository secrets."
-            exit 1
+          cd dist
+          sha256sum * > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Build release notes from the last merged PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          PR=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
+                 --jq '[.[] | select(.merged_at != null)] | sort_by(.merged_at) | last | .number // empty' || true)
+
+          if [ -z "${PR:-}" ]; then
+            PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --state merged --base main \
+                   --limit 1 --json number --jq '.[0].number // empty' || true)
           fi
 
-      - name: Deploy to Vercel Preview
-        if: github.event_name == 'pull_request'
-        run: vercel deploy --prebuilt --yes
+          {
+            echo "## v$VERSION"
+            echo
+            if [ -n "${PR:-}" ]; then
+              gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json title,body,url \
+                --jq '"### " + .title + "\n\n" + (.body // "") + "\n\n" + .url'
+            else
+              echo "Release v$VERSION"
+            fi
+          } > release-notes.md
 
-      - name: Deploy to Vercel Production
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-        run: vercel deploy --prebuilt --prod --yes
+          cat release-notes.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.VERSION }}
+          target_commitish: ${{ github.sha }}
+          name: v${{ env.VERSION }}
+          body_path: release-notes.md
+          files: dist/*

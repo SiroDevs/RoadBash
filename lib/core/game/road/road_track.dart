@@ -17,15 +17,21 @@ class RoadSegment {
 /// A looping track. Each builder's hills sum to zero so laps join up.
 class RoadTrack {
   RoadTrack(SceneId scene) {
-    if (scene == SceneId.city) {
-      _buildCity();
-    } else {
-      _buildSuburbs();
+    switch (scene) {
+      case SceneId.city:
+        _buildCity();
+      case SceneId.suburbs:
+        _buildSuburbs();
+      case SceneId.thikaRoad:
+        _buildThikaRoad();
     }
     length = segments.length * RoadConfig.segmentLength;
   }
 
   final List<RoadSegment> segments = [];
+
+  /// First segment of each named stretch, for scenes that have them.
+  final List<int> sectionStarts = [];
   late final double length;
   double _lastY = 0;
 
@@ -39,6 +45,8 @@ class RoadTrack {
       RoadTrack(scene).length *
       SceneTheme.of(scene).laps *
       RoadConfig.unitKm;
+
+  void _mark() => sectionStarts.add(segments.length);
 
   void _add(double curve, double y) {
     segments.add(RoadSegment(segments.length, _lastY, y, curve));
@@ -101,5 +109,47 @@ class RoadTrack {
     _addRoad(45, 45, 45, -4.2, 0);
     _addRoad(40, 40, 40, 2.2, 0);
     _addRoad(45, 70, 45, 0, 0);
+  }
+
+  /// Thika Rd, one way: Ruiru, Pangani, Forest Rd, Museum Hill. Run it once
+  /// (laps = 1), not as a loop. Hills in each stretch sum to zero.
+  void _buildThikaRoad() {
+    // Ruiru: wide open carriageway, long straights, gentle bends.
+    _mark();
+    _addRoad(50, 160, 50, 0, 0);
+    _addRoad(45, 90, 45, 1.4, 3);
+    _addRoad(50, 140, 50, 0, -3);
+    _addRoad(45, 80, 45, -1.8, 0);
+    _addRoad(50, 150, 50, 0, 0);
+
+    // Pangani: the flyover climb, then dense blocks either side.
+    _mark();
+    _addRoad(45, 70, 45, 0, 6);
+    _addRoad(50, 80, 50, 0, 8);
+    _addRoad(40, 60, 40, 2.4, 0);
+    _addRoad(50, 80, 50, 0, -14);
+    _addRoad(45, 90, 45, -2.2, 0);
+    _addRoad(50, 120, 50, 0, 0);
+    _addRoad(40, 50, 40, 2.0, 4);
+    _addRoad(40, 40, 40, 0, -4);
+
+    // Forest Rd: tree-lined S bends under the canopy.
+    _mark();
+    _addRoad(45, 60, 45, -2.6, 4);
+    _addRoad(45, 50, 45, 3.0, 0);
+    _addRoad(40, 40, 40, -3.2, -4);
+    _addRoad(50, 70, 50, 0, 5);
+    _addRoad(45, 55, 45, 2.4, -5);
+    _addRoad(45, 60, 45, -2.0, 0);
+    _addRoad(50, 80, 50, 0, 0);
+
+    // Museum Hill: the last climb, the interchange bends, a flat finish.
+    _mark();
+    _addRoad(50, 70, 50, 0, 7);
+    _addRoad(45, 60, 45, 3.2, 5);
+    _addRoad(40, 45, 40, -3.6, 0);
+    _addRoad(45, 50, 45, 0, -12);
+    _addRoad(50, 70, 50, 2.0, 0);
+    _addRoad(50, 150, 50, 0, 0);
   }
 }

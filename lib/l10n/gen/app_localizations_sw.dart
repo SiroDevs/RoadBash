@@ -49,6 +49,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get sceneSuburbs => 'Vitongoji';
 
   @override
+  String get sceneThikaRoad => 'Barabara ya Thika';
+
+  @override
   String get receptionTitle => 'Mapokezi';
 
   @override
@@ -60,12 +63,21 @@ class AppLocalizationsSw extends AppLocalizations {
       'Vilima vinavyopinda na mikunjo mipana pembezoni mwa mji. Kasi, mtiririko, na ni rahisi kutoka nje ya njia.';
 
   @override
+  String get blurbThikaRoad =>
+      'Kutoka Ruiru hadi Pangani, kupitia Barabara ya Forest hadi Museum Hill. Njia pana, vivuko vya juu na madaraja ya waenda kwa miguu. Kaa safi hadi mwisho.';
+
+  @override
   String get blurbReception =>
       'Njoo uweke jina la mwendeshaji, rekebisha sauti na uangalie vidhibiti.';
 
   @override
   String lengthLabel(String km, int laps) {
     return 'Urefu: km $km, mizunguko $laps';
+  }
+
+  @override
+  String lengthOneWayLabel(String km) {
+    return 'Urefu: km $km, njia moja';
   }
 
   @override

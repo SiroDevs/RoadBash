@@ -2,12 +2,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-/// Which menu entry is highlighted: 0 city, 1 suburbs, 2 reception.
+// Project imports:
+import '../../../domain/models/scene_id.dart';
+
+/// Which scene is highlighted: an index into [SceneId.values].
 @injectable
 class MenuCubit extends Cubit<int> {
   MenuCubit() : super(0);
 
-  static const entries = 3;
+  static final entries = SceneId.values.length;
 
   void move(int delta) => emit((state + delta) % entries);
 

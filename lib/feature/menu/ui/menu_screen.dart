@@ -44,17 +44,17 @@ class _MenuScreenState extends State<MenuScreen> {
       id: RoadTrack(id).length * SceneTheme.of(id).laps * RoadConfig.unitKm,
   };
 
-  SceneId? _scene(int index) =>
-      index < SceneId.values.length ? SceneId.values[index] : null;
+  /// How much of its slot the postcard fills.
+  static const double _cardScale = 0.75;
 
-  void _go(int index) {
-    final id = _scene(index);
-    if (id == null) {
-      context.goNamed(RouteNames.reception);
-    } else {
-      context.goNamed(RouteNames.race, pathParameters: {'scene': id.name});
-    }
-  }
+  SceneId _scene(int index) => SceneId.values[index];
+
+  void _go(int index) => context.goNamed(
+        RouteNames.race,
+        pathParameters: {'scene': _scene(index).name},
+      );
+
+  void _reception() => context.goNamed(RouteNames.reception);
 
   void _tap(MenuCubit menu, int index) =>
       index == menu.state ? _go(index) : menu.select(index);
@@ -67,7 +67,7 @@ class _MenuScreenState extends State<MenuScreen> {
       child: CallbackShortcuts(
         bindings: {
           const SingleActivator(LogicalKeyboardKey.arrowLeft): () =>
-              menu.move(2),
+              menu.move(MenuCubit.entries - 1),
           const SingleActivator(LogicalKeyboardKey.arrowRight): () =>
               menu.move(1),
           const SingleActivator(LogicalKeyboardKey.enter): () =>
@@ -96,16 +96,12 @@ class _MenuScreenState extends State<MenuScreen> {
     final l10n = context.l10n;
     final s = context.sizes;
     final id = _scene(index);
-    final info = SceneInfo(scene: id, km: id == null ? 0 : _km[id]!);
-    String sceneImg = AppAssets.appMain;
-    if (id == SceneId.city) {
-      sceneImg = AppAssets.sceneCity;
-    } else if (id == SceneId.suburbs) {
-      sceneImg = AppAssets.sceneSuburbs;
-    }
-    final card = id == null
-        ? ScenePreview(AppAssets.restroom)
-        : ScenePreview(sceneImg);
+    final info = SceneInfo(scene: id, km: _km[id]!);
+    final card = ScenePreview(switch (id) {
+      SceneId.city => AppAssets.sceneCity,
+      SceneId.suburbs => AppAssets.sceneSuburbs,
+      SceneId.thikaRoad => AppAssets.sceneThikaRoad,
+    });
 
     final title = RetroTitle(_label(l10n, id));
     final entries = Container(
@@ -122,17 +118,20 @@ class _MenuScreenState extends State<MenuScreen> {
         ],
       ),
     );
-    final go = Align(
-      alignment: Alignment.centerRight,
-      child: RetroButton(
-        id == null ? l10n.enterLabel : l10n.startRace,
-        onTap: () => _go(index),
+    final go = SizedBox(
+      width: double.infinity,
+      child: Wrap(
+        alignment: WrapAlignment.end,
+        spacing: s.gap * 0.75,
+        runSpacing: s.gap * 0.75,
+        children: [
+          RetroButton(l10n.receptionTitle, onTap: _reception),
+          RetroButton(l10n.startRace, onTap: () => _go(index)),
+        ],
       ),
     );
 
     return ResponsiveLayoutBuilder(
-      // Portrait phones and very short windows: everything stacked, scrolls
-      // if it has to, nothing is cut off.
       small: (_, __) => ResponsiveScrollBody(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +140,7 @@ class _MenuScreenState extends State<MenuScreen> {
             SizedBox(height: s.gap),
             Center(
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: s.cardMaxW),
+                constraints: BoxConstraints(maxWidth: s.cardMaxW * _cardScale),
                 child: card,
               ),
             ),
@@ -161,8 +160,6 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
-  /// Landscape and desktop: description and postcard side by side, the rest
-  /// pinned underneath.
   Widget _fixed(
     BuildContext context,
     RetroSizes s,
@@ -183,12 +180,12 @@ class _MenuScreenState extends State<MenuScreen> {
                   children: [
                     SingleChildScrollView(child: info).expanded(),
                     SizedBox(width: s.gap * 1.5),
-                    card.expanded().center(),
+                    _smaller(card).center().expanded(),
                   ],
                 )
               : Column(
                   children: [
-                    card.expanded().center(),
+                    _smaller(card).center().expanded(),
                     SizedBox(height: s.gapSmall),
                     ConstrainedBox(
                       constraints: BoxConstraints(
@@ -209,8 +206,10 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
-  String _label(AppLocalizations l10n, SceneId? id) =>
-      id == null ? l10n.receptionTitle : l10n.sceneTitle(id);
+  Widget _smaller(Widget card) =>
+      FractionallySizedBox(widthFactor: _cardScale, child: card);
+
+  String _label(AppLocalizations l10n, SceneId id) => l10n.sceneTitle(id);
 
   Widget _riderBar(BuildContext context) {
     final l10n = context.l10n;

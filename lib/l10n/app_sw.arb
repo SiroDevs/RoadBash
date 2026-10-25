@@ -54,6 +54,10 @@
   "@sceneSuburbs": {
     "description": "Name of the suburbs scene"
   },
+  "sceneThikaRoad": "Barabara ya Thika",
+  "@sceneThikaRoad": {
+    "description": "Name of the Thika Rd scene"
+  },
   "receptionTitle": "Mapokezi",
   "@receptionTitle": {
     "description": "Name of the settings desk"
@@ -65,6 +69,10 @@
   "blurbSuburbs": "Vilima vinavyopinda na mikunjo mipana pembezoni mwa mji. Kasi, mtiririko, na ni rahisi kutoka nje ya njia.",
   "@blurbSuburbs": {
     "description": "Suburbs description"
+  },
+  "blurbThikaRoad": "Kutoka Ruiru hadi Pangani, kupitia Barabara ya Forest hadi Museum Hill. Njia pana, vivuko vya juu na madaraja ya waenda kwa miguu. Kaa safi hadi mwisho.",
+  "@blurbThikaRoad": {
+    "description": "Thika Rd description"
   },
   "blurbReception": "Njoo uweke jina la mwendeshaji, rekebisha sauti na uangalie vidhibiti.",
   "@blurbReception": {
@@ -79,6 +87,15 @@
       },
       "laps": {
         "type": "int"
+      }
+    }
+  },
+  "lengthOneWayLabel": "Urefu: km {km}, njia moja",
+  "@lengthOneWayLabel": {
+    "description": "Race length for a one-way scene",
+    "placeholders": {
+      "km": {
+        "type": "String"
       }
     }
   },

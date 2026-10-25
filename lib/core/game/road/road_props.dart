@@ -1,68 +1,26 @@
 // Project imports:
 import '../utils/scenery_shapes.dart';
 import 'road_config.dart';
+import 'road_prop.dart';
+import 'road_props_thika.dart';
 import 'road_theme.dart';
 
-enum PropKind {
-  building,
-  broadleaf,
-  pine,
-  bush,
-  lamp,
-  sign,
-}
-
-/// One piece of roadside scenery, pinned to a segment for the whole race.
-class Prop {
-  const Prop({
-    required this.kind,
-    required this.anchor,
-    required this.side,
-    required this.offset,
-    required this.width,
-    required this.height,
-    this.depth = 0,
-    this.tint = 0,
-    this.detail = 0,
-  });
-
-  final PropKind kind;
-
-  /// Segment index the prop stands on.
-  final int anchor;
-
-  /// -1 for the left verge, 1 for the right.
-  final int side;
-
-  /// Distance from the road centre to the near face, in half-road-widths.
-  final double offset;
-
-  /// World units across (buildings) or half-width (billboards).
-  final double width;
-
-  /// World units tall.
-  final double height;
-
-  /// Segments the prop runs back along the road. 0 for billboards.
-  final int depth;
-
-  /// Palette slot for buildings.
-  final int tint;
-
-  /// Free parameter: window-grid density, canopy shape, sign face.
-  final double detail;
-}
+export 'road_prop.dart';
 
 /// Lays scenery out along a track once, then hands the renderer a per-segment
 /// index of what starts there.
 class RoadProps {
-  RoadProps(SceneTheme theme, int segmentCount)
+  RoadProps(SceneTheme theme, int segmentCount,
+      {List<int> sectionStarts = const []})
       : _bySegment = List.filled(segmentCount, const []) {
     final slots = List.generate(segmentCount, (_) => <Prop>[]);
-    if (theme.decor == DecorKind.buildings) {
-      _layOutCity(slots, segmentCount);
-    } else {
-      _layOutSuburbs(slots, segmentCount);
+    switch (theme.decor) {
+      case DecorKind.buildings:
+        _layOutCity(slots, segmentCount);
+      case DecorKind.trees:
+        _layOutSuburbs(slots, segmentCount);
+      case DecorKind.corridor:
+        layOutThikaRoad(slots, segmentCount, sectionStarts);
     }
     for (var i = 0; i < segmentCount; i++) {
       _bySegment[i] = slots[i].isEmpty ? const [] : List.unmodifiable(slots[i]);

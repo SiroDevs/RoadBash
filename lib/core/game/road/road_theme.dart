@@ -4,9 +4,9 @@ import 'dart:ui';
 // Project imports:
 import '../../../domain/models/scene_id.dart';
 
-enum BackdropKind { skyline, hills }
+enum BackdropKind { skyline, hills, hillsAndSkyline }
 
-enum DecorKind { buildings, trees }
+enum DecorKind { buildings, trees, corridor }
 
 class SceneTheme {
   const SceneTheme({
@@ -35,6 +35,9 @@ class SceneTheme {
     this.treeLight = const Color(0xFF47883B),
     this.trunk = const Color(0xFF4F3A2B),
     this.poleColor = const Color(0xFF6E737C),
+    this.bridgeColor = const Color(0xFFA7A9A4),
+    this.bridgeRail = const Color(0xFF3F4650),
+    this.signGreen = const Color(0xFF1F6B46),
   });
 
   final SceneId id;
@@ -55,6 +58,9 @@ class SceneTheme {
   final DecorKind decor;
   final List<Color> wallColors;
   final Color windowColor, roofColor, treeDark, treeLight, trunk, poleColor;
+
+  /// Footbridge and flyover concrete, its railing, and gantry sign panels.
+  final Color bridgeColor, bridgeRail, signGreen;
 
   static const SceneTheme city = SceneTheme(
     id: SceneId.city,
@@ -103,5 +109,42 @@ class SceneTheme {
     trunk: Color(0xFF553E2D),
   );
 
-  static SceneTheme of(SceneId id) => id == SceneId.city ? city : suburbs;
+  /// Thika Superhighway: dry red-earth verges, warm concrete, hills in the
+  /// distance and the Nairobi skyline ahead.
+  static const SceneTheme thikaRoad = SceneTheme(
+    id: SceneId.thikaRoad,
+    laps: 1,
+    skyTop: Color(0xFF5B8FE0),
+    skyHorizon: Color(0xFFE3DCCB),
+    backFar: Color(0xFF8DA08F),
+    backNear: Color(0xFF6E8A6A),
+    ground: Color(0xFF9C8458),
+    shoulder: Color(0xFFB4875C),
+    edgeLight: Color(0xFFC9CBCF),
+    edgeDark: Color(0xFFA9ADB4),
+    roadLight: Color(0xFF4F5059),
+    roadDark: Color(0xFF494A53),
+    fog: Color(0xFFD6D7D2),
+    backdrop: BackdropKind.hillsAndSkyline,
+    decor: DecorKind.corridor,
+    wallColors: [
+      Color(0xFFD9C9A8),
+      Color(0xFF8FB0C8),
+      Color(0xFFB8765A),
+      Color(0xFFA9A9A3),
+      Color(0xFFC9D6B5),
+      Color(0xFFE0CFA0),
+    ],
+    windowColor: Color(0xFF2E3E4E),
+    roofColor: Color(0xFF4A4F57),
+    treeDark: Color(0xFF2F6B2E),
+    treeLight: Color(0xFF5E9B3F),
+    trunk: Color(0xFF5A4332),
+  );
+
+  static SceneTheme of(SceneId id) => switch (id) {
+    SceneId.city => city,
+    SceneId.suburbs => suburbs,
+    SceneId.thikaRoad => thikaRoad,
+  };
 }

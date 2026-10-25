@@ -22,7 +22,7 @@ class RoadRenderer extends PositionComponent {
       _backdrop = RoadBackdrop(theme),
       _roads = RoadSegmentPainter(theme),
       _decor = RoadDecorPainter(theme) {
-    props = RoadProps(theme, track.count);
+    props = RoadProps(theme, track.count, sectionStarts: track.sectionStarts);
   }
 
   final SceneTheme theme;

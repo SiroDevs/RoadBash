@@ -1,1 +1,1 @@
-enum SceneId { city, suburbs }
+enum SceneId { city, suburbs, thikaRoad }

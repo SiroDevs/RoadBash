@@ -42,7 +42,9 @@ class SceneInfo extends StatelessWidget {
           if (id != null) ...[
             SizedBox(height: s.gap * 0.9),
             Text(
-              l10n.lengthLabel(km.toStringAsFixed(1), SceneTheme.of(id).laps),
+              SceneTheme.of(id).laps == 1
+                  ? l10n.lengthOneWayLabel(km.toStringAsFixed(1))
+                  : l10n.lengthLabel(km.toStringAsFixed(1), SceneTheme.of(id).laps),
               style: retroBody(size: s.small, color: Retro.yellow),
             ),
             BlocBuilder<ProgressCubit, ProgressState>(

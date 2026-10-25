@@ -54,6 +54,10 @@
   "@sceneSuburbs": {
     "description": "Name of the suburbs scene"
   },
+  "sceneThikaRoad": "Thika Road",
+  "@sceneThikaRoad": {
+    "description": "Name of the Thika Rd scene"
+  },
   "receptionTitle": "Reception",
   "@receptionTitle": {
     "description": "Name of the settings desk"
@@ -65,6 +69,10 @@
   "blurbSuburbs": "Rolling hills and sweeping bends at the edge of town. Fast, flowing and easy to run wide.",
   "@blurbSuburbs": {
     "description": "Suburbs description"
+  },
+  "blurbThikaRoad": "Ruiru to Pangani, down Forest Rd and up to Museum Hill. Wide lanes, flyovers and footbridges. Keep it clean to the finish.",
+  "@blurbThikaRoad": {
+    "description": "Thika Rd description"
   },
   "blurbReception": "Pop in to set your rider name, mix the sound and check the controls.",
   "@blurbReception": {
@@ -79,6 +87,15 @@
       },
       "laps": {
         "type": "int"
+      }
+    }
+  },
+  "lengthOneWayLabel": "Length: {km} km, one way",
+  "@lengthOneWayLabel": {
+    "description": "Race length for a one-way scene",
+    "placeholders": {
+      "km": {
+        "type": "String"
       }
     }
   },

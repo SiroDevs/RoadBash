@@ -69,6 +69,36 @@ class RoadBackdrop {
         scroll: scroll * 0.5,
         haze: _nearHaze,
       );
+    } else if (theme.backdrop == BackdropKind.hillsAndSkyline) {
+      // Far hills, the city small and hazy against them, then nearer rises.
+      drawHills(
+        canvas,
+        _path,
+        width: w,
+        baseY: horizon,
+        amplitude: 50 * k,
+        frequency: 0.006,
+        scroll: scroll * 0.5,
+        paint: _far,
+      );
+      drawCityScape(
+        canvas,
+        width: w,
+        baseY: horizon,
+        height: 70 * k,
+        scroll: scroll * 0.3 + 40 * k,
+        haze: _farHaze,
+      );
+      drawHills(
+        canvas,
+        _path,
+        width: w,
+        baseY: horizon,
+        amplitude: 20 * k,
+        frequency: 0.011,
+        scroll: scroll,
+        paint: _near,
+      );
     } else {
       drawHills(
         canvas,

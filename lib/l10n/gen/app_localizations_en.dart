@@ -49,6 +49,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sceneSuburbs => 'The Suburbs';
 
   @override
+  String get sceneThikaRoad => 'Thika Road';
+
+  @override
   String get receptionTitle => 'Reception';
 
   @override
@@ -60,12 +63,21 @@ class AppLocalizationsEn extends AppLocalizations {
       'Rolling hills and sweeping bends at the edge of town. Fast, flowing and easy to run wide.';
 
   @override
+  String get blurbThikaRoad =>
+      'Ruiru to Pangani, down Forest Rd and up to Museum Hill. Wide lanes, flyovers and footbridges. Keep it clean to the finish.';
+
+  @override
   String get blurbReception =>
       'Pop in to set your rider name, mix the sound and check the controls.';
 
   @override
   String lengthLabel(String km, int laps) {
     return 'Length: $km km, $laps laps';
+  }
+
+  @override
+  String lengthOneWayLabel(String km) {
+    return 'Length: $km km, one way';
   }
 
   @override

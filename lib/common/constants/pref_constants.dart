@@ -8,6 +8,8 @@ class PrefConstants {
   static const profileTypeSetKey = 'profile_type_set';
   static const isErrandRunnerKey = 'is_errand_runner';
 
+  static const authSessionKey = 'auth_session';
+  static const authAnonymousKey = 'auth_anonymous';
   static const playerNameKey = 'player_name';
   static const visitorIdKey = 'visitor_id';
   static const masterVolKey = 'vol_master';

@@ -74,6 +74,10 @@ class ResultsScreen extends StatelessWidget {
                       l10n.backToMenu,
                       onTap: () => context.goNamed(RouteNames.menu),
                     ),
+                    RetroButton(
+                      l10n.receptionTitle,
+                      onTap: () => context.goNamed(RouteNames.reception),
+                    ),
                   ],
                 ),
               ),

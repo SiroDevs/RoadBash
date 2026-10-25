@@ -164,6 +164,12 @@ abstract class AppLocalizations {
   /// **'The Suburbs'**
   String get sceneSuburbs;
 
+  /// Name of the Thika Rd scene
+  ///
+  /// In en, this message translates to:
+  /// **'Thika Road'**
+  String get sceneThikaRoad;
+
   /// Name of the settings desk
   ///
   /// In en, this message translates to:
@@ -182,6 +188,12 @@ abstract class AppLocalizations {
   /// **'Rolling hills and sweeping bends at the edge of town. Fast, flowing and easy to run wide.'**
   String get blurbSuburbs;
 
+  /// Thika Rd description
+  ///
+  /// In en, this message translates to:
+  /// **'Ruiru to Pangani, down Forest Rd and up to Museum Hill. Wide lanes, flyovers and footbridges. Keep it clean to the finish.'**
+  String get blurbThikaRoad;
+
   /// Reception description
   ///
   /// In en, this message translates to:
@@ -193,6 +205,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Length: {km} km, {laps} laps'**
   String lengthLabel(String km, int laps);
+
+  /// Race length for a one-way scene
+  ///
+  /// In en, this message translates to:
+  /// **'Length: {km} km, one way'**
+  String lengthOneWayLabel(String km);
 
   /// Player level
   ///

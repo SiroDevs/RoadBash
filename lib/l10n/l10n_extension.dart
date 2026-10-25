@@ -11,11 +11,17 @@ extension L10nContext on BuildContext {
 }
 
 extension SceneL10n on AppLocalizations {
-  String sceneTitle(SceneId id) =>
-      id == SceneId.city ? sceneCity : sceneSuburbs;
+  String sceneTitle(SceneId id) => switch (id) {
+    SceneId.city => sceneCity,
+    SceneId.suburbs => sceneSuburbs,
+    SceneId.thikaRoad => sceneThikaRoad,
+  };
 
-  String sceneBlurb(SceneId id) =>
-      id == SceneId.city ? blurbCity : blurbSuburbs;
+  String sceneBlurb(SceneId id) => switch (id) {
+    SceneId.city => blurbCity,
+    SceneId.suburbs => blurbSuburbs,
+    SceneId.thikaRoad => blurbThikaRoad,
+  };
 }
 
 extension ProfileL10n on PlayerProfile {

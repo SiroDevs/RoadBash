@@ -10,6 +10,7 @@ import '../utils/paint_utils.dart';
 import 'road_config.dart';
 import 'road_projection.dart';
 import 'road_props.dart';
+import 'road_span_painter.dart';
 import 'road_theme.dart';
 
 /// Draws the scenery the track laid out. Every prop is a fixed object in the
@@ -32,12 +33,14 @@ class RoadDecorPainter {
         _pole = fogRamp(theme.poleColor, theme.fog),
         _signFace = fogRamp(const Color(0xFFE8E4D8), theme.fog),
         _signInk = fogRamp(const Color(0xFF2E3238), theme.fog),
-        _shadow = fogRamp(const Color(0x3A000000), theme.fog, antiAlias: true);
+        _shadow = fogRamp(const Color(0x3A000000), theme.fog, antiAlias: true),
+        _span = RoadSpanPainter(theme);
 
   final SceneTheme theme;
   final List<List<Paint>> _wallSide, _wallFront;
   final List<Paint> _parapet, _window, _leafDark, _leafLight, _trunk;
   final List<Paint> _pole, _signFace, _signInk, _shadow;
+  final RoadSpanPainter _span;
 
   final Path _path = Path();
   final Path _grid = Path();
@@ -120,6 +123,10 @@ class RoadDecorPainter {
       k * (near.w1 / near.k1);
 
   void drawBillboard(Canvas c, VisionSeg v, Prop p, Vector2 size) {
+    if (p.kind.spansRoad) {
+      _span.draw(c, v, p, size);
+      return;
+    }
     final halfW = p.width * v.k1;
     final x = v.x1 + p.side * v.w1 * p.offset;
     if (x + halfW * 2 < 0 || x - halfW * 2 > size.x) return;
@@ -142,6 +149,9 @@ class RoadDecorPainter {
       case PropKind.sign:
         _sign(c, v, x, y, halfW, h);
       case PropKind.building:
+      case PropKind.footbridge:
+      case PropKind.gantry:
+      case PropKind.overpass:
         break;
     }
     c.restore();

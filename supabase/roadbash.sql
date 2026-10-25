@@ -104,7 +104,8 @@ $$;
 
 create or replace function public.rb_valid_name(p_name text)
 returns boolean language sql immutable set search_path = public as $$
-  select btrim(coalesce(p_name, '')) ~ '^[A-Za-z0-9][A-Za-z0-9 _]{1,10}[A-Za-z0-9]$';
+  select btrim(coalesce(p_name, '')) ~ '^[A-Za-z0-9][A-Za-z0-9 _]{1,10}[A-Za-z0-9]$'
+     and public.rb_name_key(p_name) <> 'anonplayer';
 $$;
 
 create or replace function public.rb_norm_answer(p_text text)

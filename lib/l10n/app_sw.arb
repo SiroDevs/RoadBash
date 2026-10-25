@@ -383,9 +383,9 @@
   "@signInStart": {
     "description": "Sign in button"
   },
-  "signInOffline": "Cheza bila mtandao",
-  "@signInOffline": {
-    "description": "Offline button"
+  "signInAnonymous": "Cheza bila kujulikana",
+  "@signInAnonymous": {
+    "description": "Anonymous button"
   },
   "errInvalidName": "Tumia herufi, namba, nafasi au _ (3 hadi 12).",
   "@errInvalidName": {
@@ -455,9 +455,9 @@
       }
     }
   },
-  "accountOffline": "Unacheza bila mtandao. Ingia ili uhesabiwe kwenye orodha ya washindi.",
-  "@accountOffline": {
-    "description": "Offline account line"
+  "accountAnonymous": "Unacheza bila kujulikana. Ingia ili uhesabiwe kwenye orodha ya washindi.",
+  "@accountAnonymous": {
+    "description": "Anonymous account line"
   },
   "accountAdmin": "Msimamizi: unaweza kusoma sanduku la mapendekezo.",
   "@accountAdmin": {
@@ -594,5 +594,21 @@
   "suggestionInboxEmpty": "Sanduku ni tupu.",
   "@suggestionInboxEmpty": {
     "description": "Empty inbox"
+  },
+  "commonCancel": "Ghairi",
+  "@commonCancel": {
+    "description": "Cancel button"
+  },
+  "anonymousWarningTitle": "Cheza bila kujulikana?",
+  "@anonymousWarningTitle": {
+    "description": "Anonymous warning title"
+  },
+  "anonymousWarningBody": "Utaendesha kama AnonPlayer. Michezo yako haitarekodiwa, kwa hivyo hutaonekana kwenye orodha yetu ya washindi. Ingia kwa jina ukitaka kuhesabiwa.",
+  "@anonymousWarningBody": {
+    "description": "Anonymous warning body"
+  },
+  "anonymousWarningConfirm": "Cheza hivyo hivyo",
+  "@anonymousWarningConfirm": {
+    "description": "Anonymous warning confirm"
   }
 }

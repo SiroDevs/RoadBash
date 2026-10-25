@@ -40,17 +40,16 @@ The Reception screen (the restroom) is where you check who you are signed in as 
 ## Online features (Supabase)
 
 1. Create a Supabase project and run `supabase/roadbash.sql` once in the SQL editor. It creates the `rb_*` tables, locks them down with row level security, and exposes everything through `rb_*` functions.
-2. Pass the project URL and anon key when you build or run:
+2. Put the project URL and anon key in a `.env` file in the project root (copy `.env.example`):
 
-```bash
-flutter run -d chrome \
-  --dart-define=SUPABASE_URL=https://YOUR-PROJECT.supabase.co \
-  --dart-define=SUPABASE_ANON_KEY=YOUR-ANON-KEY
+```
+SUPABASE_URL=https://YOUR-PROJECT.supabase.co
+SUPABASE_ANON_KEY=YOUR-ANON-KEY
 ```
 
-For Vercel, add the same two `--dart-define` flags to the `flutter build web` step in the GitHub Actions workflow (store the values as repository secrets).
+The file is bundled as an asset, so it is readable inside the built app. That is fine for the anon key, which is public by design (never put the service role key here). `.env` is git-ignored, so a CI build such as Vercel has to create it first, for example from repository secrets, before `flutter build web`. `--dart-define=SUPABASE_URL=...` and `--dart-define=SUPABASE_ANON_KEY=...` still work as a fallback when a key is missing from `.env`.
 
-Without those flags the game still runs: the sign-in screen offers **Play offline** and nothing is recorded.
+Players can also choose **Play anonymously** on the sign-in screen. A dialog warns them that they will ride as `AnonPlayer`, will not appear on the leaderboard and will not have their games recorded. There is no account, and no saved games, but their visit and online presence are still counted.
 
 How it behaves:
 

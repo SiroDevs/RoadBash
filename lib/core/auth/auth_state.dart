@@ -1,14 +1,14 @@
 part of 'auth_cubit.dart';
 
 class AuthState extends Equatable {
-  const AuthState({this.session, this.offline = false});
+  const AuthState({this.session, this.anonymous = false});
 
   final PlayerSession? session;
-  final bool offline;
+  final bool anonymous;
 
-  bool get isSignedIn => session != null || offline;
+  bool get isSignedIn => session != null || anonymous;
   bool get isAdmin => session?.isAdmin ?? false;
 
   @override
-  List<Object?> get props => [session, offline];
+  List<Object?> get props => [session, anonymous];
 }

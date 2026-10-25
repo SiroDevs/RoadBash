@@ -28,7 +28,7 @@ class AccountPanel extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          session == null ? l10n.accountOffline : l10n.accountSignedInAs(name),
+          session == null ? l10n.accountAnonymous : l10n.accountSignedInAs(name),
           style: retroBody(size: s.body),
         ),
         if (session?.isAdmin ?? false) ...[

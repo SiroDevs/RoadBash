@@ -383,9 +383,9 @@
   "@signInStart": {
     "description": "Sign in button"
   },
-  "signInOffline": "Play offline",
-  "@signInOffline": {
-    "description": "Offline button"
+  "signInAnonymous": "Play anonymously",
+  "@signInAnonymous": {
+    "description": "Anonymous button"
   },
   "errInvalidName": "Use 3 to 12 letters, numbers, spaces or underscores.",
   "@errInvalidName": {
@@ -455,9 +455,9 @@
       }
     }
   },
-  "accountOffline": "Playing offline. Sign in to be counted on the leaderboard.",
-  "@accountOffline": {
-    "description": "Offline account line"
+  "accountAnonymous": "Playing anonymously. Sign in to be counted on the leaderboard.",
+  "@accountAnonymous": {
+    "description": "Anonymous account line"
   },
   "accountAdmin": "Admin: you can read the suggestion box.",
   "@accountAdmin": {
@@ -594,5 +594,21 @@
   "suggestionInboxEmpty": "The box is empty.",
   "@suggestionInboxEmpty": {
     "description": "Empty inbox"
+  },
+  "commonCancel": "Cancel",
+  "@commonCancel": {
+    "description": "Cancel button"
+  },
+  "anonymousWarningTitle": "Play anonymously?",
+  "@anonymousWarningTitle": {
+    "description": "Anonymous warning title"
+  },
+  "anonymousWarningBody": "You will ride as AnonPlayer. Your games will not be recorded, so you will not appear on our leaderboard. Sign in with a name if you want to be counted.",
+  "@anonymousWarningBody": {
+    "description": "Anonymous warning body"
+  },
+  "anonymousWarningConfirm": "Play anyway",
+  "@anonymousWarningConfirm": {
+    "description": "Anonymous warning confirm"
   }
 }

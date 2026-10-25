@@ -284,7 +284,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get signInStart => 'Tuanze';
 
   @override
-  String get signInOffline => 'Cheza bila mtandao';
+  String get signInAnonymous => 'Cheza bila kujulikana';
 
   @override
   String get errInvalidName => 'Tumia herufi, namba, nafasi au _ (3 hadi 12).';
@@ -332,8 +332,8 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get accountOffline =>
-      'Unacheza bila mtandao. Ingia ili uhesabiwe kwenye orodha ya washindi.';
+  String get accountAnonymous =>
+      'Unacheza bila kujulikana. Ingia ili uhesabiwe kwenye orodha ya washindi.';
 
   @override
   String get accountAdmin =>
@@ -436,4 +436,17 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get suggestionInboxEmpty => 'Sanduku ni tupu.';
+
+  @override
+  String get commonCancel => 'Ghairi';
+
+  @override
+  String get anonymousWarningTitle => 'Cheza bila kujulikana?';
+
+  @override
+  String get anonymousWarningBody =>
+      'Utaendesha kama AnonPlayer. Michezo yako haitarekodiwa, kwa hivyo hutaonekana kwenye orodha yetu ya washindi. Ingia kwa jina ukitaka kuhesabiwa.';
+
+  @override
+  String get anonymousWarningConfirm => 'Cheza hivyo hivyo';
 }

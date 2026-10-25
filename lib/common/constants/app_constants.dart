@@ -6,4 +6,5 @@ class AppConstants {
   static const appPackageName = "com.sirodevs.roadbash";
   static const kFontFamily = 'Rajdhani';
   static const displayFont = 'Anton';
+  static const anonymousName = 'AnonPlayer';
 }

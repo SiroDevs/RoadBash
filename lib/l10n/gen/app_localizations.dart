@@ -584,11 +584,11 @@ abstract class AppLocalizations {
   /// **'Let\'s ride'**
   String get signInStart;
 
-  /// Offline button
+  /// Anonymous button
   ///
   /// In en, this message translates to:
-  /// **'Play offline'**
-  String get signInOffline;
+  /// **'Play anonymously'**
+  String get signInAnonymous;
 
   /// Invalid name
   ///
@@ -662,11 +662,11 @@ abstract class AppLocalizations {
   /// **'Signed in as {name}'**
   String accountSignedInAs(String name);
 
-  /// Offline account line
+  /// Anonymous account line
   ///
   /// In en, this message translates to:
-  /// **'Playing offline. Sign in to be counted on the leaderboard.'**
-  String get accountOffline;
+  /// **'Playing anonymously. Sign in to be counted on the leaderboard.'**
+  String get accountAnonymous;
 
   /// Admin badge
   ///
@@ -859,6 +859,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The box is empty.'**
   String get suggestionInboxEmpty;
+
+  /// Cancel button
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonCancel;
+
+  /// Anonymous warning title
+  ///
+  /// In en, this message translates to:
+  /// **'Play anonymously?'**
+  String get anonymousWarningTitle;
+
+  /// Anonymous warning body
+  ///
+  /// In en, this message translates to:
+  /// **'You will ride as AnonPlayer. Your games will not be recorded, so you will not appear on our leaderboard. Sign in with a name if you want to be counted.'**
+  String get anonymousWarningBody;
+
+  /// Anonymous warning confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Play anyway'**
+  String get anonymousWarningConfirm;
 }
 
 class _AppLocalizationsDelegate

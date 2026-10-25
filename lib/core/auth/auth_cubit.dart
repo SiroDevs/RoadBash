@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
+import '../../common/constants/app_constants.dart';
 import '../../domain/models/player_session.dart';
 import '../../domain/repos/auth_repo.dart';
 import '../progress/progress_cubit.dart';
@@ -37,8 +38,9 @@ class AuthCubit extends Cubit<AuthState> {
     await _progress.load();
   }
 
-  Future<void> playOffline() async {
-    emit(const AuthState(offline: true));
+  Future<void> playAnonymously() async {
+    _settings.setName(AppConstants.anonymousName);
+    emit(const AuthState(anonymous: true));
     await _progress.load();
   }
 

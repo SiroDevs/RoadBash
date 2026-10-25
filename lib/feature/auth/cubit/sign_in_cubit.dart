@@ -83,7 +83,7 @@ class SignInCubit extends Cubit<SignInState> {
     emit(const SignInState());
   }
 
-  void playOffline() => _auth.playOffline();
+  void playAnonymously() => _auth.playAnonymously();
 
   void _reject(SignInError error) =>
       emit(state.copyWith(busy: false, error: error));

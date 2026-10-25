@@ -9,6 +9,7 @@ import 'package:styled_widget/styled_widget.dart';
 // Project imports:
 import '../../../common/app_router/route_names.dart';
 import '../../../common/constants/app_assets.dart';
+import '../../../common/constants/app_constants.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
 import '../../../common/widgets/retro/retro_controls.dart';
@@ -19,9 +20,9 @@ import '../../../core/audio/audio_catalog.dart';
 import '../../../core/audio/music_scope.dart';
 import '../../../core/auth/auth_cubit.dart';
 import '../../../core/settings/settings_cubit.dart';
-import '../../../core/supabase/supabase_config.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../cubit/sign_in_cubit.dart';
+import 'anonymous_warning.dart';
 import 'sign_in_texts.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -32,9 +33,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  late final _name = TextEditingController(
-    text: context.read<SettingsCubit>().state.profile.name,
-  );
+  late final _name = TextEditingController(text: _savedName());
   final _answer = TextEditingController();
   final _confirm = TextEditingController();
   final _question = TextEditingController();
@@ -48,6 +47,10 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
+  String _savedName() {
+    final saved = context.read<SettingsCubit>().state.profile.name;
+    return saved == AppConstants.anonymousName ? '' : saved;
+  }
   void _clear() {
     _answer.clear();
     _confirm.clear();
@@ -180,11 +183,6 @@ class _SignInScreenState extends State<SignInScreen> {
     void guarded(VoidCallback action) {
       if (!st.busy) action();
     }
-
-    final offline =
-        !SupabaseConfig.ready ||
-        st.error == SignInError.network ||
-        st.error == SignInError.notConfigured;
     return Wrap(
       spacing: s.gap * 0.75,
       runSpacing: s.gap * 0.75,
@@ -210,8 +208,11 @@ class _SignInScreenState extends State<SignInScreen> {
             }
           }),
         ),
-        if (offline && st.stage == SignInStage.name)
-          RetroButton(l10n.signInOffline, onTap: cubit.playOffline),
+        if (st.stage == SignInStage.name)
+          RetroButton(
+            l10n.signInAnonymous,
+            onTap: () => confirmAnonymous(context, cubit.playAnonymously),
+          ),
       ],
     );
   }

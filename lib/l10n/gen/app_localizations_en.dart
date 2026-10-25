@@ -284,7 +284,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInStart => 'Let\'s ride';
 
   @override
-  String get signInOffline => 'Play offline';
+  String get signInAnonymous => 'Play anonymously';
 
   @override
   String get errInvalidName =>
@@ -333,8 +333,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get accountOffline =>
-      'Playing offline. Sign in to be counted on the leaderboard.';
+  String get accountAnonymous =>
+      'Playing anonymously. Sign in to be counted on the leaderboard.';
 
   @override
   String get accountAdmin => 'Admin: you can read the suggestion box.';
@@ -436,4 +436,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get suggestionInboxEmpty => 'The box is empty.';
+
+  @override
+  String get commonCancel => 'Cancel';
+
+  @override
+  String get anonymousWarningTitle => 'Play anonymously?';
+
+  @override
+  String get anonymousWarningBody =>
+      'You will ride as AnonPlayer. Your games will not be recorded, so you will not appear on our leaderboard. Sign in with a name if you want to be counted.';
+
+  @override
+  String get anonymousWarningConfirm => 'Play anyway';
 }

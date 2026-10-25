@@ -610,5 +610,14 @@
   "anonymousWarningConfirm": "Cheza hivyo hivyo",
   "@anonymousWarningConfirm": {
     "description": "Anonymous warning confirm"
+  },
+  "menuOnline": "{count} mtandaoni",
+  "@menuOnline": {
+    "description": "Players online badge",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

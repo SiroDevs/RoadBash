@@ -320,7 +320,7 @@
   "@signInTitle": {
     "description": "Sign-in heading"
   },
-  "signInNameLabel": "Your Name (Nickname)",
+  "signInNameLabel": "Rider name",
   "@signInNameLabel": {
     "description": "Name field label"
   },
@@ -610,5 +610,14 @@
   "anonymousWarningConfirm": "Play anyway",
   "@anonymousWarningConfirm": {
     "description": "Anonymous warning confirm"
+  },
+  "menuOnline": "{count} online",
+  "@menuOnline": {
+    "description": "Players online badge",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -551,6 +551,17 @@ begin
 end;
 $$;
 
+create or replace function public.rb_online_count()
+returns jsonb language sql stable security definer set search_path = public as $$
+  select jsonb_build_object(
+    'ok', true,
+    'online', count(*),
+    'players', count(*) filter (where player_id is not null)
+  )
+  from public.rb_presence
+  where last_seen > now() - interval '90 seconds';
+$$;
+
 create or replace function public.rb_submit_suggestion(p_token uuid, p_message text)
 returns jsonb language plpgsql security definer set search_path = public as $$
 declare
@@ -620,6 +631,7 @@ grant execute on function
   public.rb_stats_summary(int),
   public.rb_stats_series(int, int),
   public.rb_stats_heatmap(int, int),
+  public.rb_online_count(),
   public.rb_submit_suggestion(uuid, text),
   public.rb_list_suggestions(uuid, int)
   to anon, authenticated;

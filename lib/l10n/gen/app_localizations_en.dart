@@ -240,7 +240,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInTitle => 'Who\'s riding?';
 
   @override
-  String get signInNameLabel => 'Your Name (Nickname)';
+  String get signInNameLabel => 'Rider name';
 
   @override
   String get signInNameHint =>
@@ -449,4 +449,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get anonymousWarningConfirm => 'Play anyway';
+
+  @override
+  String menuOnline(int count) {
+    return '$count online';
+  }
 }

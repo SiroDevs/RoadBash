@@ -29,6 +29,7 @@ import 'package:roadbash/domain/repos/suggestion_repo.dart' as _i706;
 import 'package:roadbash/feature/auth/cubit/sign_in_cubit.dart' as _i707;
 import 'package:roadbash/feature/leaderboard/cubit/leaderboard_cubit.dart' as _i708;
 import 'package:roadbash/feature/menu/cubit/menu_cubit.dart' as _i158;
+import 'package:roadbash/feature/menu/cubit/online_cubit.dart' as _i711;
 import 'package:roadbash/feature/race/cubit/race_cubit.dart' as _i614;
 import 'package:roadbash/feature/reception/cubit/reception_cubit.dart' as _i899;
 import 'package:roadbash/feature/splash/cubit/splash_cubit.dart' as _i178;
@@ -85,6 +86,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i705.StatsRepo>(
       () => _i705.StatsRepo(gh<_i702.ApiClient>(), gh<_i805.PrefsRepo>()),
     );
+    gh.factory<_i711.OnlineCubit>(() => _i711.OnlineCubit(gh<_i705.StatsRepo>()));
     gh.factory<_i709.StatsCubit>(() => _i709.StatsCubit(gh<_i705.StatsRepo>()));
     gh.lazySingleton<_i624.ProfileRepo>(
       () => _i624.ProfileRepo(gh<_i805.PrefsRepo>()),

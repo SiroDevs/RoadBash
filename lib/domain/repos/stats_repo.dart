@@ -55,6 +55,11 @@ class StatsRepo {
     } catch (_) {}
   }
 
+  Future<int> onlineCount() async {
+    final res = await _api.call('rb_online_count');
+    return (res['online'] as num).toInt();
+  }
+
   Future<StatsSummary> summary() async => StatsSummary.fromJson(
     await _api.call('rb_stats_summary', {'p_tz_offset': _offset}),
   );

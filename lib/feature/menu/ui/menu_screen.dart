@@ -28,6 +28,7 @@ import '../../../domain/models/scene_id.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../cubit/menu_cubit.dart';
+import 'widgets/online_badge.dart';
 import 'widgets/scene_info.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -231,6 +232,7 @@ class _MenuScreenState extends State<MenuScreen> {
               style: retroBody(size: context.sizes.body),
             ),
           ),
+          const OnlineBadge(),
         ],
       ),
     );

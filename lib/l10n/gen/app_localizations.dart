@@ -515,7 +515,7 @@ abstract class AppLocalizations {
   /// Name field label
   ///
   /// In en, this message translates to:
-  /// **'Your Name (Nickname)'**
+  /// **'Rider name'**
   String get signInNameLabel;
 
   /// Name step hint
@@ -883,6 +883,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Play anyway'**
   String get anonymousWarningConfirm;
+
+  /// Players online badge
+  ///
+  /// In en, this message translates to:
+  /// **'{count} online'**
+  String menuOnline(int count);
 }
 
 class _AppLocalizationsDelegate

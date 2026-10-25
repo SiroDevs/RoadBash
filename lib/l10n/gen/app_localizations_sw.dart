@@ -449,4 +449,9 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get anonymousWarningConfirm => 'Cheza hivyo hivyo';
+
+  @override
+  String menuOnline(int count) {
+    return '$count mtandaoni';
+  }
 }

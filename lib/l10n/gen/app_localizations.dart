@@ -487,6 +487,378 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pause'**
   String get pauseRace;
+
+  /// Back button
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get commonBack;
+
+  /// Retry button
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get commonRetry;
+
+  /// Refresh button
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get commonRefresh;
+
+  /// Sign-in heading
+  ///
+  /// In en, this message translates to:
+  /// **'Who\'s riding?'**
+  String get signInTitle;
+
+  /// Name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Rider name'**
+  String get signInNameLabel;
+
+  /// Name step hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your rider name to play: 3 to 12 letters, numbers, spaces or underscores.'**
+  String get signInNameHint;
+
+  /// New name hint
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is free. Set a security question and answer to protect it. You will need the answer every time you come back.'**
+  String signInNewHint(String name);
+
+  /// Existing name hint
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back {name}. Answer your security question to ride.'**
+  String signInAnswerHint(String name);
+
+  /// Reserved name hint
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is a reserved name. Answer this to claim it:'**
+  String signInChallengeHint(String name);
+
+  /// Reserved name question
+  ///
+  /// In en, this message translates to:
+  /// **'Do you know when this game was first written?'**
+  String get signInChallengeQuestion;
+
+  /// Security question field
+  ///
+  /// In en, this message translates to:
+  /// **'Your security question'**
+  String get signInQuestionLabel;
+
+  /// Answer field
+  ///
+  /// In en, this message translates to:
+  /// **'Answer'**
+  String get signInAnswerLabel;
+
+  /// Repeat answer field
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat the answer'**
+  String get signInConfirmLabel;
+
+  /// Continue button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get signInContinue;
+
+  /// Create player button
+  ///
+  /// In en, this message translates to:
+  /// **'Create player'**
+  String get signInCreate;
+
+  /// Sign in button
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s ride'**
+  String get signInStart;
+
+  /// Offline button
+  ///
+  /// In en, this message translates to:
+  /// **'Play offline'**
+  String get signInOffline;
+
+  /// Invalid name
+  ///
+  /// In en, this message translates to:
+  /// **'Use 3 to 12 letters, numbers, spaces or underscores.'**
+  String get errInvalidName;
+
+  /// Wrong answer
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong answer. {remaining} tries left.'**
+  String errWrongAnswer(int remaining);
+
+  /// Locked
+  ///
+  /// In en, this message translates to:
+  /// **'Too many wrong answers. Try again in {minutes} min.'**
+  String errLocked(int minutes);
+
+  /// Network error
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach the server. Check your connection.'**
+  String get errNetwork;
+
+  /// Backend missing
+  ///
+  /// In en, this message translates to:
+  /// **'Online services are not set up in this build.'**
+  String get errNotConfigured;
+
+  /// Name taken
+  ///
+  /// In en, this message translates to:
+  /// **'That name was just taken. Pick another.'**
+  String get errNameTaken;
+
+  /// Wrong challenge
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong answer. {remaining} tries left.'**
+  String errWrongChallenge(int remaining);
+
+  /// Bad question
+  ///
+  /// In en, this message translates to:
+  /// **'The question needs 5 to 80 characters.'**
+  String get errInvalidQuestion;
+
+  /// Bad answer
+  ///
+  /// In en, this message translates to:
+  /// **'The answer needs 2 to 60 characters.'**
+  String get errInvalidAnswer;
+
+  /// Answers differ
+  ///
+  /// In en, this message translates to:
+  /// **'The two answers do not match.'**
+  String get errMismatch;
+
+  /// Generic error
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Try again.'**
+  String get errGeneric;
+
+  /// Account line
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in as {name}'**
+  String accountSignedInAs(String name);
+
+  /// Offline account line
+  ///
+  /// In en, this message translates to:
+  /// **'Playing offline. Sign in to be counted on the leaderboard.'**
+  String get accountOffline;
+
+  /// Admin badge
+  ///
+  /// In en, this message translates to:
+  /// **'Admin: you can read the suggestion box.'**
+  String get accountAdmin;
+
+  /// Switch player button
+  ///
+  /// In en, this message translates to:
+  /// **'Switch player'**
+  String get switchPlayer;
+
+  /// Reception item
+  ///
+  /// In en, this message translates to:
+  /// **'Stats'**
+  String get receptionStats;
+
+  /// Reception item
+  ///
+  /// In en, this message translates to:
+  /// **'Leaderboard'**
+  String get receptionLeaderboard;
+
+  /// Reception item
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion Box'**
+  String get receptionSuggestions;
+
+  /// Stats heading
+  ///
+  /// In en, this message translates to:
+  /// **'Stats'**
+  String get statsTitle;
+
+  /// Online line
+  ///
+  /// In en, this message translates to:
+  /// **'Online now: {online} ({players} players)'**
+  String statsOnlineLine(int online, int players);
+
+  /// Visitors label
+  ///
+  /// In en, this message translates to:
+  /// **'Visitors'**
+  String get statsVisitors;
+
+  /// Players label
+  ///
+  /// In en, this message translates to:
+  /// **'Players'**
+  String get statsPlayers;
+
+  /// Games label
+  ///
+  /// In en, this message translates to:
+  /// **'Games'**
+  String get statsGames;
+
+  /// All time label
+  ///
+  /// In en, this message translates to:
+  /// **'All time'**
+  String get statsAllTime;
+
+  /// Range
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get statsRangeToday;
+
+  /// Range
+  ///
+  /// In en, this message translates to:
+  /// **'7 days'**
+  String get statsRange7;
+
+  /// Range
+  ///
+  /// In en, this message translates to:
+  /// **'28 days'**
+  String get statsRange28;
+
+  /// Range
+  ///
+  /// In en, this message translates to:
+  /// **'3 months'**
+  String get statsRange90;
+
+  /// Range
+  ///
+  /// In en, this message translates to:
+  /// **'1 year'**
+  String get statsRange365;
+
+  /// Heatmap heading
+  ///
+  /// In en, this message translates to:
+  /// **'When people ride'**
+  String get statsHeatmapTitle;
+
+  /// Heatmap note
+  ///
+  /// In en, this message translates to:
+  /// **'Rows are days (Monday first), columns are hours of the day in your local time. Brighter means busier.'**
+  String get statsHeatmapNote;
+
+  /// Leaderboard heading
+  ///
+  /// In en, this message translates to:
+  /// **'Leaderboard'**
+  String get leaderboardTitle;
+
+  /// Column
+  ///
+  /// In en, this message translates to:
+  /// **'Player'**
+  String get leaderboardPlayer;
+
+  /// Column
+  ///
+  /// In en, this message translates to:
+  /// **'Games'**
+  String get leaderboardGames;
+
+  /// Column
+  ///
+  /// In en, this message translates to:
+  /// **'Wins'**
+  String get leaderboardWins;
+
+  /// Empty board
+  ///
+  /// In en, this message translates to:
+  /// **'No races finished yet. Be the first!'**
+  String get leaderboardEmpty;
+
+  /// Suggestion hint
+  ///
+  /// In en, this message translates to:
+  /// **'Tell me what to fix, add or remove. Every suggestion lands in my inbox.'**
+  String get suggestionHint;
+
+  /// Suggestion field
+  ///
+  /// In en, this message translates to:
+  /// **'Your suggestion'**
+  String get suggestionLabel;
+
+  /// Send button
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get suggestionSend;
+
+  /// Thanks
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks, it is in the box!'**
+  String get suggestionThanks;
+
+  /// Needs sign-in
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to leave a suggestion.'**
+  String get suggestionSignIn;
+
+  /// Too short
+  ///
+  /// In en, this message translates to:
+  /// **'Write a few more words.'**
+  String get suggestionTooShort;
+
+  /// Rate limited
+  ///
+  /// In en, this message translates to:
+  /// **'That is enough for now. Try again in a while.'**
+  String get suggestionRateLimited;
+
+  /// Admin inbox heading
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestions received'**
+  String get suggestionInbox;
+
+  /// Empty inbox
+  ///
+  /// In en, this message translates to:
+  /// **'The box is empty.'**
+  String get suggestionInboxEmpty;
 }
 
 class _AppLocalizationsDelegate

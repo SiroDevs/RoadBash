@@ -226,4 +226,214 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pauseRace => 'Pause';
+
+  @override
+  String get commonBack => 'Back';
+
+  @override
+  String get commonRetry => 'Retry';
+
+  @override
+  String get commonRefresh => 'Refresh';
+
+  @override
+  String get signInTitle => 'Who\'s riding?';
+
+  @override
+  String get signInNameLabel => 'Rider name';
+
+  @override
+  String get signInNameHint =>
+      'Enter your rider name to play: 3 to 12 letters, numbers, spaces or underscores.';
+
+  @override
+  String signInNewHint(String name) {
+    return '$name is free. Set a security question and answer to protect it. You will need the answer every time you come back.';
+  }
+
+  @override
+  String signInAnswerHint(String name) {
+    return 'Welcome back $name. Answer your security question to ride.';
+  }
+
+  @override
+  String signInChallengeHint(String name) {
+    return '$name is a reserved name. Answer this to claim it:';
+  }
+
+  @override
+  String get signInChallengeQuestion =>
+      'Do you know when this game was first written?';
+
+  @override
+  String get signInQuestionLabel => 'Your security question';
+
+  @override
+  String get signInAnswerLabel => 'Answer';
+
+  @override
+  String get signInConfirmLabel => 'Repeat the answer';
+
+  @override
+  String get signInContinue => 'Continue';
+
+  @override
+  String get signInCreate => 'Create player';
+
+  @override
+  String get signInStart => 'Let\'s ride';
+
+  @override
+  String get signInOffline => 'Play offline';
+
+  @override
+  String get errInvalidName =>
+      'Use 3 to 12 letters, numbers, spaces or underscores.';
+
+  @override
+  String errWrongAnswer(int remaining) {
+    return 'Wrong answer. $remaining tries left.';
+  }
+
+  @override
+  String errLocked(int minutes) {
+    return 'Too many wrong answers. Try again in $minutes min.';
+  }
+
+  @override
+  String get errNetwork => 'Could not reach the server. Check your connection.';
+
+  @override
+  String get errNotConfigured =>
+      'Online services are not set up in this build.';
+
+  @override
+  String get errNameTaken => 'That name was just taken. Pick another.';
+
+  @override
+  String errWrongChallenge(int remaining) {
+    return 'Wrong answer. $remaining tries left.';
+  }
+
+  @override
+  String get errInvalidQuestion => 'The question needs 5 to 80 characters.';
+
+  @override
+  String get errInvalidAnswer => 'The answer needs 2 to 60 characters.';
+
+  @override
+  String get errMismatch => 'The two answers do not match.';
+
+  @override
+  String get errGeneric => 'Something went wrong. Try again.';
+
+  @override
+  String accountSignedInAs(String name) {
+    return 'Signed in as $name';
+  }
+
+  @override
+  String get accountOffline =>
+      'Playing offline. Sign in to be counted on the leaderboard.';
+
+  @override
+  String get accountAdmin => 'Admin: you can read the suggestion box.';
+
+  @override
+  String get switchPlayer => 'Switch player';
+
+  @override
+  String get receptionStats => 'Stats';
+
+  @override
+  String get receptionLeaderboard => 'Leaderboard';
+
+  @override
+  String get receptionSuggestions => 'Suggestion Box';
+
+  @override
+  String get statsTitle => 'Stats';
+
+  @override
+  String statsOnlineLine(int online, int players) {
+    return 'Online now: $online ($players players)';
+  }
+
+  @override
+  String get statsVisitors => 'Visitors';
+
+  @override
+  String get statsPlayers => 'Players';
+
+  @override
+  String get statsGames => 'Games';
+
+  @override
+  String get statsAllTime => 'All time';
+
+  @override
+  String get statsRangeToday => 'Today';
+
+  @override
+  String get statsRange7 => '7 days';
+
+  @override
+  String get statsRange28 => '28 days';
+
+  @override
+  String get statsRange90 => '3 months';
+
+  @override
+  String get statsRange365 => '1 year';
+
+  @override
+  String get statsHeatmapTitle => 'When people ride';
+
+  @override
+  String get statsHeatmapNote =>
+      'Rows are days (Monday first), columns are hours of the day in your local time. Brighter means busier.';
+
+  @override
+  String get leaderboardTitle => 'Leaderboard';
+
+  @override
+  String get leaderboardPlayer => 'Player';
+
+  @override
+  String get leaderboardGames => 'Games';
+
+  @override
+  String get leaderboardWins => 'Wins';
+
+  @override
+  String get leaderboardEmpty => 'No races finished yet. Be the first!';
+
+  @override
+  String get suggestionHint =>
+      'Tell me what to fix, add or remove. Every suggestion lands in my inbox.';
+
+  @override
+  String get suggestionLabel => 'Your suggestion';
+
+  @override
+  String get suggestionSend => 'Send';
+
+  @override
+  String get suggestionThanks => 'Thanks, it is in the box!';
+
+  @override
+  String get suggestionSignIn => 'Sign in to leave a suggestion.';
+
+  @override
+  String get suggestionTooShort => 'Write a few more words.';
+
+  @override
+  String get suggestionRateLimited =>
+      'That is enough for now. Try again in a while.';
+
+  @override
+  String get suggestionInbox => 'Suggestions received';
+
+  @override
+  String get suggestionInboxEmpty => 'The box is empty.';
 }

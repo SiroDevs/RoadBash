@@ -15,6 +15,8 @@ A pseudo-3D racing game built with Flutter and Flame, made as a love letter to t
 - Procedural engine sound with selectable engine flavours, plus music and sound effects mixed in real time (`flutter_soloud`)
 - Tilt steering on phones and tablets, with on-screen pedals, pause, and mute
 - English and Kiswahili, switchable from the Reception screen
+- Player accounts on Supabase: pick a name, protect it with your own security question
+- Public stats (visitors, players, games, who is online, activity heatmap), a leaderboard and a suggestion box, all reached from the Reception screen
 - Runs on Android, iOS, web, Windows, Linux, and macOS
 
 ## Controls
@@ -33,7 +35,29 @@ On iPhone Safari, motion access needs one tap. The game asks the first time you 
 
 ## Reception
 
-The Reception screen (the restroom) is where you set your rider name, mix the sound, read the controls, change the language, or **Exit** if you want to wimp out and go home.
+The Reception screen (the restroom) is where you check who you are signed in as and switch player, mix the sound, read the controls, change the language, open the **Stats** and **Leaderboard** screens, drop a note in the **Suggestion Box**, or **Exit** if you want to wimp out and go home.
+
+## Online features (Supabase)
+
+1. Create a Supabase project and run `supabase/roadbash.sql` once in the SQL editor. It creates the `rb_*` tables, locks them down with row level security, and exposes everything through `rb_*` functions.
+2. Pass the project URL and anon key when you build or run:
+
+```bash
+flutter run -d chrome \
+  --dart-define=SUPABASE_URL=https://YOUR-PROJECT.supabase.co \
+  --dart-define=SUPABASE_ANON_KEY=YOUR-ANON-KEY
+```
+
+For Vercel, add the same two `--dart-define` flags to the `flutter build web` step in the GitHub Actions workflow (store the values as repository secrets).
+
+Without those flags the game still runs: the sign-in screen offers **Play offline** and nothing is recorded.
+
+How it behaves:
+
+- Every launch asks for a rider name. A new name gets a security question and answer; an existing name must answer its question. Answers are hashed in the database and five wrong tries lock the name for ten minutes.
+- `admin`, `siro`, `sirodevs` and `sirodevske` are reserved (table `rb_reserved_names`). A guest who types one has to pass a challenge question first, then sets their own security question. Those accounts see the received suggestions in the Suggestion Box. The challenge answer is stored only as a hash in `rb_config`.
+- Visits are counted once per launch per device, and a heartbeat every 30 seconds drives the "online now" count.
+- Finished races are saved per player and feed the leaderboard and each player's level and best times.
 
 ## Getting started
 
@@ -78,7 +102,9 @@ lib/
     progress/          Player level
     settings/          Persisted player settings
   domain/              Models and repositories
-  feature/             Splash, notice, menu, reception, race, results
+  feature/             Splash, notice, sign-in, menu, reception, race, results, stats, leaderboard, suggestions
+supabase/
+  roadbash.sql         Tables, security and functions for the online features
 ```
 
 Built with clean architecture and BLoC (`flutter_bloc`), dependency injection with `get_it` and `injectable`, and routing with `go_router`.

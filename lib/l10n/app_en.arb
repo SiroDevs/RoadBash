@@ -303,5 +303,296 @@
   "pauseRace": "Pause",
   "@pauseRace": {
     "description": "Pause button tooltip"
+  },
+  "commonBack": "Back",
+  "@commonBack": {
+    "description": "Back button"
+  },
+  "commonRetry": "Retry",
+  "@commonRetry": {
+    "description": "Retry button"
+  },
+  "commonRefresh": "Refresh",
+  "@commonRefresh": {
+    "description": "Refresh button"
+  },
+  "signInTitle": "Who's riding?",
+  "@signInTitle": {
+    "description": "Sign-in heading"
+  },
+  "signInNameLabel": "Rider name",
+  "@signInNameLabel": {
+    "description": "Name field label"
+  },
+  "signInNameHint": "Enter your rider name to play: 3 to 12 letters, numbers, spaces or underscores.",
+  "@signInNameHint": {
+    "description": "Name step hint"
+  },
+  "signInNewHint": "{name} is free. Set a security question and answer to protect it. You will need the answer every time you come back.",
+  "@signInNewHint": {
+    "description": "New name hint",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "signInAnswerHint": "Welcome back {name}. Answer your security question to ride.",
+  "@signInAnswerHint": {
+    "description": "Existing name hint",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "signInChallengeHint": "{name} is a reserved name. Answer this to claim it:",
+  "@signInChallengeHint": {
+    "description": "Reserved name hint",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "signInChallengeQuestion": "Do you know when this game was first written?",
+  "@signInChallengeQuestion": {
+    "description": "Reserved name question"
+  },
+  "signInQuestionLabel": "Your security question",
+  "@signInQuestionLabel": {
+    "description": "Security question field"
+  },
+  "signInAnswerLabel": "Answer",
+  "@signInAnswerLabel": {
+    "description": "Answer field"
+  },
+  "signInConfirmLabel": "Repeat the answer",
+  "@signInConfirmLabel": {
+    "description": "Repeat answer field"
+  },
+  "signInContinue": "Continue",
+  "@signInContinue": {
+    "description": "Continue button"
+  },
+  "signInCreate": "Create player",
+  "@signInCreate": {
+    "description": "Create player button"
+  },
+  "signInStart": "Let's ride",
+  "@signInStart": {
+    "description": "Sign in button"
+  },
+  "signInOffline": "Play offline",
+  "@signInOffline": {
+    "description": "Offline button"
+  },
+  "errInvalidName": "Use 3 to 12 letters, numbers, spaces or underscores.",
+  "@errInvalidName": {
+    "description": "Invalid name"
+  },
+  "errWrongAnswer": "Wrong answer. {remaining} tries left.",
+  "@errWrongAnswer": {
+    "description": "Wrong answer",
+    "placeholders": {
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
+  "errLocked": "Too many wrong answers. Try again in {minutes} min.",
+  "@errLocked": {
+    "description": "Locked",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "errNetwork": "Could not reach the server. Check your connection.",
+  "@errNetwork": {
+    "description": "Network error"
+  },
+  "errNotConfigured": "Online services are not set up in this build.",
+  "@errNotConfigured": {
+    "description": "Backend missing"
+  },
+  "errNameTaken": "That name was just taken. Pick another.",
+  "@errNameTaken": {
+    "description": "Name taken"
+  },
+  "errWrongChallenge": "Wrong answer. {remaining} tries left.",
+  "@errWrongChallenge": {
+    "description": "Wrong challenge",
+    "placeholders": {
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
+  "errInvalidQuestion": "The question needs 5 to 80 characters.",
+  "@errInvalidQuestion": {
+    "description": "Bad question"
+  },
+  "errInvalidAnswer": "The answer needs 2 to 60 characters.",
+  "@errInvalidAnswer": {
+    "description": "Bad answer"
+  },
+  "errMismatch": "The two answers do not match.",
+  "@errMismatch": {
+    "description": "Answers differ"
+  },
+  "errGeneric": "Something went wrong. Try again.",
+  "@errGeneric": {
+    "description": "Generic error"
+  },
+  "accountSignedInAs": "Signed in as {name}",
+  "@accountSignedInAs": {
+    "description": "Account line",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "accountOffline": "Playing offline. Sign in to be counted on the leaderboard.",
+  "@accountOffline": {
+    "description": "Offline account line"
+  },
+  "accountAdmin": "Admin: you can read the suggestion box.",
+  "@accountAdmin": {
+    "description": "Admin badge"
+  },
+  "switchPlayer": "Switch player",
+  "@switchPlayer": {
+    "description": "Switch player button"
+  },
+  "receptionStats": "Stats",
+  "@receptionStats": {
+    "description": "Reception item"
+  },
+  "receptionLeaderboard": "Leaderboard",
+  "@receptionLeaderboard": {
+    "description": "Reception item"
+  },
+  "receptionSuggestions": "Suggestion Box",
+  "@receptionSuggestions": {
+    "description": "Reception item"
+  },
+  "statsTitle": "Stats",
+  "@statsTitle": {
+    "description": "Stats heading"
+  },
+  "statsOnlineLine": "Online now: {online} ({players} players)",
+  "@statsOnlineLine": {
+    "description": "Online line",
+    "placeholders": {
+      "online": {
+        "type": "int"
+      },
+      "players": {
+        "type": "int"
+      }
+    }
+  },
+  "statsVisitors": "Visitors",
+  "@statsVisitors": {
+    "description": "Visitors label"
+  },
+  "statsPlayers": "Players",
+  "@statsPlayers": {
+    "description": "Players label"
+  },
+  "statsGames": "Games",
+  "@statsGames": {
+    "description": "Games label"
+  },
+  "statsAllTime": "All time",
+  "@statsAllTime": {
+    "description": "All time label"
+  },
+  "statsRangeToday": "Today",
+  "@statsRangeToday": {
+    "description": "Range"
+  },
+  "statsRange7": "7 days",
+  "@statsRange7": {
+    "description": "Range"
+  },
+  "statsRange28": "28 days",
+  "@statsRange28": {
+    "description": "Range"
+  },
+  "statsRange90": "3 months",
+  "@statsRange90": {
+    "description": "Range"
+  },
+  "statsRange365": "1 year",
+  "@statsRange365": {
+    "description": "Range"
+  },
+  "statsHeatmapTitle": "When people ride",
+  "@statsHeatmapTitle": {
+    "description": "Heatmap heading"
+  },
+  "statsHeatmapNote": "Rows are days (Monday first), columns are hours of the day in your local time. Brighter means busier.",
+  "@statsHeatmapNote": {
+    "description": "Heatmap note"
+  },
+  "leaderboardTitle": "Leaderboard",
+  "@leaderboardTitle": {
+    "description": "Leaderboard heading"
+  },
+  "leaderboardPlayer": "Player",
+  "@leaderboardPlayer": {
+    "description": "Column"
+  },
+  "leaderboardGames": "Games",
+  "@leaderboardGames": {
+    "description": "Column"
+  },
+  "leaderboardWins": "Wins",
+  "@leaderboardWins": {
+    "description": "Column"
+  },
+  "leaderboardEmpty": "No races finished yet. Be the first!",
+  "@leaderboardEmpty": {
+    "description": "Empty board"
+  },
+  "suggestionHint": "Tell me what to fix, add or remove. Every suggestion lands in my inbox.",
+  "@suggestionHint": {
+    "description": "Suggestion hint"
+  },
+  "suggestionLabel": "Your suggestion",
+  "@suggestionLabel": {
+    "description": "Suggestion field"
+  },
+  "suggestionSend": "Send",
+  "@suggestionSend": {
+    "description": "Send button"
+  },
+  "suggestionThanks": "Thanks, it is in the box!",
+  "@suggestionThanks": {
+    "description": "Thanks"
+  },
+  "suggestionSignIn": "Sign in to leave a suggestion.",
+  "@suggestionSignIn": {
+    "description": "Needs sign-in"
+  },
+  "suggestionTooShort": "Write a few more words.",
+  "@suggestionTooShort": {
+    "description": "Too short"
+  },
+  "suggestionRateLimited": "That is enough for now. Try again in a while.",
+  "@suggestionRateLimited": {
+    "description": "Rate limited"
+  },
+  "suggestionInbox": "Suggestions received",
+  "@suggestionInbox": {
+    "description": "Admin inbox heading"
+  },
+  "suggestionInboxEmpty": "The box is empty.",
+  "@suggestionInboxEmpty": {
+    "description": "Empty inbox"
   }
 }

@@ -19,9 +19,10 @@ import '../../../core/audio/audio_catalog.dart';
 import '../../../core/audio/music_scope.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../cubit/reception_cubit.dart';
+import '../../suggestions/ui/suggestion_panel.dart';
+import 'widgets/account_panel.dart';
 import 'widgets/exit_panel.dart';
 import 'widgets/language_picker.dart';
-import 'widgets/name_editor.dart';
 import 'widgets/sound_mix.dart';
 
 class ReceptionScreen extends StatelessWidget {
@@ -35,6 +36,9 @@ class ReceptionScreen extends StatelessWidget {
       ReceptionTab.sound: l10n.receptionSound,
       ReceptionTab.controls: l10n.receptionControls,
       ReceptionTab.language: l10n.languageTitle,
+      ReceptionTab.stats: l10n.receptionStats,
+      ReceptionTab.leaderboard: l10n.receptionLeaderboard,
+      ReceptionTab.suggestions: l10n.receptionSuggestions,
       ReceptionTab.exit: l10n.exitLabel,
     };
     final s = context.sizes;
@@ -49,7 +53,7 @@ class ReceptionScreen extends StatelessWidget {
                 RetroMenuItem(
                   label: entry.value,
                   selected: entry.key == tab,
-                  onTap: () => context.read<ReceptionCubit>().open(entry.key),
+                  onTap: () => _select(context, entry.key),
                 ),
               RetroMenuItem(
                 label: l10n.receptionDone,
@@ -86,6 +90,17 @@ class ReceptionScreen extends StatelessWidget {
     );
   }
 
+  void _select(BuildContext context, ReceptionTab tab) {
+    switch (tab) {
+      case ReceptionTab.stats:
+        context.goNamed(RouteNames.stats);
+      case ReceptionTab.leaderboard:
+        context.goNamed(RouteNames.leaderboard);
+      default:
+        context.read<ReceptionCubit>().open(tab);
+    }
+  }
+
   Widget _sideBySide(
     BuildContext context,
     RetroSizes s,
@@ -101,9 +116,11 @@ class ReceptionScreen extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: nav,
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: nav,
+              ),
             ).expanded(flex: 2),
             SizedBox(width: s.gap),
             Container(
@@ -118,9 +135,11 @@ class ReceptionScreen extends StatelessWidget {
   }
 
   Widget _detail(BuildContext context, ReceptionTab tab) => switch (tab) {
-    ReceptionTab.name => const NameEditor(),
+    ReceptionTab.name => const AccountPanel(),
     ReceptionTab.sound => const SoundMix(),
     ReceptionTab.language => const LanguagePicker(),
+    ReceptionTab.suggestions => const SuggestionPanel(),
+    ReceptionTab.stats || ReceptionTab.leaderboard => const SizedBox.shrink(),
     ReceptionTab.exit => const ExitPanel(),
     ReceptionTab.controls => Text(
       context.l10n.controlsHelp,

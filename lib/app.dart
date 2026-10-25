@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 // Project imports:
 import 'common/app_router/app_router.dart';
 import 'common/widgets/text_scale_factor.dart';
+import 'core/auth/auth_cubit.dart';
 import 'core/audio/cubit/audio_cubit.dart';
 import 'core/di/injectable.dart';
 import 'core/progress/progress_cubit.dart';
@@ -52,6 +53,7 @@ class AppViewState extends State<AppView> {
         BlocProvider.value(value: getIt<SettingsCubit>()),
         BlocProvider.value(value: getIt<ProgressCubit>()),
         BlocProvider.value(value: getIt<AudioCubit>()),
+        BlocProvider.value(value: getIt<AuthCubit>()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeMode>(
         builder: (context, themeMode) {

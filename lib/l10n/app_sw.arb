@@ -303,5 +303,296 @@
   "pauseRace": "Simamisha",
   "@pauseRace": {
     "description": "Pause button tooltip"
+  },
+  "commonBack": "Rudi",
+  "@commonBack": {
+    "description": "Back button"
+  },
+  "commonRetry": "Jaribu tena",
+  "@commonRetry": {
+    "description": "Retry button"
+  },
+  "commonRefresh": "Onyesha upya",
+  "@commonRefresh": {
+    "description": "Refresh button"
+  },
+  "signInTitle": "Nani anaendesha?",
+  "@signInTitle": {
+    "description": "Sign-in heading"
+  },
+  "signInNameLabel": "Jina la mwendeshaji",
+  "@signInNameLabel": {
+    "description": "Name field label"
+  },
+  "signInNameHint": "Weka jina lako la mwendeshaji ili kucheza: herufi, namba, nafasi au _ (3 hadi 12).",
+  "@signInNameHint": {
+    "description": "Name step hint"
+  },
+  "signInNewHint": "{name} liko wazi. Weka swali la usalama na jibu ili kulilinda. Utahitaji jibu kila unaporudi.",
+  "@signInNewHint": {
+    "description": "New name hint",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "signInAnswerHint": "Karibu tena {name}. Jibu swali lako la usalama ili uendeshe.",
+  "@signInAnswerHint": {
+    "description": "Existing name hint",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "signInChallengeHint": "{name} ni jina lililohifadhiwa. Jibu hili ili ulidai:",
+  "@signInChallengeHint": {
+    "description": "Reserved name hint",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "signInChallengeQuestion": "Je, unajua mchezo huu uliandikwa lini kwa mara ya kwanza?",
+  "@signInChallengeQuestion": {
+    "description": "Reserved name question"
+  },
+  "signInQuestionLabel": "Swali lako la usalama",
+  "@signInQuestionLabel": {
+    "description": "Security question field"
+  },
+  "signInAnswerLabel": "Jibu",
+  "@signInAnswerLabel": {
+    "description": "Answer field"
+  },
+  "signInConfirmLabel": "Rudia jibu",
+  "@signInConfirmLabel": {
+    "description": "Repeat answer field"
+  },
+  "signInContinue": "Endelea",
+  "@signInContinue": {
+    "description": "Continue button"
+  },
+  "signInCreate": "Unda mchezaji",
+  "@signInCreate": {
+    "description": "Create player button"
+  },
+  "signInStart": "Tuanze",
+  "@signInStart": {
+    "description": "Sign in button"
+  },
+  "signInOffline": "Cheza bila mtandao",
+  "@signInOffline": {
+    "description": "Offline button"
+  },
+  "errInvalidName": "Tumia herufi, namba, nafasi au _ (3 hadi 12).",
+  "@errInvalidName": {
+    "description": "Invalid name"
+  },
+  "errWrongAnswer": "Jibu si sahihi. Umebakiwa na majaribio {remaining}.",
+  "@errWrongAnswer": {
+    "description": "Wrong answer",
+    "placeholders": {
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
+  "errLocked": "Majibu mengi yasiyo sahihi. Jaribu tena baada ya dakika {minutes}.",
+  "@errLocked": {
+    "description": "Locked",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "errNetwork": "Imeshindwa kufikia seva. Angalia mtandao wako.",
+  "@errNetwork": {
+    "description": "Network error"
+  },
+  "errNotConfigured": "Huduma za mtandaoni hazijawekwa kwenye toleo hili.",
+  "@errNotConfigured": {
+    "description": "Backend missing"
+  },
+  "errNameTaken": "Jina hilo limechukuliwa. Chagua lingine.",
+  "@errNameTaken": {
+    "description": "Name taken"
+  },
+  "errWrongChallenge": "Jibu si sahihi. Umebakiwa na majaribio {remaining}.",
+  "@errWrongChallenge": {
+    "description": "Wrong challenge",
+    "placeholders": {
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
+  "errInvalidQuestion": "Swali linahitaji herufi 5 hadi 80.",
+  "@errInvalidQuestion": {
+    "description": "Bad question"
+  },
+  "errInvalidAnswer": "Jibu linahitaji herufi 2 hadi 60.",
+  "@errInvalidAnswer": {
+    "description": "Bad answer"
+  },
+  "errMismatch": "Majibu mawili hayalingani.",
+  "@errMismatch": {
+    "description": "Answers differ"
+  },
+  "errGeneric": "Hitilafu imetokea. Jaribu tena.",
+  "@errGeneric": {
+    "description": "Generic error"
+  },
+  "accountSignedInAs": "Umeingia kama {name}",
+  "@accountSignedInAs": {
+    "description": "Account line",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "accountOffline": "Unacheza bila mtandao. Ingia ili uhesabiwe kwenye orodha ya washindi.",
+  "@accountOffline": {
+    "description": "Offline account line"
+  },
+  "accountAdmin": "Msimamizi: unaweza kusoma sanduku la mapendekezo.",
+  "@accountAdmin": {
+    "description": "Admin badge"
+  },
+  "switchPlayer": "Badili mchezaji",
+  "@switchPlayer": {
+    "description": "Switch player button"
+  },
+  "receptionStats": "Takwimu",
+  "@receptionStats": {
+    "description": "Reception item"
+  },
+  "receptionLeaderboard": "Washindi",
+  "@receptionLeaderboard": {
+    "description": "Reception item"
+  },
+  "receptionSuggestions": "Sanduku la Mapendekezo",
+  "@receptionSuggestions": {
+    "description": "Reception item"
+  },
+  "statsTitle": "Takwimu",
+  "@statsTitle": {
+    "description": "Stats heading"
+  },
+  "statsOnlineLine": "Mtandaoni sasa: {online} (wachezaji {players})",
+  "@statsOnlineLine": {
+    "description": "Online line",
+    "placeholders": {
+      "online": {
+        "type": "int"
+      },
+      "players": {
+        "type": "int"
+      }
+    }
+  },
+  "statsVisitors": "Wageni",
+  "@statsVisitors": {
+    "description": "Visitors label"
+  },
+  "statsPlayers": "Wachezaji",
+  "@statsPlayers": {
+    "description": "Players label"
+  },
+  "statsGames": "Michezo",
+  "@statsGames": {
+    "description": "Games label"
+  },
+  "statsAllTime": "Jumla",
+  "@statsAllTime": {
+    "description": "All time label"
+  },
+  "statsRangeToday": "Leo",
+  "@statsRangeToday": {
+    "description": "Range"
+  },
+  "statsRange7": "Siku 7",
+  "@statsRange7": {
+    "description": "Range"
+  },
+  "statsRange28": "Siku 28",
+  "@statsRange28": {
+    "description": "Range"
+  },
+  "statsRange90": "Miezi 3",
+  "@statsRange90": {
+    "description": "Range"
+  },
+  "statsRange365": "Mwaka 1",
+  "@statsRange365": {
+    "description": "Range"
+  },
+  "statsHeatmapTitle": "Wakati watu wanaendesha",
+  "@statsHeatmapTitle": {
+    "description": "Heatmap heading"
+  },
+  "statsHeatmapNote": "Safu ni siku (Jumatatu kwanza), nguzo ni saa za siku kwa saa za eneo lako. Mwangaza zaidi inamaanisha shughuli zaidi.",
+  "@statsHeatmapNote": {
+    "description": "Heatmap note"
+  },
+  "leaderboardTitle": "Orodha ya Washindi",
+  "@leaderboardTitle": {
+    "description": "Leaderboard heading"
+  },
+  "leaderboardPlayer": "Mchezaji",
+  "@leaderboardPlayer": {
+    "description": "Column"
+  },
+  "leaderboardGames": "Michezo",
+  "@leaderboardGames": {
+    "description": "Column"
+  },
+  "leaderboardWins": "Ushindi",
+  "@leaderboardWins": {
+    "description": "Column"
+  },
+  "leaderboardEmpty": "Hakuna aliyemaliza mbio bado. Kuwa wa kwanza!",
+  "@leaderboardEmpty": {
+    "description": "Empty board"
+  },
+  "suggestionHint": "Niambie nini cha kurekebisha, kuongeza au kuondoa. Kila pendekezo hufika kwenye kikasha changu.",
+  "@suggestionHint": {
+    "description": "Suggestion hint"
+  },
+  "suggestionLabel": "Pendekezo lako",
+  "@suggestionLabel": {
+    "description": "Suggestion field"
+  },
+  "suggestionSend": "Tuma",
+  "@suggestionSend": {
+    "description": "Send button"
+  },
+  "suggestionThanks": "Asante, liko kwenye sanduku!",
+  "@suggestionThanks": {
+    "description": "Thanks"
+  },
+  "suggestionSignIn": "Ingia ili kuacha pendekezo.",
+  "@suggestionSignIn": {
+    "description": "Needs sign-in"
+  },
+  "suggestionTooShort": "Andika maneno machache zaidi.",
+  "@suggestionTooShort": {
+    "description": "Too short"
+  },
+  "suggestionRateLimited": "Inatosha kwa sasa. Jaribu tena baadaye.",
+  "@suggestionRateLimited": {
+    "description": "Rate limited"
+  },
+  "suggestionInbox": "Mapendekezo yaliyopokelewa",
+  "@suggestionInbox": {
+    "description": "Admin inbox heading"
+  },
+  "suggestionInboxEmpty": "Sanduku ni tupu.",
+  "@suggestionInboxEmpty": {
+    "description": "Empty inbox"
   }
 }

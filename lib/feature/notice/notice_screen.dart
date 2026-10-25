@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
@@ -13,6 +14,7 @@ import '../../common/widgets/retro/retro_scaffold.dart';
 import '../../common/widgets/retro/retro_style.dart';
 import '../../core/audio/audio_catalog.dart';
 import '../../core/audio/music_scope.dart';
+import '../../core/auth/auth_cubit.dart';
 import '../../l10n/l10n_extension.dart';
 
 class NoticeScreen extends StatefulWidget {
@@ -54,7 +56,8 @@ class _NoticeScreenState extends State<NoticeScreen> {
   void _continue() {
     if (!mounted || _left) return;
     _left = true;
-    context.goNamed(RouteNames.menu);
+    final signedIn = context.read<AuthCubit>().state.isSignedIn;
+    context.goNamed(signedIn ? RouteNames.menu : RouteNames.signIn);
   }
 
   @override

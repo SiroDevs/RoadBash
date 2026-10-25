@@ -9,6 +9,7 @@ class PrefConstants {
   static const isErrandRunnerKey = 'is_errand_runner';
 
   static const playerNameKey = 'player_name';
+  static const visitorIdKey = 'visitor_id';
   static const masterVolKey = 'vol_master';
   static const engineVolKey = 'vol_engine';
   static const tyreVolKey = 'vol_tyres';

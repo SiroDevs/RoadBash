@@ -2,7 +2,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-enum ReceptionTab { name, sound, controls, language, exit }
+enum ReceptionTab {
+  name,
+  sound,
+  controls,
+  language,
+  stats,
+  leaderboard,
+  suggestions,
+  exit,
+}
 
 /// Which reception item is open on the right-hand panel.
 @injectable

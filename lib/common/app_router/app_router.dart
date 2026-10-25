@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
+import '../../core/auth/auth_cubit.dart';
 import '../../core/di/injectable.dart';
 import '../../domain/models/scene_id.dart';
+import '../../feature/auth/cubit/sign_in_cubit.dart';
+import '../../feature/auth/ui/sign_in_screen.dart';
+import '../../feature/leaderboard/cubit/leaderboard_cubit.dart';
+import '../../feature/leaderboard/ui/leaderboard_screen.dart';
 import '../../feature/menu/cubit/menu_cubit.dart';
 import '../../feature/menu/ui/menu_screen.dart';
 import '../../feature/notice/notice_screen.dart';
@@ -18,11 +26,33 @@ import '../../feature/reception/cubit/reception_cubit.dart';
 import '../../feature/reception/ui/reception_screen.dart';
 import '../../feature/results/results_screen.dart';
 import '../../feature/splash/cubit/splash_cubit.dart';
+import '../../feature/stats/cubit/stats_cubit.dart';
+import '../../feature/stats/ui/stats_screen.dart';
 import '../../feature/splash/splash_screen.dart';
 import 'route_names.dart';
 
+class _AuthListenable extends ChangeNotifier {
+  _AuthListenable(Stream<AuthState> stream) {
+    _sub = stream.listen((_) => notifyListeners());
+  }
+
+  late final StreamSubscription<AuthState> _sub;
+
+  @override
+  void dispose() {
+    _sub.cancel();
+    super.dispose();
+  }
+}
+
 class AppRouter {
   AppRouter._();
+
+  static const _open = {
+    RoutePaths.splash,
+    RoutePaths.notice,
+    RoutePaths.signIn,
+  };
 
   static final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -31,7 +61,13 @@ class AppRouter {
       BlocProvider<C>(create: (_) => getIt<C>(), child: child);
 
   static GoRouter create({String initialLocation = RouteNames.splash}) {
+    final auth = getIt<AuthCubit>();
     return GoRouter(
+      refreshListenable: _AuthListenable(auth.stream),
+      redirect: (context, state) =>
+          auth.state.isSignedIn || _open.contains(state.uri.path)
+          ? null
+          : RoutePaths.splash,
       navigatorKey: rootNavigatorKey,
       initialLocation: initialLocation,
       debugLogDiagnostics: kDebugMode,
@@ -77,6 +113,28 @@ class AppRouter {
           name: RouteNames.reception,
           builder: (context, state) =>
               _provide<ReceptionCubit>(const ReceptionScreen()),
+        ),
+        GoRoute(
+          path: RoutePaths.signIn,
+          name: RouteNames.signIn,
+          builder: (context, state) =>
+              _provide<SignInCubit>(const SignInScreen()),
+        ),
+        GoRoute(
+          path: RoutePaths.stats,
+          name: RouteNames.stats,
+          builder: (context, state) => BlocProvider<StatsCubit>(
+            create: (_) => getIt<StatsCubit>()..load(),
+            child: const StatsScreen(),
+          ),
+        ),
+        GoRoute(
+          path: RoutePaths.leaderboard,
+          name: RouteNames.leaderboard,
+          builder: (context, state) => BlocProvider<LeaderboardCubit>(
+            create: (_) => getIt<LeaderboardCubit>()..load(),
+            child: const LeaderboardScreen(),
+          ),
         ),
       ],
       errorBuilder: (context, state) =>

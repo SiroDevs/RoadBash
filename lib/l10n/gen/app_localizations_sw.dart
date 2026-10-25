@@ -226,4 +226,214 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get pauseRace => 'Simamisha';
+
+  @override
+  String get commonBack => 'Rudi';
+
+  @override
+  String get commonRetry => 'Jaribu tena';
+
+  @override
+  String get commonRefresh => 'Onyesha upya';
+
+  @override
+  String get signInTitle => 'Nani anaendesha?';
+
+  @override
+  String get signInNameLabel => 'Jina la mwendeshaji';
+
+  @override
+  String get signInNameHint =>
+      'Weka jina lako la mwendeshaji ili kucheza: herufi, namba, nafasi au _ (3 hadi 12).';
+
+  @override
+  String signInNewHint(String name) {
+    return '$name liko wazi. Weka swali la usalama na jibu ili kulilinda. Utahitaji jibu kila unaporudi.';
+  }
+
+  @override
+  String signInAnswerHint(String name) {
+    return 'Karibu tena $name. Jibu swali lako la usalama ili uendeshe.';
+  }
+
+  @override
+  String signInChallengeHint(String name) {
+    return '$name ni jina lililohifadhiwa. Jibu hili ili ulidai:';
+  }
+
+  @override
+  String get signInChallengeQuestion =>
+      'Je, unajua mchezo huu uliandikwa lini kwa mara ya kwanza?';
+
+  @override
+  String get signInQuestionLabel => 'Swali lako la usalama';
+
+  @override
+  String get signInAnswerLabel => 'Jibu';
+
+  @override
+  String get signInConfirmLabel => 'Rudia jibu';
+
+  @override
+  String get signInContinue => 'Endelea';
+
+  @override
+  String get signInCreate => 'Unda mchezaji';
+
+  @override
+  String get signInStart => 'Tuanze';
+
+  @override
+  String get signInOffline => 'Cheza bila mtandao';
+
+  @override
+  String get errInvalidName => 'Tumia herufi, namba, nafasi au _ (3 hadi 12).';
+
+  @override
+  String errWrongAnswer(int remaining) {
+    return 'Jibu si sahihi. Umebakiwa na majaribio $remaining.';
+  }
+
+  @override
+  String errLocked(int minutes) {
+    return 'Majibu mengi yasiyo sahihi. Jaribu tena baada ya dakika $minutes.';
+  }
+
+  @override
+  String get errNetwork => 'Imeshindwa kufikia seva. Angalia mtandao wako.';
+
+  @override
+  String get errNotConfigured =>
+      'Huduma za mtandaoni hazijawekwa kwenye toleo hili.';
+
+  @override
+  String get errNameTaken => 'Jina hilo limechukuliwa. Chagua lingine.';
+
+  @override
+  String errWrongChallenge(int remaining) {
+    return 'Jibu si sahihi. Umebakiwa na majaribio $remaining.';
+  }
+
+  @override
+  String get errInvalidQuestion => 'Swali linahitaji herufi 5 hadi 80.';
+
+  @override
+  String get errInvalidAnswer => 'Jibu linahitaji herufi 2 hadi 60.';
+
+  @override
+  String get errMismatch => 'Majibu mawili hayalingani.';
+
+  @override
+  String get errGeneric => 'Hitilafu imetokea. Jaribu tena.';
+
+  @override
+  String accountSignedInAs(String name) {
+    return 'Umeingia kama $name';
+  }
+
+  @override
+  String get accountOffline =>
+      'Unacheza bila mtandao. Ingia ili uhesabiwe kwenye orodha ya washindi.';
+
+  @override
+  String get accountAdmin =>
+      'Msimamizi: unaweza kusoma sanduku la mapendekezo.';
+
+  @override
+  String get switchPlayer => 'Badili mchezaji';
+
+  @override
+  String get receptionStats => 'Takwimu';
+
+  @override
+  String get receptionLeaderboard => 'Washindi';
+
+  @override
+  String get receptionSuggestions => 'Sanduku la Mapendekezo';
+
+  @override
+  String get statsTitle => 'Takwimu';
+
+  @override
+  String statsOnlineLine(int online, int players) {
+    return 'Mtandaoni sasa: $online (wachezaji $players)';
+  }
+
+  @override
+  String get statsVisitors => 'Wageni';
+
+  @override
+  String get statsPlayers => 'Wachezaji';
+
+  @override
+  String get statsGames => 'Michezo';
+
+  @override
+  String get statsAllTime => 'Jumla';
+
+  @override
+  String get statsRangeToday => 'Leo';
+
+  @override
+  String get statsRange7 => 'Siku 7';
+
+  @override
+  String get statsRange28 => 'Siku 28';
+
+  @override
+  String get statsRange90 => 'Miezi 3';
+
+  @override
+  String get statsRange365 => 'Mwaka 1';
+
+  @override
+  String get statsHeatmapTitle => 'Wakati watu wanaendesha';
+
+  @override
+  String get statsHeatmapNote =>
+      'Safu ni siku (Jumatatu kwanza), nguzo ni saa za siku kwa saa za eneo lako. Mwangaza zaidi inamaanisha shughuli zaidi.';
+
+  @override
+  String get leaderboardTitle => 'Orodha ya Washindi';
+
+  @override
+  String get leaderboardPlayer => 'Mchezaji';
+
+  @override
+  String get leaderboardGames => 'Michezo';
+
+  @override
+  String get leaderboardWins => 'Ushindi';
+
+  @override
+  String get leaderboardEmpty =>
+      'Hakuna aliyemaliza mbio bado. Kuwa wa kwanza!';
+
+  @override
+  String get suggestionHint =>
+      'Niambie nini cha kurekebisha, kuongeza au kuondoa. Kila pendekezo hufika kwenye kikasha changu.';
+
+  @override
+  String get suggestionLabel => 'Pendekezo lako';
+
+  @override
+  String get suggestionSend => 'Tuma';
+
+  @override
+  String get suggestionThanks => 'Asante, liko kwenye sanduku!';
+
+  @override
+  String get suggestionSignIn => 'Ingia ili kuacha pendekezo.';
+
+  @override
+  String get suggestionTooShort => 'Andika maneno machache zaidi.';
+
+  @override
+  String get suggestionRateLimited => 'Inatosha kwa sasa. Jaribu tena baadaye.';
+
+  @override
+  String get suggestionInbox => 'Mapendekezo yaliyopokelewa';
+
+  @override
+  String get suggestionInboxEmpty => 'Sanduku ni tupu.';
 }

@@ -8,16 +8,19 @@ import 'package:injectable/injectable.dart';
 // Project imports:
 import '../../../core/progress/progress_cubit.dart';
 import '../../../core/settings/settings_cubit.dart';
+import '../../../domain/repos/stats_repo.dart';
 
 @injectable
 class SplashCubit extends Cubit<bool> {
-  SplashCubit(this._settings, this._progress) : super(false);
+  SplashCubit(this._settings, this._progress, this._stats) : super(false);
 
   final SettingsCubit _settings;
   final ProgressCubit _progress;
+  final StatsRepo _stats;
   final Completer<void> _skip = Completer<void>();
 
   Future<void> start() async {
+    unawaited(_stats.trackVisit());
     await Future.wait([
       _settings.load(),
       _progress.load(),

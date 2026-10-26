@@ -1,46 +1,25 @@
 // Dart imports:
 import 'dart:math' as math;
-import 'dart:ui' hide TextStyle;
-
-// Flutter imports:
-import 'package:flutter/painting.dart' show TextPainter, TextSpan, TextStyle;
+import 'dart:ui';
 
 // Project imports:
-import '../../../../../constants/app_constants.dart';
 import '../../../../utils/paint_utils.dart';
-import '../../../road_projection.dart';
+import '../../../projection/road_projection.dart';
 import '../../../scene/scene_theme.dart';
 import '../../prop.dart';
-import '../../zones/thika_zones.dart';
 
 class GantryPainter {
   GantryPainter(SceneTheme theme)
       : _post = fogRamp(theme.poleColor, theme.fog),
         _panel = fogRamp(theme.signGreen, theme.fog),
-        _edge = fogRamp(const Color(0xFFF2F2EC), theme.fog);
+        _edge = fogRamp(const Color(0xFFF2F2EC), theme.fog),
+        _board = fogRamp(const Color(0xFFE6B422), theme.fog),
+        _ink = fogRamp(const Color(0xFF23262B), theme.fog);
 
-  final List<Paint> _post, _panel, _edge;
+  final List<Paint> _post, _panel, _edge, _board, _ink;
 
   static const double _textCutoff = 0.55;
-
-  static final Map<String, TextPainter> _labels = {};
-
-  static TextPainter _label(String text) => _labels.putIfAbsent(
-        text,
-        () => TextPainter(
-          text: TextSpan(
-            text: text,
-            style: const TextStyle(
-              color: Color(0xFFFFFFFF),
-              fontSize: 64,
-              fontWeight: FontWeight.w700,
-              fontFamily: AppConstants.kFontFamily,
-              letterSpacing: 2,
-            ),
-          ),
-          textDirection: TextDirection.ltr,
-        )..layout(),
-      );
+  static const int _panels = 3;
 
   void draw(Canvas c, VisionSeg v, Prop p, double l, double r) {
     final k = v.k1, y = v.y1, f = v.fog;
@@ -53,26 +32,36 @@ class GantryPainter {
     c.drawRect(Rect.fromLTRB(r - pw, top, r + pw, y + 1), fogged(_post, f));
     c.drawRect(Rect.fromLTRB(l - pw, top, r + pw, top + beam), fogged(_post, f));
 
-    // Sign panel
-    final panel = Rect.fromCenter(
-      center: Offset(v.x1, top + beam + 400 * k),
-      width: (r - l) * 0.62,
-      height: 780 * k,
-    );
-    c.drawRect(panel.inflate(math.max(1.0, 34 * k)), fogged(_edge, f));
-    c.drawRect(panel, fogged(_panel, f));
+    // Advertising boards on the posts
+    for (final x in [l - pw * 5, r + pw * 1.5]) {
+      final board = Rect.fromLTRB(x, top + beam * 2, x + pw * 3.5, top + 1900 * k);
+      c.drawRect(board, fogged(_board, f));
+      c.drawRect(board.deflate(math.max(0.6, pw * 0.5)), fogged(_ink, f));
+    }
 
-    // Place name
-    if (f >= _textCutoff || panel.height < 16) return;
-    final tp = _label(thikaSignLabels[p.tint % thikaSignLabels.length]);
-    final scale = math.min(
-      panel.width * 0.88 / tp.width,
-      panel.height * 0.62 / tp.height,
-    );
-    c.save();
-    c.translate(panel.center.dx, panel.center.dy);
-    c.scale(scale);
-    tp.paint(c, Offset(-tp.width / 2, -tp.height / 2));
-    c.restore();
+    // Sign panels
+    final span = (r - l) * 0.9;
+    final gap = span * 0.04;
+    final panelW = (span - gap * (_panels - 1)) / _panels;
+    final panelH = 780 * k;
+    final panelTop = top + beam + 220 * k;
+    for (var n = 0; n < _panels; n++) {
+      final left = v.x1 - span / 2 + n * (panelW + gap);
+      final panel = Rect.fromLTWH(left, panelTop, panelW, panelH);
+      c.drawRect(panel.inflate(math.max(1.0, 30 * k)), fogged(_edge, f));
+      c.drawRect(panel, fogged(_panel, f));
+      if (f < _textCutoff && panelH > 10) {
+        // Panel text
+        for (var line = 0; line < 3; line++) {
+          final ty = panel.top + panelH * (0.16 + line * 0.27);
+          c.drawRect(
+            Rect.fromLTRB(panel.left + panelW * 0.12, ty,
+                panel.right - panelW * (0.12 + (line == 2 ? 0.3 : 0)),
+                ty + panelH * 0.1),
+            fogged(_edge, f),
+          );
+        }
+      }
+    }
   }
 }

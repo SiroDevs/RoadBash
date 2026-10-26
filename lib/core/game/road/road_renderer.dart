@@ -10,9 +10,9 @@ import '../hud/dashboard_layout.dart';
 import 'backdrop/road_backdrop.dart';
 import 'config/road_config.dart';
 import 'props/painters/prop_painter.dart';
-import 'road_projection.dart';
+import 'projection/road_projection.dart';
 import 'props/road_props.dart';
-import 'road_segment_painter.dart';
+import 'surface/road_segment_painter.dart';
 import 'scene/scene_theme.dart';
 import 'track/road_track.dart';
 import 'config/vehicle_config.dart';
@@ -23,7 +23,7 @@ class RoadRenderer extends PositionComponent {
       _backdrop = RoadBackdrop(theme),
       _roads = RoadSegmentPainter(theme),
       _decor = PropPainter(theme) {
-    props = RoadProps(theme, track.count, sectionStarts: track.sectionStarts);
+    props = RoadProps(theme, track);
   }
 
   final SceneTheme theme;

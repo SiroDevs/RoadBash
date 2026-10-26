@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:math' as math;
 import 'dart:ui';
 
 // Package imports:
@@ -8,9 +7,10 @@ import 'package:flame/components.dart';
 // Project imports:
 import '../../../utils/paint_utils.dart';
 import '../../config/road_config.dart';
-import '../../road_projection.dart';
+import '../../projection/road_projection.dart';
 import '../../scene/scene_theme.dart';
 import '../prop.dart';
+import 'box_frame.dart';
 
 class BuildingPainter {
   BuildingPainter(SceneTheme theme)
@@ -39,27 +39,20 @@ class BuildingPainter {
     final cx = size.x / 2;
     final horizonY = size.y * RoadConfig.horizonRatio;
 
-    final xi1 = near.x1 + p.side * near.w1 * p.offset;
-    final xo1 = xi1 + p.side * p.width * near.k1;
-    final xi2 = far.x1 + p.side * far.w1 * p.offset;
-    final xo2 = xi2 + p.side * p.width * far.k1;
-
-    final lo = math.min(math.min(xi1, xo1), math.min(xi2, xo2));
-    final hi = math.max(math.max(xi1, xo1), math.max(xi2, xo2));
-    if (hi < 0 || lo > size.x) return;
-
-    final t1 = near.y1 - p.height * near.k1;
-    final t2 = far.y1 - p.height * far.k1;
+    final box = BoxFrame(near, far, p, size);
+    if (!box.visible) return;
+    final xi1 = box.xi1, xo1 = box.xo1, xi2 = box.xi2;
+    final t1 = box.top1, t2 = box.top2;
 
     c.save();
     c.clipRect(Rect.fromLTRB(0, 0, size.x, near.clip));
 
     final tint = p.tint % _wallSide.length;
     // Faces
-    drawQuad(c, _path, fogged(_wallSide[tint], far.fog), xi1, near.y1, xi2,
-        far.y1, xi2, t2, xi1, t1);
-    drawQuad(c, _path, fogged(_wallFront[tint], near.fog), xi1, near.y1, xo1,
-        near.y1, xo1, t1, xi1, t1);
+    drawQuad(c, _path, fogged(_wallSide[tint], far.fog), xi1, box.base1, xi2,
+        box.base2, xi2, t2, xi1, t1);
+    drawQuad(c, _path, fogged(_wallFront[tint], near.fog), xi1, box.base1, xo1,
+        box.base1, xo1, t1, xi1, t1);
 
     // Parapet
     final cap = p.height * 0.035;

@@ -64,7 +64,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get blurbThikaRoad =>
-      'Ruiru to Pangani, down Forest Rd and up to Museum Hill. Wide lanes, flyovers and footbridges. Keep it clean to the finish.';
+      'Blue Post to Museum Hill, the whole Thika Rd run through Juja, Kimbo, Ruiru, Kahawa, Githurai and Roysambu, then down the Pangani underpass. Flyovers, footbridges and slip roads. Keep it clean to the finish.';
 
   @override
   String get blurbReception =>

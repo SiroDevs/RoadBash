@@ -4,14 +4,24 @@ import 'dart:math' as math;
 // Project imports:
 import '../../../../domain/models/scene_id.dart';
 import '../config/road_config.dart';
+import '../routes/route_stretch.dart';
+import '../routes/thika/thika_route.dart';
 import '../scene/scene_theme.dart';
+import 'road_section.dart';
 
 class RoadSegment {
-  const RoadSegment(this.index, this.y1, this.y2, this.curve);
+  const RoadSegment(
+    this.index,
+    this.y1,
+    this.y2,
+    this.curve, [
+    this.section = Section.plain,
+  ]);
   final int index;
   final double y1;
   final double y2;
   final double curve;
+  final Section section;
 }
 
 class RoadTrack {
@@ -22,7 +32,7 @@ class RoadTrack {
       case SceneId.suburbs:
         _buildSuburbs();
       case SceneId.thikaRoad:
-        _buildThikaRoad();
+        _buildRoute(thikaRoute);
     }
     length = segments.length * RoadConfig.segmentLength;
   }
@@ -46,8 +56,8 @@ class RoadTrack {
 
   void _mark() => sectionStarts.add(segments.length);
 
-  void _add(double curve, double y) {
-    segments.add(RoadSegment(segments.length, _lastY, y, curve));
+  void _add(double curve, double y, Section section) {
+    segments.add(RoadSegment(segments.length, _lastY, y, curve, section));
     _lastY = y;
   }
 
@@ -55,7 +65,14 @@ class RoadTrack {
   static double _easeInOut(double a, double b, double p) =>
       a + (b - a) * (-math.cos(p * math.pi) / 2 + 0.5);
 
-  void _addRoad(int enter, int hold, int leave, double curve, double hill) {
+  void _addRoad(
+    int enter,
+    int hold,
+    int leave,
+    double curve,
+    double hill, [
+    Section section = Section.plain,
+  ]) {
     final startY = _lastY;
     final endY = startY + hill * RoadConfig.segmentLength;
     final total = enter + hold + leave;
@@ -63,13 +80,13 @@ class RoadTrack {
     double y() => _easeInOut(startY, endY, ++step / total);
 
     for (var n = 0; n < enter; n++) {
-      _add(_easeIn(0, curve, n / enter), y());
+      _add(_easeIn(0, curve, n / enter), y(), section);
     }
     for (var n = 0; n < hold; n++) {
-      _add(curve, y());
+      _add(curve, y(), section);
     }
     for (var n = 0; n < leave; n++) {
-      _add(_easeInOut(curve, 0, n / leave), y());
+      _add(_easeInOut(curve, 0, n / leave), y(), section);
     }
   }
 
@@ -101,43 +118,27 @@ class RoadTrack {
     _addRoad(45, 70, 45, 0, 0);
   }
 
-  void _buildThikaRoad() {
-    // Ruiru
-    _mark();
-    _addRoad(50, 160, 50, 0, 0);
-    _addRoad(45, 90, 45, 1.4, 3);
-    _addRoad(50, 140, 50, 0, -3);
-    _addRoad(45, 80, 45, -1.8, 0);
-    _addRoad(50, 150, 50, 0, 0);
-
-    // Pangani
-    _mark();
-    _addRoad(45, 70, 45, 0, 6);
-    _addRoad(50, 80, 50, 0, 8);
-    _addRoad(40, 60, 40, 2.4, 0);
-    _addRoad(50, 80, 50, 0, -14);
-    _addRoad(45, 90, 45, -2.2, 0);
-    _addRoad(50, 120, 50, 0, 0);
-    _addRoad(40, 50, 40, 2.0, 4);
-    _addRoad(40, 40, 40, 0, -4);
-
-    // Forest Rd
-    _mark();
-    _addRoad(45, 60, 45, -2.6, 4);
-    _addRoad(45, 50, 45, 3.0, 0);
-    _addRoad(40, 40, 40, -3.2, -4);
-    _addRoad(50, 70, 50, 0, 5);
-    _addRoad(45, 55, 45, 2.4, -5);
-    _addRoad(45, 60, 45, -2.0, 0);
-    _addRoad(50, 80, 50, 0, 0);
-
-    // Museum Hill
-    _mark();
-    _addRoad(50, 70, 50, 0, 7);
-    _addRoad(45, 60, 45, 3.2, 5);
-    _addRoad(40, 45, 40, -3.6, 0);
-    _addRoad(45, 50, 45, 0, -12);
-    _addRoad(50, 70, 50, 2.0, 0);
-    _addRoad(50, 150, 50, 0, 0);
+  void _buildRoute(List<RouteStretch> route) {
+    for (final stretch in route) {
+      _mark();
+      var used = 0;
+      for (var k = 0; k < stretch.pieces.length; k++) {
+        final piece = stretch.pieces[k];
+        final last = k == stretch.pieces.length - 1;
+        final len = last
+            ? stretch.length - used
+            : (stretch.length * piece.weight).round();
+        used += len;
+        final ramp = (len * 0.25).round();
+        _addRoad(
+          ramp,
+          len - 2 * ramp,
+          ramp,
+          piece.curve,
+          piece.hill,
+          piece.section ?? stretch.section,
+        );
+      }
+    }
   }
 }

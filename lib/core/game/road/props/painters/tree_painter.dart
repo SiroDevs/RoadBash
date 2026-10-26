@@ -5,7 +5,7 @@ import 'dart:ui';
 // Project imports:
 import '../../../utils/paint_utils.dart';
 import '../../road_projection.dart';
-import '../../scene/scene_theme.dart';
+import '../../scene_theme.dart';
 import '../prop.dart';
 
 class TreePainter {
@@ -27,6 +27,8 @@ class TreePainter {
         _pine(c, v, x, y, w, h);
       case PropKind.bush:
         _bush(c, v, x, y, w, h);
+      case PropKind.acacia:
+        _acacia(c, v, x, y, w, h);
       default:
         break;
     }
@@ -85,6 +87,24 @@ class TreePainter {
       ..lineTo(x - w * 0.3, y - h * 0.74)
       ..close();
     c.drawPath(_path, fogged(_leafLight, v.fog));
+  }
+
+  void _acacia(Canvas c, VisionSeg v, double x, double y, double w, double h) {
+    _contact(c, v, x, y, w * 0.8);
+    final trunkW = math.max(1.0, w * 0.1);
+    c.drawRect(Rect.fromLTRB(x - trunkW, y - h * 0.6, x + trunkW, y + 1),
+        fogged(_trunk, v.fog));
+    // Flat crown
+    c.drawOval(
+        Rect.fromCenter(
+            center: Offset(x, y - h * 0.68), width: w * 2.4, height: h * 0.3),
+        fogged(_leafDark, v.fog));
+    c.drawOval(
+        Rect.fromCenter(
+            center: Offset(x - w * 0.2, y - h * 0.74),
+            width: w * 1.5,
+            height: h * 0.16),
+        fogged(_leafLight, v.fog));
   }
 
   void _bush(Canvas c, VisionSeg v, double x, double y, double w, double h) {

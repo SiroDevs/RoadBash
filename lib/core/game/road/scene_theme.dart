@@ -38,6 +38,7 @@ class SceneTheme {
     this.bridgeColor = const Color(0xFFA7A9A4),
     this.bridgeRail = const Color(0xFF3F4650),
     this.signGreen = const Color(0xFF1F6B46),
+    this.dualCarriageway = false,
   });
 
   final SceneId id;
@@ -56,6 +57,7 @@ class SceneTheme {
   final Color windowColor, roofColor, treeDark, treeLight, trunk, poleColor;
 
   final Color bridgeColor, bridgeRail, signGreen;
+  final bool dualCarriageway;
 
   static const SceneTheme city = SceneTheme(
     id: SceneId.city,
@@ -107,6 +109,8 @@ class SceneTheme {
   static const SceneTheme thikaRoad = SceneTheme(
     id: SceneId.thikaRoad,
     laps: 1,
+    lanes: 3,
+    dualCarriageway: true,
     skyTop: Color(0xFF5B8FE0),
     skyHorizon: Color(0xFFE3DCCB),
     backFar: Color(0xFF8DA08F),
@@ -127,6 +131,8 @@ class SceneTheme {
       Color(0xFFA9A9A3),
       Color(0xFFC9D6B5),
       Color(0xFFE0CFA0),
+      Color(0xFFC9877A),
+      Color(0xFF9C5B48),
     ],
     windowColor: Color(0xFF2E3E4E),
     roofColor: Color(0xFF4A4F57),

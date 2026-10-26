@@ -1,0 +1,12 @@
+enum WallStyle {
+  block(900),
+  concrete(1800),
+  rock(2200),
+  white(520),
+  parapet(760),
+  hoarding(1000);
+
+  const WallStyle(this.height);
+
+  final double height;
+}

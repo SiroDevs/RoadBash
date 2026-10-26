@@ -2,10 +2,15 @@ enum PropKind {
   building,
   broadleaf,
   pine,
+  acacia,
   bush,
   lamp,
   sign,
-
+  billboard,
+  exitSign,
+  wall,
+  slipRoad,
+  tunnel,
   footbridge,
   gantry,
   overpass;
@@ -25,23 +30,17 @@ class Prop {
     this.depth = 0,
     this.tint = 0,
     this.detail = 0,
+    this.drop = 0,
   });
 
   final PropKind kind;
-
   final int anchor;
-
   final int side;
-
   final double offset;
-
   final double width;
-
   final double height;
-
   final int depth;
-
   final int tint;
-
   final double detail;
+  final double drop;
 }

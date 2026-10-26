@@ -64,7 +64,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get blurbThikaRoad =>
-      'Kutoka Ruiru hadi Pangani, kupitia Barabara ya Forest hadi Museum Hill. Njia pana, vivuko vya juu na madaraja ya waenda kwa miguu. Kaa safi hadi mwisho.';
+      'Kutoka Blue Post hadi Museum Hill kupitia Juja, Kimbo, Ruiru, Kahawa, Githurai na Roysambu, kisha chini ya handaki la Pangani. Vivuko vya juu, madaraja ya waenda kwa miguu na njia za kutoka. Kaa safi hadi mwisho.';
 
   @override
   String get blurbReception =>

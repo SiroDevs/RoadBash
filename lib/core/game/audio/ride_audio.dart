@@ -19,14 +19,11 @@ class RideAudio {
     this.useAssetLoops = false,
   });
 
-  /// Replaced live when the player flips a sound switch mid-race.
   PlayerProfile mix;
   final AudioService service;
   final RoadRenderer road;
   final RaceController race;
 
-  /// Skid, gravel and wind still come from audio/loops/*.wav. Leave this off
-  /// until those files exist; the engine never needs them.
   final bool useAssetLoops;
 
   late final _engine = EngineSynth(mix.flavour);

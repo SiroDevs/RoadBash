@@ -1,14 +1,12 @@
 // Project imports:
 part of '../rider_painter.dart';
 
-/// Everything the rider wears: legs, torso, arms and helmet.
 class LowerBody extends RiderPartPainter {
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     _leftLeg(paint, path, canva, pose);
     _rightLeg(paint, path, canva, pose);
   }
 
-  /// Left leg swings out and down as the bike comes to a stop.
   void _leftLeg(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final f = pose.foot.clamp(0.0, 1.0);
 
@@ -72,7 +70,6 @@ class LowerBody extends RiderPartPainter {
     canva.drawPath(path, paint);
   }
 
-  /// Right leg stays tucked against the tank.
   void _rightLeg(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final f = pose.foot.clamp(0.0, 1.0);
 

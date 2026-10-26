@@ -1,7 +1,6 @@
 // Project imports:
 part of '../rider_painter.dart';
 
-/// Everything in the motorbike.
 class TailParts extends RiderPartPainter {
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final tail = tailLift(pose);

@@ -3,8 +3,8 @@ import 'dart:math' as math;
 
 // Project imports:
 import '../../../domain/models/scene_id.dart';
-import '../road/road_config.dart';
 import 'race_result.dart';
+import '../road/config/vehicle_config.dart';
 
 class RiderRival {
   const RiderRival(this.name, this.pace, this.phase);
@@ -51,12 +51,12 @@ class RaceController {
   bool get running => countdown <= 0 && !finished;
 
   double rivalDistance(RiderRival r, double t) =>
-      r.pace * RoadConfig.maxSpeed * t +
+      r.pace * VehicleConfig.maxSpeed * t +
       _surgeAmp * (math.sin(_surgeFreq * t + r.phase) - math.sin(r.phase));
 
   double rivalFinishTime(RiderRival r) {
     var lo = 0.0;
-    var hi = raceLength / (r.pace * RoadConfig.maxSpeed) + 20;
+    var hi = raceLength / (r.pace * VehicleConfig.maxSpeed) + 20;
     for (var i = 0; i < 40; i++) {
       final mid = (lo + hi) / 2;
       if (rivalDistance(r, mid) < raceLength) {

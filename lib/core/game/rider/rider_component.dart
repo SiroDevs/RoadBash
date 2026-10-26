@@ -7,11 +7,11 @@ import 'package:flame/components.dart';
 
 // Project imports:
 import '../hud/dashboard_layout.dart';
-import '../road/road_config.dart';
 import '../road/road_renderer.dart';
 import 'rider_painter.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
+import '../road/config/vehicle_config.dart';
 
 class RiderComponent extends PositionComponent {
   RiderComponent(this.road, {RiderRig? rig})
@@ -51,7 +51,7 @@ class RiderComponent extends PositionComponent {
     p.steer += (road.appliedSteer - p.steer) * ease;
     p.braking = road.brake;
 
-    final spin = math.min(road.speed, RoadConfig.maxSpeed * 0.2);
+    final spin = math.min(road.speed, VehicleConfig.maxSpeed * 0.2);
     p.phase = (p.phase + spin * dt / 900) % 1;
 
     p.foot += ((road.restingOnFoot ? 1.0 : 0.0) - p.foot) * math.min(1.0, dt * 5);

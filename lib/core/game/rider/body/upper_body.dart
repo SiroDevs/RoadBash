@@ -1,7 +1,6 @@
 // Project imports:
 part of '../rider_painter.dart';
 
-/// Everything the rider wears: legs, torso, arms and helmet.
 class UpperBody extends RiderPartPainter {
   static const _helmetShell = Color(0xFFF2C21C);
   static const _helmetShade = Color(0xFFC79A0F);
@@ -134,11 +133,9 @@ class UpperBody extends RiderPartPainter {
     canva.drawPath(path, paint);
   }
 
-  /// Sleeves and gloves, reaching for the grips [RiderBike] draws over them.
   void _arms(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final f = pose.foot.clamp(0.0, 1.0);
 
-    // Blends one coordinate: f = 0 gives the moving value, f = 1 gives the stopped value.
     double m(double moving, double stopped) => moving + (stopped - moving) * f;
 
     // Right Hand

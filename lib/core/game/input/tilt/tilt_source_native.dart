@@ -7,8 +7,6 @@ import 'package:sensors_plus/sensors_plus.dart';
 // Project imports:
 import 'tilt_source_base.dart';
 
-/// Android and iOS. sensors_plus already reports iOS in the Android sign
-/// convention, so no flipping is needed here.
 TiltSource createTiltSource() => _NativeTilt();
 
 class _NativeTilt implements TiltSource {

@@ -1,0 +1,47 @@
+enum PropKind {
+  building,
+  broadleaf,
+  pine,
+  bush,
+  lamp,
+  sign,
+
+  footbridge,
+  gantry,
+  overpass;
+
+  bool get spansRoad =>
+      this == footbridge || this == gantry || this == overpass;
+}
+
+class Prop {
+  const Prop({
+    required this.kind,
+    required this.anchor,
+    required this.side,
+    required this.offset,
+    required this.width,
+    required this.height,
+    this.depth = 0,
+    this.tint = 0,
+    this.detail = 0,
+  });
+
+  final PropKind kind;
+
+  final int anchor;
+
+  final int side;
+
+  final double offset;
+
+  final double width;
+
+  final double height;
+
+  final int depth;
+
+  final int tint;
+
+  final double detail;
+}

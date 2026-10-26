@@ -3,9 +3,9 @@ import 'dart:ui';
 
 // Project imports:
 import '../utils/paint_utils.dart';
-import 'road_config.dart';
+import 'config/road_config.dart';
 import 'road_projection.dart';
-import 'road_theme.dart';
+import 'scene/scene_theme.dart';
 
 class RoadSegmentPainter {
   RoadSegmentPainter(this.theme)
@@ -26,14 +26,11 @@ class RoadSegmentPainter {
 
   static const double _kerb = 0.032;
 
-  /// Half-widths of the painted lines, in half-road-widths.
   static const double _whiteLine = 0.014;
   static const double _laneLine = 0.015;
   static const double _yellowLine = 0.013;
   static const double _centreGap = 0.021;
 
-  /// Markings this far into the haze are a sub-pixel smudge; skipping them
-  /// removes two path fills from every distant segment.
   static const double _markingCutoff = 0.86;
 
   void draw(Canvas c, VisionSeg v, double screenW) {
@@ -46,8 +43,7 @@ class RoadSegmentPainter {
     _band(v, 1, 1 + sh);
     c.drawPath(_path, fogged((i ~/ 5).isEven ? _shoulder : _shoulderAlt, f));
 
-    // Low-contrast kerb. It reads as a speed cue without the strobe a bright
-    // alternating rumble strip gives at racing speed.
+    // Kerb
     _path.reset();
     _band(v, -1 - _kerb, -1);
     _band(v, 1, 1 + _kerb);
@@ -84,8 +80,6 @@ class RoadSegmentPainter {
     c.drawPath(_path, fogged(_center, f));
   }
 
-  /// Adds the strip between lateral offsets [a] and [b], measured in
-  /// half-road-widths from the centre line.
   void _band(VisionSeg v, double a, double b) {
     addQuad(
       _path,

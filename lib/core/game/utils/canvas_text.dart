@@ -5,10 +5,8 @@ import 'dart:ui' hide TextStyle;
 import 'package:flutter/painting.dart' show TextPainter, TextSpan, TextStyle;
 
 // Project imports:
-import '../../../common/constants/app_constants.dart';
+import '../../constants/app_constants.dart';
 
-/// Draws [text] with its vertical middle at [at].dy. [align] says whether
-/// [at].dx is the centre, left edge or right edge of the text.
 void paintText(
   Canvas canvas,
   String text,

@@ -1,9 +1,3 @@
-// Dart imports:
-import 'dart:convert';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-
 // Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -27,15 +21,4 @@ abstract class RegisterModule {
   @singleton
   @preResolve
   Future<SharedPreferences> sharedPrefs() => SharedPreferences.getInstance();
-
-}
-
-dynamic _parseAndDecode(String response) => jsonDecode(response);
-
-dynamic parseJson(String text) {
-  if (kIsWeb) {
-    return jsonDecode(text);
-  } else {
-    return compute<String, dynamic>(_parseAndDecode, text);
-  }
 }

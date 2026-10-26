@@ -14,8 +14,6 @@ import 'engine_voice.dart';
 import 'engine_wave.dart';
 import 'soloud_loop.dart';
 
-/// The synthesized engine: three generated loops played together through
-/// SoLoud, with their volume and pitch driven by [EngineVoice].
 class EngineSynth {
   EngineSynth(EngineFlavour flavour) {
     final loops = EngineWave.loopsFor(flavour);

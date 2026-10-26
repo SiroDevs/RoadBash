@@ -8,26 +8,16 @@ import 'package:flutter/foundation.dart';
 // Project imports:
 import 'tilt_source.dart';
 
-/// Gravity must have at least this much pull across the screen to be trusted;
-/// below it the device is lying flat and has no meaningful "tilt".
 const double _minInPlane = 2.5;
 
-/// How far the device is turned like a steering wheel, in radians, clockwise
-/// positive. The "straight" pose is whichever upright orientation (portrait or
-/// either landscape) the device is closest to, so it works the same in every
-/// screen orientation without having to ask the OS which one is active.
-///
-/// Returns null while the device is lying flat.
 double? rollFromGravity(double x, double y) {
   if (math.sqrt(x * x + y * y) < _minInPlane) return null;
   const quarter = math.pi / 2;
-  final angle = math.atan2(x, y); // 0 when upright in portrait
+  final angle = math.atan2(x, y);
   final upright = (angle / quarter).roundToDouble() * quarter;
   return upright - angle;
 }
 
-/// Turns accelerometer readings into a steering value in -1..1 and feeds it to
-/// [onSteer]. Turning the device clockwise steers right.
 class TiltController {
   TiltController({required this.onSteer});
 
@@ -37,11 +27,8 @@ class TiltController {
 
   final ValueChanged<double> onSteer;
 
-  /// True while the browser still needs a tap before it will share motion data
-  /// (iOS Safari). The race screen shows a button for it.
   final ValueNotifier<bool> needsPermission = ValueNotifier<bool>(false);
 
-  /// Flips left and right.
   bool invert = false;
 
   TiltSource? _source;
@@ -62,7 +49,6 @@ class TiltController {
     }
   }
 
-  /// Call this directly from a button's onPressed.
   Future<void> requestPermission() async {
     final source = _source;
     if (source == null) return;

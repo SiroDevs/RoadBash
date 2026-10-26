@@ -10,7 +10,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 
 // Project imports:
-import '../../core/audio/audio_service.dart';
+import '../audio/audio_service.dart';
 import '../../domain/models/player_profile.dart';
 import '../../domain/models/scene_id.dart';
 import 'audio/ride_audio.dart';
@@ -20,7 +20,7 @@ import 'race/race_controller.dart';
 import 'race/race_result.dart';
 import 'rider/rider_component.dart';
 import 'road/road_renderer.dart';
-import 'road/road_theme.dart';
+import 'road/scene/scene_theme.dart';
 
 class RoadGame extends FlameGame with KeyboardEvents {
   RoadGame({
@@ -110,7 +110,6 @@ class RoadGame extends FlameGame with KeyboardEvents {
     road.throttle = (_keyThrottle || _touchThrottle) && !road.brake;
   }
 
-  /// Called when a sound switch changes while the race is on.
   void updateMix(PlayerProfile profile) {
     mix = profile;
     _ride?.mix = profile;
@@ -118,7 +117,6 @@ class RoadGame extends FlameGame with KeyboardEvents {
 
   bool get menuPaused => _menuPaused;
 
-  /// Freezes the race (and the engine sound) while the controls menu is open.
   void pauseRace() {
     if (_menuPaused) return;
     _menuPaused = true;
@@ -134,8 +132,6 @@ class RoadGame extends FlameGame with KeyboardEvents {
     _ride?.resume();
   }
 
-  /// Lets go of every key and finger. A pedal that was held when the menu
-  /// opened never sees its release, so this stops it sticking.
   void clearInput() {
     _keySteer = 0;
     _touchSteer = 0;
@@ -190,7 +186,6 @@ class RoadGame extends FlameGame with KeyboardEvents {
   @override
   void lifecycleStateChange(AppLifecycleState state) {
     super.lifecycleStateChange(state);
-    // Menu open: the race stays frozen and silent whatever the app does.
     if (_menuPaused) return;
     if (state == AppLifecycleState.resumed) {
       _ride?.resume();

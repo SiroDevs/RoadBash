@@ -6,16 +6,16 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
-import '../../../common/constants/app_constants.dart';
+import '../../constants/app_constants.dart';
 import '../race/race_controller.dart';
 import '../race/race_result.dart';
-import '../road/road_config.dart';
 import '../road/road_renderer.dart';
 import '../utils/canvas_text.dart';
 import '../utils/paint_utils.dart';
 import 'dashboard_face.dart';
 import 'dashboard_layout.dart';
 import 'hud_strings.dart';
+import '../road/config/vehicle_config.dart';
 
 class DashboardHud extends PositionComponent {
   DashboardHud(this.road, this.race, this.strings) : super(priority: 10);
@@ -60,7 +60,7 @@ class DashboardHud extends PositionComponent {
       canvas,
       layout.speedOffset,
       layout.speedRadius,
-      road.speedKmh / RoadConfig.topSpeedKmh,
+      road.speedKmh / VehicleConfig.topSpeedKmh,
     );
     _needleAt(canvas, layout.rpmOffset, layout.rpmRadius, road.rpm);
     _progress(canvas, layout);
@@ -78,7 +78,7 @@ class DashboardHud extends PositionComponent {
     canva.drawCircle(ctr, r * 0.09, _hub);
   }
 
-  /// Progress indicator
+  // Progress indicator
   void _progress(Canvas canva, DashboardLayout layout) {
     final width = layout.pw * 0.25;
     final bar = Rect.fromLTWH(
@@ -110,7 +110,7 @@ class DashboardHud extends PositionComponent {
     canva.restore();
   }
 
-  /// Dashboard texts
+  // Dashboard texts
   void _readouts(Canvas canva, DashboardLayout layout) {
     Offset at(double fx, double fy) =>
         Offset(layout.left + layout.pw * fx, layout.top + layout.ph * fy);

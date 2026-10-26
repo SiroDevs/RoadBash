@@ -1,10 +1,9 @@
 // Project imports:
-import 'road_track.dart';
+import 'track/road_track.dart';
 
 class ProjectionPoint {
   double x = 0, y = 0, w = 0, z = 0;
 
-  /// Screen pixels per world unit, vertically.
   double k = 0;
 }
 
@@ -14,18 +13,12 @@ class VisionSeg {
   double x1 = 0, y1 = 0, w1 = 0, k1 = 0;
   double x2 = 0, y2 = 0, w2 = 0, k2 = 0;
 
-  /// Highest screen line already covered by nearer road (hill occlusion).
   double clip = 0;
 
-  /// 0 at the camera, 1 once fully swallowed by the horizon haze.
   double fog = 0;
 }
 
-/// A point interpolated between the near edges of two visible segments.
-///
-/// Screen x and y are not linear in world depth, so a plain lerp bends
-/// buildings. Vertical scale [k] is proportional to 1/z, which makes 1/k
-/// linear in world depth — so interpolate there and rebuild x and y from it.
+// k is 1/z, so interpolate 1/k to keep buildings from bending.
 class SpanPoint {
   double x = 0, y = 0, k = 0;
 

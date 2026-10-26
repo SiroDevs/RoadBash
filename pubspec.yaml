@@ -1,7 +1,7 @@
 name: roadbash
-description: An original pseudo-3D combat racer built with Flutter + Flame, inspired by classic 16-bit road-combat racers.
+description: Recreating our childhood Road Rash with Flutter's Flame Engine.
 publish_to: 'none'
-version: 1.0.2
+version: 1.0.3
 
 environment:
   sdk: ^3.13.5

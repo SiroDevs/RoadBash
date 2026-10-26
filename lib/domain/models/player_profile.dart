@@ -28,21 +28,16 @@ class PlayerProfile extends Equatable {
   final double effects;
   final EngineFlavour flavour;
 
-  /// Phones and tablets: steer with on-screen arrows instead of tilting.
   final bool useScreenTouch;
 
-  /// Silences everything, whatever the other sound options say.
   final bool mute;
   final bool musicOn;
   final bool effectsOn;
   final bool engineOn;
 
-  /// Flips the tilt direction, in case a device reports it the other way round.
   final bool invertTilt;
   final String language;
 
-  /// Volumes after the switches are applied. Use these for playback; the plain
-  /// [master], [music], [engine] and [effects] are the slider positions.
   double get masterGain => mute ? 0.0 : master;
   double get musicGain => musicOn ? masterGain * music : 0.0;
   double get effectsGain => effectsOn ? masterGain * effects : 0.0;

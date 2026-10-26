@@ -2,11 +2,8 @@
 import 'package:flutter/widgets.dart';
 
 // Project imports:
-import 'responsive_layout_builder.dart';
+import '../../core/layout/responsive_layout_builder.dart';
 
-/// Every size the menu screens use, per layout size (the same idea as
-/// Tupange's `BoardSize`). [large] holds the original desktop values.
-/// Screens read these through `context.sizes` instead of hard-coding numbers.
 class RetroSizes {
   const RetroSizes._({
     required this.pad,

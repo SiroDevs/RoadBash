@@ -11,7 +11,6 @@ abstract final class EngineTunes {
         EngineFlavour.arcade => _arcade,
       };
 
-  /// The original sound.
   static const _classic = EngineTune(
     layers: [
       EngineLayerSpec(48, 0.15, 7),
@@ -20,7 +19,6 @@ abstract final class EngineTunes {
     ],
   );
 
-  /// Big, lazy, lumpy cruiser: low pitch, dark, with a weak second pulse.
   static const _vTwin = EngineTune(
     layers: [
       EngineLayerSpec(30, 0.10, 17),
@@ -49,7 +47,6 @@ abstract final class EngineTunes {
     trim: 0.80,
   );
 
-  /// Smooth, high-revving four-cylinder with quick, shallow shifts.
   static const _superbike = EngineTune(
     layers: [
       EngineLayerSpec(80, 0.30, 27),
@@ -77,7 +74,6 @@ abstract final class EngineTunes {
     limiterDepth: 0.012,
   );
 
-  /// Raspy, ragged ring-ding with lots of crackle.
   static const _twoStroke = EngineTune(
     layers: [
       EngineLayerSpec(60, 0.30, 37),
@@ -107,7 +103,6 @@ abstract final class EngineTunes {
     limiterDepth: 0.03,
   );
 
-  /// Buzzy 16-bit console square wave, crushed to 4 bits.
   static const _arcade = EngineTune(
     layers: [
       EngineLayerSpec(48, 0.10, 47),

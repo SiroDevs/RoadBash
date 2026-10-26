@@ -1,9 +1,7 @@
 // Project imports:
 part of '../rider_painter.dart';
 
-/// Everything in the motorbike.
 class RiderBike extends RiderPartPainter {
-  /// Stays flat on the road while the bike banks over it.
   void paintShadow(Canvas canva, RiderPose pose) {
     final slip = pose.lean * 46;
     final squash = 1 - pose.lean.abs() * 0.5;
@@ -21,7 +19,6 @@ class RiderBike extends RiderPartPainter {
     );
   }
 
-  /// Bar ends and mirrors poking past the gloves. Drawn after the arms.
   void handleBars(Paint paint, Path path, Canvas canva, RiderPose pose) {
     // Left Handle
     path

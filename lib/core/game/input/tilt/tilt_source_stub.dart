@@ -1,7 +1,6 @@
 // Project imports:
 import 'tilt_source_base.dart';
 
-/// Used where no motion sensor can be reached.
 TiltSource createTiltSource() => _NoTilt();
 
 class _NoTilt implements TiltSource {

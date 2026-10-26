@@ -6,9 +6,6 @@ import 'dart:math' as math;
 import '../../../domain/models/engine_flavour.dart';
 import 'engine_synth.dart';
 
-/// Plays a short scripted ride (rev up through the gears, then coast down)
-/// so a flavour can be heard without starting a race. It feeds the engine the
-/// same kind of numbers the game does.
 class EnginePreview {
   static const double _dt = 0.016;
   static const double _throttleSecs = 3.4;
@@ -25,7 +22,6 @@ class EnginePreview {
     _synth = synth;
     await synth.start();
     if (token != _token) {
-      // Another preview (or stop) came in while this one was loading.
       await synth.dispose();
       return;
     }

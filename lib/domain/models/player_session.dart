@@ -9,13 +9,6 @@ class PlayerSession extends Equatable {
     required this.isAdmin,
   });
 
-  factory PlayerSession.fromJson(Map<String, dynamic> json) => PlayerSession(
-    token: json['token'] as String,
-    playerId: json['player_id'] as String,
-    name: json['name'] as String,
-    isAdmin: json['is_admin'] == true,
-  );
-
   final String token;
   final String playerId;
   final String name;

@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flame/components.dart';
 
-import '../../projection/road_projection.dart';
+import '../../road_projection.dart';
 import '../prop.dart';
 
 class BoxFrame {

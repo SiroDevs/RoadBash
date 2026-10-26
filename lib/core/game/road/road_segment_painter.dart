@@ -2,10 +2,10 @@
 import 'dart:ui';
 
 // Project imports:
-import '../../utils/paint_utils.dart';
-import '../config/road_config.dart';
-import '../projection/road_projection.dart';
-import '../scene/scene_theme.dart';
+import '../utils/paint_utils.dart';
+import 'config/road_config.dart';
+import 'road_projection.dart';
+import 'scene/scene_theme.dart';
 
 class RoadSegmentPainter {
   RoadSegmentPainter(this.theme)

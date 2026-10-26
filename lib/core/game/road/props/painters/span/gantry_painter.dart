@@ -8,7 +8,7 @@ import 'package:flutter/painting.dart' show TextPainter, TextSpan, TextStyle;
 // Project imports:
 import '../../../../../constants/app_constants.dart';
 import '../../../../utils/paint_utils.dart';
-import '../../../projection/road_projection.dart';
+import '../../../road_projection.dart';
 import '../../../scene/scene_theme.dart';
 import '../../prop.dart';
 import '../../zones/thika_zones.dart';

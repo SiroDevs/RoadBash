@@ -7,21 +7,22 @@ import 'package:flame/components.dart';
 
 // Project imports:
 import '../hud/dashboard_layout.dart';
-import 'road_backdrop.dart';
-import 'road_config.dart';
-import 'road_decor_painter.dart';
-import 'road_projection.dart';
-import 'road_props.dart';
-import 'road_segment_painter.dart';
-import 'road_theme.dart';
-import 'road_track.dart';
+import 'backdrop/road_backdrop.dart';
+import 'config/road_config.dart';
+import 'props/painters/prop_painter.dart';
+import 'projection/road_projection.dart';
+import 'props/road_props.dart';
+import 'surface/road_segment_painter.dart';
+import 'scene/scene_theme.dart';
+import 'track/road_track.dart';
+import 'config/vehicle_config.dart';
 
 class RoadRenderer extends PositionComponent {
   RoadRenderer(this.theme)
     : track = RoadTrack(theme.id),
       _backdrop = RoadBackdrop(theme),
       _roads = RoadSegmentPainter(theme),
-      _decor = RoadDecorPainter(theme) {
+      _decor = PropPainter(theme) {
     props = RoadProps(theme, track.count, sectionStarts: track.sectionStarts);
   }
 
@@ -30,7 +31,7 @@ class RoadRenderer extends PositionComponent {
   late final RoadProps props;
   final RoadBackdrop _backdrop;
   final RoadSegmentPainter _roads;
-  final RoadDecorPainter _decor;
+  final PropPainter _decor;
 
   double trkPosition = 0, fullDistance = 0;
   double playerX = -0.25, speed = 0;
@@ -44,10 +45,10 @@ class RoadRenderer extends PositionComponent {
   double curveFelt = 0;
   double _spread = 1;
 
-  double get speedPercent => speed / RoadConfig.maxSpeed;
-  double get speedKmh => speedPercent * RoadConfig.topSpeedKmh;
+  double get speedPercent => speed / VehicleConfig.maxSpeed;
+  double get speedKmh => speedPercent * VehicleConfig.topSpeedKmh;
   bool get offRoad => playerX < -1 || playerX > 1;
-  bool get stopped => speed < RoadConfig.stoppedSpeed;
+  bool get stopped => speed < VehicleConfig.stoppedSpeed;
   bool get restingOnFoot => stopped && !throttle;
   double get engineLoad => brake ? 0.3 : (throttle ? 1.0 : 0.5);
 
@@ -89,48 +90,43 @@ class RoadRenderer extends PositionComponent {
 
     curveFelt += (seg.curve - curveFelt) * math.min(1.0, dt * 3.5);
 
-    // Steering bites less the faster you go, so the bike settles into a line
-    // instead of darting a whole lane per key press.
-    final authority = 1 - RoadConfig.steerHighSpeedDamp * sp;
-    playerX += dt * RoadConfig.steerRate * appliedSteer * sp * authority;
-    playerX -= dt * RoadConfig.centrifugal * seg.curve * sp * sp;
+    final authority = 1 - VehicleConfig.steerHighSpeedDamp * sp;
+    playerX += dt * VehicleConfig.steerRate * appliedSteer * sp * authority;
+    playerX -= dt * VehicleConfig.centrifugal * seg.curve * sp * sp;
 
     if (brake) {
-      speed += RoadConfig.braking * dt;
+      speed += VehicleConfig.braking * dt;
     } else if (throttle) {
-      speed += RoadConfig.accel * dt;
+      speed += VehicleConfig.accel * dt;
     } else {
-      speed += RoadConfig.decel * dt;
+      speed += VehicleConfig.decel * dt;
     }
-    if (offRoad && speed > RoadConfig.offRoadLimit) {
-      speed += RoadConfig.offRoadDecel * dt;
+    if (offRoad && speed > VehicleConfig.offRoadLimit) {
+      speed += VehicleConfig.offRoadDecel * dt;
     }
-    const edge = RoadConfig.maxOffRoad;
+    const edge = VehicleConfig.maxOffRoad;
     playerX = math.max(-edge, math.min(edge, playerX));
-    speed = math.max(0.0, math.min(RoadConfig.maxSpeed, speed));
+    speed = math.max(0.0, math.min(VehicleConfig.maxSpeed, speed));
 
     skidding =
-        speed > RoadConfig.maxSpeed * 0.3 &&
+        speed > VehicleConfig.maxSpeed * 0.3 &&
         (brake ||
             (appliedSteer.abs() > 0.4 && sp > 0.8 && seg.curve.abs() > 2.5));
     _updateEngine(dt, sp);
     _backdrop.scroll += curveFelt * sp * dt * 34;
   }
 
-  /// Ramps the bars toward the input. Falling back to centre is quicker than
-  /// winding on lock, which is what stops a tap of the arrow key snapping.
   void _steerToward(double dt, double target) {
     final t = target.clamp(-1.0, 1.0).toDouble();
     final rate = t.abs() > appliedSteer.abs()
-        ? RoadConfig.steerAttack
-        : RoadConfig.steerRelease;
+        ? VehicleConfig.steerAttack
+        : VehicleConfig.steerRelease;
     appliedSteer += (t - appliedSteer) * math.min(1.0, dt * rate);
   }
 
   void _settleRpm(double dt, double target) =>
       rpm += (target - rpm) * math.min(1.0, dt * 8);
 
-  /// Six-speed gearbox: rpm climbs inside a gear, then drops on the shift.
   void _updateEngine(double dt, double sp) {
     const gears = 6;
     gear = math.min(gears, 1 + (sp * gears).floor());
@@ -196,8 +192,6 @@ class RoadRenderer extends PositionComponent {
       x += dx;
       dx += seg.curve;
 
-      // Clip the near edge to RoadConfig.nearClip instead of projecting
-      // points that sit almost on the camera.
       if (_p1.z < RoadConfig.nearClip) {
         if (_p2.z <= RoadConfig.nearClip) continue;
         final t = (RoadConfig.nearClip - _p1.z) / (_p2.z - _p1.z);
@@ -230,15 +224,12 @@ class RoadRenderer extends PositionComponent {
       _lastN = n;
       _roads.draw(canvas, v, size.x);
       maxY = _p2.y;
-      // Everything past here is pure haze, which the backdrop already paints.
       if (v.fog >= 1) break;
     }
 
     if (_visCount > 0) _drawDecor(canvas, baseIdx);
   }
 
-  /// Walks the visible segments far-to-near and draws the props anchored on
-  /// each, so nearer scenery paints over farther scenery.
   void _drawDecor(Canvas canvas, int baseIdx) {
     final near = _byN[_firstN]!;
     final limit = math.min(RoadConfig.decorDistance, _lastN + 1);
@@ -247,7 +238,6 @@ class RoadRenderer extends PositionComponent {
       final list = props.at((baseIdx + n + track.count * 2) % track.count);
       if (list.isEmpty) continue;
 
-      // Props behind the camera hang off the first segment still on screen.
       final anchor = n < _firstN ? near : _byN[n];
       if (anchor == null) continue;
 
@@ -257,7 +247,7 @@ class RoadRenderer extends PositionComponent {
           continue;
         }
         final backN = math.min(n + prop.depth, _lastN);
-        if (backN <= _firstN) continue; // Wholly behind the camera.
+        if (backN <= _firstN) continue;
         final back = _byN[backN] ?? _findBack(backN);
         if (back == null || back == anchor) continue;
         _decor.drawBox(canvas, anchor, back, prop, size);
@@ -265,8 +255,6 @@ class RoadRenderer extends PositionComponent {
     }
   }
 
-  /// Nearest projected segment at or before [n], for props whose back face
-  /// landed on a segment that was culled.
   VisionSeg? _findBack(int n) {
     for (var i = n; i >= _firstN; i--) {
       final v = _byN[i];

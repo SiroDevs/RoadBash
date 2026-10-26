@@ -9,7 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app.dart';
 import 'core/di/injectable.dart';
 import 'core/platform/display_setup.dart';
-import 'core/supabase/supabase_config.dart';
+import 'data/sources/remote/supabase_config.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

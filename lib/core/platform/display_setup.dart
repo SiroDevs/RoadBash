@@ -5,16 +5,11 @@ import 'package:flutter/services.dart';
 import '../utils/app_util.dart';
 
 // Package imports:
-// import 'package:window_manager/window_manager.dart';
-
 
 Future<void> configureDisplay() async {
   if (isMobile) {
-    // Portrait and landscape are both supported.
     await SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   } else if (isDesktop) {
-    // await windowManager.ensureInitialized();
-    // await windowManager.setFullScreen(true);
   }
 }

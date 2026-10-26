@@ -4,15 +4,12 @@ import 'dart:math' as math;
 // Project imports:
 import 'engine_tune.dart';
 
-/// Turns the bike's state into a volume and playback rate for each engine
-/// layer. Pure maths with no audio calls, so it is easy to unit test.
 class EngineVoice {
   EngineVoice(this.baseHz, this.tune)
     : volumes = List.filled(baseHz.length, 0.0),
       rates = List.filled(baseHz.length, 1.0),
       _weights = List.filled(baseHz.length, 0.0);
 
-  /// Loudness when stopped with no throttle. 0 = silent until you hit gas.
   static const double idleLoad = 0.0;
 
   static const double _minRate = 0.5;
@@ -42,8 +39,6 @@ class EngineVoice {
   }) {
     _clock += dt;
 
-    // A shift is a short throttle lift: the sound ducks, then swells back.
-    // The pitch drop (up) or rev-match jump (down) comes from the rpm model.
     if (gear != _gear && !locked) {
       _shiftLen = gear > _gear ? tune.shiftUp : tune.shiftDown;
       _shift = _shiftLen;
@@ -52,7 +47,6 @@ class EngineVoice {
     _shift = math.max(0.0, _shift - dt);
     _rpm += (rpm - _rpm) * math.min(1.0, dt * 20);
 
-    // Flat out in top gear the engine bounces off its rev limiter.
     final limiter = throttle && !locked && _rpm > 0.97;
     final flutter = math.sin(_clock * 2 * math.pi * tune.limiterHz);
     var fire = tune.fireMin + tune.fireSpan * _rpm;
@@ -80,7 +74,6 @@ class EngineVoice {
     }
   }
 
-  /// Equal-power crossfade between the two loops either side of [fire].
   void _crossfade(double fire) {
     final n = baseHz.length;
     for (var i = 0; i < n; i++) {

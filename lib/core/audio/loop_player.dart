@@ -1,8 +1,6 @@
 // Package imports:
 import 'package:audioplayers/audioplayers.dart';
 
-/// A looping asset whose volume and rate can be changed cheaply: values that
-/// barely moved are not sent to the platform. Failures leave it silent.
 class LoopPlayer {
   LoopPlayer(this.asset);
 

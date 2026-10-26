@@ -20,13 +20,6 @@ class PeriodStats {
     required this.games,
   });
 
-  factory PeriodStats.fromJson(Map<String, dynamic> json) => PeriodStats(
-    days: (json['days'] as num).toInt(),
-    visitors: (json['visitors'] as num).toInt(),
-    players: (json['players'] as num).toInt(),
-    games: (json['games'] as num).toInt(),
-  );
-
   final int days;
   final int visitors;
   final int players;
@@ -42,18 +35,6 @@ class StatsSummary {
     required this.totalVisitors,
     required this.periods,
   });
-
-  factory StatsSummary.fromJson(Map<String, dynamic> json) => StatsSummary(
-    online: (json['online'] as num).toInt(),
-    onlinePlayers: (json['online_players'] as num).toInt(),
-    totalPlayers: (json['total_players'] as num).toInt(),
-    totalGames: (json['total_games'] as num).toInt(),
-    totalVisitors: (json['total_visitors'] as num).toInt(),
-    periods: [
-      for (final p in json['periods'] as List)
-        PeriodStats.fromJson(Map<String, dynamic>.from(p as Map)),
-    ],
-  );
 
   final int online;
   final int onlinePlayers;
@@ -78,13 +59,6 @@ class StatsPoint {
     required this.games,
   });
 
-  factory StatsPoint.fromJson(Map<String, dynamic> json) => StatsPoint(
-    time: DateTime.parse(json['t'] as String),
-    visitors: (json['visitors'] as num).toInt(),
-    players: (json['players'] as num).toInt(),
-    games: (json['games'] as num).toInt(),
-  );
-
   final DateTime time;
   final int visitors;
   final int players;
@@ -98,13 +72,6 @@ class HeatCell {
     required this.visitors,
     required this.players,
   });
-
-  factory HeatCell.fromJson(Map<String, dynamic> json) => HeatCell(
-    day: (json['dow'] as num).toInt(),
-    hour: (json['hour'] as num).toInt(),
-    visitors: (json['visitors'] as num).toInt(),
-    players: (json['players'] as num).toInt(),
-  );
 
   final int day;
   final int hour;

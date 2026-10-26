@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 // Project imports:
-import '../road/road_config.dart';
+import '../road/config/road_config.dart';
 
 Paint fillPaint(Color color, {bool antiAlias = true}) => Paint()
   ..color = color

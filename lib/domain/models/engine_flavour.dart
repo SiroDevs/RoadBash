@@ -1,5 +1,4 @@
-/// The engine sounds a player can pick in Reception. The id is what gets
-/// saved, so never change an existing one.
+// Ids are persisted; never change an existing one.
 enum EngineFlavour {
   classic('classic', 'Classic'),
   vTwin('vtwin', 'V-Twin'),

@@ -7,8 +7,6 @@ import '../../../domain/models/engine_flavour.dart';
 import 'engine_tune.dart';
 import 'engine_tunes.dart';
 
-/// A rendered loop. [baseHz] is the firing rate it really has: the period is
-/// rounded to a whole number of samples so the loop repeats without a click.
 class EngineLoop {
   const EngineLoop(this.wav, this.baseHz);
 
@@ -16,22 +14,14 @@ class EngineLoop {
   final double baseHz;
 }
 
-/// Builds the engine sound in code, so no engine audio asset is needed.
-///
-/// Three loops (low, mid, high) are rendered for the chosen flavour. At run
-/// time the game plays them at a rate that puts their pulses exactly at the
-/// engine's firing frequency, and crossfades between them, so the tone gets
-/// brighter as the revs climb instead of just getting higher.
 abstract final class EngineWave {
   static const int sampleRate = 22050;
   static const double _loopSeconds = 0.5;
 
-  /// Average loudness each loop is scaled to before soft-clipping.
   static const double _targetRms = 0.32;
 
   static final Map<EngineFlavour, List<EngineLoop>> _cache = {};
 
-  /// The loops for [flavour], rendered the first time they are asked for.
   static List<EngineLoop> loopsFor(EngineFlavour flavour) {
     final tune = EngineTunes.of(flavour);
     return _cache[flavour] ??= [
@@ -42,7 +32,6 @@ abstract final class EngineWave {
   static EngineLoop _render(EngineTune t, EngineLayerSpec spec) {
     final period = (sampleRate / spec.fireHz).round();
     final cycle = t.pattern.length;
-    // Whole pattern repeats only, so the loop joins up cleanly.
     final pulses = math.max(
       cycle,
       (_loopSeconds * spec.fireHz / cycle).round() * cycle,
@@ -71,8 +60,6 @@ abstract final class EngineWave {
       x[i] = amp[k] * (thump + click);
     }
 
-    // One-pole low-pass, run twice over the loop so its end flows into its
-    // start. Only the second pass is kept.
     final a = (t.smooth + t.smoothBright * spec.bright)
         .clamp(0.02, 1.0)
         .toDouble();
@@ -98,16 +85,11 @@ abstract final class EngineWave {
     }
     final rms = math.sqrt(energy / length) + 1e-9;
 
-    // Pulse trains have tall peaks but little average energy, so they sound
-    // quiet next to music. Scale by RMS (average loudness) and soft-clip the
-    // peaks, which makes all three layers equally loud and a lot fuller.
     final drive = (t.drive + t.driveBright * spec.bright) * _targetRms / rms;
     for (var i = 0; i < length; i++) {
       f[i] = _tanh(drive * f[i]);
     }
 
-    // Holding each value for a few samples gives the crunchy, aliased sound
-    // of old consoles.
     if (t.hold > 1) {
       for (var i = 0; i < length; i++) {
         f[i] = f[i - i % t.hold];

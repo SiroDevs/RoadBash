@@ -9,9 +9,6 @@ import 'package:flutter/foundation.dart'
 // Project imports:
 import 'tilt_source_base.dart';
 
-/// Browsers. sensors_plus only offers the Generic Sensor API on the web, which
-/// Safari and Firefox do not have, so this listens to `devicemotion` directly.
-/// That works on Chrome (Android), Safari (iOS) and Firefox, over HTTPS.
 TiltSource createTiltSource() => _WebTilt();
 
 @JS('window')
@@ -31,8 +28,6 @@ extension type _MotionEvent._(JSObject _) implements JSObject {
   external _Acceleration? get accelerationIncludingGravity;
 }
 
-/// The `DeviceMotionEvent` constructor. Only iOS 13+ Safari has
-/// `requestPermission`; everywhere else it is undefined.
 @JS('DeviceMotionEvent')
 extension type _DeviceMotion._(JSObject _) implements JSObject {
   @JS('requestPermission')
@@ -56,7 +51,7 @@ class _WebTilt implements TiltSource {
 
   final StreamController<TiltSample> _out = StreamController.broadcast();
 
-  /// Safari on iOS reports gravity with the opposite sign to Android.
+  // iOS Safari reports gravity with the opposite sign to Android.
   final double _sign = defaultTargetPlatform == TargetPlatform.iOS ? -1 : 1;
 
   late final JSFunction _listener = _onMotion.toJS;
@@ -82,7 +77,7 @@ class _WebTilt implements TiltSource {
     _out.add(TiltSample(x * _sign, y * _sign));
   }
 
-  /// Must be called straight from a tap: Safari refuses it otherwise.
+  // Safari only allows this from a tap.
   @override
   Future<bool> requestPermission() async {
     if (!needsPermission) {

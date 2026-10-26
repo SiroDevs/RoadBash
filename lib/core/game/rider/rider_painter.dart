@@ -20,7 +20,6 @@ class RiderPainter {
   static const double width = RiderPartPainter.canvasWidth;
   static const double height = RiderPartPainter.canvasHeight;
 
-  /// Lean the painter will accept before the shadow maths stops behaving.
   static const double maxLean = math.pi / 7;
 
   final RiderBike _bikeFrame = RiderBike();
@@ -77,14 +76,10 @@ abstract class RiderPartPainter {
   final Paint ink = Paint()..isAntiAlias = true;
   final Path scratch = Path();
 
-  /// Tucking at speed drops and broadens the back.
   double tuckOf(RiderPose pose) => pose.speed * 5;
 
-  /// Braking lifts the tail toward the camera; power squats it down.
   double tailLift(RiderPose pose) => -pose.pitch * 3.5;
 
-  /// Where a hand meets the grip. [side] is -1 for left and 1 for right.
-  /// The bars turn with the input, so the hands are not quite level.
   Offset handOf(int side, RiderPose pose) =>
       Offset(midX + side * 40, 65 + tuckOf(pose) + side * pose.steer * 4);
 

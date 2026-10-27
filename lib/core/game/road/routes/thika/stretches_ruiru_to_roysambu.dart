@@ -1,6 +1,7 @@
 import '../../props/wall_style.dart';
 import '../route_stretch.dart';
 import 'presets.dart';
+import 'signage.dart';
 
 const List<RouteStretch> ruiruToRoysambu = [
   RouteStretch(
@@ -23,7 +24,7 @@ const List<RouteStretch> ruiruToRoysambu = [
     ],
     features: [
       RouteFeature.gantry(0.4),
-      RouteFeature.exitSign(0.46),
+      RouteFeature.exitSignNumbered(0.46, exit14),
       RouteFeature.exit(0.52),
       RouteFeature.overpass(0.85),
     ],

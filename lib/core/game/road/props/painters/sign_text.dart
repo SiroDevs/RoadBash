@@ -83,6 +83,10 @@ abstract final class SignText {
   static double _width(String text) => _painter(text, white).width;
 
   static void drawPanel(Canvas c, Rect box, SignPanel panel) {
+    if (panel.arrow == SignArrow.upLeft) {
+      _drawArrowBoard(c, box, panel);
+      return;
+    }
     final inner = Rect.fromLTRB(
       box.left + box.width * 0.05,
       box.top + box.height * 0.07,
@@ -153,6 +157,77 @@ abstract final class SignText {
         panel.arrow,
       );
     }
+  }
+
+  static const Color _roundelInk = Color(0xFF1B44AE);
+
+  /// Exit board: diagonal arrow on the left, one text row per destination
+  /// (with an optional amber road code), and, for numbered exits, the number
+  /// in a white disc on the right. Sizes follow the board height so the same
+  /// layout works for the wide named board and the numbered one.
+  static void _drawArrowBoard(Canvas c, Rect box, SignPanel panel) {
+    final h = box.height;
+    final hasDisc = panel.roundel != null;
+
+    _diagonalArrow(c, Offset(box.left + h * 0.31, box.top + h * 0.5), h * 0.52);
+
+    final d = h * 0.6;
+    final discX = box.right - h * 0.397;
+    final textLeft = box.left + h * 0.58;
+    final textRight = hasDisc ? discX - d / 2 - h * 0.03 : box.right - h * 0.1;
+
+    final unitH = _painter('A', white).height;
+    final gap = unitH * 0.4;
+    var need = 1.0;
+    for (final r in panel.rows) {
+      var rowW = _width(r.text);
+      if (r.code != null) rowW += gap + _width(r.code!);
+      need = math.max(need, rowW);
+    }
+    final rows = panel.rows.length;
+    final pitch = h * 0.72 / math.max(1, rows);
+    final scale = math.min(pitch * 1.22 / unitH, (textRight - textLeft) / need);
+    for (var i = 0; i < rows; i++) {
+      final r = panel.rows[i];
+      final cy = box.top + h * 0.5 + (i - (rows - 1) / 2) * pitch;
+      _run(c, r.text, textLeft, cy, scale);
+      if (r.code != null) {
+        _run(c, r.code!, textLeft + (_width(r.text) + gap) * scale, cy, scale,
+            color: amber);
+      }
+    }
+
+    if (hasDisc) {
+      final centre = Offset(discX, box.top + h * 0.5);
+      c.drawCircle(centre, d / 2, _fill);
+      final tp = _painter(panel.roundel!, _roundelInk);
+      final fit = math.min(d * 0.66 / tp.width, d * 0.62 / tp.height);
+      c.save();
+      c.translate(centre.dx, centre.dy);
+      c.scale(fit);
+      tp.paint(c, Offset(-tp.width / 2, -tp.height / 2));
+      c.restore();
+    }
+  }
+
+  static void _diagonalArrow(Canvas c, Offset centre, double len) {
+    final shaft = len * 0.27, head = len * 0.82, headH = len * 0.46;
+    final top = -len / 2, bottom = len / 2;
+    c.save();
+    c.translate(centre.dx, centre.dy);
+    c.rotate(-math.pi / 4);
+    _path
+      ..reset()
+      ..moveTo(0, top)
+      ..lineTo(head / 2, top + headH)
+      ..lineTo(shaft / 2, top + headH)
+      ..lineTo(shaft / 2, bottom)
+      ..lineTo(-shaft / 2, bottom)
+      ..lineTo(-shaft / 2, top + headH)
+      ..lineTo(-head / 2, top + headH)
+      ..close();
+    c.drawPath(_path, _fill);
+    c.restore();
   }
 
   static void _arrow(Canvas c, Rect r, SignArrow kind) {

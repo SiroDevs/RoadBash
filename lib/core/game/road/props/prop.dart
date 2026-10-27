@@ -11,6 +11,7 @@ enum PropKind {
   billboard,
   exitSign,
   wall,
+  guardrail,
   slipRoad,
   tunnel,
   footbridge,

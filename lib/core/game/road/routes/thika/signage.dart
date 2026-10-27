@@ -32,12 +32,15 @@ const List<SignBoard> pelicanBoards = [
   SignBoard(['SLOW TRAFFIC', 'KEEP LEFT']),
 ];
 
-const SignPanel exitThikaSign = SignPanel([
-  SignRow('Thika', code: '(G3203)'),
-  SignRow('Garissa', code: '(A3)'),
-]);
+// Numbered exits: the blue EXIT / KUTOKA board, only the number changes.
+// They count down towards Nairobi.
+const SignPanel exit17 = SignPanel.numbered('17');
+const SignPanel exit16 = SignPanel.numbered('16');
+const SignPanel exit15 = SignPanel.numbered('15');
+const SignPanel exit14 = SignPanel.numbered('14');
 
-const SignPanel exit17 = SignPanel([
-  SignRow('EXIT', code: '17'),
-  SignRow('KUTOKA'),
+// Named exits: the green destination board, one row per destination.
+const SignPanel exitThika = SignPanel.named([
+  SignRow('Thika', code: '(G 3203)'),
+  SignRow('Garissa', code: 'A 3'),
 ]);

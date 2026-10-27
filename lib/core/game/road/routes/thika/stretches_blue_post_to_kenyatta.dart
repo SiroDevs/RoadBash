@@ -29,7 +29,7 @@ const List<RouteStretch> bluePostToKenyatta = [
     right: [SideScenery(treeStep: (5, 10), treeSetBack: farRightTrees)],
     features: [
       RouteFeature.gantry(0.72, panels: exit17Panels, boards: pelicanBoards),
-      RouteFeature.exitSign(0.9, panels: [exitThikaSign]),
+      RouteFeature.exitSignNamed(0.9, exitThika),
     ],
   ),
   RouteStretch(
@@ -43,7 +43,7 @@ const List<RouteStretch> bluePostToKenyatta = [
     right: [SideScenery(treeStep: (6, 12), treeSetBack: farRightTrees)],
     features: [
       RouteFeature.exit(0.22),
-      RouteFeature.exitSign(0.35, blue: 1, panels:[exit17]),
+      RouteFeature.exitSignNumbered(0.35, exit17),
       RouteFeature.billboard(0.45),
       RouteFeature.overpass(0.8),
     ],
@@ -126,7 +126,7 @@ const List<RouteStretch> bluePostToKenyatta = [
     section: planted,
     left: [SideScenery(treeStep: (5, 10), treeSetBack: (1.8, 3.4), mix: bushy)],
     right: [SideScenery(treeStep: (7, 14), treeSetBack: farRightTrees)],
-    features: [RouteFeature.footbridge(0.02), RouteFeature.exitSign(0.92)],
+    features: [RouteFeature.footbridge(0.02), RouteFeature.exitSignNumbered(0.92, exit16)],
   ),
   RouteStretch(
     'juja',

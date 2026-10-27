@@ -15,7 +15,7 @@ class StreetFurniturePainter {
         _signFace = fogRamp(const Color(0xFFE8E4D8), theme.fog),
         _signInk = fogRamp(const Color(0xFF2E3238), theme.fog),
         _green = fogRamp(theme.signGreen, theme.fog),
-        _blue = fogRamp(const Color(0xFF1F5FA8), theme.fog),
+        _blue = fogRamp(const Color(0xFF1B44AE), theme.fog),
         _white = fogRamp(const Color(0xFFF2F2EC), theme.fog),
         _boards = [
           for (final c in _boardColors) fogRamp(c, theme.fog),
@@ -100,19 +100,27 @@ class StreetFurniturePainter {
   void _exitSign(Canvas c, VisionSeg v, double x, double y, double w,
       double h, Prop p) {
     final blue = p.tint;
+    final panel = p.signs.isEmpty ? null : p.signs.first;
+    final aspect = panel?.aspect;
     final poleW = math.max(1.0, w * 0.05);
+    final postX = w * (aspect == null ? 0.6 : 0.8);
     final paint = fogged(_pole, v.fog);
     c.drawRect(
-        Rect.fromLTRB(x - w * 0.6 - poleW, y - h, x - w * 0.6 + poleW, y + 1),
+        Rect.fromLTRB(x - postX - poleW, y - h, x - postX + poleW, y + 1),
         paint);
     c.drawRect(
-        Rect.fromLTRB(x + w * 0.6 - poleW, y - h, x + w * 0.6 + poleW, y + 1),
+        Rect.fromLTRB(x + postX - poleW, y - h, x + postX + poleW, y + 1),
         paint);
-    final board = Rect.fromLTRB(x - w, y - h, x + w, y - h + h * 0.5);
+    final boardH = aspect == null ? h * 0.5 : (w * 2) / aspect;
+    final board = Rect.fromLTRB(x - w, y - h, x + w, y - h + boardH);
+    if (panel != null && panel.framed) {
+      c.drawRect(board.inflate(math.max(0.8, boardH * 0.03)),
+          fogged(_white, v.fog));
+    }
     c.drawRect(board, fogged(blue == 1 ? _blue : _green, v.fog));
-    if (v.fog < 0.6 && p.signs.isNotEmpty && board.height > 12) {
+    if (v.fog < 0.6 && panel != null && board.height > 12) {
       // Sign text
-      SignText.drawPanel(c, board, p.signs.first);
+      SignText.drawPanel(c, board, panel);
     } else if (v.fog < 0.6) {
       // Sign text bars
       for (var n = 0; n < 3; n++) {

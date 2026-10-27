@@ -29,5 +29,6 @@ abstract final class RoadConfig {
   static const int fogSteps = 28;
 
   static const double shoulder = 0.13;
+  static const double medianWidth = 0.42;
   static const double unitKm = 0.0000044;
 }

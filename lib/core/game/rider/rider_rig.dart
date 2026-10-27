@@ -2,7 +2,7 @@ class RiderRig {
   /// Overall size of the rider on screen. 1.0 is the original size; 0.8 is
   /// 20% smaller. The tyres stay on the road because the rider is anchored at
   /// the ground contact point.
-  static const double sizeFactor = 0.8;
+  static const double sizeFactor = 0.65;
 
   static const double laneFill = 0.62;
   static const double screenFill = 0.30;

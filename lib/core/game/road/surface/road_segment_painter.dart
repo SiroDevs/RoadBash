@@ -87,7 +87,7 @@ class RoadSegmentPainter {
 
   static const double _verge = 1.1;
   static const double _median = RoadConfig.medianWidth;
-  static const double _opposite = 2.0;
+  static const double _opposite = RoadConfig.oppositeWidth;
   static const double _rail = 0.03;
 
   void _verges(Canvas c, VisionSeg v, double f) {

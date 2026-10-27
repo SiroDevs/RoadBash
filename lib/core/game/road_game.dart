@@ -10,9 +10,9 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 
 // Project imports:
-import '../audio/audio_service.dart';
 import '../../domain/models/player_profile.dart';
 import '../../domain/models/scene_id.dart';
+import '../audio/audio_service.dart';
 import 'audio/ride_audio.dart';
 import 'hud/dashboard_hud.dart';
 import 'hud/hud_strings.dart';

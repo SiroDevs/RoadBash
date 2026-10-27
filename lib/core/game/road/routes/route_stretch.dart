@@ -81,6 +81,7 @@ class RouteFeature {
     required this.height,
     this.lines = const [],
     this.panels = const [],
+    this.boards = const [],
   });
 
   const RouteFeature.footbridge(double at, {int style = 0})
@@ -89,8 +90,18 @@ class RouteFeature {
   const RouteFeature.overpass(double at, {int style = 0})
     : this._(PropKind.overpass, at, tint: style, offset: 1.5, height: 2500);
 
-  const RouteFeature.gantry(double at, {List<SignPanel> panels = const []})
-    : this._(PropKind.gantry, at, offset: 1.2, height: 2500, panels: panels);
+  const RouteFeature.gantry(
+    double at, {
+    List<SignPanel> panels = const [],
+    List<SignBoard> boards = const [],
+  }) : this._(
+         PropKind.gantry,
+         at,
+         offset: 1.2,
+         height: 3000,
+         panels: panels,
+         boards: boards,
+       );
 
   const RouteFeature.exit(double at, {int side = -1, int length = 24})
     : this._(
@@ -137,6 +148,7 @@ class RouteFeature {
     int side = -1,
     int blue = 0,
     List<String> lines = const [],
+    List<SignPanel> panels = const [],
   }) : this._(
          PropKind.exitSign,
          at,
@@ -146,6 +158,7 @@ class RouteFeature {
          width: 360,
          height: 1250,
          lines: lines,
+         panels: panels,
        );
 
   const RouteFeature.building(
@@ -182,6 +195,7 @@ class RouteFeature {
   final double height;
   final List<String> lines;
   final List<SignPanel> panels;
+  final List<SignBoard> boards;
 }
 
 class RouteStretch {

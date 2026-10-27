@@ -4,7 +4,7 @@ import 'dart:ui';
 // Project imports:
 import '../../../domain/models/scene_id.dart';
 
-enum BackdropKind { skyline, hills, hillsAndSkyline }
+enum BackdropKind { skyline, hills, hillsAndSkyline, sky }
 
 enum DecorKind { buildings, trees, corridor }
 
@@ -112,8 +112,8 @@ class SceneTheme {
     laps: 5,
     lanes: 3,
     dualCarriageway: true,
-    skyTop: Color(0xFF5B8FE0),
-    skyHorizon: Color(0xFFE3DCCB),
+    skyTop: Color(0xFF5F86D6),
+    skyHorizon: Color(0xFFE2EAF4),
     backFar: Color(0xFF8DA08F),
     backNear: Color(0xFF6E8A6A),
     ground: Color(0xFF9C8458),
@@ -122,8 +122,8 @@ class SceneTheme {
     edgeDark: Color(0xFFA9ADB4),
     roadLight: Color(0xFF4F5059),
     roadDark: Color(0xFF494A53),
-    fog: Color(0xFFD6D7D2),
-    backdrop: BackdropKind.hills,
+    fog: Color(0xFFD9E2EC),
+    backdrop: BackdropKind.sky,
     decor: DecorKind.corridor,
     wallColors: [
       Color(0xFFD9C9A8),

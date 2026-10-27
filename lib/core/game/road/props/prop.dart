@@ -34,6 +34,7 @@ class Prop {
     this.detail = 0,
     this.drop = 0,
     this.signs = const [],
+    this.boards = const [],
   });
 
   final PropKind kind;
@@ -47,4 +48,5 @@ class Prop {
   final double detail;
   final double drop;
   final List<SignPanel> signs;
+  final List<SignBoard> boards;
 }

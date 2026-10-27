@@ -36,8 +36,6 @@ class EngineTune {
     this.trim = 1.0,
   });
 
-  // Sound
-
   final List<EngineLayerSpec> layers;
 
   final List<double> pattern;
@@ -62,8 +60,6 @@ class EngineTune {
 
   final int levels;
   final int hold;
-
-  // Behaviour
 
   final double fireMin;
   final double fireSpan;

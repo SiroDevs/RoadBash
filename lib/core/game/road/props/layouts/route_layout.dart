@@ -199,6 +199,9 @@ void _feature(
     detail: f.detail,
     signs: f.panels.isNotEmpty
         ? f.panels
-        : (f.lines.isEmpty ? const [] : [SignPanel(f.lines)]),
+        : (f.lines.isEmpty
+              ? const []
+              : [SignPanel([for (final line in f.lines) SignRow(line)])]),
+    boards: f.boards,
   ));
 }

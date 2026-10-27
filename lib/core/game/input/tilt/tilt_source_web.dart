@@ -51,7 +51,6 @@ class _WebTilt implements TiltSource {
 
   final StreamController<TiltSample> _out = StreamController.broadcast();
 
-  // iOS Safari reports gravity with the opposite sign to Android.
   final double _sign = defaultTargetPlatform == TargetPlatform.iOS ? -1 : 1;
 
   late final JSFunction _listener = _onMotion.toJS;
@@ -77,7 +76,6 @@ class _WebTilt implements TiltSource {
     _out.add(TiltSample(x * _sign, y * _sign));
   }
 
-  // Safari only allows this from a tap.
   @override
   Future<bool> requestPermission() async {
     if (!needsPermission) {

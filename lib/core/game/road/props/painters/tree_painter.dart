@@ -94,7 +94,6 @@ class TreePainter {
     final trunkW = math.max(1.0, w * 0.1);
     c.drawRect(Rect.fromLTRB(x - trunkW, y - h * 0.6, x + trunkW, y + 1),
         fogged(_trunk, v.fog));
-    // Flat crown
     c.drawOval(
         Rect.fromCenter(
             center: Offset(x, y - h * 0.68), width: w * 2.4, height: h * 0.3),

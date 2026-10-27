@@ -33,17 +33,13 @@ class SlipRoadPainter {
     c.clipRect(Rect.fromLTRB(0, 0, size.x, near.clip));
 
     if (p.detail != 0) {
-      // Gore
       _quad(c, near, far, p.side, _edge, aNear, _edge, aFar, _gore);
     } else {
-      // Guard rail
       _quad(c, near, far, p.side, _edge + 0.04, _edge + 0.07, _edge + 0.04,
           _edge + 0.07, _rail);
     }
-    // Slip lane
     _quad(c, near, far, p.side, aNear, aNear + _lane, aFar, aFar + _lane,
         _asphalt);
-    // Lane edge
     if (near.fog < 0.8) {
       _quad(c, near, far, p.side, aNear + _lane - 0.03, aNear + _lane,
           aFar + _lane - 0.03, aFar + _lane, _line);

@@ -46,20 +46,16 @@ class WallPainter {
     c.save();
     c.clipRect(Rect.fromLTRB(0, 0, size.x, near.clip));
 
-    // Wall face
     drawQuad(c, _path, fogged(_face[s], far.fog), box.xi1, box.base1, box.xi2,
         box.base2, box.xi2, box.top2, box.xi1, box.top1);
-    // Wall end
     drawQuad(c, _path, fogged(_end[s], near.fog), box.xi1, box.base1, box.xo1,
         box.base1, box.xo1, box.top1, box.xi1, box.top1);
-    // Wall top
     final cap = p.height * 0.04;
     drawQuad(c, _path, fogged(_cap[s], far.fog), box.xi1, box.top1, box.xi2,
         box.top2, box.xi2, box.top2 - cap * far.k1, box.xi1,
         box.top1 - cap * near.k1);
 
     if (p.tint == WallStyle.rock.index && near.fog < 0.7) {
-      // Rock strata
       _path.reset();
       for (final f in const [0.3, 0.55, 0.8]) {
         final a1 = near.y1 - p.height * f * near.k1;

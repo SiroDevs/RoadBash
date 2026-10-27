@@ -1,4 +1,3 @@
-// Ids are persisted; never change an existing one.
 enum EngineFlavour {
   classic('classic', 'Classic'),
   vTwin('vtwin', 'V-Twin'),

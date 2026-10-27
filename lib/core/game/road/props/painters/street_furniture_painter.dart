@@ -4,10 +4,10 @@ import 'dart:ui';
 
 // Project imports:
 import '../../../utils/paint_utils.dart';
-import '../../../utils/sign_text.dart';
 import '../../road_projection.dart';
 import '../../scene_theme.dart';
 import '../prop.dart';
+import 'sign_text.dart';
 
 class StreetFurniturePainter {
   StreetFurniturePainter(SceneTheme theme)
@@ -83,7 +83,7 @@ class StreetFurniturePainter {
     final board = Rect.fromLTRB(x - w, y - h, x + w, y - h + h * 0.34);
     c.drawRect(board.inflate(math.max(0.6, w * 0.03)), paint);
     c.drawRect(board, fogged(_boards[face % _boards.length], v.fog));
-    final lines = p.signs.isEmpty ? const <String>[] : p.signs.first.lines;
+    final lines = p.signs.isEmpty ? const <String>[] : p.signs.first.texts;
     if (v.fog < 0.6 && lines.isNotEmpty && board.height > 12) {
       // Board text
       SignText.draw(c, board.deflate(w * 0.1), lines,
@@ -110,10 +110,9 @@ class StreetFurniturePainter {
         paint);
     final board = Rect.fromLTRB(x - w, y - h, x + w, y - h + h * 0.5);
     c.drawRect(board, fogged(blue == 1 ? _blue : _green, v.fog));
-    final lines = p.signs.isEmpty ? const <String>[] : p.signs.first.lines;
-    if (v.fog < 0.6 && lines.isNotEmpty && board.height > 12) {
+    if (v.fog < 0.6 && p.signs.isNotEmpty && board.height > 12) {
       // Sign text
-      SignText.draw(c, board.deflate(w * 0.08), lines);
+      SignText.drawPanel(c, board, p.signs.first);
     } else if (v.fog < 0.6) {
       // Sign text bars
       for (var n = 0; n < 3; n++) {

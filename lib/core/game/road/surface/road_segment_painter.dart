@@ -48,7 +48,6 @@ class RoadSegmentPainter {
     _band(v, 1, 1 + sh);
     c.drawPath(_path, fogged((i ~/ 5).isEven ? _shoulder : _shoulderAlt, f));
 
-    // Kerb
     _path.reset();
     _band(v, -1 - _kerb, -1);
     _band(v, 1, 1 + _kerb);

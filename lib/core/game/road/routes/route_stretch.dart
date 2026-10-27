@@ -232,7 +232,6 @@ class RouteFeature {
   final List<SignPanel> panels;
   final List<SignBoard> boards;
 
-  /// A single board for the exit-sign factories.
   final SignPanel? sign;
 }
 

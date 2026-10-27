@@ -8,6 +8,7 @@ import 'package:flame/components.dart';
 // Project imports:
 import '../hud/dashboard_layout.dart';
 import 'backdrop/road_backdrop.dart';
+import 'config/guardrail_config.dart';
 import 'config/road_config.dart';
 import 'props/painters/prop_painter.dart';
 import 'road_projection.dart';
@@ -42,6 +43,9 @@ class RoadRenderer extends PositionComponent {
   bool analogSteer = false;
   bool throttle = false, brake = false;
   bool locked = true, skidding = false;
+
+  /// True while the bike is pressed against a median guardrail.
+  bool railContact = false;
   int gear = 1;
   double playerZ = RoadConfig.cameraHeight * RoadConfig.cameraDepth;
 
@@ -110,13 +114,40 @@ class RoadRenderer extends PositionComponent {
     const edge = VehicleConfig.maxOffRoad;
     playerX = math.max(-edge, math.min(edge, playerX));
     speed = math.max(0.0, math.min(VehicleConfig.maxSpeed, speed));
+    _hitGuardrail(seg, dt);
 
+    final cornering =
+        brake || (appliedSteer.abs() > 0.4 && sp > 0.8 && seg.curve.abs() > 2.5);
     skidding =
-        speed > VehicleConfig.maxSpeed * 0.3 &&
-        (brake ||
-            (appliedSteer.abs() > 0.4 && sp > 0.8 && seg.curve.abs() > 2.5));
+        (speed > VehicleConfig.maxSpeed * 0.3 && cornering) ||
+        (railContact && speed > VehicleConfig.maxSpeed * 0.15);
     _updateEngine(dt, sp);
     _backdrop.scroll += curveFelt * sp * dt * 34;
+  }
+
+  bool _railLatched = false;
+
+  /// The median guardrail is solid: the rider can't go through it into the
+  /// oncoming carriageway. Pushing against it costs speed.
+  void _hitGuardrail(RoadSegment seg, double dt) {
+    final limit = theme.dualCarriageway
+        ? GuardrailConfig.riderLimit(seg.section)
+        : null;
+    if (limit == null || playerX <= limit) {
+      railContact = false;
+      // Re-arm the one-off impact only once the bike has clearly moved away.
+      if (limit == null || playerX < limit - 0.05) _railLatched = false;
+      return;
+    }
+    playerX = limit;
+    railContact = true;
+    if (!_railLatched) {
+      _railLatched = true;
+      speed *= VehicleConfig.railImpactKeep;
+    }
+    speed = math.max(0.0, speed + VehicleConfig.railScrape * dt);
+    // The bike stays upright against the rail instead of leaning into it.
+    if (appliedSteer > 0) appliedSteer = 0;
   }
 
   static const double _analogRate = 24;

@@ -37,7 +37,7 @@ class RaceScreen extends StatefulWidget {
 
 class _RaceScreenState extends State<RaceScreen> {
   late final RoadGame _game = _buildGame();
-  late final TiltController _tilt = TiltController(onSteer: _game.setTouchSteer);
+  late final TiltController _tilt = TiltController(onSteer: _game.setTiltSteer);
 
   int _inputEpoch = 0;
   bool _menuOpen = false;

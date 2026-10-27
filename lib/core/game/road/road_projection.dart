@@ -18,7 +18,6 @@ class VisionSeg {
   double fog = 0;
 }
 
-// k is 1/z, so interpolate 1/k to keep buildings from bending.
 class SpanPoint {
   double x = 0, y = 0, k = 0;
 

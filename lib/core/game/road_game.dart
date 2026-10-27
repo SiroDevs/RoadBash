@@ -188,10 +188,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
     LogicalKeyboardKey.keyD,
   ];
   static final _up = [LogicalKeyboardKey.arrowUp, LogicalKeyboardKey.keyW];
-  static final _down = [
-    LogicalKeyboardKey.arrowDown,
-    LogicalKeyboardKey.keyS,
-  ];
+  static final _down = [LogicalKeyboardKey.arrowDown, LogicalKeyboardKey.keyS];
 
   @override
   void lifecycleStateChange(AppLifecycleState state) {

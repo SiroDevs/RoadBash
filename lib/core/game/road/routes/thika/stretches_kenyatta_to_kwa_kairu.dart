@@ -1,6 +1,7 @@
 import '../../props/wall_style.dart';
 import '../route_stretch.dart';
 import 'presets.dart';
+import 'signage.dart';
 
 const List<RouteStretch> kenyattaToKwaKairu = [
   RouteStretch(
@@ -18,7 +19,7 @@ const List<RouteStretch> kenyattaToKwaKairu = [
     ],
     features: [
       RouteFeature.exitSign(0.05),
-      RouteFeature.exitSign(0.14, blue: 1),
+      RouteFeature.exitSignNumbered(0.14, exit15),
       RouteFeature.exit(0.2),
       RouteFeature.overpass(0.88),
     ],

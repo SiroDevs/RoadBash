@@ -1,7 +1,7 @@
-import '../../props/sign_panel.dart';
 import '../../props/wall_style.dart';
 import '../route_stretch.dart';
 import 'presets.dart';
+import 'signage.dart';
 
 const List<RouteStretch> bluePostToKenyatta = [
   RouteStretch(
@@ -28,28 +28,8 @@ const List<RouteStretch> bluePostToKenyatta = [
     ],
     right: [SideScenery(treeStep: (5, 10), treeSetBack: farRightTrees)],
     features: [
-      RouteFeature.gantry(
-        0.72,
-        panels: [
-          SignPanel([
-            // 'EXIT 17',
-            'Thika (G3203) Nairobi',
-            'Garissa (A3)',
-            'Mangu (C66)',
-            'Nakuru (A104)',
-            'LANE 1',
-          ]),
-          SignPanel([
-            // 'A2',
-            'Juja 11 km',
-            'Ruiru 19 km',
-            'Githurai 27 km',
-            'Nairobi 41 km',
-            'LANE 2',
-          ]),
-        ],
-      ),
-      RouteFeature.exitSign(0.9, lines: ['Thika (G3203)', 'Garissa (A3)']),
+      RouteFeature.gantry(0.72, panels: exit17Panels, boards: pelicanBoards),
+      RouteFeature.exitSignNamed(0.9, exitThika),
     ],
   ),
   RouteStretch(
@@ -62,8 +42,8 @@ const List<RouteStretch> bluePostToKenyatta = [
     ],
     right: [SideScenery(treeStep: (6, 12), treeSetBack: farRightTrees)],
     features: [
-      RouteFeature.exitSign(0.25),
-      RouteFeature.exit(0.33),
+      RouteFeature.exit(0.22),
+      RouteFeature.exitSignNumbered(0.35, exit17),
       RouteFeature.billboard(0.45),
       RouteFeature.overpass(0.8),
     ],
@@ -146,7 +126,7 @@ const List<RouteStretch> bluePostToKenyatta = [
     section: planted,
     left: [SideScenery(treeStep: (5, 10), treeSetBack: (1.8, 3.4), mix: bushy)],
     right: [SideScenery(treeStep: (7, 14), treeSetBack: farRightTrees)],
-    features: [RouteFeature.footbridge(0.02), RouteFeature.exitSign(0.92)],
+    features: [RouteFeature.footbridge(0.02), RouteFeature.exitSignNumbered(0.92, exit16)],
   ),
   RouteStretch(
     'juja',

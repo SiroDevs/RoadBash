@@ -4,7 +4,7 @@ import 'dart:ui';
 // Project imports:
 import '../../../domain/models/scene_id.dart';
 
-enum BackdropKind { skyline, hills, hillsAndSkyline }
+enum BackdropKind { skyline, hills, hillsAndSkyline, sky }
 
 enum DecorKind { buildings, trees, corridor }
 
@@ -61,7 +61,7 @@ class SceneTheme {
 
   static const SceneTheme city = SceneTheme(
     id: SceneId.city,
-    lanes: 2,
+    lanes: 4,
     skyTop: Color(0xFF6F96E4),
     skyHorizon: Color(0xFFCBDAF3),
     backFar: Color(0xFF9AA7C2),
@@ -89,6 +89,7 @@ class SceneTheme {
 
   static const SceneTheme suburbs = SceneTheme(
     id: SceneId.suburbs,
+    laps: 4,
     skyTop: Color(0xFF4A83DF),
     skyHorizon: Color(0xFFB6CEF5),
     backFar: Color(0xFF7D9279),
@@ -109,11 +110,11 @@ class SceneTheme {
 
   static const SceneTheme thikaRoad = SceneTheme(
     id: SceneId.thikaRoad,
-    laps: 5,
+    laps: 1,
     lanes: 3,
     dualCarriageway: true,
-    skyTop: Color(0xFF5B8FE0),
-    skyHorizon: Color(0xFFE3DCCB),
+    skyTop: Color(0xFF5F86D6),
+    skyHorizon: Color(0xFFE2EAF4),
     backFar: Color(0xFF8DA08F),
     backNear: Color(0xFF6E8A6A),
     ground: Color(0xFF9C8458),
@@ -122,8 +123,8 @@ class SceneTheme {
     edgeDark: Color(0xFFA9ADB4),
     roadLight: Color(0xFF4F5059),
     roadDark: Color(0xFF494A53),
-    fog: Color(0xFFD6D7D2),
-    backdrop: BackdropKind.hills,
+    fog: Color(0xFFD9E2EC),
+    backdrop: BackdropKind.sky,
     decor: DecorKind.corridor,
     wallColors: [
       Color(0xFFD9C9A8),

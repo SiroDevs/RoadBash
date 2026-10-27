@@ -48,7 +48,6 @@ class RoadSegmentPainter {
     _band(v, 1, 1 + sh);
     c.drawPath(_path, fogged((i ~/ 5).isEven ? _shoulder : _shoulderAlt, f));
 
-    // Kerb
     _path.reset();
     _band(v, -1 - _kerb, -1);
     _band(v, 1, 1 + _kerb);
@@ -87,7 +86,7 @@ class RoadSegmentPainter {
   }
 
   static const double _verge = 1.1;
-  static const double _median = 0.42;
+  static const double _median = RoadConfig.medianWidth;
   static const double _opposite = 2.0;
   static const double _rail = 0.03;
 
@@ -121,15 +120,11 @@ class RoadSegmentPainter {
     _path.reset();
     _band(v, a, a + _median);
     c.drawPath(_path, fogged(_palette.median(kind), f));
-    if (f >= _markingCutoff || kind == MedianKind.none) return;
+    // Guardrails are standing props (see GuardrailPainter); only the
+    // concrete barrier is still painted flat on the surface.
+    if (f >= _markingCutoff || kind != MedianKind.barrier) return;
     _path.reset();
-    if (kind == MedianKind.barrier) {
-      _band(v, a + _median * 0.35, a + _median * 0.65);
-      c.drawPath(_path, fogged(_palette.rail, f));
-      return;
-    }
-    _band(v, a + 0.02, a + 0.02 + _rail);
-    _band(v, a + _median - 0.02 - _rail, a + _median - 0.02);
+    _band(v, a + _median * 0.35, a + _median * 0.65);
     c.drawPath(_path, fogged(_palette.rail, f));
   }
 

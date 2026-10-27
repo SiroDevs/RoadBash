@@ -9,6 +9,7 @@ import '../../road_projection.dart';
 import '../../scene_theme.dart';
 import '../prop.dart';
 import 'building_painter.dart';
+import 'guardrail_painter.dart';
 import 'slip_road_painter.dart';
 import 'span/span_painter.dart';
 import 'street_furniture_painter.dart';
@@ -23,6 +24,7 @@ class PropPainter {
         _furniture = StreetFurniturePainter(theme),
         _span = SpanPainter(theme),
         _walls = WallPainter(theme),
+        _guardrails = GuardrailPainter(theme),
         _slipRoads = SlipRoadPainter(theme),
         _tunnels = TunnelPainter(theme);
 
@@ -31,6 +33,7 @@ class PropPainter {
   final StreetFurniturePainter _furniture;
   final SpanPainter _span;
   final WallPainter _walls;
+  final GuardrailPainter _guardrails;
   final SlipRoadPainter _slipRoads;
   final TunnelPainter _tunnels;
 
@@ -38,6 +41,8 @@ class PropPainter {
     switch (p.kind) {
       case PropKind.wall:
         _walls.draw(c, near, far, p, size);
+      case PropKind.guardrail:
+        _guardrails.draw(c, near, far, p, size);
       case PropKind.slipRoad:
         _slipRoads.draw(c, near, far, p, size);
       case PropKind.tunnel:

@@ -50,8 +50,8 @@ class RoadBackdrop {
     final k = size.y / 700;
 
     canvas.drawRect(Rect.fromLTWH(0, 0, w, horizon + 1), _sky);
-    _clouds(canvas, w, horizon);
-    
+    _clouds(canvas, w, horizon, big: theme.backdrop == BackdropKind.sky);
+
     if (theme.backdrop == BackdropKind.skyline) {
       drawCityScape(
         canvas,
@@ -70,7 +70,6 @@ class RoadBackdrop {
         haze: _nearHaze,
       );
     } else if (theme.backdrop == BackdropKind.hillsAndSkyline) {
-      // Far hills, city, near rises
       drawHills(
         canvas,
         _path,
@@ -99,7 +98,7 @@ class RoadBackdrop {
         scroll: scroll,
         paint: _near,
       );
-    } else {
+    } else if (theme.backdrop == BackdropKind.hills) {
       drawHills(
         canvas,
         _path,
@@ -124,12 +123,13 @@ class RoadBackdrop {
     canvas.drawRect(Rect.fromLTRB(0, horizon, w, size.y), _ground);
   }
 
-  void _clouds(Canvas c, double w, double horizon) {
+  void _clouds(Canvas c, double w, double horizon, {bool big = false}) {
     final span = w * 1.4;
+    final grow = big ? 1.9 : 1.0;
     for (var i = 0; i < _cloudX.length; i++) {
       final x = (_cloudX[i] * span - scroll * 0.2) % span - w * 0.2;
       final y = horizon * _cloudY[i];
-      final s = horizon * (0.10 + 0.02 * (i % 3));
+      final s = horizon * (0.10 + 0.02 * (i % 3)) * grow;
       c.drawOval(
         Rect.fromCenter(center: Offset(x, y), width: s * 3.2, height: s),
         _cloud,

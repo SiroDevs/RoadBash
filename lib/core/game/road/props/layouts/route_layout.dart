@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import '../../../utils/pseudo_random.dart';
+import '../../config/guardrail_config.dart';
 import '../../config/road_config.dart';
 import '../../routes/route_stretch.dart';
 import '../../track/road_track.dart';
@@ -16,6 +17,7 @@ void layOutRoute(
   final count = segments.length;
   final limit = count - RoadConfig.maxPropDepth - 2;
   _medianLamps(slots, segments, limit);
+  _guardrails(slots, segments);
 
   for (var z = 0; z < route.length; z++) {
     final stretch = route[z];
@@ -44,6 +46,24 @@ void _medianLamps(List<List<Prop>> slots, List<RoadSegment> segments, int limit)
       width: 100,
       height: 1900,
       detail: 1,
+    ));
+  }
+}
+
+/// Guardrails along both edges of every median, one prop per few segments.
+/// They run the whole lap (a prop reaching past the end just wraps), so there
+/// is no gap at the start/finish line.
+void _guardrails(List<List<Prop>> slots, List<RoadSegment> segments) {
+  for (var i = 0; i < segments.length; i += GuardrailConfig.span) {
+    if (!GuardrailConfig.isDrawn(segments[i].section.median)) continue;
+    slots[i].add(Prop(
+      kind: PropKind.guardrail,
+      anchor: i,
+      side: 1,
+      offset: GuardrailConfig.nearOffset,
+      width: 0,
+      height: GuardrailConfig.beamTop,
+      depth: GuardrailConfig.span,
     ));
   }
 }
@@ -197,8 +217,13 @@ void _feature(
     depth: math.min(f.depth, RoadConfig.maxPropDepth),
     tint: f.tint,
     detail: f.detail,
-    signs: f.panels.isNotEmpty
+    signs: f.sign != null
+        ? [f.sign!]
+        : f.panels.isNotEmpty
         ? f.panels
-        : (f.lines.isEmpty ? const [] : [SignPanel(f.lines)]),
+        : (f.lines.isEmpty
+              ? const []
+              : [SignPanel([for (final line in f.lines) SignRow(line)])]),
+    boards: f.boards,
   ));
 }

@@ -1,5 +1,5 @@
 enum WallStyle {
-  block(900),
+  block(300),
   concrete(1800),
   rock(2200),
   white(520),

@@ -81,6 +81,8 @@ class RouteFeature {
     required this.height,
     this.lines = const [],
     this.panels = const [],
+    this.boards = const [],
+    this.sign,
   });
 
   const RouteFeature.footbridge(double at, {int style = 0})
@@ -89,8 +91,18 @@ class RouteFeature {
   const RouteFeature.overpass(double at, {int style = 0})
     : this._(PropKind.overpass, at, tint: style, offset: 1.5, height: 2500);
 
-  const RouteFeature.gantry(double at, {List<SignPanel> panels = const []})
-    : this._(PropKind.gantry, at, offset: 1.2, height: 2500, panels: panels);
+  const RouteFeature.gantry(
+    double at, {
+    List<SignPanel> panels = const [],
+    List<SignBoard> boards = const [],
+  }) : this._(
+         PropKind.gantry,
+         at,
+         offset: 1.2,
+         height: 3000,
+         panels: panels,
+         boards: boards,
+       );
 
   const RouteFeature.exit(double at, {int side = -1, int length = 24})
     : this._(
@@ -136,17 +148,48 @@ class RouteFeature {
     double at, {
     int side = -1,
     int blue = 0,
+    double width = 360,
+    double height = 1250,
+    double? offset,
     List<String> lines = const [],
+    List<SignPanel> panels = const [],
   }) : this._(
          PropKind.exitSign,
          at,
          side: side,
          tint: blue,
-         offset: side < 0 ? 1.3 : 3.8,
-         width: 360,
-         height: 1250,
+         offset: offset ?? (side < 0 ? 1.3 : 3.8),
+         width: width,
+         height: height,
          lines: lines,
+         panels: panels,
        );
+
+  /// Blue numbered exit board (see [SignPanel.numbered]) standing in the
+  /// gore beside a left-hand slip road.
+  const RouteFeature.exitSignNumbered(double at, SignPanel panel)
+    : this._(
+        PropKind.exitSign,
+        at,
+        tint: 1,
+        offset: 1.42,
+        width: 430,
+        height: 1250,
+        sign: panel,
+      );
+
+  /// Green named exit board (see [SignPanel.named]) with destinations and
+  /// road codes.
+  const RouteFeature.exitSignNamed(double at, SignPanel panel)
+    : this._(
+        PropKind.exitSign,
+        at,
+        tint: 0,
+        offset: 1.42,
+        width: 450,
+        height: 1250,
+        sign: panel,
+      );
 
   const RouteFeature.building(
     double at, {
@@ -182,6 +225,10 @@ class RouteFeature {
   final double height;
   final List<String> lines;
   final List<SignPanel> panels;
+  final List<SignBoard> boards;
+
+  /// A single board for the exit-sign factories.
+  final SignPanel? sign;
 }
 
 class RouteStretch {

@@ -37,6 +37,9 @@ class RoadRenderer extends PositionComponent {
   double playerX = -0.25, speed = 0;
 
   double steer = 0, appliedSteer = 0, rpm = 0.16;
+
+  /// True while steering comes from the tilt sensor.
+  bool analogSteer = false;
   bool throttle = false, brake = false;
   bool locked = true, skidding = false;
   int gear = 1;
@@ -116,11 +119,15 @@ class RoadRenderer extends PositionComponent {
     _backdrop.scroll += curveFelt * sp * dt * 34;
   }
 
+  static const double _analogRate = 24;
+
   void _steerToward(double dt, double target) {
     final t = target.clamp(-1.0, 1.0).toDouble();
-    final rate = t.abs() > appliedSteer.abs()
-        ? VehicleConfig.steerAttack
-        : VehicleConfig.steerRelease;
+    final rate = analogSteer
+        ? _analogRate
+        : (t.abs() > appliedSteer.abs()
+            ? VehicleConfig.steerAttack
+            : VehicleConfig.steerRelease);
     appliedSteer += (t - appliedSteer) * math.min(1.0, dt * rate);
   }
 

@@ -31,10 +31,11 @@ class RiderComponent extends PositionComponent {
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
     final lane = DashboardLayout.lanePx(size, road.theme.lanes);
-    final h = math.min(
-      lane * RiderRig.laneFill * RiderPainter.height / RiderPainter.width,
-      size.y * RiderRig.screenFill,
-    );
+    final h = RiderRig.sizeFactor *
+        math.min(
+          lane * RiderRig.laneFill * RiderPainter.height / RiderPainter.width,
+          size.y * RiderRig.screenFill,
+        );
     this.size = Vector2(h * RiderPainter.width / RiderPainter.height, h);
     position = Vector2(size.x / 2, DashboardLayout.riderTyresGround(size));
   }

@@ -22,8 +22,13 @@ class TiltController {
   TiltController({required this.onSteer});
 
   static const double _fullLock = 26 * math.pi / 180;
-  static const double _deadZone = 2.5 * math.pi / 180;
-  static const double _smoothing = 0.28;
+  static const double _deadZone = 2.0 * math.pi / 180;
+
+  /// Smoothing time constant in seconds. Time based rather than per-sample, so
+  /// it feels the same whether the browser delivers 30, 60 or 100 readings a
+  /// second (phone browsers vary a lot). The old per-sample 0.28 on top of the
+  /// road's own steering ramp made tilt feel like it lagged by half a second.
+  static const double _tau = 0.035;
 
   final ValueChanged<double> onSteer;
 
@@ -35,6 +40,8 @@ class TiltController {
   StreamSubscription<TiltSample>? _sub;
   double _value = 0;
   bool _paused = false;
+  final Stopwatch _clock = Stopwatch();
+  int _lastMicros = 0;
 
   bool get running => _source != null;
 
@@ -72,6 +79,7 @@ class TiltController {
     _source?.dispose();
     _source = null;
     _value = 0;
+    _lastMicros = 0;
     needsPermission.value = false;
     onSteer(0);
   }
@@ -91,7 +99,13 @@ class TiltController {
     final roll = rollFromGravity(s.x, s.y);
     if (roll == null) return;
     final target = _shape(invert ? -roll : roll);
-    _value += (target - _value) * _smoothing;
+    if (!_clock.isRunning) _clock.start();
+    final now = _clock.elapsedMicroseconds;
+    // First reading, or one after a long gap: jump straight to it.
+    final dt = _lastMicros == 0 ? 1.0 : (now - _lastMicros) / 1e6;
+    _lastMicros = now == 0 ? 1 : now;
+    final alpha = 1 - math.exp(-math.min(dt, 1.0) / _tau);
+    _value += (target - _value) * alpha;
     onSteer(_value);
   }
 

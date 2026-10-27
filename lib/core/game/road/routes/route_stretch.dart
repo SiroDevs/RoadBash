@@ -1,4 +1,5 @@
 import '../props/prop.dart';
+import '../props/sign_panel.dart';
 import '../props/wall_style.dart';
 import '../track/road_section.dart';
 
@@ -78,6 +79,8 @@ class RouteFeature {
     required this.offset,
     this.width = 0,
     required this.height,
+    this.lines = const [],
+    this.panels = const [],
   });
 
   const RouteFeature.footbridge(double at, {int style = 0})
@@ -86,8 +89,8 @@ class RouteFeature {
   const RouteFeature.overpass(double at, {int style = 0})
     : this._(PropKind.overpass, at, tint: style, offset: 1.5, height: 2500);
 
-  const RouteFeature.gantry(double at)
-    : this._(PropKind.gantry, at, offset: 1.2, height: 2500);
+  const RouteFeature.gantry(double at, {List<SignPanel> panels = const []})
+    : this._(PropKind.gantry, at, offset: 1.2, height: 2500, panels: panels);
 
   const RouteFeature.exit(double at, {int side = -1, int length = 24})
     : this._(
@@ -111,27 +114,39 @@ class RouteFeature {
         height: 0,
       );
 
-  const RouteFeature.billboard(double at, {int side = 1, int face = 0})
-    : this._(
-        PropKind.billboard,
-        at,
-        side: side,
-        tint: face,
-        offset: side < 0 ? 1.7 : 3.9,
-        width: 560,
-        height: 2900,
-      );
+  const RouteFeature.billboard(
+    double at, {
+    int side = 1,
+    int face = 0,
+    List<String> lines = const [],
+    double width = 560,
+    double height = 2900,
+  }) : this._(
+         PropKind.billboard,
+         at,
+         side: side,
+         tint: face,
+         offset: side < 0 ? 1.7 : 3.9,
+         width: width,
+         height: height,
+         lines: lines,
+       );
 
-  const RouteFeature.exitSign(double at, {int side = -1, int blue = 0})
-    : this._(
-        PropKind.exitSign,
-        at,
-        side: side,
-        tint: blue,
-        offset: side < 0 ? 1.3 : 3.8,
-        width: 360,
-        height: 1250,
-      );
+  const RouteFeature.exitSign(
+    double at, {
+    int side = -1,
+    int blue = 0,
+    List<String> lines = const [],
+  }) : this._(
+         PropKind.exitSign,
+         at,
+         side: side,
+         tint: blue,
+         offset: side < 0 ? 1.3 : 3.8,
+         width: 360,
+         height: 1250,
+         lines: lines,
+       );
 
   const RouteFeature.building(
     double at, {
@@ -165,6 +180,8 @@ class RouteFeature {
   final double offset;
   final double width;
   final double height;
+  final List<String> lines;
+  final List<SignPanel> panels;
 }
 
 class RouteStretch {

@@ -1,3 +1,4 @@
+import '../../props/sign_panel.dart';
 import '../../props/wall_style.dart';
 import '../route_stretch.dart';
 import 'presets.dart';
@@ -26,7 +27,30 @@ const List<RouteStretch> bluePostToKenyatta = [
       ),
     ],
     right: [SideScenery(treeStep: (5, 10), treeSetBack: farRightTrees)],
-    features: [RouteFeature.gantry(0.72), RouteFeature.exitSign(0.9)],
+    features: [
+      RouteFeature.gantry(
+        0.72,
+        panels: [
+          SignPanel([
+            // 'EXIT 17',
+            'Thika (G3203) Nairobi',
+            'Garissa (A3)',
+            'Mangu (C66)',
+            'Nakuru (A104)',
+            'LANE 1',
+          ]),
+          SignPanel([
+            // 'A2',
+            'Juja 11 km',
+            'Ruiru 19 km',
+            'Githurai 27 km',
+            'Nairobi 41 km',
+            'LANE 2',
+          ]),
+        ],
+      ),
+      RouteFeature.exitSign(0.9, lines: ['Thika (G3203)', 'Garissa (A3)']),
+    ],
   ),
   RouteStretch(
     'thika bypass',

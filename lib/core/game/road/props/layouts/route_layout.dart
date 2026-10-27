@@ -5,6 +5,7 @@ import '../../config/road_config.dart';
 import '../../routes/route_stretch.dart';
 import '../../track/road_track.dart';
 import '../prop.dart';
+import '../sign_panel.dart';
 
 void layOutRoute(
   List<List<Prop>> slots,
@@ -196,5 +197,8 @@ void _feature(
     depth: math.min(f.depth, RoadConfig.maxPropDepth),
     tint: f.tint,
     detail: f.detail,
+    signs: f.panels.isNotEmpty
+        ? f.panels
+        : (f.lines.isEmpty ? const [] : [SignPanel(f.lines)]),
   ));
 }

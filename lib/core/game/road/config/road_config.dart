@@ -1,11 +1,22 @@
+// Flutter imports:
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+// Project imports:
+import '../../../utils/app_util.dart';
+
 abstract final class RoadConfig {
+  /// Phone browsers draw through the browser's canvas, where every road
+  /// segment costs several calls, so they draw fewer segments than desktop or
+  /// a native app. Fog hides the shorter distance.
+  static final bool _lite = kIsWeb && isTouchDevice;
+
   static const double segmentLength = 200;
   static const double roadWidth = 2000;
   static const double cameraHeight = 1000;
   static const double cameraDepth = 0.84;
   static const double horizonRatio = 0.42;
-  static const int drawDistance = 240;
-  static const int decorDistance = 200;
+  static final int drawDistance = _lite ? 170 : 240;
+  static final int decorDistance = _lite ? 130 : 200;
   static const int rumbleLength = 4;
 
   // Near-zero depth makes polygons huge and corrupts GPU rendering.

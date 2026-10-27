@@ -11,6 +11,7 @@ import 'core/router/app_router.dart';
 import 'common/widgets/text_scale_factor.dart';
 import 'features/auth/cubit/auth_cubit.dart';
 import 'features/audio/cubit/audio_cubit.dart';
+import 'core/audio/audio_warm_up.dart';
 import 'core/audio/sound_player.dart';
 import 'core/di/injectable.dart';
 import 'features/progress/cubit/progress_cubit.dart';
@@ -65,8 +66,9 @@ class AppViewState extends State<AppView> {
               darkTheme: AppTheme.darkTheme(),
               supportedLocales: const [Locale('en'), Locale('sw')],
               debugShowCheckedModeBanner: false,
-              builder: (context, child) =>
-                  TextScaleFactor(child: child ?? const SizedBox.shrink()),
+              builder: (context, child) => AudioWarmUp(
+                child: TextScaleFactor(child: child ?? const SizedBox.shrink()),
+              ),
               localizationsDelegates: const [
                 AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,

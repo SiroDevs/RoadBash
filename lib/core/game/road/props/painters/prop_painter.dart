@@ -5,8 +5,8 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
-import '../../projection/road_projection.dart';
-import '../../scene/scene_theme.dart';
+import '../../road_projection.dart';
+import '../../scene_theme.dart';
 import '../prop.dart';
 import 'building_painter.dart';
 import 'slip_road_painter.dart';

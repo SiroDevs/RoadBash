@@ -34,13 +34,30 @@ class EngineSynth {
   double _acc = 0;
   double _logClock = 0;
 
-  Future<void> start() async {
+  static Future<bool>? _ready;
+
+  /// Starts the audio engine once, however many callers ask at the same time.
+  static Future<bool> _ensureSoLoud() => _ready ??= () async {
     try {
       if (!SoLoud.instance.isInitialized) await SoLoud.instance.init();
+      return true;
     } catch (e) {
       debugPrint('[engine] SoLoud init failed: $e');
-      return;
+      _ready = null;
+      return false;
     }
+  }();
+
+  /// Does the slow, one-off work ahead of the race (builds the engine loops,
+  /// boots the audio engine) so the race itself starts smoothly. Call it from
+  /// a tap: browsers only let audio start after one.
+  static Future<void> warmUp(EngineFlavour flavour) async {
+    EngineWave.loopsFor(flavour);
+    await _ensureSoLoud();
+  }
+
+  Future<void> start() async {
+    if (!await _ensureSoLoud()) return;
     await Future.wait(_layers.map((l) => l.start()));
   }
 

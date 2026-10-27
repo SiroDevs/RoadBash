@@ -6,8 +6,8 @@ import 'package:flame/components.dart';
 
 // Project imports:
 import '../../../utils/paint_utils.dart';
-import '../../projection/road_projection.dart';
-import '../../scene/scene_theme.dart';
+import '../../road_projection.dart';
+import '../../scene_theme.dart';
 import '../prop.dart';
 
 class SlipRoadPainter {

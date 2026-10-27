@@ -1,5 +1,5 @@
 import '../routes/thika/thika_route.dart';
-import '../scene/scene_theme.dart';
+import '../scene_theme.dart';
 import '../track/road_track.dart';
 import 'layouts/city_layout.dart';
 import 'layouts/route_layout.dart';

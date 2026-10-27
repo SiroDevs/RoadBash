@@ -20,7 +20,7 @@ import 'race/race_controller.dart';
 import 'race/race_result.dart';
 import 'rider/rider_component.dart';
 import 'road/road_renderer.dart';
-import 'road/scene/scene_theme.dart';
+import 'road/scene_theme.dart';
 
 class RoadGame extends FlameGame with KeyboardEvents {
   RoadGame({
@@ -45,7 +45,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
   late final RaceController race;
   RideAudio? _ride;
 
-  double _keySteer = 0, _touchSteer = 0;
+  double _keySteer = 0, _touchSteer = 0, _tiltSteer = 0;
   bool _keyThrottle = false, _touchThrottle = false;
   bool _keyBrake = false, _touchBrake = false;
 
@@ -104,8 +104,11 @@ class RoadGame extends FlameGame with KeyboardEvents {
         ..throttle = false;
       return;
     }
-    final s = _keySteer + _touchSteer;
+    final s = _keySteer + _touchSteer + _tiltSteer;
     road.steer = s.clamp(-1.0, 1.0).toDouble();
+    // Tilt is already smooth, so the bike follows it directly; keys and
+    // arrows are on/off and keep the gradual ramp.
+    road.analogSteer = _keySteer == 0 && _touchSteer == 0 && _tiltSteer != 0;
     road.brake = _keyBrake || _touchBrake;
     road.throttle = (_keyThrottle || _touchThrottle) && !road.brake;
   }
@@ -135,8 +138,15 @@ class RoadGame extends FlameGame with KeyboardEvents {
   void clearInput() {
     _keySteer = 0;
     _touchSteer = 0;
+    _tiltSteer = 0;
     _keyThrottle = _touchThrottle = false;
     _keyBrake = _touchBrake = false;
+    _applyInput();
+  }
+
+  /// Analog steering from the tilt sensor, -1..1.
+  void setTiltSteer(double v) {
+    _tiltSteer = v;
     _applyInput();
   }
 

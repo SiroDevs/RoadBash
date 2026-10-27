@@ -4,8 +4,8 @@ import 'dart:ui';
 // Project imports:
 import '../../utils/paint_utils.dart';
 import '../config/road_config.dart';
-import '../projection/road_projection.dart';
-import '../scene/scene_theme.dart';
+import '../road_projection.dart';
+import '../scene_theme.dart';
 import '../track/road_section.dart';
 import 'road_surface_palette.dart';
 

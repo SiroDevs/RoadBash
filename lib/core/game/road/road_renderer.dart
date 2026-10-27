@@ -10,10 +10,10 @@ import '../hud/dashboard_layout.dart';
 import 'backdrop/road_backdrop.dart';
 import 'config/road_config.dart';
 import 'props/painters/prop_painter.dart';
-import 'projection/road_projection.dart';
+import 'road_projection.dart';
 import 'props/road_props.dart';
+import 'scene_theme.dart';
 import 'surface/road_segment_painter.dart';
-import 'scene/scene_theme.dart';
 import 'track/road_track.dart';
 import 'config/vehicle_config.dart';
 
@@ -37,6 +37,9 @@ class RoadRenderer extends PositionComponent {
   double playerX = -0.25, speed = 0;
 
   double steer = 0, appliedSteer = 0, rpm = 0.16;
+
+  /// True while steering comes from the tilt sensor.
+  bool analogSteer = false;
   bool throttle = false, brake = false;
   bool locked = true, skidding = false;
   int gear = 1;
@@ -116,11 +119,15 @@ class RoadRenderer extends PositionComponent {
     _backdrop.scroll += curveFelt * sp * dt * 34;
   }
 
+  static const double _analogRate = 24;
+
   void _steerToward(double dt, double target) {
     final t = target.clamp(-1.0, 1.0).toDouble();
-    final rate = t.abs() > appliedSteer.abs()
-        ? VehicleConfig.steerAttack
-        : VehicleConfig.steerRelease;
+    final rate = analogSteer
+        ? _analogRate
+        : (t.abs() > appliedSteer.abs()
+            ? VehicleConfig.steerAttack
+            : VehicleConfig.steerRelease);
     appliedSteer += (t - appliedSteer) * math.min(1.0, dt * rate);
   }
 

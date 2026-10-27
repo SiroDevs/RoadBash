@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 // Project imports:
-import '../../../../domain/models/scene_id.dart';
+import '../../../domain/models/scene_id.dart';
 
 enum BackdropKind { skyline, hills, hillsAndSkyline }
 

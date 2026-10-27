@@ -59,9 +59,10 @@ class GantryPainter {
       final panel = Rect.fromLTWH(left, panelTop, panelW, panelH);
       c.drawRect(panel.inflate(math.max(1.0, 30 * k)), fogged(_edge, f));
       c.drawRect(panel, fogged(panels[n].blue ? _blue : _panel, f));
+      
       if (f < _textCutoff && panelH > 10 && panels[n].lines.isNotEmpty) {
         // Panel text
-        SignText.draw(c, panel.deflate(panelW * 0.04), panels[n].lines);
+        SignText.draw(c, panel.inflate(panelW * 0.001), panels[n].lines);
       } else if (f < _textCutoff && panelH > 10) {
         // Panel text bars
         for (var line = 0; line < 3; line++) {

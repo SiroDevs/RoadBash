@@ -32,7 +32,7 @@ const List<RouteStretch> bluePostToKenyatta = [
         0.72,
         panels: [
           SignPanel([
-            'EXIT 17',
+            // 'EXIT 17',
             'Thika (G3203) Nairobi',
             'Garissa (A3)',
             'Mangu (C66)',
@@ -40,7 +40,7 @@ const List<RouteStretch> bluePostToKenyatta = [
             'LANE 1',
           ]),
           SignPanel([
-            'A2',
+            // 'A2',
             'Juja 11 km',
             'Ruiru 19 km',
             'Githurai 27 km',

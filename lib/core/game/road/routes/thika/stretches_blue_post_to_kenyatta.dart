@@ -42,8 +42,8 @@ const List<RouteStretch> bluePostToKenyatta = [
     ],
     right: [SideScenery(treeStep: (6, 12), treeSetBack: farRightTrees)],
     features: [
-      RouteFeature.exitSign(0.25),
-      RouteFeature.exit(0.33),
+      RouteFeature.exit(0.22),
+      RouteFeature.exitSign(0.35, blue: 1, panels:[exit17]),
       RouteFeature.billboard(0.45),
       RouteFeature.overpass(0.8),
     ],

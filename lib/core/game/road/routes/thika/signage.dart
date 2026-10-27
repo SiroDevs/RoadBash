@@ -36,3 +36,8 @@ const SignPanel exitThikaSign = SignPanel([
   SignRow('Thika', code: '(G3203)'),
   SignRow('Garissa', code: '(A3)'),
 ]);
+
+const SignPanel exit17 = SignPanel([
+  SignRow('EXIT', code: '17'),
+  SignRow('KUTOKA'),
+]);

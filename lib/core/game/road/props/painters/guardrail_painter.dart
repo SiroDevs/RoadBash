@@ -17,11 +17,11 @@ import '../prop.dart';
 /// rail with round ones.
 class GuardrailPainter {
   GuardrailPainter(SceneTheme theme)
-      : _light = fogRamp(const Color(0xFFCDD1D6), theme.fog),
-        _dark = fogRamp(const Color(0xFF858B93), theme.fog),
-        _flat = fogRamp(const Color(0xFFADB2B9), theme.fog),
-        _nearPost = fogRamp(const Color(0xFF7A7064), theme.fog),
-        _farPost = fogRamp(const Color(0xFFD5D8DC), theme.fog);
+    : _light = fogRamp(const Color(0xFFCDD1D6), theme.fog),
+      _dark = fogRamp(const Color(0xFF858B93), theme.fog),
+      _flat = fogRamp(const Color(0xFFADB2B9), theme.fog),
+      _nearPost = fogRamp(const Color(0xFF7A7064), theme.fog),
+      _farPost = fogRamp(const Color(0xFFD5D8DC), theme.fog);
 
   final List<Paint> _light, _dark, _flat, _nearPost, _farPost;
   final Path _path = Path();
@@ -40,15 +40,31 @@ class GuardrailPainter {
     c.save();
     c.clipRect(Rect.fromLTRB(0, 0, size.x, near.clip));
     if (near.fog < _farRailFog) {
-      _rail(c, near, far, GuardrailConfig.farOffset, post, detailed,
-          _farPost, size);
+      _rail(
+        c,
+        near,
+        far,
+        GuardrailConfig.farOffset,
+        post,
+        detailed,
+        _farPost,
+        size,
+      );
     }
     _rail(c, near, far, p.offset, post, detailed, _nearPost, size);
     c.restore();
   }
 
-  void _rail(Canvas c, VisionSeg near, VisionSeg far, double offset,
-      bool post, bool detailed, List<Paint> postPaint, Vector2 size) {
+  void _rail(
+    Canvas c,
+    VisionSeg near,
+    VisionSeg far,
+    double offset,
+    bool post,
+    bool detailed,
+    List<Paint> postPaint,
+    Vector2 size,
+  ) {
     final xn = near.x1 + near.w1 * offset;
     final xf = far.x1 + far.w1 * offset;
     if (math.max(xn, xf) < 0 || math.min(xn, xf) > size.x) return;
@@ -86,8 +102,14 @@ class GuardrailPainter {
     c.drawPath(_path, fogged(_dark, far.fog));
   }
 
-  void _band(VisionSeg near, VisionSeg far, double xn, double xf, double h0,
-      double h1) {
+  void _band(
+    VisionSeg near,
+    VisionSeg far,
+    double xn,
+    double xf,
+    double h0,
+    double h1,
+  ) {
     addQuad(
       _path,
       xn,

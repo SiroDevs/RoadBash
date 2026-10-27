@@ -61,7 +61,7 @@ class SceneTheme {
 
   static const SceneTheme city = SceneTheme(
     id: SceneId.city,
-    lanes: 2,
+    lanes: 4,
     skyTop: Color(0xFF6F96E4),
     skyHorizon: Color(0xFFCBDAF3),
     backFar: Color(0xFF9AA7C2),
@@ -89,6 +89,7 @@ class SceneTheme {
 
   static const SceneTheme suburbs = SceneTheme(
     id: SceneId.suburbs,
+    laps: 4,
     skyTop: Color(0xFF4A83DF),
     skyHorizon: Color(0xFFB6CEF5),
     backFar: Color(0xFF7D9279),
@@ -109,7 +110,7 @@ class SceneTheme {
 
   static const SceneTheme thikaRoad = SceneTheme(
     id: SceneId.thikaRoad,
-    laps: 5,
+    laps: 1,
     lanes: 3,
     dualCarriageway: true,
     skyTop: Color(0xFF5F86D6),

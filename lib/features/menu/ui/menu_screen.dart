@@ -20,7 +20,7 @@ import '../../../common/widgets/retro/brand/scene_preview.dart';
 import '../../../core/audio/audio_catalog.dart';
 import '../../../common/widgets/retro/page/music_scope.dart';
 import '../../../core/game/road/config/road_config.dart';
-import '../../../core/game/road/scene_theme.dart';
+import '../../../core/game/road/scene/scene_theme.dart';
 import '../../../core/game/road/track/road_track.dart';
 import '../../progress/cubit/progress_cubit.dart';
 import '../../settings/cubit/settings_cubit.dart';

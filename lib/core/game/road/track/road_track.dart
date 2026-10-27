@@ -6,7 +6,7 @@ import '../../../../domain/models/scene_id.dart';
 import '../config/road_config.dart';
 import '../routes/route_stretch.dart';
 import '../routes/thika/thika_route.dart';
-import '../scene_theme.dart';
+import '../scene/scene_theme.dart';
 import 'road_section.dart';
 
 class RoadSegment {

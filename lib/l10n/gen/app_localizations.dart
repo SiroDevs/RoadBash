@@ -191,7 +191,7 @@ abstract class AppLocalizations {
   /// Thika Rd description
   ///
   /// In en, this message translates to:
-  /// **'Blue Post to Museum Hill, the whole Thika Rd run through Juja, Kimbo, Ruiru, Kahawa, Githurai and Roysambu, then down the Pangani underpass. Flyovers, footbridges and slip roads. Keep it clean to the finish.'**
+  /// **'Ruiru to Pangani, down Forest Rd and up to Museum Hill. Wide lanes, flyovers and footbridges. Keep it clean to the finish.'**
   String get blurbThikaRoad;
 
   /// Reception description

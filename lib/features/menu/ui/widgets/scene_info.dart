@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../core/game/race/race_result.dart';
-import '../../../../core/game/road/scene_theme.dart';
+import '../../../../core/game/road/scene/scene_theme.dart';
 import '../../../progress/cubit/progress_cubit.dart';
 import '../../../../domain/models/scene_id.dart';
 import '../../../../common/l10n/l10n_extension.dart';

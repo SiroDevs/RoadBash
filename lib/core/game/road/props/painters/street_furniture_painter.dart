@@ -4,8 +4,9 @@ import 'dart:ui';
 
 // Project imports:
 import '../../../utils/paint_utils.dart';
-import '../../road_projection.dart';
-import '../../scene_theme.dart';
+import '../../../utils/sign_text.dart';
+import '../../projection/road_projection.dart';
+import '../../scene/scene_theme.dart';
 import '../prop.dart';
 
 class StreetFurniturePainter {
@@ -39,9 +40,9 @@ class StreetFurniturePainter {
       case PropKind.sign:
         _sign(c, v, x, y, w, h);
       case PropKind.billboard:
-        _billboard(c, v, x, y, w, h, p.tint);
+        _billboard(c, v, x, y, w, h, p);
       case PropKind.exitSign:
-        _exitSign(c, v, x, y, w, h, p.tint);
+        _exitSign(c, v, x, y, w, h, p);
       default:
         break;
     }
@@ -74,15 +75,21 @@ class StreetFurniturePainter {
   }
 
   void _billboard(Canvas c, VisionSeg v, double x, double y, double w,
-      double h, int face) {
+      double h, Prop p) {
+    final face = p.tint;
     final poleW = math.max(1.0, w * 0.07);
     final paint = fogged(_pole, v.fog);
     c.drawRect(Rect.fromLTRB(x - poleW, y - h, x + poleW, y + 1), paint);
     final board = Rect.fromLTRB(x - w, y - h, x + w, y - h + h * 0.34);
     c.drawRect(board.inflate(math.max(0.6, w * 0.03)), paint);
     c.drawRect(board, fogged(_boards[face % _boards.length], v.fog));
-    if (v.fog < 0.6) {
+    final lines = p.signs.isEmpty ? const <String>[] : p.signs.first.lines;
+    if (v.fog < 0.6 && lines.isNotEmpty && board.height > 12) {
       // Board text
+      SignText.draw(c, board.deflate(w * 0.1), lines,
+          color: face % _boards.length == 2 ? const Color(0xFF23262B) : SignText.white);
+    } else if (v.fog < 0.6) {
+      // Board text bars
       c.drawRect(
           Rect.fromLTRB(board.left + w * 0.2, board.top + board.height * 0.3,
               board.right - w * 0.2, board.top + board.height * 0.42),
@@ -91,7 +98,8 @@ class StreetFurniturePainter {
   }
 
   void _exitSign(Canvas c, VisionSeg v, double x, double y, double w,
-      double h, int blue) {
+      double h, Prop p) {
+    final blue = p.tint;
     final poleW = math.max(1.0, w * 0.05);
     final paint = fogged(_pole, v.fog);
     c.drawRect(
@@ -102,8 +110,12 @@ class StreetFurniturePainter {
         paint);
     final board = Rect.fromLTRB(x - w, y - h, x + w, y - h + h * 0.5);
     c.drawRect(board, fogged(blue == 1 ? _blue : _green, v.fog));
-    if (v.fog < 0.6) {
+    final lines = p.signs.isEmpty ? const <String>[] : p.signs.first.lines;
+    if (v.fog < 0.6 && lines.isNotEmpty && board.height > 12) {
       // Sign text
+      SignText.draw(c, board.deflate(w * 0.08), lines);
+    } else if (v.fog < 0.6) {
+      // Sign text bars
       for (var n = 0; n < 3; n++) {
         final ty = board.top + board.height * (0.2 + n * 0.26);
         c.drawRect(

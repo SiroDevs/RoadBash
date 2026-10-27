@@ -10,10 +10,10 @@ import '../hud/dashboard_layout.dart';
 import 'backdrop/road_backdrop.dart';
 import 'config/road_config.dart';
 import 'props/painters/prop_painter.dart';
-import 'road_projection.dart';
+import 'projection/road_projection.dart';
 import 'props/road_props.dart';
-import 'scene_theme.dart';
 import 'surface/road_segment_painter.dart';
+import 'scene/scene_theme.dart';
 import 'track/road_track.dart';
 import 'config/vehicle_config.dart';
 

@@ -1,3 +1,5 @@
+import 'sign_panel.dart';
+
 enum PropKind {
   building,
   broadleaf,
@@ -31,6 +33,7 @@ class Prop {
     this.tint = 0,
     this.detail = 0,
     this.drop = 0,
+    this.signs = const [],
   });
 
   final PropKind kind;
@@ -43,4 +46,5 @@ class Prop {
   final int tint;
   final double detail;
   final double drop;
+  final List<SignPanel> signs;
 }

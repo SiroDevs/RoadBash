@@ -3,7 +3,7 @@ import 'dart:ui';
 
 // Project imports:
 import '../../utils/paint_utils.dart';
-import '../scene_theme.dart';
+import '../scene/scene_theme.dart';
 import '../track/road_section.dart';
 
 class RoadSurfacePalette {

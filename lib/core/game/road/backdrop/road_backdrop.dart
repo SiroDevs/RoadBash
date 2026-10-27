@@ -9,7 +9,7 @@ import '../../utils/paint_utils.dart';
 import 'hills.dart';
 import 'skyline/skyline.dart';
 import '../config/road_config.dart';
-import '../scene_theme.dart';
+import '../scene/scene_theme.dart';
 
 class RoadBackdrop {
   RoadBackdrop(this.theme)

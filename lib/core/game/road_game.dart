@@ -20,7 +20,7 @@ import 'race/race_controller.dart';
 import 'race/race_result.dart';
 import 'rider/rider_component.dart';
 import 'road/road_renderer.dart';
-import 'road/scene_theme.dart';
+import 'road/scene/scene_theme.dart';
 
 class RoadGame extends FlameGame with KeyboardEvents {
   RoadGame({

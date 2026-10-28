@@ -3,7 +3,7 @@ enum WallStyle {
   concrete(1800),
   rock(2200),
   white(520),
-  parapet(760),
+  parapet(360),
   hoarding(1000);
 
   const WallStyle(this.height);

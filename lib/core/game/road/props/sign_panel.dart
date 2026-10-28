@@ -1,4 +1,4 @@
-enum SignArrow { none, up, exit, upLeft }
+enum SignArrow { none, up, exit, upLeft, upRight }
 
 class SignRow {
   const SignRow(this.text, {this.code, this.tail});

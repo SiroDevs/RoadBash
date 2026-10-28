@@ -24,7 +24,7 @@ const Section urban = Section(
 
 const (double, double) farRight = (3.9, 5.2);
 const (double, double) farRightTrees = (3.8, 6.0);
-const (double, double) serviceSide = (2.3, 2.9);
+const (double, double) serviceSide = (3.0, 3.2);
 const (double, double) nearLeft = (1.6, 2.4);
 
 const SideScenery noScenery = SideScenery();

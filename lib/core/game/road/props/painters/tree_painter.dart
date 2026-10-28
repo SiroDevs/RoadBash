@@ -13,9 +13,12 @@ class TreePainter {
       : _leafDark = fogRamp(theme.treeDark, theme.fog, antiAlias: true),
         _leafLight = fogRamp(theme.treeLight, theme.fog, antiAlias: true),
         _trunk = fogRamp(theme.trunk, theme.fog),
-        _shadow = fogRamp(const Color(0x3A000000), theme.fog, antiAlias: true);
+        _shadow = fogRamp(const Color(0x3A000000), theme.fog, antiAlias: true),
+        _rock = fogRamp(theme.rockColor, theme.fog, antiAlias: true),
+        _rockLight =
+            fogRamp(shade(theme.rockColor, 0.22), theme.fog, antiAlias: true);
 
-  final List<Paint> _leafDark, _leafLight, _trunk, _shadow;
+  final List<Paint> _leafDark, _leafLight, _trunk, _shadow, _rock, _rockLight;
   final Path _path = Path();
 
   void draw(Canvas c, VisionSeg v, Prop p, double x, double y, double w,
@@ -29,6 +32,10 @@ class TreePainter {
         _bush(c, v, x, y, w, h);
       case PropKind.acacia:
         _acacia(c, v, x, y, w, h);
+      case PropKind.palm:
+        _palm(c, v, x, y, w, h);
+      case PropKind.rock:
+        _boulder(c, v, x, y, w, h);
       default:
         break;
     }
@@ -118,5 +125,70 @@ class TreePainter {
             width: w * 1.1,
             height: h * 0.45),
         fogged(_leafLight, v.fog));
+  }
+
+  void _palm(Canvas c, VisionSeg v, double x, double y, double w, double h) {
+    _contact(c, v, x, y, w * 0.6);
+    final topX = x + w * 0.22;
+    final topY = y - h * 0.82;
+    final trunkW = math.max(1.0, w * 0.1);
+    _path
+      ..reset()
+      ..moveTo(x - trunkW, y + 1)
+      ..quadraticBezierTo(x + w * 0.02, y - h * 0.4, topX - trunkW * 0.6, topY)
+      ..lineTo(topX + trunkW * 0.6, topY)
+      ..quadraticBezierTo(x + w * 0.06, y - h * 0.4, x + trunkW, y + 1)
+      ..close();
+    c.drawPath(_path, fogged(_trunk, v.fog));
+
+    // Seven drooping fronds fanned around the crown.
+    const reach = [-1.0, -0.66, -0.3, 0.0, 0.3, 0.66, 1.0];
+    _path.reset();
+    for (var i = 0; i < reach.length; i++) {
+      final dir = reach[i];
+      final tipX = topX + dir * w * 1.35;
+      final tipY = topY + h * (0.04 + 0.1 * dir.abs()) - h * 0.05 * (1 - dir.abs());
+      final lift = topY - h * (0.16 - 0.05 * dir.abs());
+      _path
+        ..moveTo(topX, topY)
+        ..quadraticBezierTo(topX + dir * w * 0.7, lift - h * 0.04, tipX, tipY)
+        ..quadraticBezierTo(topX + dir * w * 0.7, lift + h * 0.07, topX, topY);
+    }
+    c.drawPath(_path, fogged(_leafDark, v.fog));
+
+    _path.reset();
+    for (final dir in const [-0.5, 0.15, 0.7]) {
+      final tipX = topX + dir * w * 1.1;
+      final tipY = topY + h * 0.03;
+      _path
+        ..moveTo(topX, topY - h * 0.01)
+        ..quadraticBezierTo(
+            topX + dir * w * 0.5, topY - h * 0.12, tipX, tipY)
+        ..quadraticBezierTo(
+            topX + dir * w * 0.5, topY - h * 0.05, topX, topY - h * 0.01);
+    }
+    c.drawPath(_path, fogged(_leafLight, v.fog));
+  }
+
+  void _boulder(Canvas c, VisionSeg v, double x, double y, double w, double h) {
+    _contact(c, v, x, y, w * 0.9);
+    _path
+      ..reset()
+      ..moveTo(x - w, y)
+      ..lineTo(x - w * 0.82, y - h * 0.55)
+      ..lineTo(x - w * 0.25, y - h)
+      ..lineTo(x + w * 0.5, y - h * 0.82)
+      ..lineTo(x + w, y - h * 0.2)
+      ..lineTo(x + w * 0.9, y)
+      ..close();
+    c.drawPath(_path, fogged(_rock, v.fog));
+    _path
+      ..reset()
+      ..moveTo(x - w * 0.82, y - h * 0.55)
+      ..lineTo(x - w * 0.25, y - h)
+      ..lineTo(x + w * 0.5, y - h * 0.82)
+      ..lineTo(x + w * 0.05, y - h * 0.5)
+      ..close();
+    c.drawPath(_path, fogged(_rockLight, v.fog));
   }
 }

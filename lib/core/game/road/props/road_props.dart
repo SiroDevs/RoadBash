@@ -2,6 +2,8 @@ import '../routes/thika/thika_route.dart';
 import '../scene_theme.dart';
 import '../track/road_track.dart';
 import 'layouts/city_layout.dart';
+import 'layouts/jungle_layout.dart';
+import 'layouts/savanna_layout.dart';
 import 'layouts/route_layout.dart';
 import 'layouts/suburbs_layout.dart';
 import 'prop.dart';
@@ -20,6 +22,10 @@ class RoadProps {
         layOutSuburbs(slots, count);
       case DecorKind.corridor:
         layOutRoute(slots, track.segments, track.sectionStarts, thikaRoute);
+      case DecorKind.jungle:
+        layOutJungle(slots, count);
+      case DecorKind.savanna:
+        layOutSavanna(slots, count);
     }
     for (var i = 0; i < count; i++) {
       _bySegment[i] = slots[i].isEmpty ? const [] : List.unmodifiable(slots[i]);

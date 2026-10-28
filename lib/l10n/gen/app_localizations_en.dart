@@ -52,6 +52,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sceneThikaRoad => 'Thika Road';
 
   @override
+  String get sceneJungle => 'The Jungle';
+
+  @override
+  String get sceneDirtRoad => 'Dirt Road';
+
+  @override
   String get receptionTitle => 'Reception';
 
   @override
@@ -65,6 +71,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get blurbThikaRoad =>
       'Blue Post to Museum Hill, the whole Thika Rd run through Juja, Kimbo, Ruiru, Kahawa, Githurai and Roysambu, then down the Pangani underpass. Flyovers, footbridges and slip roads. Keep it clean to the finish.';
+
+  @override
+  String get blurbJungle =>
+      'Thick rainforest on a narrow, twisting blacktop. Steep climbs, tight bends and trees right at the edge. Brake early, stay on the tarmac.';
+
+  @override
+  String get blurbDirtRoad =>
+      'Red murram through open dry country. Long straights, rolling crests and wide, dusty bends. No lines to follow, so pick your rut.';
 
   @override
   String get blurbReception =>

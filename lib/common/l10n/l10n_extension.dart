@@ -15,12 +15,16 @@ extension SceneL10n on AppLocalizations {
     SceneId.city => sceneCity,
     SceneId.suburbs => sceneSuburbs,
     SceneId.thikaRoad => sceneThikaRoad,
+    SceneId.jungle => sceneJungle,
+    SceneId.dirtRoad => sceneDirtRoad,
   };
 
   String sceneBlurb(SceneId id) => switch (id) {
     SceneId.city => blurbCity,
     SceneId.suburbs => blurbSuburbs,
     SceneId.thikaRoad => blurbThikaRoad,
+    SceneId.jungle => blurbJungle,
+    SceneId.dirtRoad => blurbDirtRoad,
   };
 }
 

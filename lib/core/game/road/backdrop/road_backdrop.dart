@@ -15,11 +15,12 @@ class RoadBackdrop {
   RoadBackdrop(this.theme)
     : _far = fillPaint(Color.lerp(theme.backFar, theme.fog, 0.35)!),
       _near = fillPaint(Color.lerp(theme.backNear, theme.fog, 0.18)!),
+      _front = fillPaint(Color.lerp(theme.backNear, const Color(0xFF000000), 0.18)!),
       _farHaze = theme.fog.withAlpha(150),
       _nearHaze = theme.fog.withAlpha(45);
 
   final SceneTheme theme;
-  final Paint _far, _near;
+  final Paint _far, _near, _front;
   final Color _farHaze, _nearHaze;
   final Paint _sky = Paint();
   final Paint _ground = Paint()..isAntiAlias = false;
@@ -97,6 +98,41 @@ class RoadBackdrop {
         frequency: 0.011,
         scroll: scroll,
         paint: _near,
+      );
+    } else if (theme.backdrop == BackdropKind.ridges) {
+      drawHills(
+        canvas,
+        _path,
+        width: w,
+        baseY: horizon,
+        amplitude: 78 * k,
+        frequency: 0.005,
+        scroll: scroll * 0.35,
+        paint: _far,
+      );
+      canvas.drawRect(
+        Rect.fromLTRB(0, horizon - 90 * k, w, horizon),
+        Paint()..color = _farHaze.withAlpha(60),
+      );
+      drawHills(
+        canvas,
+        _path,
+        width: w,
+        baseY: horizon,
+        amplitude: 54 * k,
+        frequency: 0.008,
+        scroll: scroll * 0.6,
+        paint: _near,
+      );
+      drawHills(
+        canvas,
+        _path,
+        width: w,
+        baseY: horizon,
+        amplitude: 30 * k,
+        frequency: 0.013,
+        scroll: scroll,
+        paint: _front,
       );
     } else if (theme.backdrop == BackdropKind.hills) {
       drawHills(

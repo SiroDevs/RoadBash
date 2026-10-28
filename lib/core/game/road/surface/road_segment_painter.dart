@@ -17,6 +17,8 @@ class RoadSegmentPainter {
       _kerbDark = fogRamp(theme.edgeDark, theme.fog),
       _roadLight = fogRamp(theme.roadLight, theme.fog),
       _roadDark = fogRamp(theme.roadDark, theme.fog),
+      _rut = fogRamp(theme.rutColor, theme.fog),
+      _ridge = fogRamp(shade(theme.roadLight, 0.08), theme.fog),
       _lane = fogRamp(theme.laneColor, theme.fog),
       _center = fogRamp(theme.centerColor, theme.fog),
       _palette = RoadSurfacePalette(theme);
@@ -24,7 +26,7 @@ class RoadSegmentPainter {
   final SceneTheme theme;
   final List<Paint> _shoulder, _shoulderAlt;
   final List<Paint> _kerbLight, _kerbDark;
-  final List<Paint> _roadLight, _roadDark, _lane, _center;
+  final List<Paint> _roadLight, _roadDark, _lane, _center, _rut, _ridge;
   final RoadSurfacePalette _palette;
   final Path _path = Path();
 
@@ -63,7 +65,8 @@ class RoadSegmentPainter {
       fogged((i ~/ RoadConfig.rumbleLength).isEven ? _roadLight : _roadDark, f),
     );
 
-    if (f >= _markingCutoff) return;
+    if (theme.ruts) _ruts(c, v, f);
+    if (!theme.markings || f >= _markingCutoff) return;
 
     _path.reset();
     _band(v, -1, -1 + _whiteLine * 2);
@@ -83,6 +86,21 @@ class RoadSegmentPainter {
     _band(v, -_centreGap - _yellowLine, -_centreGap + _yellowLine);
     _band(v, _centreGap - _yellowLine, _centreGap + _yellowLine);
     c.drawPath(_path, fogged(_center, f));
+  }
+
+  /// Two wheel ruts with a raised ridge between them, broken up along the
+  /// road so the surface doesn't read as painted stripes.
+  void _ruts(Canvas c, VisionSeg v, double f) {
+    final i = v.seg.index;
+    _path.reset();
+    _band(v, -0.62, -0.34);
+    _band(v, 0.34, 0.62);
+    c.drawPath(_path, fogged(_rut, f));
+    if ((i ~/ 7).isEven) {
+      _path.reset();
+      _band(v, -0.08, 0.08);
+      c.drawPath(_path, fogged(_ridge, f));
+    }
   }
 
   static const double _verge = 1.1;

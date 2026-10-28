@@ -6,6 +6,8 @@ enum PropKind {
   pine,
   acacia,
   bush,
+  palm,
+  rock,
   lamp,
   sign,
   billboard,

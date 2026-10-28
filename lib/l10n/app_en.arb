@@ -58,6 +58,14 @@
   "@sceneThikaRoad": {
     "description": "Name of the Thika Rd scene"
   },
+  "sceneJungle": "The Jungle",
+  "@sceneJungle": {
+    "description": "Name of the jungle scene"
+  },
+  "sceneDirtRoad": "Dirt Road",
+  "@sceneDirtRoad": {
+    "description": "Name of the dirt road scene"
+  },
   "receptionTitle": "Reception",
   "@receptionTitle": {
     "description": "Name of the settings desk"
@@ -73,6 +81,14 @@
   "blurbThikaRoad": "Blue Post to Museum Hill, the whole Thika Rd run through Juja, Kimbo, Ruiru, Kahawa, Githurai and Roysambu, then down the Pangani underpass. Flyovers, footbridges and slip roads. Keep it clean to the finish.",
   "@blurbThikaRoad": {
     "description": "Thika Rd description"
+  },
+  "blurbJungle": "Thick rainforest on a narrow, twisting blacktop. Steep climbs, tight bends and trees right at the edge. Brake early, stay on the tarmac.",
+  "@blurbJungle": {
+    "description": "Jungle description"
+  },
+  "blurbDirtRoad": "Red murram through open dry country. Long straights, rolling crests and wide, dusty bends. No lines to follow, so pick your rut.",
+  "@blurbDirtRoad": {
+    "description": "Dirt road description"
   },
   "blurbReception": "Pop in to set your rider name, mix the sound and check the controls.",
   "@blurbReception": {

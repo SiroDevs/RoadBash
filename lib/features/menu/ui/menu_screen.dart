@@ -100,6 +100,8 @@ class _MenuScreenState extends State<MenuScreen> {
       SceneId.city => AppAssets.sceneCity,
       SceneId.suburbs => AppAssets.sceneSuburbs,
       SceneId.thikaRoad => AppAssets.sceneThikaRoad,
+      SceneId.jungle => AppAssets.sceneJungle,
+      SceneId.dirtRoad => AppAssets.sceneDirtRoad,
     });
 
     final title = RetroTitle(_label(l10n, id));

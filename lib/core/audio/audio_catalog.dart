@@ -16,6 +16,10 @@ enum MusicTrack {
     SceneId.city => city,
     SceneId.suburbs => suburbs,
     SceneId.thikaRoad => thikard,
+    // No dedicated tracks yet: reuse existing ones. Add jungle.mp3 /
+    // dirt_road.mp3 to MusicTrack and point these two at them.
+    SceneId.jungle => suburbs,
+    SceneId.dirtRoad => city,
   };
 }
 

@@ -12,4 +12,6 @@ class AppAssets {
   static const sceneCity = 'assets/images/scenes/city.png';
   static const sceneSuburbs = 'assets/images/scenes/suburbs.png';
   static const sceneThikaRoad = 'assets/images/scenes/thika_rd.png';
+  static const sceneJungle = 'assets/images/scenes/jungle.png';
+  static const sceneDirtRoad = 'assets/images/scenes/dirt_road.png';
 }

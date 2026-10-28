@@ -10,12 +10,12 @@ import '../../prop.dart';
 
 class FootbridgePainter {
   FootbridgePainter(SceneTheme theme)
-      : _frame = [for (final c in _colors) fogRamp(c, theme.fog)],
-        _dark = [for (final c in _colors) fogRamp(shade(c, -0.35), theme.fog)],
-        _mesh = [
-          for (final c in _colors)
-            fogRamp(c.withValues(alpha: 0.42), theme.fog, antiAlias: true),
-        ];
+    : _frame = [for (final c in _colors) fogRamp(c, theme.fog)],
+      _dark = [for (final c in _colors) fogRamp(shade(c, -0.35), theme.fog)],
+      _mesh = [
+        for (final c in _colors)
+          fogRamp(c.withValues(alpha: 0.42), theme.fog, antiAlias: true),
+      ];
 
   static const List<Color> _colors = [
     Color(0xFF3E6FA3),
@@ -29,7 +29,14 @@ class FootbridgePainter {
   final List<List<Paint>> _frame, _dark, _mesh;
   final Path _path = Path();
 
-  void draw(Canvas c, VisionSeg v, Prop p, double l, double r) {
+  void draw(
+    Canvas c,
+    VisionSeg v,
+    Prop p,
+    double l,
+    double r, {
+    double? pillarX,
+  }) {
     final s = p.tint % _frame.length;
     final k = v.k1, y = v.y1, f = v.fog;
     final top = y - p.height * k;
@@ -50,17 +57,39 @@ class FootbridgePainter {
       ..close();
     c.drawPath(_path, fogged(_dark[s], f));
 
+    // Centre pier, standing in the median
+    if (pillarX != null) {
+      final pier = math.max(1.5, 170 * k);
+      c.drawRect(
+        Rect.fromLTRB(pillarX - pier, deck, pillarX + pier, y + 1),
+        fogged(_dark[s], f),
+      );
+      c.drawRect(
+        Rect.fromLTRB(
+          pillarX - pier * 2.2,
+          deck,
+          pillarX + pier * 2.2,
+          deck + 110 * k,
+        ),
+        fogged(_dark[s], f),
+      );
+    }
+
     // Deck
     c.drawRect(Rect.fromLTRB(l - pw, deck, l + pw, y + 1), fogged(_dark[s], f));
     c.drawRect(Rect.fromLTRB(r - pw, deck, r + pw, y + 1), fogged(_dark[s], f));
-    c.drawRect(Rect.fromLTRB(l - pw * 1.6, top, r + pw * 1.6, deck),
-        fogged(_frame[s], f));
+    c.drawRect(
+      Rect.fromLTRB(l - pw * 1.6, top, r + pw * 1.6, deck),
+      fogged(_frame[s], f),
+    );
 
     // Railing
     final railTop = top - 250 * k;
     final bar = math.max(1.0, 36 * k);
-    c.drawRect(Rect.fromLTRB(l - pw * 1.6, railTop, r + pw * 1.6, railTop + bar),
-        fogged(_frame[s], f));
+    c.drawRect(
+      Rect.fromLTRB(l - pw * 1.6, railTop, r + pw * 1.6, railTop + bar),
+      fogged(_frame[s], f),
+    );
     final posts = ((r - l) / math.max(6.0, 300 * k)).floor().clamp(2, 28);
     _path.reset();
     for (var n = 0; n <= posts; n++) {
@@ -74,15 +103,26 @@ class FootbridgePainter {
     } else {
       // Covered walkway
       final roof = railTop - 330 * k;
-      c.drawRect(Rect.fromLTRB(l - pw * 1.6, roof, r + pw * 1.6, railTop),
-          fogged(_mesh[s], f));
-      c.drawRect(Rect.fromLTRB(l - pw * 2, roof - bar * 1.4, r + pw * 2, roof),
-          fogged(_dark[s], f));
+      c.drawRect(
+        Rect.fromLTRB(l - pw * 1.6, roof, r + pw * 1.6, railTop),
+        fogged(_mesh[s], f),
+      );
+      c.drawRect(
+        Rect.fromLTRB(l - pw * 2, roof - bar * 1.4, r + pw * 2, roof),
+        fogged(_dark[s], f),
+      );
     }
   }
 
-  void _archSpan(Canvas c, double f, int s, double l, double r, double base,
-      double k) {
+  void _archSpan(
+    Canvas c,
+    double f,
+    int s,
+    double l,
+    double r,
+    double base,
+    double k,
+  ) {
     final rise = 1150 * k;
     final t = math.max(1.2, 70 * k);
     final mid = (l + r) / 2;
@@ -101,7 +141,9 @@ class FootbridgePainter {
     }
     _path.close();
     c.drawPath(_path, fogged(_frame[s], f));
-    c.drawRect(Rect.fromLTRB(mid - t * 0.5, base - rise, mid + t * 0.5, base),
-        fogged(_frame[s], f));
+    c.drawRect(
+      Rect.fromLTRB(mid - t * 0.5, base - rise, mid + t * 0.5, base),
+      fogged(_frame[s], f),
+    );
   }
 }

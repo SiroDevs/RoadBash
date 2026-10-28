@@ -1,9 +1,10 @@
+import '../../props/sign_panel.dart';
 import '../../props/wall_style.dart';
 import '../route_stretch.dart';
 import 'presets.dart';
 import 'signage.dart';
 
-const List<RouteStretch> bluePostToKenyatta = [
+const List<RouteStretch> bluePostToKroad = [
   RouteStretch(
     'after blue post',
     6,
@@ -37,42 +38,61 @@ const List<RouteStretch> bluePostToKenyatta = [
     7,
     section: planted,
     left: [
-      SideScenery(to: 0.5, treeStep: (3, 6), mix: TreeMix.belt, treeSetBack: (1.6, 2.6)),
+      SideScenery(
+        to: 0.5,
+        treeStep: (3, 6),
+        mix: TreeMix.belt,
+        treeSetBack: (1.6, 2.6),
+      ),
       SideScenery(from: 0.5, treeStep: (8, 14), mix: bushy),
     ],
     right: [SideScenery(treeStep: (6, 12), treeSetBack: farRightTrees)],
     features: [
       RouteFeature.exit(0.22),
-      RouteFeature.exitSignNumbered(0.35, exit17),
+      RouteFeature.exitSignNumbered(0.35, SignPanel.numbered('17')),
       RouteFeature.billboard(0.45),
       RouteFeature.overpass(0.8),
     ],
   ),
   RouteStretch(
     'jomoko',
-    4,
+    5,
     pieces: [RoutePiece(1, hill: -1)],
     section: planted,
     left: [SideScenery(treeStep: (10, 18), mix: TreeMix.savanna)],
     right: [
-      SideScenery(treeStep: (10, 18), mix: TreeMix.savanna, treeSetBack: farRightTrees),
+      SideScenery(
+        treeStep: (10, 18),
+        mix: TreeMix.savanna,
+        treeSetBack: farRightTrees,
+      ),
       SideScenery(from: 0.55, lots: 0.4, storeys: (1, 2), setBack: farRight),
     ],
     features: [
-      RouteFeature.billboard(0.1, side: -1, face: 1),
-      RouteFeature.footbridge(0.4),
-      RouteFeature.gantry(0.7),
-      RouteFeature.exit(0.86, length: 26),
+      RouteFeature.exit(0.1, length: 26),
+      RouteFeature.billboard(0.4, side: -1, face: 1),
+      RouteFeature.footbridge(0.7),
     ],
   ),
   RouteStretch(
     'tibs',
-    3,
+    6,
     section: planted,
     left: [
-      SideScenery(lots: 0.9, storeys: (3, 4), setBack: serviceSide, service: true),
+      SideScenery(
+        lots: 0.9,
+        storeys: (3, 4),
+        setBack: serviceSide,
+        service: true,
+      ),
     ],
-    right: [SideScenery(treeStep: (14, 22), mix: TreeMix.savanna, treeSetBack: farRightTrees)],
+    right: [
+      SideScenery(
+        treeStep: (14, 22),
+        mix: TreeMix.savanna,
+        treeSetBack: farRightTrees,
+      ),
+    ],
     features: [
       RouteFeature.billboard(0.15, face: 2),
       RouteFeature.building(0.4, storeys: 1, width: 3600, depth: 10, tint: 3),
@@ -80,20 +100,37 @@ const List<RouteStretch> bluePostToKenyatta = [
     ],
   ),
   RouteStretch(
-    'thika rd (bypass to witethie)',
+    'thika to witethie)',
     8,
     pieces: [RoutePiece(0.5, curve: 0.8, hill: 1), RoutePiece(0.5)],
     section: planted,
     left: [
-      SideScenery(to: 0.2, lots: 0.8, storeys: (1, 2), setBack: serviceSide, service: true),
-      SideScenery(from: 0.2, to: 0.85, treeStep: (14, 26), mix: TreeMix.savanna),
-      SideScenery(from: 0.85, treeStep: (5, 9), mix: bushy),
+      SideScenery(
+        to: 0.2,
+        lots: 0.8,
+        storeys: (1, 2),
+        setBack: serviceSide,
+        service: true,
+      ),
+      SideScenery(
+        from: 0.2,
+        to: 0.65,
+        treeStep: (14, 26),
+        mix: TreeMix.savanna,
+      ),
+      SideScenery(from: 0.65, treeStep: (5, 9), mix: bushy),
     ],
-    right: [SideScenery(treeStep: (14, 26), mix: TreeMix.savanna, treeSetBack: farRightTrees)],
+    right: [
+      SideScenery(
+        treeStep: (14, 26),
+        mix: TreeMix.savanna,
+        treeSetBack: farRightTrees,
+      ),
+    ],
     features: [
-      RouteFeature.billboard(0.25, face: 1),
-      RouteFeature.footbridge(0.5),
-      RouteFeature.billboard(0.78, side: -1, face: 0),
+      RouteFeature.billboard(0.35, face: 1),
+      RouteFeature.footbridge(0.6),
+      RouteFeature.billboard(0.9, side: -1, face: 0),
     ],
   ),
   RouteStretch(
@@ -107,35 +144,67 @@ const List<RouteStretch> bluePostToKenyatta = [
         lots: 0.9,
         storeys: (4, 5),
         setBack: (1.7, 2.3),
-        walls: [WallRun(WallStyle.rock, 0, 0.4, offset: 1.18)],
+        walls: [WallRun(WallStyle.rock, 0, 0.4, offset: 2.38)],
       ),
-      SideScenery(from: 0.4, to: 0.78, lots: 0.9, storeys: (2, 4), setBack: serviceSide, service: true),
+      SideScenery(
+        from: 0.4,
+        to: 0.68,
+        lots: 0.9,
+        storeys: (2, 4),
+        setBack: serviceSide,
+        service: true,
+      ),
       SideScenery(from: 0.78, treeStep: (6, 10), mix: bushy),
     ],
-    right: [SideScenery(treeStep: (10, 20), mix: TreeMix.savanna, treeSetBack: farRightTrees)],
+    right: [
+      SideScenery(
+        treeStep: (10, 20),
+        mix: TreeMix.savanna,
+        treeSetBack: farRightTrees,
+      ),
+    ],
     features: [
-      RouteFeature.footbridge(0.28),
-      RouteFeature.footbridge(0.55, style: 2),
+      RouteFeature.exitSignNumbered(0.15, SignPanel.numbered('16')),
+      RouteFeature.exit(0.22),
+      RouteFeature.footbridge(0.48, style: 2),
       RouteFeature.billboard(0.62, side: -1, face: 2),
     ],
   ),
   RouteStretch(
-    'thika rd (witethie to juja)',
-    11,
+    'witethie to juja',
+    15,
     pieces: [RoutePiece(0.5, curve: -0.8), RoutePiece(0.5)],
     section: planted,
     left: [SideScenery(treeStep: (5, 10), treeSetBack: (1.8, 3.4), mix: bushy)],
     right: [SideScenery(treeStep: (7, 14), treeSetBack: farRightTrees)],
-    features: [RouteFeature.footbridge(0.02), RouteFeature.exitSignNumbered(0.92, exit16)],
+    features: [
+      RouteFeature.exitSignNamed(0.5, exitJuja, side: 1),
+      RouteFeature.exit(0.85),
+      RouteFeature.exitSignNumbered(0.9, SignPanel.numbered('15')),
+      RouteFeature.footbridge(1.5),
+    ],
   ),
   RouteStretch(
     'juja',
-    11,
+    12,
     pieces: [RoutePiece(1, hill: 1)],
     section: planted,
     left: [
-      SideScenery(to: 0.55, lots: 0.92, storeys: (3, 5), setBack: serviceSide, service: true),
-      SideScenery(from: 0.55, to: 0.8, lots: 0.7, storeys: (2, 4), setBack: serviceSide, service: true),
+      SideScenery(
+        to: 0.55,
+        lots: 0.92,
+        storeys: (3, 5),
+        setBack: serviceSide,
+        service: true,
+      ),
+      SideScenery(
+        from: 0.55,
+        to: 0.8,
+        lots: 0.7,
+        storeys: (2, 4),
+        setBack: serviceSide,
+        service: true,
+      ),
       SideScenery(
         from: 0.8,
         treeStep: (8, 12),
@@ -143,18 +212,24 @@ const List<RouteStretch> bluePostToKenyatta = [
       ),
     ],
     right: [
-      SideScenery(lots: 0.4, storeys: (2, 5), setBack: farRight, treeStep: (8, 14), treeSetBack: farRightTrees),
+      SideScenery(
+        lots: 0.4,
+        storeys: (2, 5),
+        setBack: farRight,
+        treeStep: (8, 14),
+        treeSetBack: farRightTrees,
+      ),
       SideScenery(from: 0.85, lots: 0.8, storeys: (5, 9), setBack: (4.0, 5.0)),
     ],
     features: [
       RouteFeature.billboard(0.3),
       RouteFeature.footbridge(0.62),
-      RouteFeature.overpass(0.9, style: 1),
+      RouteFeature.overpass(1.5, style: 1),
     ],
   ),
   RouteStretch(
-    'thika rd (kenyatta junction)',
-    6,
+    'k-road',
+    12,
     pieces: [RoutePiece(1, curve: 1.0)],
     section: cutting,
     left: [
@@ -165,12 +240,15 @@ const List<RouteStretch> bluePostToKenyatta = [
         walls: [WallRun(WallStyle.rock, 0.4, 0.6, offset: 1.2)],
         treeStep: (6, 9),
       ),
-      SideScenery(from: 0.6, lots: 0.8, storeys: (3, 5), setBack: serviceSide, service: true),
+      SideScenery(
+        from: 0.6,
+        lots: 0.8,
+        storeys: (3, 5),
+        setBack: serviceSide,
+        service: true,
+      ),
     ],
     right: [SideScenery(lots: 0.35, storeys: (1, 3), setBack: farRight)],
-    features: [
-      RouteFeature.entry(0.08),
-      RouteFeature.footbridge(0.94),
-    ],
+    features: [RouteFeature.entry(0.5), RouteFeature.footbridge(1.8)],
   ),
 ];

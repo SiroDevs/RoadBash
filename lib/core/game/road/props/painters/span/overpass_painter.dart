@@ -19,36 +19,93 @@ class OverpassPainter {
   final List<Paint> _concrete, _underside, _rail, _yellow, _earth;
   final Path _path = Path();
 
-  void draw(Canvas c, VisionSeg v, Prop p, double l, double r) {
+  /// How far the crossing road falls away from the level span over the
+  /// highway, and how many road units it takes to do so.
+  static const double _rampDrop = 1200;
+  static const double _rampLen = 5.0;
+  static const int _steps = 14;
+
+  /// [l]..[r] is the whole deck (past both screen edges); [spanL]..[spanR] is
+  /// the level stretch directly over the highway. Outside it the crossing
+  /// road eases down towards the ground on an embankment, so it rises
+  /// gradually as it approaches the highway and drops gently on leaving.
+  void draw(
+    Canvas c,
+    VisionSeg v,
+    Prop p,
+    double l,
+    double r, {
+    double? spanL,
+    double? spanR,
+    double? medianPier,
+    double? farPier,
+  }) {
     final k = v.k1, y = v.y1, f = v.fog;
     final top = y - p.height * k;
     final slab = 560 * k;
     final pier = math.max(1.0, 210 * k);
+    final sl = spanL ?? l, sr = spanR ?? r;
+    final unit = math.max(v.w1, 1e-6);
 
-    // Embankments
-    _path.reset();
-    _path
-      ..moveTo(l, top + slab)
-      ..lineTo(l - 1700 * k, y)
-      ..lineTo(l, y)
-      ..close()
-      ..moveTo(r, top + slab)
-      ..lineTo(r + 1700 * k, y)
-      ..lineTo(r, y)
-      ..close();
-    c.drawPath(_path, fogged(_earth, f));
+    double drop(double x) {
+      final u = x < sl ? (sl - x) / unit : (x > sr ? (x - sr) / unit : 0.0);
+      final t = (u / _rampLen).clamp(0.0, 1.0);
+      return _rampDrop * k * t * t * (3 - 2 * t);
+    }
+
+    // x positions along the deck, dense on the two ramps.
+    final xs = <double>[
+      for (var n = 0; n < _steps; n++) l + (sl - l) * n / _steps,
+      sl,
+      sr,
+      for (var n = 1; n <= _steps; n++) sr + (r - sr) * n / _steps,
+    ];
+
+    // Ramp embankments: earth from the underside of the deck to the ground.
+    for (final wing in [
+      xs.where((x) => x <= sl).toList(),
+      xs.where((x) => x >= sr).toList(),
+    ]) {
+      if (wing.length < 2) continue;
+      _path.reset();
+      _path.moveTo(wing.first, y);
+      for (final x in wing) {
+        _path.lineTo(x, top + drop(x) + slab);
+      }
+      _path.lineTo(wing.last, y);
+      _path.close();
+      c.drawPath(_path, fogged(_earth, f));
+    }
 
     // Piers
-    for (final x in [v.x1 - v.w1 * 1.3, v.x1 + v.w1 * 1.3]) {
+    // Near-side pier, an optional pier in the median, and the far-side pier
+    // (just past the shoulder of the opposite carriageway when it crosses the
+    // whole highway).
+    for (final x in [
+      v.x1 - v.w1 * 1.3,
+      if (medianPier != null) medianPier,
+      farPier ?? v.x1 + v.w1 * 1.3,
+    ]) {
       c.drawRect(Rect.fromLTRB(x - pier, top + slab, x + pier, y + 1),
           fogged(_underside, f));
     }
 
-    // Deck
-    c.drawRect(Rect.fromLTRB(l, top, r, top + slab), fogged(_concrete, f));
-    c.drawRect(Rect.fromLTRB(l, top + slab * 0.72, r, top + slab),
-        fogged(_underside, f));
-    c.drawRect(Rect.fromLTRB(l, top - 130 * k, r, top),
-        fogged(p.tint == 1 ? _yellow : _rail, f));
+    // Deck, following the ramp profile.
+    void band(double a, double b, List<Paint> ramp) {
+      _path.reset();
+      _path.moveTo(xs.first, top + drop(xs.first) + a);
+      for (final x in xs) {
+        _path.lineTo(x, top + drop(x) + a);
+      }
+      for (final x in xs.reversed) {
+        _path.lineTo(x, top + drop(x) + b);
+      }
+      _path.close();
+      c.drawPath(_path, fogged(ramp, f));
+    }
+
+    band(0, slab, _concrete);
+    band(slab * 0.72, slab, _underside);
+    band(-130 * k, 0, p.tint == 1 ? _yellow : _rail);
   }
 }

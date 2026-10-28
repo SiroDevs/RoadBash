@@ -359,6 +359,7 @@ create or replace function public.rb_record_game(
   p_time_ms int
 )
 returns jsonb language plpgsql security definer set search_path = public as $$
+
 declare
   v_player public.rb_players;
 begin
@@ -366,7 +367,7 @@ begin
   if v_player.id is null then
     return jsonb_build_object('ok', false, 'error', 'invalid_session');
   end if;
-  if p_scene not in ('city', 'suburbs')
+  if p_scene is null or p_scene !~ '^[A-Za-z0-9_-]{1,40}$'
      or p_place is null or p_place not between 1 and 6
      or p_time_ms is null or p_time_ms not between 10000 and 3600000 then
     return jsonb_build_object('ok', false, 'error', 'invalid_game');

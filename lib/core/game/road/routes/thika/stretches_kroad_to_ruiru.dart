@@ -1,11 +1,12 @@
+import '../../props/sign_panel.dart';
 import '../../props/wall_style.dart';
 import '../route_stretch.dart';
 import 'presets.dart';
 import 'signage.dart';
 
-const List<RouteStretch> kenyattaToKwaKairu = [
+const List<RouteStretch> kRoadToRuiru = [
   RouteStretch(
-    'kenyatta rd',
+    'Kroad',
     5,
     section: planted,
     left: [
@@ -18,10 +19,10 @@ const List<RouteStretch> kenyattaToKwaKairu = [
       SideScenery(from: 0.75, treeStep: (14, 22), mix: TreeMix.savanna, treeSetBack: farRightTrees),
     ],
     features: [
-      RouteFeature.exitSign(0.05),
-      RouteFeature.exitSignNumbered(0.14, exit15),
-      RouteFeature.exit(0.2),
-      RouteFeature.overpass(0.88),
+      RouteFeature.exitSign(0.3),
+      RouteFeature.exitSignNumbered(0.5, SignPanel.numbered('14')),
+      RouteFeature.exit(0.8),
+      RouteFeature.overpass(1.2),
     ],
   ),
   RouteStretch(
@@ -43,9 +44,9 @@ const List<RouteStretch> kenyattaToKwaKairu = [
     ],
     right: [SideScenery(treeStep: (6, 12), mix: bushy, treeSetBack: farRightTrees)],
     features: [
-      RouteFeature.gantry(0.5),
-      RouteFeature.building(0.62, storeys: 4, depth: 12, width: 3400, tint: 2),
-      RouteFeature.building(0.94, storeys: 2, depth: 10, width: 3000, tint: 0),
+      RouteFeature.gantry(1.8, panels: tollPanels, boards: pelicanBoards),
+      RouteFeature.building(3.5, storeys: 4, depth: 12, width: 3400, tint: 2),
+      RouteFeature.building(4.2, storeys: 2, depth: 10, width: 3000, tint: 0),
     ],
   ),
   RouteStretch(

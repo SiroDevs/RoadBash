@@ -167,23 +167,28 @@ class RouteFeature {
 
   /// Blue numbered exit board (see [SignPanel.numbered]) standing in the
   /// gore beside a left-hand slip road.
-  const RouteFeature.exitSignNumbered(double at, SignPanel panel)
-    : this._(
-        PropKind.exitSign,
-        at,
-        tint: 1,
-        offset: 1.42,
-        width: 430,
-        height: 1250,
-        sign: panel,
-      );
+  const RouteFeature.exitSignNumbered(
+    double at,
+    SignPanel panel, {
+    int side = -1,
+  }) : this._(
+         PropKind.exitSign,
+         at,
+         side: side,
+         tint: 1,
+         offset: 1.42,
+         width: 430,
+         height: 1250,
+         sign: panel,
+       );
 
   /// Green named exit board (see [SignPanel.named]) with destinations and
   /// road codes.
-  const RouteFeature.exitSignNamed(double at, SignPanel panel)
+  const RouteFeature.exitSignNamed(double at, SignPanel panel, {int side = -1})
     : this._(
         PropKind.exitSign,
         at,
+        side: side,
         tint: 0,
         offset: 1.42,
         width: 450,
@@ -227,7 +232,6 @@ class RouteFeature {
   final List<SignPanel> panels;
   final List<SignBoard> boards;
 
-  /// A single board for the exit-sign factories.
   final SignPanel? sign;
 }
 

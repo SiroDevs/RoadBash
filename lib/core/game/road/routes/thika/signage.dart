@@ -32,15 +32,44 @@ const List<SignBoard> pelicanBoards = [
   SignBoard(['SLOW TRAFFIC', 'KEEP LEFT']),
 ];
 
-// Numbered exits: the blue EXIT / KUTOKA board, only the number changes.
-// They count down towards Nairobi.
-const SignPanel exit17 = SignPanel.numbered('17');
-const SignPanel exit16 = SignPanel.numbered('16');
-const SignPanel exit15 = SignPanel.numbered('15');
-const SignPanel exit14 = SignPanel.numbered('14');
-
-// Named exits: the green destination board, one row per destination.
 const SignPanel exitThika = SignPanel.named([
   SignRow('Thika', code: '(G 3203)'),
   SignRow('Garissa', code: 'A 3'),
 ]);
+const SignPanel exitJuja = SignPanel.named([
+  SignRow('Nairobi', code: 'A2'),
+  SignRow('Juja', code: 'E490'),
+]);
+
+const List<SignPanel> tollPanels = [
+  SignPanel(
+    [
+      SignRow('Vehicles over 3.5 tonnes'),
+      SignRow('keep left'),
+      SignRow('Weighbridge Ahead'),
+    ],
+    footer: 'LANE 1',
+    arrow: SignArrow.exit,
+    weight: 1.3,
+  ),
+  SignPanel(
+    [
+      SignRow('Ruiru', tail: '4 km'),
+      SignRow('Kenyatta', tail: ''),
+      SignRow('University', tail: '9 km'),
+      SignRow('Githurai', tail: '12 km'),
+    ],
+    tab: 'A2',
+    footer: 'LANE 2',
+    arrow: SignArrow.up,
+  ),
+  SignPanel(
+    [
+      SignRow('Kasarani', tail: '16 km'),
+      SignRow('Muthaiga', tail: '23 km'),
+      SignRow('Nairobi', code: "(A2)", tail: '27 km'),
+    ],
+    footer: 'LANE 3',
+    arrow: SignArrow.up,
+  ),
+];

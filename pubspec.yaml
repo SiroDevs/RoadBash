@@ -1,7 +1,7 @@
 name: roadbash
 description: Recreating our childhood Road Rash with Flutter's Flame Engine.
 publish_to: 'none'
-version: 1.0.9
+version: 1.0.8
 
 environment:
   sdk: ^3.13.5

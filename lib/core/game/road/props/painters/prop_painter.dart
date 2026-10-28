@@ -72,6 +72,8 @@ class PropPainter {
       case PropKind.pine:
       case PropKind.acacia:
       case PropKind.bush:
+      case PropKind.palm:
+      case PropKind.rock:
         _trees.draw(c, v, p, x, y, halfW, h);
       case PropKind.lamp:
       case PropKind.sign:

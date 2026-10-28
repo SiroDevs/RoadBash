@@ -170,6 +170,18 @@ abstract class AppLocalizations {
   /// **'Thika Road'**
   String get sceneThikaRoad;
 
+  /// Name of the jungle scene
+  ///
+  /// In en, this message translates to:
+  /// **'The Jungle'**
+  String get sceneJungle;
+
+  /// Name of the dirt road scene
+  ///
+  /// In en, this message translates to:
+  /// **'Dirt Road'**
+  String get sceneDirtRoad;
+
   /// Name of the settings desk
   ///
   /// In en, this message translates to:
@@ -193,6 +205,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Blue Post to Museum Hill, the whole Thika Rd run through Juja, Kimbo, Ruiru, Kahawa, Githurai and Roysambu, then down the Pangani underpass. Flyovers, footbridges and slip roads. Keep it clean to the finish.'**
   String get blurbThikaRoad;
+
+  /// Jungle description
+  ///
+  /// In en, this message translates to:
+  /// **'Thick rainforest on a narrow, twisting blacktop. Steep climbs, tight bends and trees right at the edge. Brake early, stay on the tarmac.'**
+  String get blurbJungle;
+
+  /// Dirt road description
+  ///
+  /// In en, this message translates to:
+  /// **'Red murram through open dry country. Long straights, rolling crests and wide, dusty bends. No lines to follow, so pick your rut.'**
+  String get blurbDirtRoad;
 
   /// Reception description
   ///

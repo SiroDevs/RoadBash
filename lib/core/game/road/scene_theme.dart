@@ -4,9 +4,9 @@ import 'dart:ui';
 // Project imports:
 import '../../../domain/models/scene_id.dart';
 
-enum BackdropKind { skyline, hills, hillsAndSkyline, sky }
+enum BackdropKind { skyline, hills, hillsAndSkyline, sky, ridges }
 
-enum DecorKind { buildings, trees, corridor }
+enum DecorKind { buildings, trees, corridor, jungle, savanna }
 
 class SceneTheme {
   const SceneTheme({
@@ -39,6 +39,10 @@ class SceneTheme {
     this.bridgeRail = const Color(0xFF3F4650),
     this.signGreen = const Color(0xFF1F6B46),
     this.dualCarriageway = false,
+    this.markings = true,
+    this.ruts = false,
+    this.rutColor = const Color(0xFF8A5A33),
+    this.rockColor = const Color(0xFF8A7F73),
   });
 
   final SceneId id;
@@ -58,6 +62,13 @@ class SceneTheme {
 
   final Color bridgeColor, bridgeRail, signGreen;
   final bool dualCarriageway;
+
+  /// False on unpaved roads: no lane lines or centre line.
+  final bool markings;
+
+  /// Wheel ruts and a centre ridge painted on the surface (dirt road).
+  final bool ruts;
+  final Color rutColor, rockColor;
 
   static const SceneTheme city = SceneTheme(
     id: SceneId.city,
@@ -143,9 +154,61 @@ class SceneTheme {
     trunk: Color(0xFF5A4332),
   );
 
+  static const SceneTheme jungle = SceneTheme(
+    id: SceneId.jungle,
+    laps: 3,
+    lanes: 2,
+    skyTop: Color(0xFF5E9DB0),
+    skyHorizon: Color(0xFFCFE6D2),
+    backFar: Color(0xFF4F7A5C),
+    backNear: Color(0xFF2F5E3C),
+    ground: Color(0xFF2B6A2E),
+    shoulder: Color(0xFF6B5A3E),
+    edgeLight: Color(0xFF8C8F86),
+    edgeDark: Color(0xFF7A7E76),
+    roadLight: Color(0xFF454A4F),
+    roadDark: Color(0xFF3F4449),
+    fog: Color(0xFFB8D4C4),
+    backdrop: BackdropKind.ridges,
+    decor: DecorKind.jungle,
+    laneColor: Color(0xFFC9CFC0),
+    centerColor: Color(0xFFD9C45A),
+    treeDark: Color(0xFF14502A),
+    treeLight: Color(0xFF2F8A3E),
+    trunk: Color(0xFF4A3524),
+  );
+
+  static const SceneTheme dirtRoad = SceneTheme(
+    id: SceneId.dirtRoad,
+    laps: 4,
+    lanes: 2,
+    skyTop: Color(0xFF5B96D9),
+    skyHorizon: Color(0xFFF3DDB8),
+    backFar: Color(0xFFB59A7A),
+    backNear: Color(0xFF9C7F5A),
+    ground: Color(0xFF9E5A32),
+    shoulder: Color(0xFF8F5230),
+    edgeLight: Color(0xFFB98550),
+    edgeDark: Color(0xFFAD7A47),
+    roadLight: Color(0xFFCB9A62),
+    roadDark: Color(0xFFC3925B),
+    fog: Color(0xFFEAD3AE),
+    backdrop: BackdropKind.hills,
+    decor: DecorKind.savanna,
+    markings: false,
+    ruts: true,
+    rutColor: Color(0xFF8A5A33),
+    rockColor: Color(0xFF8A7F73),
+    treeDark: Color(0xFF5C6B2E),
+    treeLight: Color(0xFF8E9A45),
+    trunk: Color(0xFF4A3828),
+  );
+
   static SceneTheme of(SceneId id) => switch (id) {
     SceneId.city => city,
     SceneId.suburbs => suburbs,
     SceneId.thikaRoad => thikaRoad,
+    SceneId.jungle => jungle,
+    SceneId.dirtRoad => dirtRoad,
   };
 }

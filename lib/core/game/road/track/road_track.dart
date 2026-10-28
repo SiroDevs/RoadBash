@@ -33,6 +33,10 @@ class RoadTrack {
         _buildSuburbs();
       case SceneId.thikaRoad:
         _buildRoute(thikaRoute);
+      case SceneId.jungle:
+        _buildJungle();
+      case SceneId.dirtRoad:
+        _buildDirtRoad();
     }
     length = segments.length * RoadConfig.segmentLength;
   }
@@ -116,6 +120,36 @@ class RoadTrack {
     _addRoad(45, 45, 45, -4.2, 0);
     _addRoad(40, 40, 40, 2.2, 0);
     _addRoad(45, 70, 45, 0, 0);
+  }
+
+  // Tight, twisting and steep. Hills sum to zero so the lap closes cleanly.
+  void _buildJungle() {
+    _addRoad(40, 50, 40, 0, 0);
+    _addRoad(40, 40, 40, 3.2, 6);
+    _addRoad(35, 30, 35, -4.0, -6);
+    _addRoad(40, 35, 40, 4.6, 9);
+    _addRoad(35, 30, 35, -3.6, -3);
+    _addRoad(40, 40, 40, -4.8, -6);
+    _addRoad(35, 30, 35, 3.0, 4);
+    _addRoad(45, 40, 45, 0, -4);
+    _addRoad(40, 45, 40, 4.2, 0);
+    _addRoad(40, 40, 40, -3.4, 0);
+    _addRoad(45, 60, 45, 0, 0);
+  }
+
+  // Long open stretches, rolling crests and a few wide bends.
+  void _buildDirtRoad() {
+    _addRoad(45, 70, 45, 0, 0);
+    _addRoad(50, 50, 50, 1.8, 7);
+    _addRoad(45, 45, 45, -2.2, -3);
+    _addRoad(40, 40, 40, 2.8, -4);
+    _addRoad(45, 60, 45, 0, 5);
+    _addRoad(45, 40, 45, -3.0, -5);
+    _addRoad(40, 50, 40, 3.4, 8);
+    _addRoad(45, 40, 45, -3.8, -8);
+    _addRoad(40, 40, 40, 2.0, 3);
+    _addRoad(45, 40, 45, -1.8, -3);
+    _addRoad(45, 80, 45, 0, 0);
   }
 
   void _buildRoute(List<RouteStretch> route) {

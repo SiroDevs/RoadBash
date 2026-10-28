@@ -58,6 +58,14 @@
   "@sceneThikaRoad": {
     "description": "Name of the Thika Rd scene"
   },
+  "sceneJungle": "Msituni",
+  "@sceneJungle": {
+    "description": "Name of the jungle scene"
+  },
+  "sceneDirtRoad": "Barabara ya Vumbi",
+  "@sceneDirtRoad": {
+    "description": "Name of the dirt road scene"
+  },
   "receptionTitle": "Mapokezi",
   "@receptionTitle": {
     "description": "Name of the settings desk"
@@ -73,6 +81,14 @@
   "blurbThikaRoad": "Kutoka Blue Post hadi Museum Hill kupitia Juja, Kimbo, Ruiru, Kahawa, Githurai na Roysambu, kisha chini ya handaki la Pangani. Vivuko vya juu, madaraja ya waenda kwa miguu na njia za kutoka. Kaa safi hadi mwisho.",
   "@blurbThikaRoad": {
     "description": "Thika Rd description"
+  },
+  "blurbJungle": "Msitu mnene wa kitropiki kwenye barabara nyembamba ya lami yenye mikunjo. Miinuko mikali, kona kali na miti ukingoni mwa barabara. Kanyaga breki mapema, baki kwenye lami.",
+  "@blurbJungle": {
+    "description": "Jungle description"
+  },
+  "blurbDirtRoad": "Murram nyekundu katika nchi kavu iliyo wazi. Nyoofu ndefu, miinuko laini na mikunjo mipana yenye vumbi. Hakuna mistari ya kufuata, chagua njia yako.",
+  "@blurbDirtRoad": {
+    "description": "Dirt road description"
   },
   "blurbReception": "Njoo uweke jina la mwendeshaji, rekebisha sauti na uangalie vidhibiti.",
   "@blurbReception": {

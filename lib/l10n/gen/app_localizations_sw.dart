@@ -52,6 +52,12 @@ class AppLocalizationsSw extends AppLocalizations {
   String get sceneThikaRoad => 'Barabara ya Thika';
 
   @override
+  String get sceneJungle => 'Msituni';
+
+  @override
+  String get sceneDirtRoad => 'Barabara ya Vumbi';
+
+  @override
   String get receptionTitle => 'Mapokezi';
 
   @override
@@ -65,6 +71,14 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get blurbThikaRoad =>
       'Kutoka Blue Post hadi Museum Hill kupitia Juja, Kimbo, Ruiru, Kahawa, Githurai na Roysambu, kisha chini ya handaki la Pangani. Vivuko vya juu, madaraja ya waenda kwa miguu na njia za kutoka. Kaa safi hadi mwisho.';
+
+  @override
+  String get blurbJungle =>
+      'Msitu mnene wa kitropiki kwenye barabara nyembamba ya lami yenye mikunjo. Miinuko mikali, kona kali na miti ukingoni mwa barabara. Kanyaga breki mapema, baki kwenye lami.';
+
+  @override
+  String get blurbDirtRoad =>
+      'Murram nyekundu katika nchi kavu iliyo wazi. Nyoofu ndefu, miinuko laini na mikunjo mipana yenye vumbi. Hakuna mistari ya kufuata, chagua njia yako.';
 
   @override
   String get blurbReception =>

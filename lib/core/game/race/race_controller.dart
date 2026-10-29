@@ -3,8 +3,8 @@ import 'dart:math' as math;
 
 // Project imports:
 import '../../../domain/models/scene_id.dart';
-import 'race_result.dart';
 import '../road/config/vehicle_config.dart';
+import 'race_result.dart';
 
 class RiderRival {
   const RiderRival(this.name, this.pace, this.phase);
@@ -19,6 +19,7 @@ class RaceController {
     required this.scene,
     required this.laps,
     required this.lapLength,
+    this.runOut = 0,
     required this.playerName,
     this.rivals = defaultRivals,
   });
@@ -37,6 +38,10 @@ class RaceController {
   final SceneId scene;
   final int laps;
   final double lapLength;
+
+  /// Road after the finish line that is part of the last lap's track but not
+  /// of the race.
+  final double runOut;
   final String playerName;
   final List<RiderRival> rivals;
 
@@ -47,7 +52,7 @@ class RaceController {
   bool finished = false, playerAhead = true;
   double gapSeconds = 0;
 
-  double get raceLength => lapLength * laps;
+  double get raceLength => lapLength * laps - runOut;
   bool get running => countdown <= 0 && !finished;
 
   double rivalDistance(RiderRival r, double t) =>

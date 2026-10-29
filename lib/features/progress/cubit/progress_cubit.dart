@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
+import '../../../core/game/race/race_result.dart';
 import '../../../domain/models/race_record.dart';
 import '../../../domain/models/scene_id.dart';
 import '../../../domain/repos/race_repo.dart';
-import '../../../core/game/race/race_result.dart';
 
 part 'progress_state.dart';
 

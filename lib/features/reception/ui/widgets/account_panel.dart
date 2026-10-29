@@ -6,13 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import '../../../../core/router/route_names.dart';
+import '../../../../common/l10n/l10n_extension.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../auth/cubit/auth_cubit.dart';
 import '../../../settings/cubit/settings_cubit.dart';
-import '../../../../common/l10n/l10n_extension.dart';
 
 class AccountPanel extends StatelessWidget {
   const AccountPanel({super.key});

@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
-import 'auth_cubit.dart';
 import '../../../domain/errors/api_exception.dart';
 import '../../../domain/models/name_status.dart';
 import '../../../domain/repos/auth_repo.dart';
+import 'auth_cubit.dart';
 
 part 'sign_in_state.dart';
 

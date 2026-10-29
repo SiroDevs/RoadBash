@@ -10,29 +10,39 @@ import '../hud/dashboard_layout.dart';
 import 'backdrop/road_backdrop.dart';
 import 'config/guardrail_config.dart';
 import 'config/road_config.dart';
+import 'config/vehicle_config.dart';
+import 'finish/finish_pad_painter.dart';
+import 'finish/finish_zone.dart';
 import 'props/painters/prop_painter.dart';
-import 'road_projection.dart';
 import 'props/road_props.dart';
+import 'road_projection.dart';
 import 'scene_theme.dart';
 import 'surface/road_segment_painter.dart';
 import 'track/road_track.dart';
-import 'config/vehicle_config.dart';
 
 class RoadRenderer extends PositionComponent {
   RoadRenderer(this.theme)
     : track = RoadTrack(theme.id),
       _backdrop = RoadBackdrop(theme),
       _roads = RoadSegmentPainter(theme),
-      _decor = PropPainter(theme) {
+      _decor = PropPainter(theme),
+      _pad = FinishPadPainter(theme) {
     props = RoadProps(theme, track);
+    finish = FinishZone(
+      line: track.baseCount,
+      laps: theme.laps,
+      lapLength: track.length,
+    );
   }
 
   final SceneTheme theme;
   final RoadTrack track;
   late final RoadProps props;
+  late final FinishZone finish;
   final RoadBackdrop _backdrop;
   final RoadSegmentPainter _roads;
   final PropPainter _decor;
+  final FinishPadPainter _pad;
 
   double trkPosition = 0, fullDistance = 0;
   double playerX = -0.25, speed = 0;
@@ -81,6 +91,7 @@ class RoadRenderer extends PositionComponent {
 
   @override
   void update(double dt) {
+    finish.update(trkPosition, fullDistance);
     final seg = track.at(trkPosition + playerZ);
     _steerToward(dt, locked ? 0 : steer);
     if (locked) {
@@ -199,6 +210,7 @@ class RoadRenderer extends PositionComponent {
   @override
   void render(Canvas canvas) {
     if (size.x <= 0 || size.y <= 0) return;
+    _backdrop.skylineRise = finish.rise;
     _backdrop.draw(canvas, size);
 
     const len = RoadConfig.segmentLength;
@@ -219,6 +231,8 @@ class RoadRenderer extends PositionComponent {
 
     for (var n = 0; n < RoadConfig.drawDistance; n++) {
       final seg = track.segments[(baseIdx + n) % track.count];
+      // On the last lap the street ends at the finish plaza's closing block.
+      if (finish.on && seg.index >= finish.cutIndex) break;
       final looped = seg.index < baseIdx;
       final camX = playerX * RoadConfig.roadWidth - x;
       final camY = playerY + RoadConfig.cameraHeight;
@@ -261,6 +275,10 @@ class RoadRenderer extends PositionComponent {
       if (_firstN < 0) _firstN = n;
       _lastN = n;
       _roads.draw(canvas, v, size.x);
+      if (finish.on) {
+        final row = finish.padRow(seg.index);
+        if (row >= 0) _pad.draw(canvas, v, row);
+      }
       maxY = _p2.y;
       if (v.fog >= 1) break;
     }
@@ -280,6 +298,7 @@ class RoadRenderer extends PositionComponent {
       if (anchor == null) continue;
 
       for (final prop in list) {
+        if (!finish.shows(prop)) continue;
         if (prop.depth == 0) {
           _decor.drawBillboard(canvas, anchor, prop, size);
           continue;

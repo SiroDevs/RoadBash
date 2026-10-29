@@ -7,16 +7,16 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import 'core/router/app_router.dart';
+import 'common/theme/theme_data.dart';
 import 'common/widgets/text_scale_factor.dart';
-import 'features/auth/cubit/auth_cubit.dart';
-import 'features/audio/cubit/audio_cubit.dart';
 import 'core/audio/audio_warm_up.dart';
 import 'core/audio/sound_player.dart';
 import 'core/di/injectable.dart';
+import 'core/router/app_router.dart';
+import 'features/audio/cubit/audio_cubit.dart';
+import 'features/auth/cubit/auth_cubit.dart';
 import 'features/progress/cubit/progress_cubit.dart';
 import 'features/settings/cubit/settings_cubit.dart';
-import 'common/theme/theme_data.dart';
 import 'l10n/gen/app_localizations.dart';
 
 class MyApp extends StatelessWidget {

@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:injectable/injectable.dart';
 
+// Project imports:
 import '../../domain/models/leaderboard_entry.dart';
 import '../../domain/repos/leaderboard_repo.dart';
 import '../mappers/leaderboard_mapper.dart';

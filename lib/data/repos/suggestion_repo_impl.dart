@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:injectable/injectable.dart';
 
+// Project imports:
 import '../../domain/models/suggestion.dart';
 import '../../domain/repos/suggestion_repo.dart';
 import '../mappers/suggestion_mapper.dart';

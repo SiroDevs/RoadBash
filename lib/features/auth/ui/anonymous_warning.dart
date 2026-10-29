@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
+import '../../../common/l10n/l10n_extension.dart';
 import '../../../common/layout/retro_sizes.dart';
 import '../../../common/widgets/retro/retro_style.dart';
-import '../../../common/l10n/l10n_extension.dart';
 
 Future<void> confirmAnonymous(
   BuildContext context,

@@ -1,3 +1,4 @@
+// Project imports:
 import '../../domain/models/stats_models.dart';
 
 int _int(Map<String, dynamic> json, String key) => (json[key] as num).toInt();

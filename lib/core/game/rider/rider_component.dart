@@ -7,11 +7,11 @@ import 'package:flame/components.dart';
 
 // Project imports:
 import '../hud/dashboard_layout.dart';
+import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 import 'rider_painter.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
-import '../road/config/vehicle_config.dart';
 
 class RiderComponent extends PositionComponent {
   RiderComponent(this.road, {RiderRig? rig})

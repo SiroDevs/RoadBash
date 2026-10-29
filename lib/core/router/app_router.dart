@@ -10,9 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import '../../features/auth/cubit/auth_cubit.dart';
-import '../di/injectable.dart';
 import '../../domain/models/scene_id.dart';
+import '../../features/auth/cubit/auth_cubit.dart';
 import '../../features/auth/cubit/sign_in_cubit.dart';
 import '../../features/auth/ui/sign_in_screen.dart';
 import '../../features/leaderboard/cubit/leaderboard_cubit.dart';
@@ -26,9 +25,10 @@ import '../../features/reception/cubit/reception_cubit.dart';
 import '../../features/reception/ui/reception_screen.dart';
 import '../../features/results/results_screen.dart';
 import '../../features/splash/cubit/splash_cubit.dart';
+import '../../features/splash/splash_screen.dart';
 import '../../features/stats/cubit/stats_cubit.dart';
 import '../../features/stats/ui/stats_screen.dart';
-import '../../features/splash/splash_screen.dart';
+import '../di/injectable.dart';
 import 'route_names.dart';
 
 class _AuthListenable extends ChangeNotifier {

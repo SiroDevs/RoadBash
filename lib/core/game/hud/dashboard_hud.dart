@@ -9,13 +9,13 @@ import 'package:flame/components.dart';
 import '../../constants/app_constants.dart';
 import '../race/race_controller.dart';
 import '../race/race_result.dart';
+import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 import '../utils/canvas_text.dart';
 import '../utils/paint_utils.dart';
 import 'dashboard_face.dart';
 import 'dashboard_layout.dart';
 import 'hud_strings.dart';
-import '../road/config/vehicle_config.dart';
 
 class DashboardHud extends PositionComponent {
   DashboardHud(this.road, this.race, this.strings) : super(priority: 10);

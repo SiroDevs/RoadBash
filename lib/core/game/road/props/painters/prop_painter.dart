@@ -9,6 +9,7 @@ import '../../road_projection.dart';
 import '../../scene_theme.dart';
 import '../prop.dart';
 import 'building_painter.dart';
+import 'finish_painter.dart';
 import 'guardrail_painter.dart';
 import 'slip_road_painter.dart';
 import 'span/span_painter.dart';
@@ -21,6 +22,7 @@ class PropPainter {
   PropPainter(SceneTheme theme)
       : _buildings = BuildingPainter(theme),
         _trees = TreePainter(theme),
+        _finish = FinishPainter(theme),
         _furniture = StreetFurniturePainter(theme),
         _span = SpanPainter(theme),
         _walls = WallPainter(theme),
@@ -30,6 +32,7 @@ class PropPainter {
 
   final BuildingPainter _buildings;
   final TreePainter _trees;
+  final FinishPainter _finish;
   final StreetFurniturePainter _furniture;
   final SpanPainter _span;
   final WallPainter _walls;
@@ -75,6 +78,9 @@ class PropPainter {
       case PropKind.palm:
       case PropKind.rock:
         _trees.draw(c, v, p, x, y, halfW, h);
+      case PropKind.post:
+      case PropKind.spectator:
+        _finish.draw(c, v, p, x, y, halfW, h);
       case PropKind.lamp:
       case PropKind.sign:
       case PropKind.billboard:

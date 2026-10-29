@@ -62,6 +62,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
       scene: scene,
       laps: theme.laps,
       lapLength: road.track.length,
+      runOut: road.track.runOutLength,
       playerName: playerName,
     );
     await addAll([

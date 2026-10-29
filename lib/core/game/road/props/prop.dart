@@ -1,3 +1,4 @@
+// Project imports:
 import 'sign_panel.dart';
 
 enum PropKind {
@@ -18,11 +19,17 @@ enum PropKind {
   tunnel,
   footbridge,
   gantry,
-  overpass;
+  overpass,
+  block,
+  post,
+  spectator;
 
   bool get spansRoad =>
       this == footbridge || this == gantry || this == overpass;
 }
+
+/// When a prop is drawn relative to the finish plaza on the last lap.
+enum PropPhase { always, finishOnly, hiddenAtFinish }
 
 class Prop {
   const Prop({
@@ -38,6 +45,7 @@ class Prop {
     this.drop = 0,
     this.signs = const [],
     this.boards = const [],
+    this.phase = PropPhase.always,
   });
 
   final PropKind kind;
@@ -52,4 +60,21 @@ class Prop {
   final double drop;
   final List<SignPanel> signs;
   final List<SignBoard> boards;
+  final PropPhase phase;
+
+  Prop withPhase(PropPhase phase) => Prop(
+    kind: kind,
+    anchor: anchor,
+    side: side,
+    offset: offset,
+    width: width,
+    height: height,
+    depth: depth,
+    tint: tint,
+    detail: detail,
+    drop: drop,
+    signs: signs,
+    boards: boards,
+    phase: phase,
+  );
 }

@@ -7,6 +7,7 @@ import 'package:flame/components.dart';
 // Project imports:
 import '../../../utils/paint_utils.dart';
 import '../../config/road_config.dart';
+import '../../finish/finish_config.dart';
 import '../../road_projection.dart';
 import '../../scene_theme.dart';
 import '../prop.dart';
@@ -21,10 +22,17 @@ class BuildingPainter {
           for (final c in theme.wallColors)
             fogRamp(shade(c, -0.22), theme.fog)
         ],
+        _blockSide = [
+          for (final c in FinishConfig.blockColors) fogRamp(c, theme.fog)
+        ],
+        _blockFront = [
+          for (final c in FinishConfig.blockColors)
+            fogRamp(shade(c, -0.22), theme.fog)
+        ],
         _parapet = fogRamp(theme.roofColor, theme.fog),
         _window = fogRamp(theme.windowColor, theme.fog);
 
-  final List<List<Paint>> _wallSide, _wallFront;
+  final List<List<Paint>> _wallSide, _wallFront, _blockSide, _blockFront;
   final List<Paint> _parapet, _window;
 
   final Path _path = Path();
@@ -47,11 +55,14 @@ class BuildingPainter {
     c.save();
     c.clipRect(Rect.fromLTRB(0, 0, size.x, near.clip));
 
-    final tint = p.tint % _wallSide.length;
+    final block = p.kind == PropKind.block;
+    final sides = block ? _blockSide : _wallSide;
+    final fronts = block ? _blockFront : _wallFront;
+    final tint = p.tint % sides.length;
     // Faces
-    drawQuad(c, _path, fogged(_wallSide[tint], far.fog), xi1, box.base1, xi2,
+    drawQuad(c, _path, fogged(sides[tint], far.fog), xi1, box.base1, xi2,
         box.base2, xi2, t2, xi1, t1);
-    drawQuad(c, _path, fogged(_wallFront[tint], near.fog), xi1, box.base1, xo1,
+    drawQuad(c, _path, fogged(fronts[tint], near.fog), xi1, box.base1, xo1,
         box.base1, xo1, t1, xi1, t1);
 
     // Parapet

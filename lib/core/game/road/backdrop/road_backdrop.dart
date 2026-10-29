@@ -6,10 +6,10 @@ import 'package:flame/components.dart';
 
 // Project imports:
 import '../../utils/paint_utils.dart';
-import 'hills.dart';
-import 'skyline/skyline.dart';
 import '../config/road_config.dart';
 import '../scene_theme.dart';
+import 'hills.dart';
+import 'skyline/skyline.dart';
 
 class RoadBackdrop {
   RoadBackdrop(this.theme)
@@ -28,6 +28,10 @@ class RoadBackdrop {
   final Path _path = Path();
 
   double scroll = 0;
+
+  /// 0..1, how far the finish-street skyline has climbed over the horizon
+  /// on scenes whose own backdrop has none.
+  double skylineRise = 0;
 
   static const _cloudX = [0.05, 0.28, 0.52, 0.74, 0.93];
   static const _cloudY = [0.20, 0.45, 0.15, 0.38, 0.25];
@@ -154,6 +158,26 @@ class RoadBackdrop {
         frequency: 0.012,
         scroll: scroll,
         paint: _near,
+      );
+    }
+    if (theme.backdrop != BackdropKind.skyline && skylineRise > 0.02) {
+      // The ground below the horizon hides the part still rising.
+      final drop = 1 - skylineRise;
+      drawCityScape(
+        canvas,
+        width: w,
+        baseY: horizon + 170 * k * drop,
+        height: 110 * k,
+        scroll: scroll * 0.25 + 90 * k,
+        haze: _farHaze,
+      );
+      drawCityScape(
+        canvas,
+        width: w,
+        baseY: horizon + 260 * k * drop,
+        height: 170 * k,
+        scroll: scroll * 0.5,
+        haze: _nearHaze,
       );
     }
     canvas.drawRect(Rect.fromLTRB(0, horizon, w, size.y), _ground);

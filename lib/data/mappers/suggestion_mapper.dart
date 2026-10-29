@@ -1,3 +1,4 @@
+// Project imports:
 import '../../domain/models/suggestion.dart';
 
 Suggestion suggestionFromJson(Map<String, dynamic> json) => Suggestion(

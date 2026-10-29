@@ -90,7 +90,7 @@
   "@blurbDirtRoad": {
     "description": "Dirt road description"
   },
-  "blurbReception": "Njoo uweke jina la mwendeshaji, rekebisha sauti na uangalie vidhibiti.",
+  "blurbReception": "Weka jina la mchezaji, rekebisha sauti, angalia vidhibiti, chagua lugha, tazama takwimu na washindi, au weka pendekezo kwenye sanduku la mapendekezo.",
   "@blurbReception": {
     "description": "Reception description"
   },
@@ -152,6 +152,10 @@
   "startRace": "Anza shindano",
   "@startRace": {
     "description": "Start button"
+  },
+  "mostPlayed": "Inachezwa zaidi",
+  "@mostPlayed": {
+    "description": "Small badge on the scene the player has raced most"
   },
   "enterLabel": "Ingia",
   "@enterLabel": {

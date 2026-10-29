@@ -1,11 +1,26 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
+import '../retro_grayscale.dart';
+
 class RetroBackdrop extends StatelessWidget {
-  const RetroBackdrop({super.key, required this.child, this.asset});
+  const RetroBackdrop({
+    super.key,
+    required this.child,
+    this.asset,
+    this.grayscale = false,
+    this.dim = 0,
+  });
 
   final Widget child;
   final String? asset;
+
+  /// Shows the background image in black and white.
+  final bool grayscale;
+
+  /// Darkens the background image, from 0 (none) to 1 (black).
+  final double dim;
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +29,15 @@ class RetroBackdrop extends StatelessWidget {
       children: [
         const CustomPaint(painter: _BackdropPainter()),
         if (asset != null)
-          Image.asset(
-            asset!,
-            fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+          grayscaleIf(
+            grayscale,
+            Image.asset(
+              asset!,
+              fit: BoxFit.cover,
+              color: Color.fromRGBO(0, 0, 0, dim),
+              colorBlendMode: BlendMode.srcOver,
+              errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+            ),
           ),
         child,
       ],

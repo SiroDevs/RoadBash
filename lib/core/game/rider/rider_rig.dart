@@ -1,5 +1,7 @@
+// Dart imports:
 import 'dart:math' as math;
 
+// Project imports:
 import 'rider_painter.dart';
 
 class RiderRig {

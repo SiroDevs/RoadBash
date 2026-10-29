@@ -36,6 +36,7 @@ import 'package:roadbash/features/audio/cubit/audio_cubit.dart' as _i683;
 import 'package:roadbash/features/auth/cubit/auth_cubit.dart' as _i961;
 import 'package:roadbash/features/auth/cubit/sign_in_cubit.dart' as _i659;
 import 'package:roadbash/features/menu/cubit/menu_cubit.dart' as _i158;
+import 'package:roadbash/features/menu/cubit/menu_memory.dart' as _i900;
 import 'package:roadbash/features/menu/cubit/online_cubit.dart' as _i198;
 import 'package:roadbash/features/progress/cubit/progress_cubit.dart' as _i641;
 import 'package:roadbash/features/race/cubit/race_cubit.dart' as _i614;
@@ -58,7 +59,8 @@ extension GetItInjectableX on _i174.GetIt {
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
-    gh.factory<_i158.MenuCubit>(() => _i158.MenuCubit());
+    gh.lazySingleton<_i900.MenuMemory>(() => _i900.MenuMemory());
+    gh.factory<_i158.MenuCubit>(() => _i158.MenuCubit(gh<_i900.MenuMemory>()));
     gh.factory<_i899.ReceptionCubit>(() => _i899.ReceptionCubit());
     await gh.singletonAsync<_i460.SharedPreferences>(
       () => registerModule.sharedPrefs(),

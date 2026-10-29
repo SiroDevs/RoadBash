@@ -90,7 +90,7 @@
   "@blurbDirtRoad": {
     "description": "Dirt road description"
   },
-  "blurbReception": "Pop in to set your rider name, mix the sound and check the controls.",
+  "blurbReception": "Set your player name, mix the sound, check the controls, pick a language, see your stats and the leaderboard, or drop a note in the suggestion box.",
   "@blurbReception": {
     "description": "Reception description"
   },
@@ -152,6 +152,10 @@
   "startRace": "Start race",
   "@startRace": {
     "description": "Start button"
+  },
+  "mostPlayed": "Most played",
+  "@mostPlayed": {
+    "description": "Small badge on the scene the player has raced most"
   },
   "enterLabel": "Enter",
   "@enterLabel": {

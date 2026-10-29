@@ -1,8 +1,13 @@
+// Dart imports:
 import 'dart:math' as math;
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:flutter_soloud/flutter_soloud.dart';
 
+// Project imports:
 import '../../../domain/models/engine_flavour.dart';
 import '../../audio/synth/engine_synth.dart';
 import '../../audio/synth/engine_tunes.dart';

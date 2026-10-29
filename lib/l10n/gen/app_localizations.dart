@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// Reception description
   ///
   /// In en, this message translates to:
-  /// **'Pop in to set your rider name, mix the sound and check the controls.'**
+  /// **'Set your player name, mix the sound, check the controls, pick a language, see your stats and the leaderboard, or drop a note in the suggestion box.'**
   String get blurbReception;
 
   /// Race length
@@ -265,6 +265,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start race'**
   String get startRace;
+
+  /// Small badge on the scene the player has raced most
+  ///
+  /// In en, this message translates to:
+  /// **'Most played'**
+  String get mostPlayed;
 
   /// Enter button
   ///

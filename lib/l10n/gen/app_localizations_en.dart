@@ -82,7 +82,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get blurbReception =>
-      'Pop in to set your rider name, mix the sound and check the controls.';
+      'Set your player name, mix the sound, check the controls, pick a language, see your stats and the leaderboard, or drop a note in the suggestion box.';
 
   @override
   String lengthLabel(String km, int laps) {
@@ -114,6 +114,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get startRace => 'Start race';
+
+  @override
+  String get mostPlayed => 'Most played';
 
   @override
   String get enterLabel => 'Enter';

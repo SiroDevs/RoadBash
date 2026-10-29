@@ -8,7 +8,9 @@ import '../../audio/audio_service.dart';
 import '../../audio/loop_player.dart';
 import '../../audio/synth/engine_synth.dart';
 import '../race/race_controller.dart';
+import '../race/rival_racer.dart';
 import '../road/road_renderer.dart';
+import 'rival_audio.dart';
 
 class RideAudio {
   RideAudio({
@@ -16,6 +18,7 @@ class RideAudio {
     required this.service,
     required this.road,
     required this.race,
+    this.racers = const [],
     this.useAssetLoops = false,
   });
 
@@ -24,9 +27,11 @@ class RideAudio {
   final RoadRenderer road;
   final RaceController race;
 
+  final List<RivalRacer> racers;
   final bool useAssetLoops;
 
   late final _engine = EngineSynth(mix.flavour);
+  late final _rivals = RivalAudio(racers, road, race, mix.flavour);
   final _skid = LoopPlayer(LoopSound.skid.asset);
   final _gravel = LoopPlayer(LoopSound.gravel.asset);
   final _wind = LoopPlayer(LoopSound.wind.asset);
@@ -46,6 +51,7 @@ class RideAudio {
 
   Future<void> start() => Future.wait([
         _engine.start(),
+        _rivals.start(),
         if (useAssetLoops) ..._loops.map((p) => p.start()),
       ]);
 
@@ -61,6 +67,8 @@ class RideAudio {
       locked: road.locked,
       stopped: road.stopped,
     );
+
+    _rivals.update(dt, volume: mix.engineGain);
 
     final k = math.min(1.0, dt * 12);
     _skidLevel += ((road.skidding ? 1.0 : 0.0) - _skidLevel) * k;
@@ -103,6 +111,7 @@ class RideAudio {
 
   void pause() {
     _engine.pause();
+    _rivals.pause();
     for (final p in _loops) {
       p.pause();
     }
@@ -110,6 +119,7 @@ class RideAudio {
 
   void resume() {
     _engine.resume();
+    _rivals.resume();
     for (final p in _loops) {
       p.resume();
     }
@@ -117,6 +127,7 @@ class RideAudio {
 
   Future<void> dispose() => Future.wait([
         _engine.dispose(),
+        _rivals.dispose(),
         ..._loops.map((p) => p.dispose()),
       ]);
 }

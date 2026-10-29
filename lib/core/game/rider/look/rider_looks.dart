@@ -1,7 +1,5 @@
-// Dart imports:
 import 'dart:ui';
 
-// Project imports:
 import 'bike_look.dart';
 import 'rider_look.dart';
 

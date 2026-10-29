@@ -48,6 +48,8 @@ class EngineSynth {
     }
   }();
 
+  static Future<bool> ensureReady() => _ensureSoLoud();
+
   /// Does the slow, one-off work ahead of the race (builds the engine loops,
   /// boots the audio engine) so the race itself starts smoothly. Call it from
   /// a tap: browsers only let audio start after one.

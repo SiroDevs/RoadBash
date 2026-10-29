@@ -1,10 +1,7 @@
-// Dart imports:
 import 'dart:ui';
 
-// Flutter imports:
 import 'package:flutter/rendering.dart';
 
-// Project imports:
 import 'look/rider_look.dart';
 import 'rider_painter.dart';
 import 'rider_pose.dart';

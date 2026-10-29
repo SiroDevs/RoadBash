@@ -1,4 +1,3 @@
-// Dart imports:
 import 'dart:ui';
 
 class BikeLook {

@@ -1,10 +1,7 @@
-// Dart imports:
 import 'dart:ui';
 
-// Flutter imports:
 import 'package:flutter/painting.dart';
 
-// Project imports:
 import 'bike_look.dart';
 
 class RiderLook {

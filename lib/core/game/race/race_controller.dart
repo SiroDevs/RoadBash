@@ -3,10 +3,10 @@ import 'dart:math' as math;
 
 // Project imports:
 import '../../../domain/models/scene_id.dart';
+import 'race_result.dart';
 import '../rider/look/rider_look.dart';
 import '../rider/look/rider_looks.dart';
 import '../road/config/vehicle_config.dart';
-import 'race_result.dart';
 
 class RiderRival {
   const RiderRival(this.name, this.pace, this.phase, [this.look = RiderLook.main]);

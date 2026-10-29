@@ -1,10 +1,7 @@
-// Dart imports:
 import 'dart:math' as math;
 import 'dart:ui';
 
-// Project imports:
 import '../rider/rider_painter.dart';
-import '../rider/rider_rig.dart';
 import '../rider/rider_sprite.dart';
 import '../road/config/guardrail_config.dart';
 import '../road/config/vehicle_config.dart';
@@ -30,7 +27,8 @@ class RivalRacer implements RoadActor {
     (0.45, 1040),
   ];
   static const double _edge = 0.92;
-  static const double _gap = 0.34;
+  static const double _gap = 0.4;
+  static const double _reach = 3200;
 
   final RiderRival rival;
   final int index;
@@ -40,6 +38,7 @@ class RivalRacer implements RoadActor {
   double _dist = 0, _speed = 0, _visLead = 0, _lead = 0;
   double _lateral = 0, _gridLateral = 0, _latVel = 0, _t = 0;
   bool _crossed = false;
+  double _swing = 0;
 
   @override
   double get distance => _dist + _visLead;
@@ -49,11 +48,15 @@ class RivalRacer implements RoadActor {
 
   bool get settled => _crossed && _speed == 0;
 
+  double get speed => _speed;
+
+  bool get braking => sprite.pose.braking;
+
   void update(double dt, RaceController race, RoadRenderer road) {
     if (dt <= 0) return;
     final clock = race.raceClock;
     _advance(dt, race, road);
-    final k = (1 - clock / 4).clamp(0.0, 1.0);
+    final k = (1 - clock / 4).clamp(0.0, 1.0).toDouble();
     _visLead = _lead * k * k;
 
     final seg = road.track.at(distance + road.playerZ);
@@ -77,7 +80,7 @@ class RivalRacer implements RoadActor {
     final decel = (_speed * _speed / (2 * math.max(remaining, 60))).clamp(
       VehicleConfig.maxSpeed * 0.6,
       VehicleConfig.maxSpeed * 3.5,
-    );
+    ).toDouble();
     _speed = math.max(0.0, _speed - decel * dt);
     _dist += _speed * dt;
   }
@@ -101,7 +104,7 @@ class RivalRacer implements RoadActor {
     final limit = road.theme.dualCarriageway
         ? GuardrailConfig.riderLimit(section)
         : null;
-    final maxL = math.min(_edge, (limit ?? 9) - 0.12);
+    final maxL = math.min(_edge, (limit ?? 9.0) - 0.12);
 
     double target;
     if (_crossed && race.finished) {
@@ -110,21 +113,25 @@ class RivalRacer implements RoadActor {
       final width = 2 / lanes;
       final lane = -1 + width * ((index % lanes) + 0.5);
       final weave = width * 0.22 * math.sin(clock * 0.6 + rival.phase);
-      final t = (clock / 6).clamp(0.0, 1.0);
+      final t = (clock / 6).clamp(0.0, 1.0).toDouble();
       final blend = t * t * (3 - 2 * t);
       target = _gridLateral + (lane + weave - _gridLateral) * blend;
 
       final dz = distance - road.fullDistance;
-      final close = (1 - dz.abs() / 1600).clamp(0.0, 1.0);
+      final close = (1 - dz.abs() / _reach).clamp(0.0, 1.0).toDouble();
       final side = target - road.playerX;
       if (close > 0 && side.abs() < _gap) {
-        target += (side >= 0 ? 1 : -1) * (_gap - side.abs()) * close;
+        final dir = side.abs() < 0.02 ? (index.isEven ? 1.0 : -1.0) : side.sign;
+        target += dir * (_gap - side.abs()) * math.sqrt(close);
+        _swing = 1;
       }
     }
     target = target.clamp(-_edge, maxL).toDouble();
 
     final prev = _lateral;
-    _lateral += (target - _lateral) * math.min(1.0, dt * 2.5);
+    final rate = _swing > 0 ? 5.0 : 2.5;
+    _swing = 0;
+    _lateral += (target - _lateral) * math.min(1.0, dt * rate);
     _latVel = (_lateral - prev) / dt;
   }
 
@@ -138,7 +145,7 @@ class RivalRacer implements RoadActor {
 
   void _pose(double dt, double curve, double clock) {
     final p = sprite.pose;
-    final sp = (_speed / VehicleConfig.maxSpeed).clamp(0.0, 1.0);
+    final sp = (_speed / VehicleConfig.maxSpeed).clamp(0.0, 1.0).toDouble();
     final stopped = _speed < VehicleConfig.stoppedSpeed;
     final resting = stopped && (clock == 0 || _crossed);
     final braking = _crossed && !stopped;
@@ -147,11 +154,11 @@ class RivalRacer implements RoadActor {
 
     p.speed = sp;
     p.braking = braking;
-    p.steer += ((_latVel / 0.7).clamp(-1.0, 1.0) - p.steer) * ease;
+    p.steer += ((_latVel / 0.7).clamp(-1.0, 1.0).toDouble() - p.steer) * ease;
     p.foot += ((resting ? 1.0 : 0.0) - p.foot) * math.min(1.0, dt * 5);
     final bank = (p.steer * 0.30 + curve * 0.040) * (0.3 + 0.7 * sp) -
         0.12 * p.foot;
-    final lean = bank.clamp(-RiderPainter.maxLean, RiderPainter.maxLean);
+    final lean = bank.clamp(-RiderPainter.maxLean, RiderPainter.maxLean).toDouble();
     p.lean += (lean - p.lean) * math.min(1.0, dt * 6);
     final pitch = braking ? -1.0 : 0.5;
     p.pitch += (pitch * sp - p.pitch) * math.min(1.0, dt * 6);
@@ -161,9 +168,7 @@ class RivalRacer implements RoadActor {
   }
 
   @override
-  void paint(Canvas canvas, Offset ground, double lanePx, double screenH) {
-    final h = RiderRig.heightFor(lanePx, screenH);
-    if (h < 3) return;
-    sprite.paintAt(canvas, ground, h / RiderSprite.height);
+  void paint(Canvas canvas, Offset ground, double height) {
+    sprite.paintAt(canvas, ground, height / RiderSprite.height);
   }
 }

@@ -69,7 +69,7 @@ class RivalAudio {
         var source = _sources[key];
         source ??= await so.loadMem(key, v.loop.wav, mode: LoadMode.memory);
         _sources[key] = source;
-        if (_disposed) return dispose();
+        if (_disposed) return await dispose();
         v.handle = so.play(source, volume: 0, looping: true);
       } catch (e) {
         debugPrint('[rival-engine] could not start: $e');

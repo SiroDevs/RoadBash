@@ -6,6 +6,35 @@ A pseudo-3D racing game built with Flutter and Flame, made as a love letter to t
 
 > Work in progress. Controls and UI are still being polished. Suggestions and complaints are welcome.
 
+## Screenshots
+
+<table>
+    <tr>
+        <td>
+            <image src="./screenshots/image1.png"/>
+        </td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td>
+            <image src="./screenshots/image2.png"/>
+        </td>
+        <td>
+            <image src="./screenshots/image3.png"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Leaderboard
+        </td>
+        <td>
+            Stats
+        </td>
+    </tr>
+</table>
+
 ## Features
 
 - Classic pseudo-3D road rendering with hills, bends, haze, and roadside scenery (buildings, trees, lamps, signs) that keeps a fixed size and scales with distance on any screen shape

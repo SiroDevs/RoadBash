@@ -1,11 +1,10 @@
-// Dart imports:
 import 'dart:math' as math;
 import 'dart:ui';
 
-// Package imports:
 import 'package:flame/components.dart';
 
-// Project imports:
+import '../../hud/dashboard_layout.dart';
+import '../../rider/rider_rig.dart';
 import '../config/road_config.dart';
 import '../road_projection.dart';
 import 'road_actor.dart';
@@ -37,6 +36,8 @@ class RoadTraffic {
   }
 
   void paintAt(Canvas canvas, int n, VisionSeg v, Vector2 size) {
+    final playerLane = DashboardLayout.lanePx(size, lanes);
+    final playerH = RiderRig.heightFor(playerLane, size.y);
     for (var i = 0; i < actors.length; i++) {
       if (_n[i] != n) continue;
       final t = _t[i];
@@ -45,10 +46,11 @@ class RoadTraffic {
       final w = v.w1 + (v.w2 - v.w1) * t;
       final a = actors[i];
       final lanePx = 2 * w / lanes;
-      if (lanePx < 2) continue;
+      final h = playerH * math.min(lanePx / playerLane, 1.6);
+      if (h < 3) continue;
       canvas.save();
       canvas.clipRect(Rect.fromLTRB(0, 0, size.x, math.max(v.clip, y + 1)));
-      a.paint(canvas, Offset(x + w * a.lateral, y), lanePx, size.y);
+      a.paint(canvas, Offset(x + w * a.lateral, y), h);
       canvas.restore();
     }
   }

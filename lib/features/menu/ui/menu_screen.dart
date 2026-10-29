@@ -12,8 +12,6 @@ import '../../../common/constants/app_assets.dart';
 import '../../../common/l10n/l10n_extension.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
-import '../../../common/widgets/retro/brand/scene_preview.dart';
-import '../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../common/widgets/retro/page/music_scope.dart';
 import '../../../common/widgets/retro/page/retro_scaffold.dart';
 import '../../../common/widgets/retro/retro_style.dart';
@@ -22,12 +20,13 @@ import '../../../core/game/road/track/road_track.dart';
 import '../../../core/layout/responsive_layout_builder.dart';
 import '../../../core/router/route_names.dart';
 import '../../../domain/models/scene_id.dart';
-import '../../../l10n/gen/app_localizations.dart';
 import '../../progress/cubit/progress_cubit.dart';
-import '../../settings/cubit/settings_cubit.dart';
 import '../cubit/menu_cubit.dart';
-import 'widgets/online_badge.dart';
+import '../cubit/menu_target.dart';
+import '../cubit/scene_order.dart';
+import 'widgets/rider_bar.dart';
 import 'widgets/scene_info.dart';
+import 'widgets/scene_tile.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -38,97 +37,88 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   final Map<SceneId, double> _km = {
-    for (final id in SceneId.values)
-      id: RoadTrack.raceKm(id),
+    for (final id in SceneId.values) id: RoadTrack.raceKm(id),
   };
 
-  static const double _cardScale = 0.75;
+  /// Columns of the grid as last laid out, for the up/down arrow keys.
+  int _columns = 5;
 
-  SceneId _scene(int index) => SceneId.values[index];
+  /// 5 across on a laptop, 3 on wide phones and tablets, 2 on a phone.
+  static int _columnsFor(double width) =>
+      width >= 840 ? 5 : (width >= 520 ? 3 : 2);
 
-  void _go(int index) => context.goNamed(
-        RouteNames.race,
-        pathParameters: {'scene': _scene(index).name},
-      );
-
-  void _reception() => context.goNamed(RouteNames.reception);
-
-  void _tap(MenuCubit menu, int index) =>
-      index == menu.state ? _go(index) : menu.select(index);
+  void _open(MenuCubit menu, MenuTarget target) {
+    menu.open(target);
+    final id = target.scene;
+    if (id == null) {
+      context.goNamed(RouteNames.reception);
+    } else {
+      context.goNamed(RouteNames.race, pathParameters: {'scene': id.name});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final menu = context.read<MenuCubit>();
     return MusicScope(
       track: MusicTrack.menu,
-      child: CallbackShortcuts(
-        bindings: {
-          const SingleActivator(LogicalKeyboardKey.arrowLeft): () =>
-              menu.move(MenuCubit.entries - 1),
-          const SingleActivator(LogicalKeyboardKey.arrowRight): () =>
-              menu.move(1),
-          const SingleActivator(LogicalKeyboardKey.enter): () =>
-              _go(menu.state),
-        },
-        child: Focus(
-          autofocus: true,
-          child: BlocBuilder<MenuCubit, int>(
-            builder: (context, index) => RetroScaffold(
-              asset: AppAssets.appMain,
-              padding: EdgeInsets.fromLTRB(
-                context.sizes.pad,
-                context.sizes.pad * 0.65,
-                context.sizes.pad,
-                context.sizes.pad * 0.5,
+      child: BlocBuilder<ProgressCubit, ProgressState>(
+        builder: (context, progress) {
+          final order = SceneOrder.from(progress);
+          final items = order.items;
+          return CallbackShortcuts(
+            bindings: {
+              const SingleActivator(LogicalKeyboardKey.arrowLeft): () =>
+                  menu.move(-1, items),
+              const SingleActivator(LogicalKeyboardKey.arrowRight): () =>
+                  menu.move(1, items),
+              const SingleActivator(LogicalKeyboardKey.arrowUp): () =>
+                  menu.move(-_columns, items),
+              const SingleActivator(LogicalKeyboardKey.arrowDown): () =>
+                  menu.move(_columns, items),
+              const SingleActivator(LogicalKeyboardKey.enter): () =>
+                  _open(menu, menu.state ?? items.first),
+            },
+            child: Focus(
+              autofocus: true,
+              child: BlocBuilder<MenuCubit, MenuTarget?>(
+                builder: (context, state) => RetroScaffold(
+                  asset: AppAssets.appMain,
+                  padding: EdgeInsets.fromLTRB(
+                    context.sizes.pad,
+                    context.sizes.pad * 0.65,
+                    context.sizes.pad,
+                    context.sizes.pad * 0.5,
+                  ),
+                  child: _content(
+                    context,
+                    menu,
+                    order,
+                    items.contains(state) ? state! : items.first,
+                  ),
+                ),
               ),
-              child: _content(context, menu, index),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
 
-  Widget _content(BuildContext context, MenuCubit menu, int index) {
+  Widget _content(
+    BuildContext context,
+    MenuCubit menu,
+    SceneOrder order,
+    MenuTarget selected,
+  ) {
     final l10n = context.l10n;
     final s = context.sizes;
-    final id = _scene(index);
-    final info = SceneInfo(scene: id, km: _km[id]!);
-    final card = ScenePreview(switch (id) {
-      SceneId.city => AppAssets.sceneCity,
-      SceneId.suburbs => AppAssets.sceneSuburbs,
-      SceneId.thikaRoad => AppAssets.sceneThikaRoad,
-      SceneId.jungle => AppAssets.sceneJungle,
-      SceneId.dirtRoad => AppAssets.sceneDirtRoad,
-    });
-
-    final title = RetroTitle(_label(l10n, id));
-    final entries = Container(
-      color: Retro.panel,
-      child: Row(
-        children: [
-          for (var i = 0; i < MenuCubit.entries; i++)
-            RetroMenuItem(
-              center: true,
-              selected: i == index,
-              label: _label(l10n, _scene(i)),
-              onTap: () => _tap(menu, i),
-            ).expanded(),
-        ],
-      ),
+    final id = selected.scene;
+    final title = RetroTitle(
+      id == null ? l10n.receptionTitle : l10n.sceneTitle(id),
     );
-    final go = SizedBox(
-      width: double.infinity,
-      child: Wrap(
-        alignment: WrapAlignment.end,
-        spacing: s.gap * 0.75,
-        runSpacing: s.gap * 0.75,
-        children: [
-          RetroButton(l10n.receptionTitle, onTap: _reception),
-          RetroButton(l10n.startRace, onTap: () => _go(index)),
-        ],
-      ),
-    );
+    final grid = _grid(context, menu, order, selected);
+    final info = SceneInfo(scene: id, km: id == null ? 0 : _km[id]!);
 
     return ResponsiveLayoutBuilder(
       small: (_, __) => ResponsiveScrollBody(
@@ -137,102 +127,70 @@ class _MenuScreenState extends State<MenuScreen> {
           children: [
             title,
             SizedBox(height: s.gap),
-            Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: s.cardMaxW * _cardScale),
-                child: card,
-              ),
-            ),
+            grid,
             SizedBox(height: s.gap),
             info,
             SizedBox(height: s.gap),
-            _riderBar(context),
-            SizedBox(height: s.gapSmall),
-            entries,
-            SizedBox(height: s.gap),
-            go,
+            const RiderBar(),
           ],
         ),
       ),
-      medium: (_, __) => _fixed(context, s, title, info, card, entries, go),
-      large: (_, __) => _fixed(context, s, title, info, card, entries, go),
+      medium: (_, __) => _fixed(s, title, grid, info),
+      large: (_, __) => _fixed(s, title, grid, info),
     );
   }
 
-  Widget _fixed(
-    BuildContext context,
-    RetroSizes s,
-    Widget title,
-    Widget info,
-    Widget card,
-    Widget entries,
-    Widget go,
-  ) {
+  Widget _fixed(RetroSizes s, Widget title, Widget grid, Widget info) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         title,
         SizedBox(height: s.gapSmall),
-        LayoutBuilder(
-          builder: (context, box) => box.maxWidth > 640
-              ? Row(
-                  children: [
-                    SingleChildScrollView(child: info).expanded(),
-                    SizedBox(width: s.gap * 1.5),
-                    _smaller(card).center().expanded(),
-                  ],
-                )
-              : Column(
-                  children: [
-                    _smaller(card).center().expanded(),
-                    SizedBox(height: s.gapSmall),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight: box.maxHeight * 0.45,
-                      ),
-                      child: SingleChildScrollView(child: info),
-                    ),
-                  ],
-                ),
+        SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [grid, SizedBox(height: s.gap), info],
+          ),
         ).expanded(),
         SizedBox(height: s.gapSmall),
-        _riderBar(context),
-        SizedBox(height: s.gapSmall * 0.75),
-        entries,
-        SizedBox(height: s.gap * 0.6),
-        go,
+        const RiderBar(),
       ],
     );
   }
 
-  Widget _smaller(Widget card) =>
-      FractionallySizedBox(widthFactor: _cardScale, child: card);
-
-  String _label(AppLocalizations l10n, SceneId id) => l10n.sceneTitle(id);
-
-  Widget _riderBar(BuildContext context) {
+  Widget _grid(
+    BuildContext context,
+    MenuCubit menu,
+    SceneOrder order,
+    MenuTarget selected,
+  ) {
     final l10n = context.l10n;
-    return Container(
-      color: Retro.panel,
-      padding: EdgeInsets.symmetric(vertical: context.sizes.gapSmall),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          BlocBuilder<SettingsCubit, SettingsState>(
-            builder: (context, s) => Text(
-              s.profile.displayName(l10n),
-              style: retroBody(size: context.sizes.body),
-            ),
-          ),
-          BlocBuilder<ProgressCubit, ProgressState>(
-            builder: (context, p) => Text(
-              l10n.levelLabel(p.level),
-              style: retroBody(size: context.sizes.body),
-            ),
-          ),
-          const OnlineBadge(),
-        ],
-      ),
+    final gap = context.sizes.gap;
+    return LayoutBuilder(
+      builder: (context, box) {
+        final cols = _columns = _columnsFor(box.maxWidth);
+        final width = (box.maxWidth - gap * (cols - 1)) / cols;
+        return Wrap(
+          spacing: gap,
+          runSpacing: gap,
+          children: [
+            for (final item in order.items)
+              SizedBox(
+                width: width,
+                child: SceneTile(
+                  image: menuAsset(item),
+                  label: item.isReception
+                      ? l10n.receptionTitle
+                      : l10n.sceneTitle(item.scene!),
+                  selected: item == selected,
+                  mostPlayed: !item.isReception && item.scene == order.mostPlayed,
+                  onTap: () => _open(menu, item),
+                  onHighlight: () => menu.select(item),
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 }

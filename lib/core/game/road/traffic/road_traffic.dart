@@ -1,8 +1,11 @@
+// Dart imports:
 import 'dart:math' as math;
 import 'dart:ui';
 
+// Package imports:
 import 'package:flame/components.dart';
 
+// Project imports:
 import '../../hud/dashboard_layout.dart';
 import '../../rider/rider_rig.dart';
 import '../config/road_config.dart';

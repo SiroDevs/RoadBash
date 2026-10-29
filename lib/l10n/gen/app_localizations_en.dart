@@ -116,6 +116,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get startRace => 'Start race';
 
   @override
+  String get mostPlayed => 'Most played';
+
+  @override
   String get enterLabel => 'Enter';
 
   @override

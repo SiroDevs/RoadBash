@@ -153,6 +153,10 @@
   "@startRace": {
     "description": "Start button"
   },
+  "mostPlayed": "Most played",
+  "@mostPlayed": {
+    "description": "Small badge on the scene the player has raced most"
+  },
   "enterLabel": "Enter",
   "@enterLabel": {
     "description": "Enter button"

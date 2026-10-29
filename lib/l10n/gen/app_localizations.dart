@@ -266,6 +266,12 @@ abstract class AppLocalizations {
   /// **'Start race'**
   String get startRace;
 
+  /// Small badge on the scene the player has raced most
+  ///
+  /// In en, this message translates to:
+  /// **'Most played'**
+  String get mostPlayed;
+
   /// Enter button
   ///
   /// In en, this message translates to:

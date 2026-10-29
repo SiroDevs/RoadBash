@@ -116,6 +116,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get startRace => 'Anza shindano';
 
   @override
+  String get mostPlayed => 'Inachezwa zaidi';
+
+  @override
   String get enterLabel => 'Ingia';
 
   @override

@@ -20,6 +20,7 @@ import 'road_projection.dart';
 import 'scene_theme.dart';
 import 'surface/road_segment_painter.dart';
 import 'track/road_track.dart';
+import 'traffic/road_traffic.dart';
 
 class RoadRenderer extends PositionComponent {
   RoadRenderer(this.theme)
@@ -45,6 +46,7 @@ class RoadRenderer extends PositionComponent {
   final RoadSegmentPainter _roads;
   final PropPainter _decor;
   final FinishPadPainter _pad;
+  RoadTraffic? traffic;
 
   double trkPosition = 0, fullDistance = 0;
   double playerX = -0.25, speed = 0;
@@ -283,7 +285,10 @@ class RoadRenderer extends PositionComponent {
       if (v.fog >= 1) break;
     }
 
-    if (_visCount > 0) _drawDecor(canvas, baseIdx);
+    if (_visCount > 0) {
+      traffic?.prepare(trkPosition, fullDistance, playerZ);
+      _drawDecor(canvas, baseIdx);
+    }
   }
 
   void _drawDecor(Canvas canvas, int baseIdx) {
@@ -291,10 +296,11 @@ class RoadRenderer extends PositionComponent {
     final limit = math.min(RoadConfig.decorDistance, _lastN + 1);
 
     for (var n = limit - 1; n >= -RoadConfig.maxPropDepth; n--) {
+      final anchor = n < _firstN ? near : _byN[n];
+      if (anchor != null) traffic?.paintAt(canvas, n, anchor, size);
+
       final list = props.at((baseIdx + n + track.count * 2) % track.count);
       if (list.isEmpty) continue;
-
-      final anchor = n < _firstN ? near : _byN[n];
       if (anchor == null) continue;
 
       for (final prop in list) {

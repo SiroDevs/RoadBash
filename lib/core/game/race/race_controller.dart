@@ -3,15 +3,18 @@ import 'dart:math' as math;
 
 // Project imports:
 import '../../../domain/models/scene_id.dart';
+import '../rider/look/rider_look.dart';
+import '../rider/look/rider_looks.dart';
 import '../road/config/vehicle_config.dart';
 import 'race_result.dart';
 
 class RiderRival {
-  const RiderRival(this.name, this.pace, this.phase);
+  const RiderRival(this.name, this.pace, this.phase, [this.look = RiderLook.main]);
 
   final String name;
   final double pace;
   final double phase;
+  final RiderLook look;
 }
 
 class RaceController {
@@ -25,11 +28,11 @@ class RaceController {
   });
 
   static const List<RiderRival> defaultRivals = [
-    RiderRival('Mike', 0.86, 0.0),
-    RiderRival('Bose', 0.82, 1.7),
-    RiderRival('Sam', 0.78, 3.1),
-    RiderRival('Kamau', 0.72, 4.4),
-    RiderRival('Brayo', 0.66, 5.6),
+    RiderRival('Mike', 0.86, 0.0, RiderLooks.mike),
+    RiderRival('Bose', 0.82, 1.7, RiderLooks.bose),
+    RiderRival('Sam', 0.78, 3.1, RiderLooks.sam),
+    RiderRival('Kamau', 0.72, 4.4, RiderLooks.kamau),
+    RiderRival('Brayo', 0.66, 5.6, RiderLooks.brayo),
   ];
 
   static const double _surgeAmp = 2500;
@@ -45,7 +48,7 @@ class RaceController {
   final String playerName;
   final List<RiderRival> rivals;
 
-  double countdown = 3.0, elapsed = 0;
+  double countdown = 3.0, elapsed = 0, raceClock = 0;
   double finishTime = 0, progress = 0;
   int lap = 1, position = 1;
   RiderRival? nearest;
@@ -78,6 +81,7 @@ class RaceController {
       countdown -= dt;
       return;
     }
+    raceClock += dt;
     if (finished) return;
     elapsed += dt;
     progress = math.min(1.0, playerDistance / raceLength);

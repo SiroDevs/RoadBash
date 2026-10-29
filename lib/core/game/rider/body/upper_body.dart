@@ -2,9 +2,9 @@
 part of '../rider_painter.dart';
 
 class UpperBody extends RiderPartPainter {
-  static const _helmetShell = Color(0xFFF2C21C);
-  static const _helmetShade = Color(0xFFC79A0F);
-  static const _helmetGloss = Color(0x66FFFFFF);
+  UpperBody(super.look);
+
+  late final Color _shade = look.helmetShade;
 
   static const double _mid = RiderPartPainter.midX;
 
@@ -27,7 +27,7 @@ class UpperBody extends RiderPartPainter {
         67,
         m(neckY - 20, neckY - 30),
       ),
-      RiderPartPainter.leather,
+      look.neck,
       5,
     );
 
@@ -44,9 +44,9 @@ class UpperBody extends RiderPartPainter {
         width: 30,
         height: 32,
       ),
-      _helmetShell,
+      look.helmet,
     );
-    quad(canva, _helmetShade, [
+    quad(canva, _shade, [
       Offset(_mid - 13, m(cy + 8, cy)),
       Offset(_mid + 13, m(cy + 8, cy)),
       Offset(_mid + 8, m(cy + 15, cy + 7)),
@@ -60,7 +60,7 @@ class UpperBody extends RiderPartPainter {
         _mid + 10,
         m(cy - 5, cy - 12),
       ),
-      _helmetShade,
+      _shade,
       5,
     );
     oval(
@@ -70,7 +70,7 @@ class UpperBody extends RiderPartPainter {
         width: 15,
         height: 11,
       ),
-      _helmetGloss,
+      RiderLook.helmetGloss,
     );
     canva.restore();
   }
@@ -100,7 +100,7 @@ class UpperBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFA349A4);
+      ..color = look.suit;
     canva.drawPath(path, paint);
 
     // Back Reflector
@@ -124,12 +124,12 @@ class UpperBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF880015);
+      ..color = look.backPatch;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4.5
-      ..color = const Color(0xFFB5E61D);
+      ..color = look.stripeEdge;
     canva.drawPath(path, paint);
   }
 
@@ -154,7 +154,7 @@ class UpperBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFA349A4);
+      ..color = look.suit;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -171,12 +171,12 @@ class UpperBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF22B14C);
+      ..color = look.stripe;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0
-      ..color = const Color(0xFFB5E61D);
+      ..color = look.stripeEdge;
     canva.drawPath(path, paint);
 
     // Left Hand
@@ -194,7 +194,7 @@ class UpperBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFA349A4);
+      ..color = look.suit;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -212,12 +212,12 @@ class UpperBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF22B14C);
+      ..color = look.stripe;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0
-      ..color = const Color(0xFFB5E61D);
+      ..color = look.stripeEdge;
     canva.drawPath(path, paint);
   }
 }

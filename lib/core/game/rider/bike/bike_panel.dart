@@ -2,6 +2,8 @@
 part of '../rider_painter.dart';
 
 class BikePanels extends RiderPartPainter {
+  BikePanels(super.look);
+
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final tail = tailLift(pose);
     _backSidePanels(paint, path, canva, pose, tail);
@@ -32,7 +34,7 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFC3C3C3);
+      ..color = bike.panel;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -56,7 +58,7 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFC3C3C3);
+      ..color = bike.panel;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -88,7 +90,7 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFC3C3C3);
+      ..color = bike.panel;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -113,7 +115,7 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFC3C3C3);
+      ..color = bike.panel;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -131,7 +133,7 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFEFE4B0);
+      ..color = bike.trim;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -152,12 +154,12 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF22B14C);
+      ..color = bike.accent;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.25
-      ..color = const Color(0xFFB5E61D);
+      ..color = bike.accentEdge;
     canva.drawPath(path, paint);
     // Green Left Part
     path
@@ -171,12 +173,12 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF22B14C);
+      ..color = bike.accent;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.25
-      ..color = const Color(0xFFB5E61D);
+      ..color = bike.accentEdge;
     canva.drawPath(path, paint);
     // Small Middle Left Part
     path
@@ -192,7 +194,7 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFEFE4B0);
+      ..color = bike.trim;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -214,7 +216,7 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF7F7F7F);
+      ..color = bike.panelDark;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -232,7 +234,7 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFEFE4B0);
+      ..color = bike.trim;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -259,7 +261,7 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF7F7F7F);
+      ..color = bike.panelDark;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -277,7 +279,7 @@ class BikePanels extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF7F7F7F);
+      ..color = bike.panelDark;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke

@@ -2,6 +2,8 @@
 part of '../rider_painter.dart';
 
 class LowerBody extends RiderPartPainter {
+  LowerBody(super.look);
+
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     _leftLeg(paint, path, canva, pose);
     _rightLeg(paint, path, canva, pose);
@@ -26,7 +28,7 @@ class LowerBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFA349A4);
+      ..color = look.suit;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -45,12 +47,12 @@ class LowerBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF22B14C);
+      ..color = look.stripe;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0
-      ..color = const Color(0xFFB5E61D);
+      ..color = look.stripeEdge;
     canva.drawPath(path, paint);
 
     // Left Boot
@@ -66,7 +68,7 @@ class LowerBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF000000);
+      ..color = look.boots;
     canva.drawPath(path, paint);
   }
 
@@ -87,7 +89,7 @@ class LowerBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFA349A4);
+      ..color = look.suit;
     canva.drawPath(path, paint);
     // Right Leg Reflector
     path
@@ -101,12 +103,12 @@ class LowerBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF22B14C);
+      ..color = look.stripe;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0
-      ..color = const Color(0xFFB5E61D);
+      ..color = look.stripeEdge;
     canva.drawPath(path, paint);
     // Right Boot
     path
@@ -121,7 +123,7 @@ class LowerBody extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF000000);
+      ..color = look.boots;
     canva.drawPath(path, paint);
   }
 }

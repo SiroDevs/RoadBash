@@ -18,9 +18,11 @@ import 'hud/dashboard_hud.dart';
 import 'hud/hud_strings.dart';
 import 'race/race_controller.dart';
 import 'race/race_result.dart';
+import 'race/rival_racer.dart';
 import 'rider/rider_component.dart';
 import 'road/road_renderer.dart';
 import 'road/scene_theme.dart';
+import 'road/traffic/road_traffic.dart';
 
 class RoadGame extends FlameGame with KeyboardEvents {
   RoadGame({
@@ -43,6 +45,7 @@ class RoadGame extends FlameGame with KeyboardEvents {
 
   late final RoadRenderer road;
   late final RaceController race;
+  late final List<RivalRacer> racers;
   RideAudio? _ride;
 
   double _keySteer = 0, _touchSteer = 0, _tiltSteer = 0;
@@ -65,6 +68,11 @@ class RoadGame extends FlameGame with KeyboardEvents {
       runOut: road.track.runOutLength,
       playerName: playerName,
     );
+    racers = [
+      for (var i = 0; i < race.rivals.length; i++)
+        RivalRacer(race.rivals[i], i, theme.lanes),
+    ];
+    road.traffic = RoadTraffic(racers, theme.lanes);
     await addAll([
       road,
       RiderComponent(road),
@@ -84,17 +92,23 @@ class RoadGame extends FlameGame with KeyboardEvents {
     road.locked = race.countdown > 0;
     _applyInput();
     race.update(dt, road.fullDistance, road.speed);
+    for (final r in racers) {
+      r.update(dt, race, road);
+    }
 
     if (race.finished && !_finishing) {
       _finishing = true;
       _applyInput();
     }
-    if (_finishing && !_notified && (_finishDelay -= dt) <= 0) {
+    if (_finishing && !_notified && (_finishDelay -= dt) <= 0 && _fieldHome) {
       _notified = true;
       onFinished(race.buildResult());
     }
     _ride?.update(dt);
   }
+
+  bool get _fieldHome =>
+      _finishDelay < -3.6 || racers.every((r) => r.settled);
 
   void _applyInput() {
     if (!isLoaded) return;

@@ -30,6 +30,7 @@ import 'widgets/menu_target_info.dart';
 import 'widgets/rider_bar.dart';
 import 'widgets/scene_info.dart';
 
+/// Main menu where the player picks a scene or reception.
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
 
@@ -37,6 +38,7 @@ class MenuScreen extends StatefulWidget {
   State<MenuScreen> createState() => _MenuScreenState();
 }
 
+/// State for [MenuScreen]; caches the race length of each scene.
 class _MenuScreenState extends State<MenuScreen> {
   final Map<SceneId, double> _km = {
     for (final id in SceneId.values) id: RoadTrack.raceKm(id),
@@ -44,6 +46,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
   static const double _cardScale = 0.75;
 
+  /// Selects a menu target and opens the scene's race or reception.
   void _open(MenuCubit menu, MenuTarget target) {
     menu.open(target);
     final id = target.scene;
@@ -107,6 +110,7 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
+  /// Builds the menu body for the selected target.
   Widget _content(
     BuildContext context,
     MenuCubit menu,
@@ -152,6 +156,7 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
+  /// Lays out the title, info, card and entries in a fixed column.
   Widget _fixed(
     RetroSizes sizes,
     Widget title,
@@ -194,6 +199,7 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
+  /// Shrinks the scene card to fit beside the entries.
   Widget _smaller(Widget card) =>
       FractionallySizedBox(widthFactor: _cardScale, child: card);
 }

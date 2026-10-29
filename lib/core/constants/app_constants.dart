@@ -1,3 +1,4 @@
+/// App-wide constants such as the title and fonts.
 class AppConstants {
   AppConstants._();
 

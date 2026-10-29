@@ -35,6 +35,7 @@ mixin RoadInput on FlameGame {
     LogicalKeyboardKey.keyS,
   ];
 
+  /// Combines key, touch and tilt input into the rider controls.
   void applyInput() {
     if (!isLoaded) return;
     if (finishing) {
@@ -52,6 +53,7 @@ mixin RoadInput on FlameGame {
     road.throttle = (_keyThrottle || _touchThrottle) && !road.brake;
   }
 
+  /// Updates the key steering, throttle and brake from pressed keys.
   void readKeys(Set<LogicalKeyboardKey> keysPressed) {
     bool anyDown(List<LogicalKeyboardKey> keys) =>
         keys.any(keysPressed.contains);
@@ -62,6 +64,7 @@ mixin RoadInput on FlameGame {
     applyInput();
   }
 
+  /// Clears all key, touch and tilt input.
   void clearInput() {
     _keySteer = 0;
     _touchSteer = 0;
@@ -77,16 +80,19 @@ mixin RoadInput on FlameGame {
     applyInput();
   }
 
+  /// Sets the touch steering value, from -1 to 1.
   void setTouchSteer(double value) {
     _touchSteer = value;
     applyInput();
   }
 
+  /// Sets whether the touch throttle is pressed.
   void setTouchThrottle(bool pressed) {
     _touchThrottle = pressed;
     applyInput();
   }
 
+  /// Sets whether the touch brake is pressed.
   void setTouchBrake(bool pressed) {
     _touchBrake = pressed;
     applyInput();

@@ -7,6 +7,7 @@ import '../../domain/repos/leaderboard_repo.dart';
 import '../mappers/leaderboard_mapper.dart';
 import '../sources/remote/api_client.dart';
 
+/// Reads the leaderboard from the API.
 @LazySingleton(as: LeaderboardRepo)
 class LeaderboardRepoImpl implements LeaderboardRepo {
   LeaderboardRepoImpl(this._api);

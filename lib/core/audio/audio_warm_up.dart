@@ -19,9 +19,11 @@ class AudioWarmUp extends StatefulWidget {
   State<AudioWarmUp> createState() => _AudioWarmUpState();
 }
 
+/// State for [AudioWarmUp]; prepares the engine sound once.
 class _AudioWarmUpState extends State<AudioWarmUp> {
   bool _done = false;
 
+  /// Prepares the engine synth in advance.
   void _warm() {
     if (_done) return;
     _done = true;

@@ -1,6 +1,7 @@
 // Project imports:
 import '../../domain/models/suggestion.dart';
 
+/// Builds a [Suggestion] from JSON.
 Suggestion suggestionFromJson(Map<String, dynamic> json) => Suggestion(
   id: (json['id'] as num).toInt(),
   playerName: json['player_name'] as String,

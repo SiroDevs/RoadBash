@@ -10,6 +10,7 @@ import '../prop.dart';
 import '../sign_panel.dart';
 import 'scenery_layout.dart';
 
+/// Places scenery and features along a route from its stretches.
 void layOutRoute(
   List<List<Prop>> slots,
   List<RoadSegment> segments,
@@ -40,6 +41,7 @@ void layOutRoute(
   }
 }
 
+/// Adds lamps along the median of dual carriageways.
 void _medianLamps(
   List<List<Prop>> slots,
   List<RoadSegment> segments,
@@ -77,6 +79,7 @@ void _guardrails(List<List<Prop>> slots, List<RoadSegment> segments) {
   }
 }
 
+/// Places one route feature on its segment.
 void _feature(
   List<List<Prop>> slots,
   int limit,

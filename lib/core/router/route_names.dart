@@ -1,3 +1,4 @@
+/// Route names.
 class RouteNames {
   RouteNames._();
 
@@ -12,6 +13,7 @@ class RouteNames {
   static const leaderboard = 'leaderboard';
 }
 
+/// Route paths.
 class RoutePaths {
   RoutePaths._();
 

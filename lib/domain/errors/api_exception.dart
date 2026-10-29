@@ -1,3 +1,4 @@
+/// Error from the backend with a code and optional retry info.
 class ApiException implements Exception {
   const ApiException(this.code, {this.retryAfter, this.remaining});
 

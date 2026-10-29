@@ -18,6 +18,7 @@ import 'tree_painter.dart';
 import 'tunnel_painter.dart';
 import 'wall_painter.dart';
 
+/// Paints every kind of prop using the specialised painters.
 class PropPainter {
   PropPainter(SceneTheme theme)
       : _buildings = BuildingPainter(theme),
@@ -40,6 +41,7 @@ class PropPainter {
   final SlipRoadPainter _slipRoads;
   final TunnelPainter _tunnels;
 
+  /// Draws box-shaped props such as buildings and walls.
   void drawBox(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
     switch (prop.kind) {
       case PropKind.wall:
@@ -55,6 +57,7 @@ class PropPainter {
     }
   }
 
+  /// Draws sprite-like props such as trees, signs and spans.
   void drawBillboard(Canvas canvas, VisionSeg vision, Prop prop, Vector2 size) {
     if (prop.kind.spansRoad) {
       _span.draw(canvas, vision, prop, size);

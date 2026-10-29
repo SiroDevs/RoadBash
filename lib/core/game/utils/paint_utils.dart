@@ -4,27 +4,34 @@ import 'dart:ui';
 // Project imports:
 import '../road/config/road_config.dart';
 
+/// Creates a fill paint for a color.
 Paint fillPaint(Color color, {bool antiAlias = true}) => Paint()
   ..color = color
   ..isAntiAlias = antiAlias;
 
+/// Returns a darker shade of a color.
 Color shade(Color color, double amount) => Color.lerp(
   color,
   amount < 0 ? const Color(0xFF000000) : const Color(0xFFFFFFFF),
   amount.abs(),
 )!;
 
+/// Builds paints that fade a color into the fog.
 List<Paint> fogRamp(Color base, Color fog, {bool antiAlias = false}) =>
     List.generate(RoadConfig.fogSteps, (i) {
       final fraction = i / (RoadConfig.fogSteps - 1);
       return fillPaint(Color.lerp(base, fog, fraction)!, antiAlias: antiAlias);
     });
 
+/// Picks the paint for a fog amount.
 Paint fogged(List<Paint> ramp, double fog) {
   final step = (fog * (ramp.length - 1)).round();
   return ramp[step < 0 ? 0 : (step >= ramp.length ? ramp.length - 1 : step)];
 }
 
+/// Adds a four-corner shape to a path.
+///
+/// Takes the four corners as (x1, y1) to (x4, y4), in drawing order.
 void addQuad(
   Path path,
   double x1,
@@ -44,6 +51,10 @@ void addQuad(
     ..close();
 }
 
+/// Draws a filled four-corner shape.
+///
+/// Takes the four corners as (x1, y1) to (x4, y4), in drawing order, and fills
+/// them with [paint].
 void drawQuad(
   Canvas canva,
   Path path,

@@ -1,3 +1,4 @@
+/// Paths to the app's asset files.
 class AppAssets {
   AppAssets._();
 

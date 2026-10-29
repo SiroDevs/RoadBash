@@ -1,3 +1,4 @@
+/// Wall styles and their heights.
 enum WallStyle {
   block(300),
   concrete(1800),

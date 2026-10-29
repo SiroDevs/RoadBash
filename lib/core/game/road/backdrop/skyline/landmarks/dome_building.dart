@@ -5,6 +5,7 @@ import 'dart:ui';
 import '../shape_primitives.dart';
 import '../skyline_palette.dart';
 
+/// Draws the dome building.
 void drawDomeBuilding(Canvas canva, Paint paint) {
   drawPoly(canva, paint, const [
     190,

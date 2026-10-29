@@ -1,6 +1,7 @@
 // Project imports:
 import '../models/stats_models.dart';
 
+/// Contract for tracking visits and reading stats.
 abstract interface class StatsRepo {
   Future<void> trackVisit();
   Future<int> onlineCount();

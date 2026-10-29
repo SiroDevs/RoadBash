@@ -17,6 +17,7 @@ abstract final class SignGlyphs {
   static final Paint fill = Paint()..color = white;
   static final Path path = Path();
 
+  /// Returns a cached text painter for a text and color.
   static TextPainter painter(String text, Color color) => _cache.putIfAbsent(
     '${color.toARGB32()}|$text',
     () => TextPainter(
@@ -34,8 +35,10 @@ abstract final class SignGlyphs {
     )..layout(),
   );
 
+  /// Returns amber for texts in brackets, white otherwise.
   static Color colorFor(String text) => text.startsWith('(') ? amber : white;
 
+  /// Returns the unscaled width of a text.
   static double widthOf(String text) => painter(text, white).width;
 
   // Draws [text] scaled about its vertical centre, left or right anchored.

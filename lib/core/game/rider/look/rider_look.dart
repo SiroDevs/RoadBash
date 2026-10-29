@@ -7,6 +7,7 @@ import 'package:flutter/painting.dart';
 // Project imports:
 import 'bike_look.dart';
 
+/// Colors of the rider's suit, helmet and details.
 class RiderLook {
   const RiderLook({
     this.suit = const Color(0xFFA349A4),
@@ -36,6 +37,7 @@ class RiderLook {
 
   static const Color helmetGloss = Color(0x66FFFFFF);
 
+  /// Shaded helmet color, derived unless overridden.
   Color get helmetShade {
     final shadeOverride = helmetShadeOverride;
     if (shadeOverride != null) return shadeOverride;
@@ -43,6 +45,7 @@ class RiderLook {
     return hsl.withLightness((hsl.lightness * 0.77).clamp(0.0, 1.0)).toColor();
   }
 
+  /// Returns a copy with the given colors replaced.
   RiderLook copyWith({
     Color? suit,
     Color? stripe,

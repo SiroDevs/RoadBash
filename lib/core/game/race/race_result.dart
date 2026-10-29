@@ -1,6 +1,7 @@
 // Project imports:
 import '../../../domain/models/scene_id.dart';
 
+/// Formats seconds as minutes and seconds with tenths.
 String formatTime(double seconds, {bool short = false}) {
   final tenths = (seconds * 10).round();
   final minutes = tenths ~/ 600;
@@ -9,6 +10,7 @@ String formatTime(double seconds, {bool short = false}) {
   return (short && minutes == 0) ? ss : '$minutes:$ss';
 }
 
+/// One row of the results table.
 class ResultRow {
   const ResultRow({
     required this.place,
@@ -23,11 +25,13 @@ class ResultRow {
   final bool isPlayer;
 }
 
+/// Final standings of a race.
 class RaceResult {
   const RaceResult({required this.scene, required this.rows});
 
   final SceneId scene;
   final List<ResultRow> rows;
 
+  /// The player's row in the standings.
   ResultRow get player => rows.firstWhere((r) => r.isPlayer);
 }

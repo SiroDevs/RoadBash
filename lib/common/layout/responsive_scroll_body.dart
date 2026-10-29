@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/widgets.dart';
 
+/// Scrollable body that adapts its width to the screen size.
 class ResponsiveScrollBody extends StatelessWidget {
   const ResponsiveScrollBody({
     super.key,

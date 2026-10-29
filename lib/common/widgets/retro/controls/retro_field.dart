@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../layout/retro_sizes.dart';
 import '../retro_style.dart';
 
+/// Retro text field with an optional show/hide toggle.
 class RetroField extends StatefulWidget {
   const RetroField({
     super.key,
@@ -31,6 +32,7 @@ class RetroField extends StatefulWidget {
   State<RetroField> createState() => _RetroFieldState();
 }
 
+/// State for [RetroField]; tracks whether the text is hidden.
 class _RetroFieldState extends State<RetroField> {
   bool _hidden = true;
 

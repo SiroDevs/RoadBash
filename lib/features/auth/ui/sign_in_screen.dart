@@ -22,6 +22,7 @@ import '../cubit/sign_in_cubit.dart';
 import 'anonymous_warning.dart';
 import 'sign_in_texts.dart';
 
+/// Sign-in screen with name, answer and account creation steps.
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -29,6 +30,7 @@ class SignInScreen extends StatefulWidget {
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
+/// State for [SignInScreen]; owns the text controllers.
 class _SignInScreenState extends State<SignInScreen> {
   late final _name = TextEditingController(text: _savedName());
   final _answer = TextEditingController();
@@ -44,10 +46,12 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
+  /// Returns the saved player name, or empty for anonymous players.
   String _savedName() {
     final saved = context.read<SettingsCubit>().state.profile.name;
     return saved == AppConstants.anonymousName ? '' : saved;
   }
+  /// Clears the answer, confirm and question fields.
   void _clear() {
     _answer.clear();
     _confirm.clear();
@@ -82,6 +86,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+  /// Builds the form panel for the current sign-in stage.
   Widget _panel(BuildContext context, SignInState st) {
     final l10n = context.l10n;
     final sizes = context.sizes;
@@ -163,12 +168,14 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+  /// Submits the new-account form to the cubit.
   void _create(SignInCubit cubit) => cubit.submitCreate(
     question: _question.text,
     answer: _answer.text,
     confirm: _confirm.text,
   );
 
+  /// Builds the action buttons for the current sign-in stage.
   Widget _actions(BuildContext context, SignInState st) {
     final l10n = context.l10n;
     final sizes = context.sizes;

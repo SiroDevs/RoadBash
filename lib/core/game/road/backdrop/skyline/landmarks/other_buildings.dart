@@ -5,6 +5,7 @@ import 'dart:ui';
 import '../shape_primitives.dart';
 import '../skyline_palette.dart';
 
+/// Draws smaller background buildings.
 void drawOtherBuildings(Canvas canva, Paint paint) {
   drawPoly(canva, paint, const [37, 90, 37, 72, 30, 72, 30, 90], color3F48CC);
   drawPoly(canva, paint, const [

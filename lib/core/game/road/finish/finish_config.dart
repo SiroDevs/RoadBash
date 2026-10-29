@@ -25,8 +25,11 @@ enum FinishLook {
   final int padRows;
   final int chequerRows;
 
+  /// Number of segments in the finish pad.
   int get padLength => padRows * FinishConfig.rowSegments;
+  /// True for the city entry finish.
   bool get city => this == cityEntry;
+  /// True for the zebra crossing finish.
   bool get zebraCrossing => this == zebra;
 
   /// How far before the line the finish dressing (and, for [cityEntry], the
@@ -38,6 +41,7 @@ enum FinishLook {
 
 /// Layout numbers for the finish, in segments unless noted.
 abstract final class FinishConfig {
+  /// Returns the finish style of a scene.
   static FinishLook lookFor(SceneId scene) => switch (scene) {
     SceneId.city => FinishLook.zebra,
     SceneId.thikaRoad => FinishLook.cityEntry,
@@ -51,6 +55,7 @@ abstract final class FinishConfig {
 
   static const double runOutMetres = 300;
 
+  /// Segments after the line where the rider is allowed to coast.
   static int get runOut => math.max(
     (runOutMetres / 1000 / RoadConfig.unitKm / RoadConfig.segmentLength).ceil(),
     RoadConfig.drawDistance + 60,

@@ -1,17 +1,20 @@
 // Project imports:
 part of '../rider_painter.dart';
 
+/// Paints the rider's helmet, torso and arms.
 class UpperBody extends RiderPartPainter {
   UpperBody(super.look);
 
   late final Helmet _helmet = Helmet(look);
 
+  /// Paints the helmet, torso and arms.
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     _helmet.paint(canva, pose);
     _torso(paint, path, canva, pose);
     _arms(paint, path, canva, pose);
   }
 
+  /// Paints the torso.
   void _torso(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final foot = pose.foot.clamp(0.0, 1.0);
 
@@ -70,6 +73,7 @@ class UpperBody extends RiderPartPainter {
     canva.drawPath(path, paint);
   }
 
+  /// Paints the arms and hands.
   void _arms(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final foot = pose.foot.clamp(0.0, 1.0);
 

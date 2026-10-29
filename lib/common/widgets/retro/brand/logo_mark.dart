@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 // Project imports:
 import '../../../../core/constants/app_constants.dart';
 
+/// RoadBash logo drawn as license plates.
 class RoadBashLogo extends StatelessWidget {
   const RoadBashLogo({super.key, this.size = 64});
 
   final double size;
 
+  /// Builds one license plate with the given text and colors.
   Widget _plate(String text, Color bg, Color fg) => Container(
     padding: EdgeInsets.symmetric(
       horizontal: size * 0.25,

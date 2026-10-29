@@ -6,6 +6,7 @@ import '../../../layout/retro_sizes.dart';
 import '../retro_style.dart';
 import 'click_sound.dart';
 
+/// Retro button that plays a click sound.
 class RetroButton extends StatelessWidget {
   const RetroButton(this.label, {super.key, required this.onTap});
 
@@ -31,6 +32,7 @@ class RetroButton extends StatelessWidget {
   }
 }
 
+/// Retro menu entry that can be selected.
 class RetroMenuItem extends StatelessWidget {
   const RetroMenuItem({
     super.key,

@@ -7,8 +7,10 @@ import 'package:sensors_plus/sensors_plus.dart';
 // Project imports:
 import 'tilt_source_base.dart';
 
+/// Creates the tilt source that reads the phone accelerometer.
 TiltSource createTiltSource() => _NativeTilt();
 
+/// Tilt source backed by the native accelerometer.
 class _NativeTilt implements TiltSource {
   _NativeTilt() {
     _sub = accelerometerEventStream(

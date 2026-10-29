@@ -17,6 +17,7 @@ import '../../../domain/models/suggestion.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../cubit/suggestion_cubit.dart';
 
+/// Panel for sending a suggestion and, for admins, reading the inbox.
 class SuggestionPanel extends StatelessWidget {
   const SuggestionPanel({super.key});
 
@@ -30,6 +31,7 @@ class SuggestionPanel extends StatelessWidget {
   );
 }
 
+/// Returns the localized text for a suggestion error.
 String? _errorText(AppLocalizations l10n, SuggestionError? error) =>
     switch (error) {
       null => null,
@@ -39,6 +41,7 @@ String? _errorText(AppLocalizations l10n, SuggestionError? error) =>
       SuggestionError.network => l10n.errNetwork,
     };
 
+/// Form for typing and sending a suggestion.
 class _Form extends StatefulWidget {
   const _Form({required this.state});
 
@@ -48,6 +51,7 @@ class _Form extends StatefulWidget {
   State<_Form> createState() => _FormState();
 }
 
+/// State for [_Form]; owns the text controller.
 class _FormState extends State<_Form> {
   final _text = TextEditingController();
 
@@ -99,6 +103,7 @@ class _FormState extends State<_Form> {
   }
 }
 
+/// List of received suggestions for admins.
 class _Inbox extends StatelessWidget {
   const _Inbox({required this.state});
 
@@ -129,6 +134,7 @@ class _Inbox extends StatelessWidget {
     );
   }
 
+  /// Builds one suggestion entry with its date.
   Widget _tile(BuildContext context, Suggestion item) {
     final sizes = context.sizes;
     final when = DateFormat('d MMM, HH:mm').format(item.createdAt);

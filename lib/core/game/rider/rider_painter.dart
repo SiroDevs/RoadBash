@@ -18,6 +18,7 @@ part 'body/helmet.dart';
 part 'body/lower_body.dart';
 part 'body/upper_body.dart';
 
+/// Paints the bike and rider from a pose.
 class RiderPainter {
   RiderPainter(this.rig, {this.look = RiderLook.main});
 
@@ -42,6 +43,7 @@ class RiderPainter {
     ..strokeJoin = StrokeJoin.round;
   final Path _path = Path();
 
+  /// Paints the bike and rider in the given pose.
   void paint(Canvas canva, RiderPose pose) {
     _bikeFrame.paintShadow(canva, pose);
 
@@ -74,10 +76,12 @@ class RiderPainter {
   }
 }
 
+/// Base class for painters of the bike and rider parts.
 abstract class RiderPartPainter {
   RiderPartPainter(this.look);
 
   final RiderLook look;
+  /// Bike colors of the current look.
   BikeLook get bike => look.bike;
 
   static const double canvasWidth = 120;
@@ -88,13 +92,17 @@ abstract class RiderPartPainter {
   final Paint ink = Paint()..isAntiAlias = true;
   final Path scratch = Path();
 
+  /// Returns how far the rider tucks forward.
   double tuckOf(RiderPose pose) => pose.speed * 5;
 
+  /// Returns how much the tail lifts with the bike's pitch.
   double tailLift(RiderPose pose) => -pose.pitch * 3.5;
 
+  /// Returns the hand position on a handlebar side.
   Offset handOf(int side, RiderPose pose) =>
       Offset(midX + side * 40, 65 + tuckOf(pose) + side * pose.steer * 4);
 
+  /// Fills a rounded rectangle.
   void fill(Canvas canva, Rect rect, Color color, [double radius = 3]) {
     ink
       ..style = PaintingStyle.fill
@@ -102,6 +110,7 @@ abstract class RiderPartPainter {
     canva.drawRRect(RRect.fromRectXY(rect, radius, radius), ink);
   }
 
+  /// Fills an oval.
   void oval(Canvas canva, Rect rect, Color color) {
     ink
       ..style = PaintingStyle.fill
@@ -109,6 +118,7 @@ abstract class RiderPartPainter {
     canva.drawOval(rect, ink);
   }
 
+  /// Fills a polygon through the given points.
   void quad(Canvas canva, Color color, List<Offset> pts) {
     ink
       ..style = PaintingStyle.fill
@@ -122,6 +132,7 @@ abstract class RiderPartPainter {
     canva.drawPath(scratch, ink);
   }
 
+  /// Draws a limb as a thick line between two points.
   void limb(Canvas canva, Offset start, Offset end, double width, Color color) {
     ink
       ..style = PaintingStyle.stroke

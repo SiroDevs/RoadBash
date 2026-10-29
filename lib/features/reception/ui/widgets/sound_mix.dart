@@ -15,6 +15,7 @@ import '../../../../core/audio/synth/engine_preview.dart';
 import '../../../../domain/models/engine_flavour.dart';
 import '../../../settings/cubit/settings_cubit.dart';
 
+/// Reception panel with volume sliders and engine sound selection.
 class SoundMix extends StatefulWidget {
   const SoundMix({super.key});
 
@@ -22,6 +23,7 @@ class SoundMix extends StatefulWidget {
   State<SoundMix> createState() => _SoundMixState();
 }
 
+/// State for [SoundMix]; owns the engine sound preview player.
 class _SoundMixState extends State<SoundMix> {
   final _preview = EnginePreview();
 
@@ -31,11 +33,13 @@ class _SoundMixState extends State<SoundMix> {
     super.dispose();
   }
 
+  /// Saves the chosen engine sound and plays a preview.
   void _pick(EngineFlavour flavour) {
     context.read<SettingsCubit>().setFlavour(flavour);
     _listen(flavour);
   }
 
+  /// Plays a short preview of the engine sound at the current volume.
   void _listen(EngineFlavour flavour) {
     final profile = context.read<SettingsCubit>().state.profile;
     unawaited(_preview.play(flavour, profile.masterGain * profile.engine));
@@ -61,6 +65,7 @@ class _SoundMixState extends State<SoundMix> {
     );
   }
 
+  /// Builds a fixed-width label for a slider row.
   Widget _label(BuildContext context, String text, {Color? color}) {
     final sizes = context.sizes;
     return SizedBox(
@@ -77,6 +82,7 @@ class _SoundMixState extends State<SoundMix> {
     );
   }
 
+  /// Builds a labelled slider row.
   Widget _slider(
     BuildContext context,
     String label,

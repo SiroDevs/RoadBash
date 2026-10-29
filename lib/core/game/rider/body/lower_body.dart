@@ -1,14 +1,17 @@
 // Project imports:
 part of '../rider_painter.dart';
 
+/// Paints the rider's legs.
 class LowerBody extends RiderPartPainter {
   LowerBody(super.look);
 
+  /// Paints both legs.
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     _leftLeg(paint, path, canva, pose);
     _rightLeg(paint, path, canva, pose);
   }
 
+  /// Paints the left leg.
   void _leftLeg(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final foot = pose.foot.clamp(0.0, 1.0);
 
@@ -72,6 +75,7 @@ class LowerBody extends RiderPartPainter {
     canva.drawPath(path, paint);
   }
 
+  /// Paints the right leg.
   void _rightLeg(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final foot = pose.foot.clamp(0.0, 1.0);
 

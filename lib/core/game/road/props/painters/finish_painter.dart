@@ -37,6 +37,11 @@ class FinishPainter {
   final List<Paint> _black, _white, _trousers;
   final List<List<Paint>> _skin, _shirt;
 
+  /// Draws a finish-area prop such as a post or spectator.
+  ///
+  /// [anchorX] and [anchorY] are the prop's ground point on screen and [width]
+  /// and [height] its size in pixels. [vision] is the projected segment it
+  /// stands on.
   void draw(Canvas canvas, VisionSeg vision, Prop prop, double anchorX, double anchorY, double width,
       double height) {
     switch (prop.kind) {
@@ -49,6 +54,11 @@ class FinishPainter {
     }
   }
 
+  /// Draws a striped finish post.
+  ///
+  /// [anchorX] and [anchorY] are the prop's ground point on screen and [width]
+  /// and [height] its size in pixels. [vision] is the projected segment it
+  /// stands on.
   void _post(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double width, double height) {
     const bands = 6;
     final bh = height / bands;
@@ -70,6 +80,11 @@ class FinishPainter {
     );
   }
 
+  /// Draws a spectator.
+  ///
+  /// [anchorX] and [anchorY] are the prop's ground point on screen and [width]
+  /// and [height] its size in pixels. [vision] is the projected segment it
+  /// stands on.
   void _spectator(Canvas canvas, VisionSeg vision, Prop prop, double anchorX, double anchorY, double width,
       double height) {
     final shirt = fogged(_shirt[prop.tint % _shirt.length], vision.fog);

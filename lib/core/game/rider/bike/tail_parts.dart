@@ -1,21 +1,25 @@
 // Project imports:
 part of '../rider_painter.dart';
 
+/// Paints the bike's tail: brake light, covers and rear wheel.
 class TailParts extends RiderPartPainter {
   TailParts(super.look);
 
   late final TailCovers _covers = TailCovers(look);
 
+  /// Paints the tail parts.
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final tail = tailLift(pose);
     _tailUnit(paint, path, canva, pose, tail);
     _covers.paint(paint, path, canva, pose, tail);
   }
 
+  /// Paints the rear wheel.
   void paintWheel(Paint paint, Canvas canva, RiderPose pose) {
     _rearWheel(paint, canva, pose);
   }
   
+  /// Paints the brake light and tail unit.
   void _tailUnit(Paint paint, Path path, Canvas canva, RiderPose pose, double tail) {
     // Brake Light
     path
@@ -117,6 +121,7 @@ class TailParts extends RiderPartPainter {
     canva.drawPath(path, paint);
   }
 
+  /// Paints the rear wheel.
   void _rearWheel(Paint paint, Canvas canva, RiderPose pose) {
     paint
       ..style = PaintingStyle.fill

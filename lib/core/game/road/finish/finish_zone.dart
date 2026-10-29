@@ -27,6 +27,7 @@ class FinishZone {
   /// 0..1, how far the skyline has climbed over the horizon (Thika only).
   double rise = 0;
 
+  /// Updates the finish zone from the rider's position.
   void update(double trackPosition, double fullDistance) {
     const seg = RoadConfig.segmentLength;
     final ahead = (line * seg - trackPosition) / seg;
@@ -37,6 +38,7 @@ class FinishZone {
         : 0.0;
   }
 
+  /// True when a prop should be shown in the current finish phase.
   bool shows(Prop prop) => switch (prop.phase) {
     PropPhase.always => true,
     PropPhase.finishOnly => on,
@@ -50,5 +52,6 @@ class FinishZone {
     return offset ~/ FinishConfig.rowSegments;
   }
 
+  /// True when a pad row is part of a zebra crossing.
   bool isZebra(int row) => look.zebraCrossing && row >= look.chequerRows;
 }

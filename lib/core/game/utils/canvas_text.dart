@@ -10,6 +10,10 @@ import '../../constants/app_constants.dart';
 final Map<String, TextPainter> _painters = {};
 const int _painterLimit = 96;
 
+/// Returns a cached text painter for the given style.
+///
+/// [size], [color], [weight] and [fontFamily] set the style and [shadow] adds a
+/// drop shadow.
 TextPainter _painterFor(
   String text,
   double size,
@@ -53,6 +57,11 @@ TextPainter _painterFor(
   return tp;
 }
 
+/// Draws text at a point with the given style.
+///
+/// [at] is the anchor point, [size] the font size and [color] the text color.
+/// [weight], [align] and [fontFamily] set the style and [shadow] adds a drop
+/// shadow.
 void paintText(
   Canvas canvas,
   String text,

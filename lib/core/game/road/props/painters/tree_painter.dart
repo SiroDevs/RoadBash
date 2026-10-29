@@ -8,6 +8,7 @@ import '../../road_projection.dart';
 import '../../scene_theme.dart';
 import '../prop.dart';
 
+/// Paints trees, bushes, palms and boulders.
 class TreePainter {
   TreePainter(SceneTheme theme)
       : _leafDark = fogRamp(theme.treeDark, theme.fog, antiAlias: true),
@@ -21,6 +22,11 @@ class TreePainter {
   final List<Paint> _leafDark, _leafLight, _trunk, _shadow, _rock, _rockLight;
   final Path _path = Path();
 
+  /// Draws the tree or boulder for a prop.
+  ///
+  /// [anchorX] and [anchorY] are the prop's ground point on screen and [width]
+  /// and [height] its size in pixels. [vision] is the projected segment it
+  /// stands on.
   void draw(Canvas canvas, VisionSeg vision, Prop prop, double anchorX, double anchorY, double width,
       double height) {
     switch (prop.kind) {
@@ -41,6 +47,7 @@ class TreePainter {
     }
   }
 
+  /// Draws the ground shadow under a tree.
   void _contact(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double radius) {
     if (radius < 1.2) return;
     canvas.drawOval(
@@ -48,6 +55,7 @@ class TreePainter {
         fogged(_shadow, vision.fog));
   }
 
+  /// Draws a broadleaf tree (parameters as in [draw]).
   void _broadleaf(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double treeWidth, double treeHeight) {
     _contact(canvas, vision, anchorX, anchorY, treeWidth * 0.9);
     final trunkW = math.max(1.0, treeWidth * 0.17);
@@ -68,6 +76,7 @@ class TreePainter {
         fogged(_leafLight, vision.fog));
   }
 
+  /// Draws a pine tree (parameters as in [draw]).
   void _pine(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double width, double height) {
     _contact(canvas, vision, anchorX, anchorY, width * 0.7);
     final trunkW = math.max(1.0, width * 0.13);
@@ -96,6 +105,7 @@ class TreePainter {
     canvas.drawPath(_path, fogged(_leafLight, vision.fog));
   }
 
+  /// Draws an acacia tree (parameters as in [draw]).
   void _acacia(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double treeWidth, double treeHeight) {
     _contact(canvas, vision, anchorX, anchorY, treeWidth * 0.8);
     final trunkW = math.max(1.0, treeWidth * 0.1);
@@ -113,6 +123,7 @@ class TreePainter {
         fogged(_leafLight, vision.fog));
   }
 
+  /// Draws a bush (parameters as in [draw]).
   void _bush(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double treeWidth, double treeHeight) {
     _contact(canvas, vision, anchorX, anchorY, treeWidth * 0.8);
     canvas.drawOval(
@@ -127,6 +138,7 @@ class TreePainter {
         fogged(_leafLight, vision.fog));
   }
 
+  /// Draws a palm tree (parameters as in [draw]).
   void _palm(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double width, double height) {
     _contact(canvas, vision, anchorX, anchorY, width * 0.6);
     final topX = anchorX + width * 0.22;
@@ -170,6 +182,7 @@ class TreePainter {
     canvas.drawPath(_path, fogged(_leafLight, vision.fog));
   }
 
+  /// Draws a boulder (parameters as in [draw]).
   void _boulder(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double width, double height) {
     _contact(canvas, vision, anchorX, anchorY, width * 0.9);
     _path

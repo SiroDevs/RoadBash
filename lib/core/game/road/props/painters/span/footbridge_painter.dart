@@ -8,6 +8,7 @@ import '../../../road_projection.dart';
 import '../../../scene_theme.dart';
 import '../../prop.dart';
 
+/// Paints footbridges over the road.
 class FootbridgePainter {
   FootbridgePainter(SceneTheme theme)
     : _frame = [for (final c in _colors) fogRamp(c, theme.fog)],
@@ -29,6 +30,10 @@ class FootbridgePainter {
   final List<List<Paint>> _frame, _dark, _mesh;
   final Path _path = Path();
 
+  /// Draws a footbridge between the road edges.
+  ///
+  /// [left] and [right] are the screen x positions of the bridge ends.
+  /// [pillarX] is the optional x position of a center pillar.
   void draw(
     Canvas canvas,
     VisionSeg vision,
@@ -114,6 +119,10 @@ class FootbridgePainter {
     }
   }
 
+  /// Draws an arched bridge span.
+  ///
+  /// [fog] and [style] pick the paints, [left] and [right] are the span ends,
+  /// [base] is the deck line and [scale] the projection scale.
   void _archSpan(
     Canvas canvas,
     double fog,

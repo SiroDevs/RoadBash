@@ -15,6 +15,7 @@ import '../../settings/cubit/settings_cubit.dart';
 
 part 'auth_state.dart';
 
+/// Holds the signed-in session and keeps it in sync with storage.
 @lazySingleton
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this._repo, this._settings, this._progress)
@@ -32,6 +33,7 @@ class AuthCubit extends Cubit<AuthState> {
   final ProgressCubit _progress;
   late final StreamSubscription<PlayerSession?> _sub;
 
+  /// Restores the saved session or anonymous mode on startup.
   Future<void> restore() async {
     if (state.isSignedIn) return;
     final session = _repo.savedSession;
@@ -45,6 +47,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  /// Stores a new session and applies the player name and progress.
   Future<void> signedIn(PlayerSession session) async {
     _repo.saveSession(session);
     _repo.setSession(session);
@@ -53,6 +56,7 @@ class AuthCubit extends Cubit<AuthState> {
     await _progress.load();
   }
 
+  /// Switches to anonymous play without an account.
   Future<void> playAnonymously() async {
     _repo.saveAnonymous();
     _settings.setName(AppConstants.anonymousName);
@@ -60,6 +64,7 @@ class AuthCubit extends Cubit<AuthState> {
     await _progress.load();
   }
 
+  /// Clears the saved session and signs out.
   Future<void> signOut() async {
     _repo.clearSaved();
     await _repo.logout();

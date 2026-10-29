@@ -5,6 +5,7 @@ import 'dart:ui';
 import '../shape_primitives.dart';
 import '../skyline_palette.dart';
 
+/// Draws the Times Tower.
 void drawTimesTower(Canvas canva, Paint paint) {
   drawPoly(canva, paint, const [
     162,

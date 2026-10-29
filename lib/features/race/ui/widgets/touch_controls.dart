@@ -13,6 +13,7 @@ import '../../../../core/game/hud/dashboard_layout.dart';
 import 'touch_pedal.dart';
 import 'touch_steer_pad.dart';
 
+/// On-screen pedals and steering pad for touch devices.
 class TouchControls extends StatelessWidget {
   const TouchControls({
     super.key,

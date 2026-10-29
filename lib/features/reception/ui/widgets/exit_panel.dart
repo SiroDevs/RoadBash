@@ -17,9 +17,11 @@ import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/utils/app_util.dart';
 
+/// Reception panel that exits the game.
 class ExitPanel extends StatelessWidget {
   const ExitPanel({super.key});
 
+  /// Leaves the app; on web it returns to the splash screen instead.
   Future<void> _exit(BuildContext context) async {
     if (kIsWeb) {
       context.goNamed(RouteNames.splash);

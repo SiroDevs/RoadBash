@@ -9,6 +9,7 @@ import '../../scene_theme.dart';
 import '../prop.dart';
 import 'sign_text.dart';
 
+/// Paints lamps, signs, billboards and exit signs.
 class StreetFurniturePainter {
   StreetFurniturePainter(SceneTheme theme)
       : _pole = fogRamp(theme.poleColor, theme.fog),
@@ -32,6 +33,11 @@ class StreetFurniturePainter {
   final List<Paint> _pole, _signFace, _signInk, _green, _blue, _white;
   final List<List<Paint>> _boards;
 
+  /// Draws the street furniture for a prop.
+  ///
+  /// [anchorX] and [anchorY] are the prop's ground point on screen and [width]
+  /// and [height] its size in pixels. [vision] is the projected segment it
+  /// stands on.
   void draw(Canvas canvas, VisionSeg vision, Prop prop, double anchorX, double anchorY, double width,
       double height) {
     switch (prop.kind) {
@@ -48,6 +54,12 @@ class StreetFurniturePainter {
     }
   }
 
+  /// Draws a street lamp.
+  ///
+  /// [anchorX] and [anchorY] are the prop's ground point on screen and [width]
+  /// and [height] its size in pixels. [vision] is the projected segment it
+  /// stands on. [side] is the side of the road and [arm] the length of the lamp
+  /// arm.
   void _lamp(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double width, double height,
       int side, double arm) {
     final poleW = math.max(1.0, width * 0.35);
@@ -65,6 +77,11 @@ class StreetFurniturePainter {
         fogged(_signFace, vision.fog));
   }
 
+  /// Draws a road sign.
+  ///
+  /// [anchorX] and [anchorY] are the prop's ground point on screen and [width]
+  /// and [height] its size in pixels. [vision] is the projected segment it
+  /// stands on.
   void _sign(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double width, double height) {
     final poleW = math.max(1.0, width * 0.17);
     canvas.drawRect(
@@ -74,6 +91,11 @@ class StreetFurniturePainter {
     canvas.drawRect(plate.deflate(math.max(0.6, width * 0.16)), fogged(_signInk, vision.fog));
   }
 
+  /// Draws a billboard.
+  ///
+  /// [anchorX] and [anchorY] are the prop's ground point on screen and [width]
+  /// and [height] its size in pixels. [vision] is the projected segment it
+  /// stands on. [prop] picks the billboard face.
   void _billboard(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double width,
       double height, Prop prop) {
     final face = prop.tint;
@@ -97,6 +119,11 @@ class StreetFurniturePainter {
     }
   }
 
+  /// Draws an exit sign.
+  ///
+  /// [anchorX] and [anchorY] are the prop's ground point on screen and [width]
+  /// and [height] its size in pixels. [vision] is the projected segment it
+  /// stands on. [prop] holds the sign panels.
   void _exitSign(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double width,
       double height, Prop prop) {
     final blue = prop.tint;

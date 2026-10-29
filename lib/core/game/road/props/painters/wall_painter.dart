@@ -12,6 +12,7 @@ import '../prop.dart';
 import '../wall_style.dart';
 import 'box_frame.dart';
 
+/// Paints roadside walls.
 class WallPainter {
   WallPainter(SceneTheme theme)
       : _face = [
@@ -38,6 +39,7 @@ class WallPainter {
   final List<Paint> _strata;
   final Path _path = Path();
 
+  /// Draws a wall between two segments.
   void draw(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
     final box = BoxFrame(near, far, prop, size);
     if (!box.visible) return;

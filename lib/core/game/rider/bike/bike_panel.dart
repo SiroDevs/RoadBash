@@ -1,11 +1,13 @@
 // Project imports:
 part of '../rider_painter.dart';
 
+/// Paints the bike's fairing panels.
 class BikePanels extends RiderPartPainter {
   BikePanels(super.look);
 
   late final BikeMiddlePanels _middle = BikeMiddlePanels(look);
 
+  /// Paints all fairing panels.
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final tail = tailLift(pose);
     _backSidePanels(paint, path, canva, pose, tail);
@@ -13,6 +15,7 @@ class BikePanels extends RiderPartPainter {
     _smallPanels(paint, path, canva, pose, tail);
   }
 
+  /// Paints the rear side panels.
   void _backSidePanels(
     Paint paint,
     Path path,
@@ -69,6 +72,7 @@ class BikePanels extends RiderPartPainter {
     canva.drawPath(path, paint);
   }
 
+  /// Paints the small rear panels.
   void _smallPanels(
     Paint paint,
     Path path,

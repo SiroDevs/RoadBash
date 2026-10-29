@@ -9,6 +9,7 @@ import '../../../layout/retro_sizes.dart';
 import '../retro_style.dart';
 import 'click_sound.dart';
 
+/// Row of selectable chips.
 class RetroChips<T> extends StatelessWidget {
   const RetroChips({
     super.key,

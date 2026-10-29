@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:math';
 
+/// Generates a random UUID v4.
 String newUuidV4() {
   final random = Random.secure();
   final bytes = List<int>.generate(16, (_) => random.nextInt(256));

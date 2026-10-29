@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import '../retro_grayscale.dart';
 
+/// Retro background image with a dimming and grayscale option.
 class RetroBackdrop extends StatelessWidget {
   const RetroBackdrop({
     super.key,
@@ -43,6 +44,7 @@ class RetroBackdrop extends StatelessWidget {
   }
 }
 
+/// Paints the dark overlay behind the backdrop.
 class _BackdropPainter extends CustomPainter {
   const _BackdropPainter();
 

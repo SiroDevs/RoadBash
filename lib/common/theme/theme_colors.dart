@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+/// Color palette used by the app themes.
 class ThemeColors {
   ThemeColors._();
   static const black2 = Color(0xFF202124);

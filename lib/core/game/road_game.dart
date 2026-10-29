@@ -25,6 +25,7 @@ import 'road/road_renderer.dart';
 import 'road/scene_theme.dart';
 import 'road/traffic/road_traffic.dart';
 
+/// Flame game that runs a race on the road.
 class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
   RoadGame({
     required this.scene,
@@ -111,16 +112,20 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     _ride?.update(dt);
   }
 
+  /// True when the finish delay is over or every rival has settled.
   bool get _fieldHome =>
       _finishDelay < -3.6 || racers.every((r) => r.settled);
 
+  /// Applies a new player profile to the game and its audio.
   void updateMix(PlayerProfile profile) {
     mix = profile;
     _ride?.mix = profile;
   }
 
+  /// True while the race is paused from the menu.
   bool get menuPaused => _menuPaused;
 
+  /// Pauses the race and silences input and audio.
   void pauseRace() {
     if (_menuPaused) return;
     _menuPaused = true;
@@ -129,6 +134,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     _ride?.pause();
   }
 
+  /// Resumes a race paused from the menu.
   void resumeRace() {
     if (!_menuPaused) return;
     _menuPaused = false;
@@ -160,6 +166,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     }
   }
 
+  /// Stops audio and releases the game's resources.
   Future<void> shutdown() async {
     _shutDown = true;
     final ride = _ride;

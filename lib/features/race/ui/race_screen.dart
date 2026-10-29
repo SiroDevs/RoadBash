@@ -26,6 +26,7 @@ import 'widgets/race_pause_overlay.dart';
 import 'widgets/race_top_bar.dart';
 import 'widgets/touch_controls.dart';
 
+/// Screen that hosts a race for the given scene.
 class RaceScreen extends StatefulWidget {
   const RaceScreen({super.key, required this.scene});
 
@@ -35,6 +36,7 @@ class RaceScreen extends StatefulWidget {
   State<RaceScreen> createState() => _RaceScreenState();
 }
 
+/// State for [RaceScreen]; owns the game, tilt input and pause handling.
 class _RaceScreenState extends State<RaceScreen> {
   late final RoadGame _game = _buildGame();
   late final TiltController _tilt = TiltController(onSteer: _game.setTiltSteer);
@@ -48,6 +50,7 @@ class _RaceScreenState extends State<RaceScreen> {
     (_) => _game.isLoaded ? _game.race.lap : 1,
   ).distinct();
 
+  /// Creates the road game with the player's profile and HUD strings.
   RoadGame _buildGame() {
     final l10n = context.l10n;
     final profile = context.read<SettingsCubit>().state.profile;
@@ -78,6 +81,7 @@ class _RaceScreenState extends State<RaceScreen> {
     });
   }
 
+  /// Starts or stops tilt steering to match the profile settings.
   void _syncTilt(PlayerProfile profile) {
     _tilt.invert = profile.invertTilt;
     if (isTouchDevice && !profile.useScreenTouch) {
@@ -87,6 +91,7 @@ class _RaceScreenState extends State<RaceScreen> {
     }
   }
 
+  /// Pauses or resumes the race.
   void _togglePause() {
     if (_menuOpen) return;
     final pausing = !_paused;
@@ -102,6 +107,7 @@ class _RaceScreenState extends State<RaceScreen> {
     }
   }
 
+  /// Pauses the race and shows the controls menu, then resumes if needed.
   Future<void> _openControls() async {
     if (_menuOpen) return;
     _menuOpen = true;
@@ -172,7 +178,9 @@ class _RaceScreenState extends State<RaceScreen> {
                     ),
                   ),
                 if (_paused)
-                  Positioned.fill(child: RacePauseOverlay(onTap: _togglePause)),
+                  Positioned.fill(
+                    child: RacePauseOverlay(onTap: _togglePause),
+                  ),
                 RaceTopBar(
                   game: _game,
                   laps: _laps,

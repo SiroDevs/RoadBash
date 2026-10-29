@@ -10,6 +10,7 @@ import '../../../layout/retro_sizes.dart';
 import '../controls/retro_controls.dart';
 import '../retro_style.dart';
 
+/// Retro page with a title and a back button.
 class RetroSubPage extends StatelessWidget {
   const RetroSubPage({
     super.key,

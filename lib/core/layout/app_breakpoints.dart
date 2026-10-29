@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:math' as math;
 
+/// Screen width breakpoints.
 abstract class AppBreakpoints {
   static const double small = 576;
 
@@ -10,6 +11,7 @@ abstract class AppBreakpoints {
 
   static const double comfortableAspect = 1.6;
 
+  /// Returns the width used to pick a layout, limited by the height.
   static double layoutWidth(double width, double height) {
     if (height <= 0) return width;
     return math.min(width, height * comfortableAspect);

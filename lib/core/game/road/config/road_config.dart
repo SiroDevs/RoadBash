@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 // Project imports:
 import '../../../utils/app_util.dart';
 
+/// Road drawing constants.
 abstract final class RoadConfig {
   static final bool _lite = kIsWeb && isTouchDevice;
 

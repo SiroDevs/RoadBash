@@ -13,6 +13,7 @@ import '../../scene_theme.dart';
 import '../prop.dart';
 import 'box_frame.dart';
 
+/// Paints buildings as shaded boxes with windows.
 class BuildingPainter {
   BuildingPainter(SceneTheme theme)
       : _wallSide = [
@@ -43,6 +44,7 @@ class BuildingPainter {
   static const double _windowCutoff = 0.55;
   static const double _minWindowPixels = 46;
 
+  /// Draws a building between two segments.
   void draw(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
     final cx = size.x / 2;
     final horizonY = size.y * RoadConfig.horizonRatio;
@@ -77,6 +79,10 @@ class BuildingPainter {
     canvas.restore();
   }
 
+  /// Draws the window grid on a building face.
+  ///
+  /// [cx] is the screen center x and [horizonY] the horizon line used to
+  /// project the face.
   void _windows(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, double cx,
       double horizonY) {
     final storeys = prop.detail.round().clamp(2, 10);
@@ -103,6 +109,7 @@ class BuildingPainter {
     canvas.drawPath(_grid, fogged(_window, near.fog));
   }
 
+  /// Returns the half-width of the span at a scale.
   double _spanHalfWidth(VisionSeg near, VisionSeg far, double scale) =>
       scale * (near.w1 / near.k1);
 }

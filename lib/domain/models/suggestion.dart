@@ -1,3 +1,4 @@
+/// A suggestion sent by a player.
 class Suggestion {
   const Suggestion({
     required this.id,

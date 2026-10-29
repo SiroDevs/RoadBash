@@ -14,6 +14,7 @@ import 'footbridge_painter.dart';
 import 'gantry_painter.dart';
 import 'overpass_painter.dart';
 
+/// Chooses and paints the props that span the road.
 class SpanPainter {
   SpanPainter(SceneTheme theme)
       : _dual = theme.dualCarriageway,
@@ -26,6 +27,7 @@ class SpanPainter {
   final GantryPainter _gantry;
   final OverpassPainter _overpass;
 
+  /// Draws the span prop for a segment.
   void draw(Canvas canvas, VisionSeg vision, Prop prop, Vector2 size) {
     final overpass = prop.kind == PropKind.overpass;
     final reachUnits = overpass ? 1.5 : 1.22;

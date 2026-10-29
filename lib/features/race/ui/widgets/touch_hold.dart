@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// Reports whether any pointer is pressing its child.
 class TouchHold extends StatefulWidget {
   const TouchHold({required this.onChanged, required this.builder});
 
@@ -12,10 +13,12 @@ class TouchHold extends StatefulWidget {
   State<TouchHold> createState() => TouchHoldState();
 }
 
+/// State for [TouchHold]; tracks active pointers.
 class TouchHoldState extends State<TouchHold> {
   final Set<int> _pointers = {};
   bool _down = false;
 
+  /// Notifies the listener when the pressed state changes.
   void _sync() {
     final next = _pointers.isNotEmpty;
     if (next == _down) return;

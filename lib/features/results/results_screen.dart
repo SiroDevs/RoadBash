@@ -16,6 +16,7 @@ import '../../core/game/race/race_result.dart';
 import '../../core/router/route_names.dart';
 import '../race/cubit/race_cubit.dart';
 
+/// Results screen shown after a race.
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({super.key, required this.outcome});
 
@@ -81,6 +82,7 @@ class ResultsScreen extends StatelessWidget {
     );
   }
 
+  /// Builds one result row for a racer.
   Widget _row(BuildContext context, ResultRow row) {
     final sizes = context.sizes;
     final style = retroBody(

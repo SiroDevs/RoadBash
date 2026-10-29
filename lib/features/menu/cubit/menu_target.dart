@@ -11,6 +11,7 @@ class MenuTarget extends Equatable {
 
   final SceneId? scene;
 
+  /// True when the target is the reception rather than a scene.
   bool get isReception => scene == null;
 
   @override

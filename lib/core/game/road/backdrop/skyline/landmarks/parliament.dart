@@ -5,6 +5,7 @@ import 'dart:ui';
 import '../shape_primitives.dart';
 import '../skyline_palette.dart';
 
+/// Draws the Parliament building.
 void drawParliament(Canvas canva, Paint paint) {
   drawPoly(canva, paint, const [
     72,

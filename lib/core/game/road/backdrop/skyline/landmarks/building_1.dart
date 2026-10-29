@@ -5,6 +5,7 @@ import 'dart:ui';
 import '../shape_primitives.dart';
 import '../skyline_palette.dart';
 
+/// Draws the first generic building.
 void drawBuilding1(Canvas canva, Paint paint) {
   drawPoly(
     canva,

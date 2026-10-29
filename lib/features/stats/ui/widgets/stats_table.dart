@@ -11,6 +11,7 @@ import '../../../../domain/models/stats_models.dart';
 import '../../../../l10n/gen/app_localizations.dart';
 import 'range_labels.dart';
 
+/// Table of summary numbers for the stats screen.
 class StatsTable extends StatelessWidget {
   const StatsTable({super.key, required this.summary, required this.l10n});
 
@@ -55,6 +56,7 @@ class StatsTable extends StatelessWidget {
         .decorated(color: Retro.panel, borderRadius: BorderRadius.circular(12));
   }
 
+  /// Builds one table row from the given cell texts.
   Widget _row(RetroSizes sizes, List<String> cells, TextStyle style) => Row(
     children: [
       Text(cells[0], style: style).expanded(flex: 3),

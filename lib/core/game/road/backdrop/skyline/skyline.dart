@@ -14,6 +14,7 @@ final Paint _cityPaint = Paint()
   ..strokeCap = StrokeCap.round
   ..strokeJoin = StrokeJoin.round;
 
+/// Draws the city skyline across the horizon.
 void drawCityScape(
   Canvas canva, {
   required double width,

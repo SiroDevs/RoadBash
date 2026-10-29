@@ -10,6 +10,7 @@ import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../domain/models/stats_models.dart';
 import '../../cubit/stats_cubit.dart';
 
+/// Heatmap of activity by day and hour.
 class RetroHeatmap extends StatelessWidget {
   const RetroHeatmap({
     super.key,
@@ -50,6 +51,7 @@ class RetroHeatmap extends StatelessWidget {
   }
 }
 
+/// Paints the heatmap cells and labels.
 class _HeatPainter extends CustomPainter {
   _HeatPainter({
     required this.grid,
@@ -92,6 +94,7 @@ class _HeatPainter extends CustomPainter {
     }
   }
 
+  /// Draws a text label at the given position.
   void _text(Canvas canvas, String text, Offset at) {
     final painter = TextPainter(
       text: TextSpan(

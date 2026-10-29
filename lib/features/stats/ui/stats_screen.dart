@@ -26,6 +26,7 @@ import 'widgets/heatmap.dart';
 import 'widgets/range_labels.dart';
 import 'widgets/stats_table.dart';
 
+/// Stats screen showing totals, charts and the activity heatmap.
 class StatsScreen extends StatelessWidget {
   const StatsScreen({super.key});
 
@@ -45,6 +46,7 @@ class StatsScreen extends StatelessWidget {
     );
   }
 
+  /// Builds the stats content for the current state.
   List<Widget> _body(BuildContext context, StatsState st) {
     final l10n = context.l10n;
     final sizes = context.sizes;
@@ -103,6 +105,7 @@ class StatsScreen extends StatelessWidget {
     ];
   }
 
+  /// Builds the heatmap section with its metric toggle.
   Widget _heatmap(BuildContext context, StatsState st, String locale) {
     final l10n = context.l10n;
     final sizes = context.sizes;
@@ -139,14 +142,17 @@ class StatsScreen extends StatelessWidget {
         .decorated(color: Retro.panel, borderRadius: BorderRadius.circular(12));
   }
 
+  /// Shortens a day label to two characters.
   String _short(String text) =>
       text.length > 2 ? text.substring(0, 2) : text;
 
+  /// Formats a bucket time for the selected range.
   String _stamp(StatsRange range, DateTime time, String locale) =>
       range == StatsRange.today
       ? _format('HH:mm', locale, time)
       : _format('d MMM', locale, time);
 
+  /// Formats a date with a pattern, falling back if the locale is missing.
   String _format(String pattern, String locale, DateTime time) {
     try {
       return DateFormat(pattern, locale).format(time);

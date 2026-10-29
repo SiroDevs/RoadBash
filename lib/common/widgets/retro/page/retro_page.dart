@@ -7,6 +7,7 @@ import '../../../constants/app_assets.dart';
 import 'music_scope.dart';
 import 'retro_scaffold.dart';
 
+/// Retro page that adds the backdrop and plays an optional music track.
 class RetroPage extends StatelessWidget {
   const RetroPage({
     super.key,

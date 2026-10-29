@@ -6,6 +6,12 @@ import '../../../utils/pseudo_random.dart';
 import '../../routes/route_stretch.dart';
 import '../prop.dart';
 
+/// Places the side scenery of one stretch.
+///
+/// [slots] holds the props of each segment and [limit] is the last usable
+/// segment. [base] and [len] give the stretch's first segment and length.
+/// [span] describes the scenery, [side] is -1 for left or 1 for right, and
+/// [stretchIndex] varies the building tints.
 void layOutScenery(
   List<List<Prop>> slots,
   int limit,
@@ -38,6 +44,10 @@ void layOutScenery(
   }
 }
 
+/// Places a building and returns the next free position.
+///
+/// [cursor] is the segment to start at and [seed] drives its random size.
+/// [span], [side] and [stretchIndex] are as in [layOutScenery].
 int _building(
   List<List<Prop>> slots,
   int cursor,
@@ -63,6 +73,7 @@ int _building(
   return depth + (pseudoRandom(seed + 3) * 4).floor();
 }
 
+/// Places one tree.
 void _tree(List<List<Prop>> slots, int cursor, int seed, SideScenery span, int side) {
   final kind = span.mix.pick(pseudoRandom(seed + 2));
   final scale = kind == PropKind.bush
@@ -84,6 +95,10 @@ void _tree(List<List<Prop>> slots, int cursor, int seed, SideScenery span, int s
   ));
 }
 
+/// Places a wall run.
+///
+/// [limit], [base] and [len] bound the stretch as in [layOutScenery]. [run]
+/// gives the wall style and range, and [side] the side of the road.
 void _walls(
   List<List<Prop>> slots,
   int limit,
@@ -108,6 +123,7 @@ void _walls(
   }
 }
 
+/// Places slip road lanes along a stretch.
 void _service(List<List<Prop>> slots, int first, int last, int side) {
   for (var i = first; i < last; i += 24) {
     slots[i].add(Prop(

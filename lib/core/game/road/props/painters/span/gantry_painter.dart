@@ -10,6 +10,7 @@ import '../../prop.dart';
 import '../../sign_panel.dart';
 import '../sign_text.dart';
 
+/// Paints overhead sign gantries.
 class GantryPainter {
   GantryPainter(SceneTheme theme)
       : _steel = fogRamp(theme.poleColor, theme.fog),
@@ -30,6 +31,7 @@ class GantryPainter {
     SignPanel([]),
   ];
 
+  /// Draws a gantry across the road.
   void draw(Canvas canvas, VisionSeg vision, Prop prop, double left, double right) {
     final scale = vision.k1, groundY = vision.y1, fog = vision.fog;
     final top = groundY - prop.height * scale;
@@ -43,12 +45,20 @@ class GantryPainter {
     _panels(canvas, vision, prop, top + depth * 0.62, left, right, scale);
   }
 
+  /// Draws a straight bar between two points.
+  ///
+  /// [ramp] holds the fogged paints, (x1, y1) and (x2, y2) are the ends and
+  /// [th] is the bar thickness.
   void _bar(Canvas canvas, double fog, List<Paint> ramp, double x1, double y1,
       double x2, double y2, double th) {
     drawQuad(canvas, _path, fogged(ramp, fog), x1 - th / 2, y1, x2 - th / 2, y2,
         x2 + th / 2, y2, x1 + th / 2, y1);
   }
 
+  /// Draws the truss that spans the road.
+  ///
+  /// [left] and [right] are the end x positions, [top] is the top line, [depth]
+  /// the truss depth and [scale] the projection scale.
   void _truss(Canvas canvas, double fog, double left, double right, double top, double depth,
       double scale) {
     final th = math.max(1.0, 38 * scale);
@@ -69,6 +79,10 @@ class GantryPainter {
     }
   }
 
+  /// Draws a gantry support tower.
+  ///
+  /// [cx] is the tower's center x, [groundY] its base and [boardTop] the top of
+  /// the sign board it carries. [board] holds the optional text columns.
   void _tower(Canvas canvas, double fog, double cx, double groundY, double boardTop,
       double scale, SignBoard? board) {
     final bw = 560 * scale, bh = 1700 * scale;
@@ -118,6 +132,10 @@ class GantryPainter {
     }
   }
 
+  /// Draws the sign panels hung on the gantry.
+  ///
+  /// [panelTop] is the top of the panels, [left] and [right] bound them and
+  /// [scale] is the projection scale.
   void _panels(Canvas canvas, VisionSeg vision, Prop prop, double panelTop, double left,
       double right, double scale) {
     final fog = vision.fog;
@@ -151,6 +169,10 @@ class GantryPainter {
     }
   }
 
+  /// Draws a small label tab on a panel.
+  ///
+  /// [panel] is the sign panel, [label] the tab text and [edge] the border
+  /// thickness. [panelHeight] sets the tab height.
   void _tab(Canvas canvas, double fog, Rect panel, String label, double edge,
       double panelHeight) {
     final width = panel.width * (0.14 + 0.05 * label.length).clamp(0.25, 0.6);
@@ -164,6 +186,7 @@ class GantryPainter {
     }
   }
 
+  /// Draws placeholder text bars on a panel.
   void _bars(Canvas canvas, double fog, Rect panel) {
     for (var line = 0; line < 3; line++) {
       final ty = panel.top + panel.height * (0.16 + line * 0.27);

@@ -19,6 +19,7 @@ import 'features/progress/cubit/progress_cubit.dart';
 import 'features/settings/cubit/settings_cubit.dart';
 import 'l10n/gen/app_localizations.dart';
 
+/// Root widget that builds the app view.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => const AppView();
 }
 
+/// App shell that sets up providers, theme, locale and routing.
 class AppView extends StatefulWidget {
   final GoRouter? router;
   const AppView({super.key, this.router});
@@ -34,6 +36,7 @@ class AppView extends StatefulWidget {
   State<AppView> createState() => AppViewState();
 }
 
+/// State for [AppView]; owns the router and its lifecycle.
 class AppViewState extends State<AppView> {
   late final GoRouter _router = widget.router ?? AppRouter.create();
 

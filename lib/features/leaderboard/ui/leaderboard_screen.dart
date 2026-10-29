@@ -22,6 +22,7 @@ import '../../auth/cubit/auth_cubit.dart';
 import '../cubit/leaderboard_cubit.dart';
 import 'leaderboard_skeleton.dart';
 
+/// Leaderboard screen listing the top players.
 class LeaderboardScreen extends StatelessWidget {
   const LeaderboardScreen({super.key});
 
@@ -45,6 +46,7 @@ class LeaderboardScreen extends StatelessWidget {
     );
   }
 
+  /// Builds the leaderboard content for the current load status.
   List<Widget> _body(BuildContext context, LeaderboardState st, String me) {
     final l10n = context.l10n;
     final sizes = context.sizes;
@@ -80,6 +82,7 @@ class LeaderboardScreen extends StatelessWidget {
     }
   }
 
+  /// Builds one leaderboard row; highlights the current player.
   Widget _entry(RetroSizes sizes, LeaderboardEntry entry, bool mine) => _row(
     sizes,
     '${entry.rank}',
@@ -92,6 +95,9 @@ class LeaderboardScreen extends StatelessWidget {
     ).copyWith(fontFamily: AppConstants.displayFont, fontWeight: FontWeight.w400),
   );
 
+  /// Builds a row of rank, name, games and wins cells.
+  ///
+  /// All cells share [style] and the column widths from [sizes].
   Widget _row(
     RetroSizes sizes,
     String rank,

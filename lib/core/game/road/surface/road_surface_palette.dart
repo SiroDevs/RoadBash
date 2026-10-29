@@ -6,6 +6,7 @@ import '../../utils/paint_utils.dart';
 import '../scene_theme.dart';
 import '../track/road_section.dart';
 
+/// Fogged paints for verge and median surfaces.
 class RoadSurfacePalette {
   RoadSurfacePalette(SceneTheme theme)
       : dirt = fogRamp(const Color(0xFFB4875C), theme.fog),
@@ -18,12 +19,14 @@ class RoadSurfacePalette {
 
   final List<Paint> dirt, grass, paved, planted, barrier, rail, railShadow;
 
+  /// Returns the paints for a verge kind.
   List<Paint> verge(VergeKind kind) => switch (kind) {
     VergeKind.dirt => dirt,
     VergeKind.grass => grass,
     VergeKind.paved => paved,
   };
 
+  /// Returns the paints for a median kind.
   List<Paint> median(MedianKind kind) => switch (kind) {
     MedianKind.planted => planted,
     MedianKind.barrier => barrier,

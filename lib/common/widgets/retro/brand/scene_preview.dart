@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+/// Shows a scene's preview image.
 class ScenePreview extends StatelessWidget {
   const ScenePreview(this.sceneImg, {super.key});
 

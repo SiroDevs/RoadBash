@@ -8,6 +8,7 @@ import '../rider/look/rider_looks.dart';
 import '../road/config/vehicle_config.dart';
 import 'race_result.dart';
 
+/// A rival rider's name, pace, phase and look.
 class RiderRival {
   const RiderRival(this.name, this.pace, this.phase, [this.look = RiderLook.main]);
 
@@ -17,6 +18,7 @@ class RiderRival {
   final RiderLook look;
 }
 
+/// Tracks the countdown, laps, finish and rival positions.
 class RaceController {
   RaceController({
     required this.scene,
@@ -53,13 +55,17 @@ class RaceController {
   bool finished = false, playerAhead = true;
   double gapSeconds = 0;
 
+  /// Total race distance.
   double get raceLength => lapLength * laps - runOut;
+  /// True while the race is underway.
   bool get running => countdown <= 0 && !finished;
 
+  /// Returns how far a rival has gone at [time], with pace surges.
   double rivalDistance(RiderRival rival, double time) =>
       rival.pace * VehicleConfig.maxSpeed * time +
       _surgeAmp * (math.sin(_surgeFreq * time + rival.phase) - math.sin(rival.phase));
 
+  /// Returns the time when a rival reaches the finish.
   double rivalFinishTime(RiderRival rival) {
     var lo = 0.0;
     var hi = raceLength / (rival.pace * VehicleConfig.maxSpeed) + 20;
@@ -74,6 +80,7 @@ class RaceController {
     return hi;
   }
 
+  /// Advances the countdown, clock and finish state.
   void update(double dt, double playerDistance, double playerSpeed) {
     if (countdown > 0) {
       countdown -= dt;
@@ -109,6 +116,7 @@ class RaceController {
     }
   }
 
+  /// Builds the final standings with the player and rivals.
   RaceResult buildResult() {
     final times = <(String, double, bool)>[
       (playerName, finishTime, true),

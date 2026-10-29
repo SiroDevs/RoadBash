@@ -1,3 +1,4 @@
+/// Settings of one layer of the engine sound.
 class EngineLayerSpec {
   const EngineLayerSpec(this.fireHz, this.bright, this.seed);
 
@@ -6,6 +7,7 @@ class EngineLayerSpec {
   final int seed;
 }
 
+/// Settings that define the sound of one engine flavour.
 class EngineTune {
   const EngineTune({
     required this.layers,

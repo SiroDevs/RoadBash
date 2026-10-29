@@ -30,6 +30,7 @@ class ChartSkeleton extends StatelessWidget {
     );
   }
 
+  /// Builds one skeleton placeholder panel.
   Widget _panel(RetroSizes sizes) {
     return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

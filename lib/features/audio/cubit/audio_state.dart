@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 // Project imports:
 import '../../../core/audio/audio_catalog.dart';
 
+/// Audio state: the music track that is playing.
 class AudioState extends Equatable {
   const AudioState({this.track});
 

@@ -8,6 +8,7 @@ import '../../../domain/models/leaderboard_entry.dart';
 import '../../../domain/models/load_status.dart';
 import '../../../domain/repos/leaderboard_repo.dart';
 
+/// State of the leaderboard: load status and entries.
 class LeaderboardState extends Equatable {
   const LeaderboardState({
     this.status = LoadStatus.loading,
@@ -21,12 +22,14 @@ class LeaderboardState extends Equatable {
   List<Object?> get props => [status, entries];
 }
 
+/// Loads the leaderboard.
 @injectable
 class LeaderboardCubit extends Cubit<LeaderboardState> {
   LeaderboardCubit(this._repo) : super(const LeaderboardState());
 
   final LeaderboardRepo _repo;
 
+  /// Loads the top players and reports success or failure.
   Future<void> load() async {
     emit(const LeaderboardState());
     try {

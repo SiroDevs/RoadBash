@@ -10,6 +10,7 @@ import '../routes/thika/thika_route.dart';
 import '../scene_theme.dart';
 import 'road_section.dart';
 
+/// One road segment with start and end height, curve and section.
 class RoadSegment {
   const RoadSegment(
     this.index,
@@ -25,6 +26,7 @@ class RoadSegment {
   final Section section;
 }
 
+/// Builds the list of road segments for a scene.
 class RoadTrack {
   RoadTrack(SceneId scene) {
     switch (scene) {
@@ -48,6 +50,7 @@ class RoadTrack {
   late final double length;
   double _lastY = 0;
 
+  /// Number of segments in one lap.
   int get count => segments.length;
 
   /// Index of the finish line. The last lap stops [FinishConfig.runOut]
@@ -55,29 +58,41 @@ class RoadTrack {
   /// the line.
   int get finishIndex => count - FinishConfig.runOut;
 
+  /// Length of the run-out section after the finish.
   double get runOutLength => FinishConfig.runOut * RoadConfig.segmentLength;
 
+  /// Returns the segment index at a track position.
   int indexAt(double position) => (position / RoadConfig.segmentLength).floor() % count;
 
+  /// Returns the segment at a track position.
   RoadSegment at(double position) => segments[indexAt(position)];
 
+  /// Returns the race distance of a scene in kilometres.
   static double raceKm(SceneId scene) {
     final track = RoadTrack(scene);
     final laps = SceneTheme.of(scene).laps;
     return (track.length * laps - track.runOutLength) * RoadConfig.unitKm;
   }
 
+  /// Marks the start of a new route stretch.
   void _mark() => sectionStarts.add(segments.length);
 
+  /// Adds one segment with the given curve, height and section.
   void _add(double curve, double height, Section section) {
     segments.add(RoadSegment(segments.length, _lastY, height, curve, section));
     _lastY = height;
   }
 
+  /// Eases a value in at the start.
   static double _easeIn(double start, double end, double progress) => start + (end - start) * progress * progress;
+  /// Eases a value in and out using a cosine curve.
   static double _easeInOut(double start, double end, double progress) =>
       start + (end - start) * (-math.cos(progress * math.pi) / 2 + 0.5);
 
+  /// Adds a road piece that enters, holds and leaves a curve and hill.
+  ///
+  /// [enter], [hold] and [leave] are segment counts for easing into, staying at
+  /// and easing out of [curve] and [hill]. [section] sets the verge and median.
   void _addRoad(
     int enter,
     int hold,
@@ -103,6 +118,7 @@ class RoadTrack {
     }
   }
 
+  /// Builds the city road.
   void _buildCity() {
     _addRoad(45, 70, 45, 0, 0);
     _addRoad(40, 35, 40, 2.0, 5);
@@ -117,6 +133,7 @@ class RoadTrack {
     _addRoad(50, 70, 50, 0, 0);
   }
 
+  /// Builds the suburbs road.
   void _buildSuburbs() {
     _addRoad(45, 60, 45, 0, 0);
     _addRoad(45, 45, 45, 2.6, 8);
@@ -161,6 +178,7 @@ class RoadTrack {
     _addRoad(45, 80, 45, 0, 0);
   }
 
+  /// Builds a road from a list of route stretches.
   void _buildRoute(List<RouteStretch> route) {
     for (final stretch in route) {
       _mark();

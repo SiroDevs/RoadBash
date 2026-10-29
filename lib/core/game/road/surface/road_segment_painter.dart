@@ -9,6 +9,7 @@ import '../scene_theme.dart';
 import '../track/road_section.dart';
 import 'road_surface_palette.dart';
 
+/// Paints the road surface, verges and markings.
 class RoadSegmentPainter {
   RoadSegmentPainter(this.theme)
     : _shoulder = fogRamp(theme.shoulder, theme.fog),
@@ -39,6 +40,7 @@ class RoadSegmentPainter {
 
   static const double _markingCutoff = 0.86;
 
+  /// Draws one road segment.
   void draw(Canvas canvas, VisionSeg vision, double screenW) {
     final segmentIndex = vision.seg.index;
     final fog = vision.fog;
@@ -108,6 +110,7 @@ class RoadSegmentPainter {
   static const double _opposite = RoadConfig.oppositeWidth;
   static const double _rail = 0.03;
 
+  /// Draws the verges on both sides.
   void _verges(Canvas canvas, VisionSeg vision, double fog) {
     final section = vision.seg.section;
     const sh = RoadConfig.shoulder;
@@ -134,6 +137,7 @@ class RoadSegmentPainter {
     }
   }
 
+  /// Draws the median strip.
   void _paintMedian(Canvas canvas, VisionSeg vision, double fog, double offset, MedianKind kind) {
     _path.reset();
     _band(vision, offset, offset + _median);
@@ -146,6 +150,7 @@ class RoadSegmentPainter {
     canvas.drawPath(_path, fogged(_palette.rail, fog));
   }
 
+  /// Draws the opposite carriageway.
   void _paintOpposite(Canvas canvas, VisionSeg vision, double fog, double offset) {
     final segmentIndex = vision.seg.index;
     _path.reset();
@@ -170,6 +175,7 @@ class RoadSegmentPainter {
     canvas.drawPath(_path, fogged(_lane, fog));
   }
 
+  /// Adds a quad between two lateral offsets.
   void _band(VisionSeg vision, double offset, double outer) {
     addQuad(
       _path,

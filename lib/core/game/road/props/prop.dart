@@ -1,6 +1,7 @@
 // Project imports:
 import 'sign_panel.dart';
 
+/// Kinds of roadside objects.
 enum PropKind {
   building,
   broadleaf,
@@ -24,6 +25,7 @@ enum PropKind {
   post,
   spectator;
 
+  /// True for props that cross the whole road.
   bool get spansRoad =>
       this == footbridge || this == gantry || this == overpass;
 }
@@ -31,6 +33,7 @@ enum PropKind {
 /// When a prop is drawn relative to the finish plaza on the last lap.
 enum PropPhase { always, finishOnly, hiddenAtFinish }
 
+/// A roadside object placed on a road segment.
 class Prop {
   const Prop({
     required this.kind,
@@ -62,6 +65,7 @@ class Prop {
   final List<SignBoard> boards;
   final PropPhase phase;
 
+  /// Returns a copy shown only in the given finish phase.
   Prop withPhase(PropPhase phase) => Prop(
     kind: kind,
     anchor: anchor,

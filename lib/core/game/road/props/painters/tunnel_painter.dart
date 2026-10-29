@@ -10,6 +10,7 @@ import '../../road_projection.dart';
 import '../../scene_theme.dart';
 import '../prop.dart';
 
+/// Paints tunnels over the road.
 class TunnelPainter {
   TunnelPainter(SceneTheme theme)
       : _ceiling = fogRamp(const Color(0xFF34363A), theme.fog),
@@ -22,6 +23,7 @@ class TunnelPainter {
   static const double _reach = 1.14;
   static const double _slabThickness = 420;
 
+  /// Draws a tunnel between two segments.
   void draw(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
     final l1 = near.x1 - near.w1 * _reach, r1 = near.x1 + near.w1 * _reach;
     final l2 = far.x1 - far.w1 * _reach, r2 = far.x1 + far.w1 * _reach;

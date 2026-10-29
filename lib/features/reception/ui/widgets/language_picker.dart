@@ -11,6 +11,7 @@ import '../../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../settings/cubit/settings_cubit.dart';
 
+/// Reception panel for choosing the app language.
 class LanguagePicker extends StatelessWidget {
   const LanguagePicker({super.key});
 

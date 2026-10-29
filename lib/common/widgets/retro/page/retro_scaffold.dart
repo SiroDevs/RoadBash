@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../layout/retro_sizes.dart';
 import 'retro_backdrop.dart';
 
+/// Scaffold that places content over the retro backdrop.
 class RetroScaffold extends StatelessWidget {
   const RetroScaffold({
     super.key,

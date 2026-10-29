@@ -13,6 +13,7 @@ import '../sources/local/pref_keys.dart';
 import '../sources/local/prefs_source.dart';
 import '../sources/remote/api_client.dart';
 
+/// Auth data layer using the API and stored session.
 @LazySingleton(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo {
   AuthRepoImpl(this._api, this._prefs);

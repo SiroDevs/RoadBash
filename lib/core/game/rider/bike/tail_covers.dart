@@ -1,9 +1,11 @@
 // Project imports:
 part of '../rider_painter.dart';
 
+/// Paints the tail cover panels and exhaust.
 class TailCovers extends RiderPartPainter {
   TailCovers(super.look);
 
+  /// Paints the tail covers and exhaust.
   void paint(
     Paint paint,
     Path path,
@@ -15,6 +17,7 @@ class TailCovers extends RiderPartPainter {
     _exhaustPanel(paint, path, canva, tail);
   }
 
+  /// Paints the hollow and cover parts of the tail.
   void _tailCovers(
     Paint paint,
     Path path,
@@ -94,6 +97,7 @@ class TailCovers extends RiderPartPainter {
     canva.drawPath(path, paint);
   }
 
+  /// Paints the exhaust panel.
   void _exhaustPanel(Paint paint, Path path, Canvas canva, double tail) {
     // Exhaust Panel
     path

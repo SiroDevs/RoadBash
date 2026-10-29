@@ -6,6 +6,7 @@ import 'dart:math' as math;
 import '../../../domain/models/engine_flavour.dart';
 import 'engine_synth.dart';
 
+/// Plays a short engine sound sample for the sound settings.
 class EnginePreview {
   static const double _dt = 0.016;
   static const double _throttleSecs = 3.4;
@@ -15,6 +16,7 @@ class EnginePreview {
   Timer? _timer;
   int _token = 0;
 
+  /// Plays a timed preview of an engine flavour.
   Future<void> play(EngineFlavour flavour, double volume) async {
     await stop();
     final token = _token;
@@ -56,6 +58,7 @@ class EnginePreview {
     );
   }
 
+  /// Stops the preview.
   Future<void> stop() async {
     _token++;
     _timer?.cancel();

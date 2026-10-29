@@ -23,6 +23,7 @@ import 'widgets/exit_panel.dart';
 import 'widgets/language_picker.dart';
 import 'widgets/sound_mix.dart';
 
+/// Reception screen with tabs for name, sound, language, stats and more.
 class ReceptionScreen extends StatelessWidget {
   const ReceptionScreen({super.key});
 
@@ -85,6 +86,7 @@ class ReceptionScreen extends StatelessWidget {
     );
   }
 
+  /// Navigates to stats/leaderboard routes, or opens the tab in place.
   void _select(BuildContext context, ReceptionTab tab) {
     switch (tab) {
       case ReceptionTab.stats:
@@ -96,6 +98,7 @@ class ReceptionScreen extends StatelessWidget {
     }
   }
 
+  /// Lays out the title, tab list and detail panel side by side.
   Widget _sideBySide(
     BuildContext context,
     RetroSizes sizes,
@@ -129,6 +132,7 @@ class ReceptionScreen extends StatelessWidget {
     );
   }
 
+  /// Returns the panel that matches the selected reception tab.
   Widget _detail(BuildContext context, ReceptionTab tab) => switch (tab) {
     ReceptionTab.name => const AccountPanel(),
     ReceptionTab.sound => const SoundMix(),

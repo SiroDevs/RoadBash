@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:equatable/equatable.dart';
 
+/// A signed-in player's token, id and name.
 class PlayerSession extends Equatable {
   const PlayerSession({
     required this.token,

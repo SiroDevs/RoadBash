@@ -10,6 +10,7 @@ import 'rider_painter.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
 
+/// Rider and bike that can be drawn anywhere, such as a rival.
 class RiderSprite {
   RiderSprite({this.look = RiderLook.main, RiderRig? rig})
     : rig = rig ?? RiderRig() {
@@ -24,6 +25,7 @@ class RiderSprite {
   static const double width = RiderPainter.width;
   static const double height = RiderPainter.height;
 
+  /// Paints the sprite with its wheels on the ground point.
   void paintAt(Canvas canvas, Offset ground, double scale) {
     canvas
       ..save()
@@ -37,6 +39,7 @@ class RiderSprite {
   }
 }
 
+/// Custom painter that draws a [RiderSprite].
 class RiderSpritePainter extends CustomPainter {
   RiderSpritePainter(this.sprite);
 

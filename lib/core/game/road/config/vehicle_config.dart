@@ -1,6 +1,7 @@
 // Project imports:
 import 'road_config.dart';
 
+/// Bike speed, acceleration and steering constants.
 abstract final class VehicleConfig {
   static const double maxSpeed = RoadConfig.segmentLength * 60;
   static const double topSpeedKmh = 240;

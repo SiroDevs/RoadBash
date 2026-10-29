@@ -30,6 +30,7 @@ class LeaderboardSkeleton extends StatelessWidget {
     );
   }
 
+  /// Builds one skeleton row; headers use smaller blocks.
   Widget _row(RetroSizes sizes, bool header) {
     final height = header ? sizes.caption : sizes.body;
     return Row(

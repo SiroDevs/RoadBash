@@ -16,6 +16,7 @@ import '../sources/local/pref_keys.dart';
 import '../sources/local/prefs_source.dart';
 import '../sources/remote/api_client.dart';
 
+/// Reads and records stats through the API and local storage.
 @LazySingleton(as: StatsRepo)
 class StatsRepoImpl implements StatsRepo {
   StatsRepoImpl(this._api, this._prefs);

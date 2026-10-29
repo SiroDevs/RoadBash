@@ -4,6 +4,7 @@ import 'dart:math' as math;
 // Project imports:
 import 'engine_tune.dart';
 
+/// Mixes engine layers into one voice driven by rpm.
 class EngineVoice {
   EngineVoice(this.baseHz, this.tune)
     : volumes = List.filled(baseHz.length, 0.0),
@@ -28,6 +29,7 @@ class EngineVoice {
   double _clock = 0;
   int _gear = 1;
 
+  /// Updates layer volumes and pitch from rpm, gear and throttle.
   void update(
     double dt, {
     required double rpm,
@@ -74,6 +76,7 @@ class EngineVoice {
     }
   }
 
+  /// Blends the layers around a firing rate.
   void _crossfade(double fire) {
     final count = baseHz.length;
     for (var i = 0; i < count; i++) {

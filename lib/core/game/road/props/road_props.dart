@@ -16,26 +16,18 @@ class RoadProps {
   RoadProps(SceneTheme theme, RoadTrack track)
     : _bySegment = List.filled(track.count, const []) {
     final count = track.count;
-    final base = track.baseCount;
     final slots = List.generate(count, (_) => <Prop>[]);
-    // The lap's own scenery stops at the finish line; the finish plaza after
-    // it is laid out separately.
     switch (theme.decor) {
       case DecorKind.buildings:
-        layOutCity(slots, base);
+        layOutCity(slots, count);
       case DecorKind.trees:
-        layOutSuburbs(slots, base);
+        layOutSuburbs(slots, count);
       case DecorKind.corridor:
-        layOutRoute(
-          slots,
-          track.segments.sublist(0, base),
-          track.sectionStarts,
-          thikaRoute,
-        );
+        layOutRoute(slots, track.segments, track.sectionStarts, thikaRoute);
       case DecorKind.jungle:
-        layOutJungle(slots, base);
+        layOutJungle(slots, count);
       case DecorKind.savanna:
-        layOutSavanna(slots, base);
+        layOutSavanna(slots, count);
     }
     layOutFinish(slots, track, theme);
     for (var i = 0; i < count; i++) {

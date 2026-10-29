@@ -39,8 +39,8 @@ class RaceController {
   final int laps;
   final double lapLength;
 
-  /// Road after the finish line that is part of the last lap's track but not
-  /// of the race.
+  /// Road after the finish line that the last lap still has left, which is
+  /// not part of the race.
   final double runOut;
   final String playerName;
   final List<RiderRival> rivals;

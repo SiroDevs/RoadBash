@@ -11,6 +11,7 @@ import 'backdrop/road_backdrop.dart';
 import 'config/guardrail_config.dart';
 import 'config/road_config.dart';
 import 'config/vehicle_config.dart';
+import 'finish/finish_config.dart';
 import 'finish/finish_pad_painter.dart';
 import 'finish/finish_zone.dart';
 import 'props/painters/prop_painter.dart';
@@ -29,9 +30,10 @@ class RoadRenderer extends PositionComponent {
       _pad = FinishPadPainter(theme) {
     props = RoadProps(theme, track);
     finish = FinishZone(
-      line: track.baseCount,
+      line: track.finishIndex,
       laps: theme.laps,
       lapLength: track.length,
+      look: FinishConfig.lookFor(theme.id),
     );
   }
 
@@ -91,7 +93,6 @@ class RoadRenderer extends PositionComponent {
 
   @override
   void update(double dt) {
-    finish.update(trkPosition, fullDistance);
     final seg = track.at(trkPosition + playerZ);
     _steerToward(dt, locked ? 0 : steer);
     if (locked) {
@@ -105,6 +106,7 @@ class RoadRenderer extends PositionComponent {
     final step = dt * speed;
     trkPosition = (trkPosition + step) % track.length;
     fullDistance += step;
+    finish.update(trkPosition, fullDistance);
 
     curveFelt += (seg.curve - curveFelt) * math.min(1.0, dt * 3.5);
 
@@ -231,8 +233,6 @@ class RoadRenderer extends PositionComponent {
 
     for (var n = 0; n < RoadConfig.drawDistance; n++) {
       final seg = track.segments[(baseIdx + n) % track.count];
-      // On the last lap the street ends at the finish plaza's closing block.
-      if (finish.on && seg.index >= finish.cutIndex) break;
       final looped = seg.index < baseIdx;
       final camX = playerX * RoadConfig.roadWidth - x;
       final camY = playerY + RoadConfig.cameraHeight;
@@ -277,7 +277,7 @@ class RoadRenderer extends PositionComponent {
       _roads.draw(canvas, v, size.x);
       if (finish.on) {
         final row = finish.padRow(seg.index);
-        if (row >= 0) _pad.draw(canvas, v, row);
+        if (row >= 0) _pad.draw(canvas, v, row, zebra: finish.isZebra(row));
       }
       maxY = _p2.y;
       if (v.fog >= 1) break;

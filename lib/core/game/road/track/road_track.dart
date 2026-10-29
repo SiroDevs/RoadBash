@@ -39,8 +39,6 @@ class RoadTrack {
       case SceneId.dirtRoad:
         _buildDirtRoad();
     }
-    baseCount = segments.length;
-    _addRunOut();
     length = segments.length * RoadConfig.segmentLength;
   }
 
@@ -48,13 +46,14 @@ class RoadTrack {
 
   final List<int> sectionStarts = [];
   late final double length;
-
-  /// Segments of the lap itself. The finish line sits at this index; the
-  /// segments after it are the flat run-out of the finish plaza.
-  late final int baseCount;
   double _lastY = 0;
 
   int get count => segments.length;
+
+  /// Index of the finish line. The last lap stops [FinishConfig.runOut]
+  /// segments short of the lap's end, so the scene's own road carries on past
+  /// the line.
+  int get finishIndex => count - FinishConfig.runOut;
 
   double get runOutLength => FinishConfig.runOut * RoadConfig.segmentLength;
 
@@ -101,13 +100,6 @@ class RoadTrack {
     }
     for (var n = 0; n < leave; n++) {
       _add(_easeInOut(curve, 0, n / leave), y(), section);
-    }
-  }
-
-  void _addRunOut() {
-    final section = segments.last.section;
-    for (var n = 0; n < FinishConfig.runOut; n++) {
-      _add(0, _lastY, section);
     }
   }
 

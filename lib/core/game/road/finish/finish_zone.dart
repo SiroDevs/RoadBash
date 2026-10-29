@@ -3,34 +3,38 @@ import '../config/road_config.dart';
 import '../props/prop.dart';
 import 'finish_config.dart';
 
-/// Tracks whether the finish plaza is in play for the current frame.
+/// Knows whether the finish is in play for the current frame.
 ///
-/// The plaza only exists on the last lap: props tagged [PropPhase.finishOnly]
-/// are drawn while it is [on], and the ordinary scenery that would clash with
-/// it ([PropPhase.hiddenAtFinish]) is skipped.
+/// The finish only exists on the last lap: props tagged
+/// [PropPhase.finishOnly] are drawn while it is [on], and scenery it replaces
+/// ([PropPhase.hiddenAtFinish]) is skipped.
 class FinishZone {
-  FinishZone({required this.line, required this.laps, required this.lapLength});
+  FinishZone({
+    required this.line,
+    required this.laps,
+    required this.lapLength,
+    required this.look,
+  });
 
-  /// Index of the first pad segment, which is also the first run-out segment.
+  /// Index of the first pad segment: the race ends here on the last lap.
   final int line;
   final int laps;
+
+  /// Length of the whole track, which every lap loops over.
   final double lapLength;
+  final FinishLook look;
 
   bool on = false;
 
-  /// 0..1, how far the skyline has climbed over the horizon.
+  /// 0..1, how far the skyline has climbed over the horizon (Thika only).
   double rise = 0;
-
-  /// First segment that is no longer drawn while the plaza is on.
-  int get cutIndex =>
-      line + FinishConfig.wallAt + FinishConfig.wallDepth + 2;
 
   void update(double trackPosition, double fullDistance) {
     const seg = RoadConfig.segmentLength;
     final ahead = (line * seg - trackPosition) / seg;
-    const reach = FinishConfig.approach + 200 + 20;
+    final reach = look.lead + RoadConfig.decorDistance + 20;
     on = fullDistance >= (laps - 1) * lapLength && ahead < reach;
-    rise = on
+    rise = on && look.city
         ? (1 - ahead / FinishConfig.skylineRise).clamp(0.0, 1.0).toDouble()
         : 0.0;
   }
@@ -44,7 +48,9 @@ class FinishZone {
   /// Row of the pad this segment belongs to, or -1 when it is not on the pad.
   int padRow(int index) {
     final d = index - line;
-    if (d < 0 || d >= FinishConfig.padLength) return -1;
+    if (d < 0 || d >= look.padLength) return -1;
     return d ~/ FinishConfig.rowSegments;
   }
+
+  bool isZebra(int row) => look.zebraCrossing && row >= look.chequerRows;
 }

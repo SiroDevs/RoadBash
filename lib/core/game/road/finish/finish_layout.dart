@@ -9,27 +9,33 @@ import '../scene_theme.dart';
 import '../track/road_track.dart';
 import 'finish_config.dart';
 
-/// Dresses the end of the track as the finish plaza: chequered cones, a
-/// crowd, city blocks on both sides and a building closing the street. All of
-/// it only shows on the last lap (see FinishZone).
+/// Dresses the finish of the last lap. Every scene gets chequered cones and a
+/// crowd on its own road; Thika Road also eases into city blocks, because
+/// Museum Hill leads into Nairobi. All of it only shows on the last lap (see
+/// FinishZone).
 void layOutFinish(List<List<Prop>> slots, RoadTrack track, SceneTheme theme) {
-  final line = track.baseCount;
+  final look = FinishConfig.lookFor(theme.id);
+  final line = track.finishIndex;
   final from = math.max(1, line - FinishConfig.approach);
-  _clearScenery(slots, line, from);
-  _posts(slots, from, line);
-  _crowd(slots, track, theme, from, line);
-  _blocks(slots, track, theme, from, line);
-  _endWall(slots, line);
+  if (look.city) {
+    final cityFrom = math.max(1, line - FinishConfig.cityLead);
+    _clearScenery(slots, track.count, cityFrom);
+    _blocks(slots, track, theme, cityFrom);
+  }
+  _posts(slots, from, line, look);
+  _laneCones(slots, line, look);
+  _crowd(slots, track, theme, from, line, look);
 }
 
 bool _farRight(RoadTrack track, SceneTheme theme, int i) =>
     theme.dualCarriageway && track.segments[i].section.hasOpposite;
 
-/// Ordinary scenery in (or reaching into) the plaza steps aside on the last
-/// lap. Median guardrails and lamps stay, they are part of the road.
-void _clearScenery(List<List<Prop>> slots, int line, int from) {
+/// Thika's own scenery from [from] to the end of the lap steps aside on the
+/// last lap for the city blocks. Median guardrails and lamps stay, they are
+/// part of the road.
+void _clearScenery(List<List<Prop>> slots, int count, int from) {
   final start = math.max(0, from - RoadConfig.maxPropDepth);
-  for (var i = start; i < line; i++) {
+  for (var i = start; i < count; i++) {
     slots[i] = [
       for (final p in slots[i])
         if (p.kind != PropKind.guardrail &&
@@ -42,8 +48,8 @@ void _clearScenery(List<List<Prop>> slots, int line, int from) {
   }
 }
 
-void _posts(List<List<Prop>> slots, int from, int line) {
-  final end = line + FinishConfig.padLength + 14;
+void _posts(List<List<Prop>> slots, int from, int line, FinishLook look) {
+  final end = line + look.padLength + 14;
   for (var i = from; i < end; i += 3) {
     for (final side in const [-1, 1]) {
       slots[i].add(
@@ -61,14 +67,35 @@ void _posts(List<List<Prop>> slots, int from, int line) {
   }
 }
 
+/// Cones standing in the road itself around the finish, on the lane lines.
+void _laneCones(List<List<Prop>> slots, int line, FinishLook look) {
+  const lanes = [-0.62, -0.12, 0.38, 0.8];
+  final end = line + look.padLength + 36;
+  for (var i = line - 24; i < end; i += 5) {
+    final x = lanes[(pseudoRandom(i + 5) * lanes.length).floor()];
+    slots[i].add(
+      Prop(
+        kind: PropKind.post,
+        anchor: i,
+        side: x < 0 ? -1 : 1,
+        offset: x.abs(),
+        width: 55,
+        height: 330,
+        phase: PropPhase.finishOnly,
+      ),
+    );
+  }
+}
+
 void _crowd(
   List<List<Prop>> slots,
   RoadTrack track,
   SceneTheme theme,
   int from,
   int line,
+  FinishLook look,
 ) {
-  final end = line + FinishConfig.padLength + 34;
+  final end = line + look.padLength + 34;
   for (var i = from + 4; i < end; i += 2) {
     for (final side in const [-1, 1]) {
       final seed = i * 7 + (side > 0 ? 3 : 0) + 11;
@@ -94,14 +121,15 @@ void _crowd(
   }
 }
 
+/// City blocks lining Thika's run-in, all the way to the end of the lap (the
+/// last segments are skipped: they wrap round behind the camera).
 void _blocks(
   List<List<Prop>> slots,
   RoadTrack track,
   SceneTheme theme,
   int from,
-  int line,
 ) {
-  final to = line + FinishConfig.wallAt - 6;
+  final to = track.count - RoadConfig.maxPropDepth - 4;
   for (final side in const [-1, 1]) {
     var i = from + 6 + (side < 0 ? 0 : 5);
     while (i < to) {
@@ -130,24 +158,4 @@ void _blocks(
       i += depth + 1 + (pseudoRandom(seed + 4) * 3).floor();
     }
   }
-}
-
-/// One wide building across the whole street, so the road ends at a city
-/// block instead of running on into the start of the lap.
-void _endWall(List<List<Prop>> slots, int line) {
-  final i = line + FinishConfig.wallAt;
-  slots[i].add(
-    Prop(
-      kind: PropKind.block,
-      anchor: i,
-      side: 1,
-      offset: -7,
-      width: 60000,
-      height: 3400,
-      depth: FinishConfig.wallDepth,
-      tint: 0,
-      detail: 7,
-      phase: PropPhase.finishOnly,
-    ),
-  );
 }

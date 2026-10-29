@@ -1,32 +1,70 @@
 // Dart imports:
+import 'dart:math' as math;
 import 'dart:ui';
 
-/// Layout numbers for the finish plaza that closes every race, in segments
-/// unless noted. The line sits where the lap's own road ends; the run-out is
-/// extra flat road after it, so the rider coasts into the plaza instead of
-/// seeing the start of the lap again.
-abstract final class FinishConfig {
-  /// Cones, crowd and city blocks start this far before the line.
-  static const int approach = 64;
+// Project imports:
+import '../../../../domain/models/scene_id.dart';
+import '../config/road_config.dart';
 
-  /// The chequered pad across the road: rows of [rowSegments] segments.
-  static const int padRows = 6;
+/// How a scene dresses its finish. Nothing here builds a foreign scene: every
+/// scene keeps its own road and scenery, and only gets the race furniture
+/// (chequered strip, cones, crowd).
+enum FinishLook {
+  /// Chequered strip, cones and crowd on the scene's own road.
+  plain(padRows: 4, chequerRows: 4),
+
+  /// The city scene: a chequered strip followed by a zebra crossing.
+  zebra(padRows: 6, chequerRows: 1),
+
+  /// Thika Road: Museum Hill is the way into Nairobi, so the last stretch
+  /// eases into city blocks and a skyline instead of changing at the line.
+  cityEntry(padRows: 4, chequerRows: 4);
+
+  const FinishLook({required this.padRows, required this.chequerRows});
+
+  final int padRows;
+  final int chequerRows;
+
+  int get padLength => padRows * FinishConfig.rowSegments;
+  bool get city => this == cityEntry;
+  bool get zebraCrossing => this == zebra;
+
+  /// How far before the line the finish dressing (and, for [cityEntry], the
+  /// scenery it replaces) starts, in segments.
+  int get lead => city
+      ? FinishConfig.cityLead + RoadConfig.maxPropDepth
+      : FinishConfig.approach;
+}
+
+/// Layout numbers for the finish, in segments unless noted.
+abstract final class FinishConfig {
+  static FinishLook lookFor(SceneId scene) => switch (scene) {
+    SceneId.city => FinishLook.zebra,
+    SceneId.thikaRoad => FinishLook.cityEntry,
+    _ => FinishLook.plain,
+  };
+
+  /// Cones and crowd start this far before the line.
+  static const int approach = 64;
   static const int rowSegments = 2;
   static const int padColumns = 14;
-  static const int padLength = padRows * rowSegments;
+  static const int zebraColumns = 9;
 
-  /// Flat road laid after the line.
-  static const int runOut = 90;
+  /// The last lap stops this far short of the lap's end, so the scene simply
+  /// carries on past the line and the start of the lap is never in view.
+  static const double runOutMetres = 300;
 
-  /// Where the building that closes the street stands, counted from the line.
-  static const int wallAt = 60;
-  static const int wallDepth = 4;
+  static int get runOut => math.max(
+    (runOutMetres / 1000 / RoadConfig.unitKm / RoadConfig.segmentLength).ceil(),
+    RoadConfig.drawDistance + 60,
+  );
 
-  /// The skyline starts climbing over the horizon this far before the line.
-  static const int skylineRise = 120;
+  /// Thika only: the city blocks start this far before the line, and the
+  /// skyline climbs over the horizon during [skylineRise] segments before it.
+  static const int cityLead = 160;
+  static const int skylineRise = 260;
 
-  /// City blocks lining the plaza: near-black and pale blue faces, like the
-  /// classic finish street.
+  /// City blocks lining the Thika run-in: near-black and pale blue faces.
   static const List<Color> blockColors = [
     Color(0xFF1B1F2B),
     Color(0xFF8FA6C9),

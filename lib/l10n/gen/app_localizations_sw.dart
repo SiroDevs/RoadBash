@@ -389,6 +389,11 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
+  String statsPeak(int peak) {
+    return 'Upeo $peak';
+  }
+
+  @override
   String get statsVisitors => 'Wageni';
 
   @override

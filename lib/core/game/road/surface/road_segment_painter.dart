@@ -39,67 +39,67 @@ class RoadSegmentPainter {
 
   static const double _markingCutoff = 0.86;
 
-  void draw(Canvas c, VisionSeg v, double screenW) {
-    final i = v.seg.index;
-    final f = v.fog;
+  void draw(Canvas canvas, VisionSeg vision, double screenW) {
+    final segmentIndex = vision.seg.index;
+    final fog = vision.fog;
 
     const sh = RoadConfig.shoulder;
-    if (theme.dualCarriageway) _verges(c, v, f);
+    if (theme.dualCarriageway) _verges(canvas, vision, fog);
     _path.reset();
-    _band(v, -1 - sh, -1);
-    _band(v, 1, 1 + sh);
-    c.drawPath(_path, fogged((i ~/ 5).isEven ? _shoulder : _shoulderAlt, f));
+    _band(vision, -1 - sh, -1);
+    _band(vision, 1, 1 + sh);
+    canvas.drawPath(_path, fogged((segmentIndex ~/ 5).isEven ? _shoulder : _shoulderAlt, fog));
 
     _path.reset();
-    _band(v, -1 - _kerb, -1);
-    _band(v, 1, 1 + _kerb);
-    c.drawPath(
+    _band(vision, -1 - _kerb, -1);
+    _band(vision, 1, 1 + _kerb);
+    canvas.drawPath(
       _path,
-      fogged((i ~/ RoadConfig.rumbleLength).isEven ? _kerbLight : _kerbDark, f),
+      fogged((segmentIndex ~/ RoadConfig.rumbleLength).isEven ? _kerbLight : _kerbDark, fog),
     );
 
     _path.reset();
-    _band(v, -1, 1);
-    c.drawPath(
+    _band(vision, -1, 1);
+    canvas.drawPath(
       _path,
-      fogged((i ~/ RoadConfig.rumbleLength).isEven ? _roadLight : _roadDark, f),
+      fogged((segmentIndex ~/ RoadConfig.rumbleLength).isEven ? _roadLight : _roadDark, fog),
     );
 
-    if (theme.ruts) _ruts(c, v, f);
-    if (!theme.markings || f >= _markingCutoff) return;
+    if (theme.ruts) _ruts(canvas, vision, fog);
+    if (!theme.markings || fog >= _markingCutoff) return;
 
     _path.reset();
-    _band(v, -1, -1 + _whiteLine * 2);
-    _band(v, 1 - _whiteLine * 2, 1);
-    if ((i ~/ 3).isEven) {
+    _band(vision, -1, -1 + _whiteLine * 2);
+    _band(vision, 1 - _whiteLine * 2, 1);
+    if ((segmentIndex ~/ 3).isEven) {
       final lanes = theme.lanes;
       for (var n = 1; n < lanes; n++) {
         if (!theme.dualCarriageway && n == lanes ~/ 2) continue;
-        final a = 2 * n / lanes - 1;
-        _band(v, a - _laneLine, a + _laneLine);
+        final offset = 2 * n / lanes - 1;
+        _band(vision, offset - _laneLine, offset + _laneLine);
       }
     }
-    c.drawPath(_path, fogged(_lane, f));
+    canvas.drawPath(_path, fogged(_lane, fog));
     if (theme.dualCarriageway) return;
 
     _path.reset();
-    _band(v, -_centreGap - _yellowLine, -_centreGap + _yellowLine);
-    _band(v, _centreGap - _yellowLine, _centreGap + _yellowLine);
-    c.drawPath(_path, fogged(_center, f));
+    _band(vision, -_centreGap - _yellowLine, -_centreGap + _yellowLine);
+    _band(vision, _centreGap - _yellowLine, _centreGap + _yellowLine);
+    canvas.drawPath(_path, fogged(_center, fog));
   }
 
   /// Two wheel ruts with a raised ridge between them, broken up along the
   /// road so the surface doesn't read as painted stripes.
-  void _ruts(Canvas c, VisionSeg v, double f) {
-    final i = v.seg.index;
+  void _ruts(Canvas canvas, VisionSeg vision, double fog) {
+    final segmentIndex = vision.seg.index;
     _path.reset();
-    _band(v, -0.62, -0.34);
-    _band(v, 0.34, 0.62);
-    c.drawPath(_path, fogged(_rut, f));
-    if ((i ~/ 7).isEven) {
+    _band(vision, -0.62, -0.34);
+    _band(vision, 0.34, 0.62);
+    canvas.drawPath(_path, fogged(_rut, fog));
+    if ((segmentIndex ~/ 7).isEven) {
       _path.reset();
-      _band(v, -0.08, 0.08);
-      c.drawPath(_path, fogged(_ridge, f));
+      _band(vision, -0.08, 0.08);
+      canvas.drawPath(_path, fogged(_ridge, fog));
     }
   }
 
@@ -108,79 +108,79 @@ class RoadSegmentPainter {
   static const double _opposite = RoadConfig.oppositeWidth;
   static const double _rail = 0.03;
 
-  void _verges(Canvas c, VisionSeg v, double f) {
-    final section = v.seg.section;
+  void _verges(Canvas canvas, VisionSeg vision, double fog) {
+    final section = vision.seg.section;
     const sh = RoadConfig.shoulder;
-    final f0 = fogged(_palette.verge(section.left), f);
+    final f0 = fogged(_palette.verge(section.left), fog);
     _path.reset();
-    _band(v, -1 - sh - _verge, -1 - sh);
-    c.drawPath(_path, f0);
+    _band(vision, -1 - sh - _verge, -1 - sh);
+    canvas.drawPath(_path, f0);
 
     var edge = 1 + sh;
     if (section.hasOpposite) {
-      _paintMedian(c, v, f, edge, section.median);
+      _paintMedian(canvas, vision, fog, edge, section.median);
       edge += _median;
-      _paintOpposite(c, v, f, edge);
+      _paintOpposite(canvas, vision, fog, edge);
       edge += _opposite + sh;
     }
     _path.reset();
-    _band(v, edge, edge + _verge);
-    c.drawPath(_path, fogged(_palette.verge(section.right), f));
+    _band(vision, edge, edge + _verge);
+    canvas.drawPath(_path, fogged(_palette.verge(section.right), fog));
 
-    if (section.railLeft && f < _markingCutoff) {
+    if (section.railLeft && fog < _markingCutoff) {
       _path.reset();
-      _band(v, -1 - sh - 0.08, -1 - sh - 0.08 + _rail * 2);
-      c.drawPath(_path, fogged(_palette.rail, f));
+      _band(vision, -1 - sh - 0.08, -1 - sh - 0.08 + _rail * 2);
+      canvas.drawPath(_path, fogged(_palette.rail, fog));
     }
   }
 
-  void _paintMedian(Canvas c, VisionSeg v, double f, double a, MedianKind kind) {
+  void _paintMedian(Canvas canvas, VisionSeg vision, double fog, double offset, MedianKind kind) {
     _path.reset();
-    _band(v, a, a + _median);
-    c.drawPath(_path, fogged(_palette.median(kind), f));
+    _band(vision, offset, offset + _median);
+    canvas.drawPath(_path, fogged(_palette.median(kind), fog));
     // Guardrails are standing props (see GuardrailPainter); only the
     // concrete barrier is still painted flat on the surface.
-    if (f >= _markingCutoff || kind != MedianKind.barrier) return;
+    if (fog >= _markingCutoff || kind != MedianKind.barrier) return;
     _path.reset();
-    _band(v, a + _median * 0.35, a + _median * 0.65);
-    c.drawPath(_path, fogged(_palette.rail, f));
+    _band(vision, offset + _median * 0.35, offset + _median * 0.65);
+    canvas.drawPath(_path, fogged(_palette.rail, fog));
   }
 
-  void _paintOpposite(Canvas c, VisionSeg v, double f, double a) {
-    final i = v.seg.index;
+  void _paintOpposite(Canvas canvas, VisionSeg vision, double fog, double offset) {
+    final segmentIndex = vision.seg.index;
     _path.reset();
-    _band(v, a, a + _opposite);
-    c.drawPath(
+    _band(vision, offset, offset + _opposite);
+    canvas.drawPath(
       _path,
-      fogged((i ~/ RoadConfig.rumbleLength).isEven ? _roadLight : _roadDark, f),
+      fogged((segmentIndex ~/ RoadConfig.rumbleLength).isEven ? _roadLight : _roadDark, fog),
     );
     _path.reset();
-    _band(v, a + _opposite, a + _opposite + RoadConfig.shoulder);
-    c.drawPath(_path, fogged(_shoulder, f));
-    if (f >= _markingCutoff) return;
+    _band(vision, offset + _opposite, offset + _opposite + RoadConfig.shoulder);
+    canvas.drawPath(_path, fogged(_shoulder, fog));
+    if (fog >= _markingCutoff) return;
     _path.reset();
-    _band(v, a, a + _whiteLine * 2);
-    _band(v, a + _opposite - _whiteLine * 2, a + _opposite);
-    if ((i ~/ 3).isEven) {
+    _band(vision, offset, offset + _whiteLine * 2);
+    _band(vision, offset + _opposite - _whiteLine * 2, offset + _opposite);
+    if ((segmentIndex ~/ 3).isEven) {
       for (var n = 1; n < theme.lanes; n++) {
-        final u = a + _opposite * n / theme.lanes;
-        _band(v, u - _laneLine, u + _laneLine);
+        final position = offset + _opposite * n / theme.lanes;
+        _band(vision, position - _laneLine, position + _laneLine);
       }
     }
-    c.drawPath(_path, fogged(_lane, f));
+    canvas.drawPath(_path, fogged(_lane, fog));
   }
 
-  void _band(VisionSeg v, double a, double b) {
+  void _band(VisionSeg vision, double offset, double outer) {
     addQuad(
       _path,
-      v.x1 + v.w1 * a,
-      v.y1,
-      v.x1 + v.w1 * b,
-      v.y1,
-      v.x2 + v.w2 * b,
-      v.y2,
-      v.x2 + v.w2 * a,
-      v.y2,
+      vision.x1 + vision.w1 * offset,
+      vision.y1,
+      vision.x1 + vision.w1 * outer,
+      vision.y1,
+      vision.x2 + vision.w2 * outer,
+      vision.y2,
+      vision.x2 + vision.w2 * offset,
+      vision.y2,
     );
   }
 }

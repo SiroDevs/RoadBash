@@ -532,6 +532,15 @@
       }
     }
   },
+  "statsPeak": "Upeo {peak}",
+  "@statsPeak": {
+    "description": "Highest value shown on a stats chart",
+    "placeholders": {
+      "peak": {
+        "type": "int"
+      }
+    }
+  },
   "statsVisitors": "Wageni",
   "@statsVisitors": {
     "description": "Visitors label"

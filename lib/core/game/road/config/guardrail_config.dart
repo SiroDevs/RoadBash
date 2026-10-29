@@ -7,23 +7,17 @@ import 'road_config.dart';
 /// Offsets are in road units (-1..1 is the carriageway, the same units the
 /// road painter and props use).
 abstract final class GuardrailConfig {
-  /// Rail on the rider's side of the median, and the one on the far side.
   static const double nearOffset = 1 + RoadConfig.shoulder + 0.03;
   static const double farOffset =
       1 + RoadConfig.shoulder + RoadConfig.medianWidth - 0.03;
 
-  /// Concrete barrier medians are painted flat; this is its near edge.
   static const double barrierOffset =
       1 + RoadConfig.shoulder + RoadConfig.medianWidth * 0.35;
 
-  /// Half the width of the bike, so the rider's side touches the rail rather
-  /// than their centre line.
   static const double riderClearance = 0.08;
 
-  /// Segments covered by one rail prop (one post per span, ~2 m apart).
   static const int span = 4;
 
-  // Heights above the road, in world units.
   static const double beamBottom = 190;
   static const double valleyBottom = 238;
   static const double valleyTop = 282;

@@ -31,7 +31,7 @@ class AudioCubit extends Cubit<AudioState>
 
   PlayerProfile get _mix => _settings.state.profile;
 
-  double _musicVolume(MusicTrack t) => _mix.musicGain * t.gain;
+  double _musicVolume(MusicTrack track) => _mix.musicGain * track.gain;
 
   @override
   Future<void> playMusic(MusicTrack track) async {

@@ -60,7 +60,7 @@ class _FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     final st = widget.state;
     final error = _errorText(l10n, st.error);
     return BlocListener<SuggestionCubit, SuggestionState>(
@@ -69,8 +69,8 @@ class _FormState extends State<_Form> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.suggestionHint, style: retroBody(size: s.small)),
-          SizedBox(height: s.gap),
+          Text(l10n.suggestionHint, style: retroBody(size: sizes.small)),
+          SizedBox(height: sizes.gap),
           RetroField(
             controller: _text,
             label: l10n.suggestionLabel,
@@ -79,14 +79,14 @@ class _FormState extends State<_Form> {
             action: TextInputAction.newline,
           ),
           if (error != null)
-            Text(error, style: retroBody(size: s.small, color: Retro.red)),
+            Text(error, style: retroBody(size: sizes.small, color: Retro.red)),
           if (st.sent)
             Text(
               l10n.suggestionThanks,
-              style: retroBody(size: s.small, color: Colors.lightGreenAccent),
+              style: retroBody(size: sizes.small, color: Colors.lightGreenAccent),
             ),
           if (st.busy) const LinearProgressIndicator(color: Retro.orange),
-          SizedBox(height: s.gap),
+          SizedBox(height: sizes.gap),
           RetroButton(
             l10n.suggestionSend,
             onTap: () {
@@ -107,47 +107,47 @@ class _Inbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     final error = _errorText(l10n, state.error);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(l10n.suggestionInbox, style: retroBody(size: s.body, color: Retro.yellow)),
-        SizedBox(height: s.gap),
+        Text(l10n.suggestionInbox, style: retroBody(size: sizes.body, color: Retro.yellow)),
+        SizedBox(height: sizes.gap),
         RetroButton(
           l10n.commonRefresh,
           onTap: context.read<SuggestionCubit>().loadInbox,
         ),
-        SizedBox(height: s.gap),
+        SizedBox(height: sizes.gap),
         if (error != null)
-          Text(error, style: retroBody(size: s.small, color: Retro.red)),
+          Text(error, style: retroBody(size: sizes.small, color: Retro.red)),
         if (state.busy) const LinearProgressIndicator(color: Retro.orange),
         if (!state.busy && state.inbox.isEmpty && error == null)
-          Text(l10n.suggestionInboxEmpty, style: retroBody(size: s.small)),
+          Text(l10n.suggestionInboxEmpty, style: retroBody(size: sizes.small)),
         for (final item in state.inbox) _tile(context, item),
       ],
     );
   }
 
   Widget _tile(BuildContext context, Suggestion item) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     final when = DateFormat('d MMM, HH:mm').format(item.createdAt);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           '${item.playerName}  ·  $when',
-          style: retroBody(size: s.caption, color: Retro.orange),
+          style: retroBody(size: sizes.caption, color: Retro.orange),
         ),
-        SizedBox(height: s.gapSmall * 0.5),
-        Text(item.message, style: retroBody(size: s.small)),
+        SizedBox(height: sizes.gapSmall * 0.5),
+        Text(item.message, style: retroBody(size: sizes.small)),
       ],
     )
-        .padding(all: s.gap)
+        .padding(all: sizes.gap)
         .decorated(
           color: const Color(0x66000000),
           borderRadius: BorderRadius.circular(10),
         )
-        .padding(bottom: s.gapSmall);
+        .padding(bottom: sizes.gapSmall);
   }
 }

@@ -68,14 +68,14 @@ class DashboardHud extends PositionComponent {
     _banner(canvas);
   }
 
-  void _needleAt(Canvas canva, Offset ctr, double r, double fraction) {
-    _needle.strokeWidth = math.max(2.0, r * 0.045);
+  void _needleAt(Canvas canva, Offset ctr, double radius, double fraction) {
+    _needle.strokeWidth = math.max(2.0, radius * 0.045);
     canva.drawLine(
       ctr,
-      DashboardLayout.polar(ctr, DashboardLayout.dialAngle(fraction), r * 0.8),
+      DashboardLayout.polar(ctr, DashboardLayout.dialAngle(fraction), radius * 0.8),
       _needle,
     );
-    canva.drawCircle(ctr, r * 0.09, _hub);
+    canva.drawCircle(ctr, radius * 0.09, _hub);
   }
 
   // Progress indicator

@@ -11,32 +11,32 @@ Future<void> confirmAnonymous(
   VoidCallback onConfirm,
 ) async {
   final l10n = context.l10n;
-  final s = context.sizes;
+  final sizes = context.sizes;
   final accepted = await showDialog<bool>(
     context: context,
     builder: (dialog) => AlertDialog(
       backgroundColor: Retro.panel,
       title: Text(
         l10n.anonymousWarningTitle,
-        style: retroBody(size: s.body, color: Retro.yellow),
+        style: retroBody(size: sizes.body, color: Retro.yellow),
       ),
       content: Text(
         l10n.anonymousWarningBody,
-        style: retroBody(size: s.small),
+        style: retroBody(size: sizes.small),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(dialog).pop(false),
           child: Text(
             l10n.commonCancel,
-            style: retroBody(size: s.small, color: Retro.dim),
+            style: retroBody(size: sizes.small, color: Retro.dim),
           ),
         ),
         TextButton(
           onPressed: () => Navigator.of(dialog).pop(true),
           child: Text(
             l10n.anonymousWarningConfirm,
-            style: retroBody(size: s.small, color: Retro.orange),
+            style: retroBody(size: sizes.small, color: Retro.orange),
           ),
         ),
       ],

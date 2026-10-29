@@ -59,8 +59,8 @@ class EngineVoice {
 
     var duck = 1.0;
     if (_shift > 0) {
-      final p = 1 - _shift / _shiftLen;
-      duck = tune.duckDepth + (1 - tune.duckDepth) * p * p;
+      final progress = 1 - _shift / _shiftLen;
+      duck = tune.duckDepth + (1 - tune.duckDepth) * progress * progress;
     }
     var gain = _load * duck * (0.55 + 0.45 * _rpm) * tune.trim;
     if (limiter) {
@@ -75,24 +75,24 @@ class EngineVoice {
   }
 
   void _crossfade(double fire) {
-    final n = baseHz.length;
-    for (var i = 0; i < n; i++) {
+    final count = baseHz.length;
+    for (var i = 0; i < count; i++) {
       _weights[i] = 0;
     }
     if (fire <= baseHz.first) {
       _weights[0] = 1;
     } else if (fire >= baseHz.last) {
-      _weights[n - 1] = 1;
+      _weights[count - 1] = 1;
     } else {
-      var i = 0;
-      while (fire >= baseHz[i + 1]) {
-        i++;
+      var index = 0;
+      while (fire >= baseHz[index + 1]) {
+        index++;
       }
-      final f =
-          (math.log(fire) - math.log(baseHz[i])) /
-          (math.log(baseHz[i + 1]) - math.log(baseHz[i]));
-      _weights[i] = math.cos(f * math.pi / 2);
-      _weights[i + 1] = math.sin(f * math.pi / 2);
+      final fraction =
+          (math.log(fire) - math.log(baseHz[index])) /
+          (math.log(baseHz[index + 1]) - math.log(baseHz[index]));
+      _weights[index] = math.cos(fraction * math.pi / 2);
+      _weights[index + 1] = math.sin(fraction * math.pi / 2);
     }
   }
 }

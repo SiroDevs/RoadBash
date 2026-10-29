@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
+import '../../../../common/l10n/l10n_extension.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 
@@ -28,9 +29,9 @@ class RetroBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     final peak = values.isEmpty ? 0 : values.reduce(math.max);
-    final caption = retroBody(size: s.caption, color: Retro.dim);
+    final caption = retroBody(size: sizes.caption, color: Retro.dim);
     final marks = labels.isEmpty
         ? const <String>[]
         : [labels.first, labels[labels.length ~/ 2], labels.last];
@@ -40,24 +41,24 @@ class RetroBarChart extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(title, style: retroBody(size: s.small, color: color)),
-            Text('max $peak', style: caption),
+            Text(title, style: retroBody(size: sizes.small, color: color)),
+            Text(context.l10n.statsPeak(peak), style: caption),
           ],
         ),
-        SizedBox(height: s.gapSmall),
+        SizedBox(height: sizes.gapSmall),
         SizedBox(
           width: double.infinity,
-          height: s.gap * 8,
+          height: sizes.gap * 8,
           child: CustomPaint(painter: _BarPainter(values, color)),
         ),
-        SizedBox(height: s.gapSmall * 0.5),
+        SizedBox(height: sizes.gapSmall * 0.5),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [for (final m in marks) Text(m, style: caption)],
         ),
       ],
     )
-        .padding(all: s.gap)
+        .padding(all: sizes.gap)
         .decorated(color: Retro.panel, borderRadius: BorderRadius.circular(12));
   }
 }
@@ -77,13 +78,13 @@ class _BarPainter extends CustomPainter {
     final paint = Paint()..color = color;
     final faint = Paint()..color = Retro.dim.withValues(alpha: 0.35);
     for (var i = 0; i < values.length; i++) {
-      final x = i * (width + gap);
-      final h = values[i] == 0
+      final barX = i * (width + gap);
+      final barHeight = values[i] == 0
           ? 2.0
           : math.max(3.0, values[i] / peak * (size.height - 2));
       canvas.drawRRect(
         RRect.fromRectAndRadius(
-          Rect.fromLTWH(x, size.height - h, width, h),
+          Rect.fromLTWH(barX, size.height - barHeight, width, barHeight),
           const Radius.circular(2),
         ),
         values[i] == 0 ? faint : paint,

@@ -25,38 +25,38 @@ class SlipRoadPainter {
   static const double _gap = 0.12;
   static const double _spread = 0.9;
 
-  void draw(Canvas c, VisionSeg near, VisionSeg far, Prop p, Vector2 size) {
-    final aNear = _edge + _gapAt(p, near.seg.index);
-    final aFar = _edge + _gapAt(p, far.seg.index);
+  void draw(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
+    final aNear = _edge + _gapAt(prop, near.seg.index);
+    final aFar = _edge + _gapAt(prop, far.seg.index);
 
-    c.save();
-    c.clipRect(Rect.fromLTRB(0, 0, size.x, near.clip));
+    canvas.save();
+    canvas.clipRect(Rect.fromLTRB(0, 0, size.x, near.clip));
 
-    if (p.detail != 0) {
-      _quad(c, near, far, p.side, _edge, aNear, _edge, aFar, _gore);
+    if (prop.detail != 0) {
+      _quad(canvas, near, far, prop.side, _edge, aNear, _edge, aFar, _gore);
     } else {
-      _quad(c, near, far, p.side, _edge + 0.04, _edge + 0.07, _edge + 0.04,
+      _quad(canvas, near, far, prop.side, _edge + 0.04, _edge + 0.07, _edge + 0.04,
           _edge + 0.07, _rail);
     }
-    _quad(c, near, far, p.side, aNear, aNear + _lane, aFar, aFar + _lane,
+    _quad(canvas, near, far, prop.side, aNear, aNear + _lane, aFar, aFar + _lane,
         _asphalt);
     if (near.fog < 0.8) {
-      _quad(c, near, far, p.side, aNear + _lane - 0.03, aNear + _lane,
+      _quad(canvas, near, far, prop.side, aNear + _lane - 0.03, aNear + _lane,
           aFar + _lane - 0.03, aFar + _lane, _line);
     }
-    c.restore();
+    canvas.restore();
   }
 
-  double _gapAt(Prop p, int index) {
-    if (p.detail == 0) return _gap;
-    final t = ((index - p.anchor) / p.depth).clamp(0.0, 1.0);
-    return _spread * (p.detail > 0 ? t : 1 - t);
+  double _gapAt(Prop prop, int index) {
+    if (prop.detail == 0) return _gap;
+    final progress = ((index - prop.anchor) / prop.depth).clamp(0.0, 1.0);
+    return _spread * (prop.detail > 0 ? progress : 1 - progress);
   }
 
-  void _quad(Canvas c, VisionSeg near, VisionSeg far, int side, double n0,
+  void _quad(Canvas canvas, VisionSeg near, VisionSeg far, int side, double n0,
       double n1, double f0, double f1, List<Paint> ramp) {
     drawQuad(
-      c,
+      canvas,
       _path,
       fogged(ramp, far.fog),
       near.x1 + side * near.w1 * n0,

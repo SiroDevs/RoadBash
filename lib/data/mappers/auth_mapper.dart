@@ -9,11 +9,11 @@ PlayerSession playerSessionFromJson(Map<String, dynamic> json) => PlayerSession(
   isAdmin: json['is_admin'] == true,
 );
 
-Map<String, dynamic> playerSessionToJson(PlayerSession s) => {
-  'token': s.token,
-  'player_id': s.playerId,
-  'name': s.name,
-  'is_admin': s.isAdmin,
+Map<String, dynamic> playerSessionToJson(PlayerSession session) => {
+  'token': session.token,
+  'player_id': session.playerId,
+  'name': session.name,
+  'is_admin': session.isAdmin,
 };
 
 NameStatus nameStatusFromJson(Map<String, dynamic> json) => NameStatus(

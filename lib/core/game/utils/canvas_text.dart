@@ -7,10 +7,6 @@ import 'package:flutter/painting.dart' show TextPainter, TextSpan, TextStyle;
 // Project imports:
 import '../../constants/app_constants.dart';
 
-/// Laid-out text, kept between frames. Building and measuring a paragraph is
-/// one of the slowest things a canvas can do (in the browser every call crosses
-/// into the rendering engine), and the HUD used to do it for every label on
-/// every frame. A label only needs laying out when its text or style changes.
 final Map<String, TextPainter> _painters = {};
 const int _painterLimit = 96;
 

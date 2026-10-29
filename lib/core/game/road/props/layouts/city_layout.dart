@@ -5,23 +5,23 @@ import '../prop.dart';
 
 void layOutCity(List<List<Prop>> slots, int count) {
   for (final side in const [-1, 1]) {
-    var i = (side < 0) ? 0 : 7;
+    var cursor = (side < 0) ? 0 : 7;
     var lot = 0;
-    while (i < count - RoadConfig.maxPropDepth) {
-      final seed = (i * 2 + (side > 0 ? 1 : 0)) * 31 + 7;
+    while (cursor < count - RoadConfig.maxPropDepth) {
+      final seed = (cursor * 2 + (side > 0 ? 1 : 0)) * 31 + 7;
       final gap = pseudoRandom(seed + 3);
 
       if (gap < 0.17) {
-        i += 5 + (gap * 22).floor();
+        cursor += 5 + (gap * 22).floor();
         lot++;
         continue;
       }
 
       final depth = 9 + (pseudoRandom(seed) * 14).floor();
       final storeys = 3 + (pseudoRandom(seed + 1) * 9).floor();
-      slots[i].add(Prop(
+      slots[cursor].add(Prop(
         kind: PropKind.building,
-        anchor: i,
+        anchor: cursor,
         side: side,
         offset: 1.42 + 0.5 * pseudoRandom(seed + 5),
         width: 2600 + 3400 * pseudoRandom(seed + 6),
@@ -30,7 +30,7 @@ void layOutCity(List<List<Prop>> slots, int count) {
         tint: lot + (side > 0 ? 1 : 0),
         detail: storeys.toDouble(),
       ));
-      i += depth + 1 + (pseudoRandom(seed + 4) * 4).floor();
+      cursor += depth + 1 + (pseudoRandom(seed + 4) * 4).floor();
       lot++;
     }
   }

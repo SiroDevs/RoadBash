@@ -3,7 +3,7 @@ import '../../../domain/models/engine_flavour.dart';
 import 'engine_tune.dart';
 
 abstract final class EngineTunes {
-  static EngineTune of(EngineFlavour f) => switch (f) {
+  static EngineTune of(EngineFlavour flavour) => switch (flavour) {
         EngineFlavour.classic => _classic,
         EngineFlavour.vTwin => _vTwin,
         EngineFlavour.superbike => _superbike,

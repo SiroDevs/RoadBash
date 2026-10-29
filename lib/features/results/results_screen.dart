@@ -29,7 +29,7 @@ class ResultsScreen extends StatelessWidget {
       ...result.rows.take(3),
       if (result.player.place > 3) result.player,
     ];
-    final s = context.sizes;
+    final sizes = context.sizes;
     return RetroPage(
       child: ResponsiveScrollBody(
         child: Column(
@@ -40,22 +40,22 @@ class ResultsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RetroTitle(l10n.resultsTitle),
-                SizedBox(height: s.gap * 1.2),
+                SizedBox(height: sizes.gap * 1.2),
                 for (final r in rows) _row(context, r),
                 if (outcome.newBest) ...[
-                  SizedBox(height: s.gap * 0.75),
+                  SizedBox(height: sizes.gap * 0.75),
                   Text(
                     l10n.newBestTime,
-                    style: retroBody(size: s.body, color: Retro.yellow),
+                    style: retroBody(size: sizes.body, color: Retro.yellow),
                   ),
                 ],
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(top: s.gap),
+              padding: EdgeInsets.only(top: sizes.gap),
               child: Wrap(
-                spacing: s.gap * 0.75,
-                runSpacing: s.gap * 0.75,
+                spacing: sizes.gap * 0.75,
+                runSpacing: sizes.gap * 0.75,
                 children: [
                   RetroButton(
                     l10n.raceAgain,
@@ -81,23 +81,23 @@ class ResultsScreen extends StatelessWidget {
     );
   }
 
-  Widget _row(BuildContext context, ResultRow r) {
-    final s = context.sizes;
+  Widget _row(BuildContext context, ResultRow row) {
+    final sizes = context.sizes;
     final style = retroBody(
-      size: s.resultRow,
-      color: r.isPlayer ? Retro.yellow : Colors.white,
+      size: sizes.resultRow,
+      color: row.isPlayer ? Retro.yellow : Colors.white,
     ).copyWith(fontFamily: AppConstants.displayFont, fontWeight: FontWeight.w400);
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: s.gapSmall * 0.5),
+      padding: EdgeInsets.symmetric(vertical: sizes.gapSmall * 0.5),
       child: Row(
         children: [
-          SizedBox(width: s.resultPlaceW, child: Text('${r.place})', style: style)),
+          SizedBox(width: sizes.resultPlaceW, child: Text('${row.place})', style: style)),
           SizedBox(
-            width: s.resultTimeW,
-            child: Text(formatTime(r.seconds), style: style),
+            width: sizes.resultTimeW,
+            child: Text(formatTime(row.seconds), style: style),
           ),
           Expanded(
-            child: Text(r.name, style: style, overflow: TextOverflow.ellipsis),
+            child: Text(row.name, style: style, overflow: TextOverflow.ellipsis),
           ),
         ],
       ),

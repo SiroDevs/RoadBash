@@ -24,8 +24,8 @@ class MenuEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
-    final hintSize = s.caption * 0.6;
+    final sizes = context.sizes;
+    final hintSize = sizes.caption * 0.6;
     return Stack(
       alignment: Alignment.topCenter,
       children: [

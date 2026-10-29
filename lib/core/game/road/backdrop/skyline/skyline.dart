@@ -22,8 +22,8 @@ void drawCityScape(
   required double scroll,
   Color? haze,
 }) {
-  final s = height / (cityBaseline - cityTop);
-  final tile = cityTile * s;
+  final scale = height / (cityBaseline - cityTop);
+  final tile = cityTile * scale;
   _cityPaint.colorFilter = haze == null
       ? null
       : ColorFilter.mode(haze, BlendMode.srcOver);
@@ -31,7 +31,7 @@ void drawCityScape(
     canva
       ..save()
       ..translate(i * tile - scroll, baseY)
-      ..scale(s)
+      ..scale(scale)
       ..translate(-cityLeft, -cityBaseline);
 
     for (final building in nairobiLandmarks) {

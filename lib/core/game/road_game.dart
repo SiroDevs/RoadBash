@@ -16,6 +16,7 @@ import '../audio/audio_service.dart';
 import 'audio/ride_audio.dart';
 import 'hud/dashboard_hud.dart';
 import 'hud/hud_strings.dart';
+import 'input/road_input.dart';
 import 'race/race_controller.dart';
 import 'race/race_result.dart';
 import 'race/rival_racer.dart';
@@ -24,7 +25,7 @@ import 'road/road_renderer.dart';
 import 'road/scene_theme.dart';
 import 'road/traffic/road_traffic.dart';
 
-class RoadGame extends FlameGame with KeyboardEvents {
+class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
   RoadGame({
     required this.scene,
     required this.mix,
@@ -43,17 +44,14 @@ class RoadGame extends FlameGame with KeyboardEvents {
   final ValueChanged<RaceResult> onFinished;
   final VoidCallback? onPauseKey;
 
+  @override
   late final RoadRenderer road;
   late final RaceController race;
   late final List<RivalRacer> racers;
   RideAudio? _ride;
 
-  double _keySteer = 0, _touchSteer = 0, _tiltSteer = 0;
-  bool _keyThrottle = false, _touchThrottle = false;
-  bool _keyBrake = false, _touchBrake = false;
-
   bool _menuPaused = false;
-  bool _finishing = false, _notified = false;
+  bool _notified = false;
   bool _shutDown = false;
   double _finishDelay = 2.4;
 
@@ -96,17 +94,17 @@ class RoadGame extends FlameGame with KeyboardEvents {
     if (!isLoaded) return;
 
     road.locked = race.countdown > 0;
-    _applyInput();
+    applyInput();
     race.update(dt, road.fullDistance, road.speed);
     for (final r in racers) {
       r.update(dt, race, road);
     }
 
-    if (race.finished && !_finishing) {
-      _finishing = true;
-      _applyInput();
+    if (race.finished && !finishing) {
+      finishing = true;
+      applyInput();
     }
-    if (_finishing && !_notified && (_finishDelay -= dt) <= 0 && _fieldHome) {
+    if (finishing && !_notified && (_finishDelay -= dt) <= 0 && _fieldHome) {
       _notified = true;
       onFinished(race.buildResult());
     }
@@ -115,24 +113,6 @@ class RoadGame extends FlameGame with KeyboardEvents {
 
   bool get _fieldHome =>
       _finishDelay < -3.6 || racers.every((r) => r.settled);
-
-  void _applyInput() {
-    if (!isLoaded) return;
-    if (_finishing) {
-      road
-        ..steer = 0
-        ..brake = true
-        ..throttle = false;
-      return;
-    }
-    final s = _keySteer + _touchSteer + _tiltSteer;
-    road.steer = s.clamp(-1.0, 1.0).toDouble();
-    // Tilt is already smooth, so the bike follows it directly; keys and
-    // arrows are on/off and keep the gradual ramp.
-    road.analogSteer = _keySteer == 0 && _touchSteer == 0 && _tiltSteer != 0;
-    road.brake = _keyBrake || _touchBrake;
-    road.throttle = (_keyThrottle || _touchThrottle) && !road.brake;
-  }
 
   void updateMix(PlayerProfile profile) {
     mix = profile;
@@ -156,36 +136,6 @@ class RoadGame extends FlameGame with KeyboardEvents {
     _ride?.resume();
   }
 
-  void clearInput() {
-    _keySteer = 0;
-    _touchSteer = 0;
-    _tiltSteer = 0;
-    _keyThrottle = _touchThrottle = false;
-    _keyBrake = _touchBrake = false;
-    _applyInput();
-  }
-
-  /// Analog steering from the tilt sensor, -1..1.
-  void setTiltSteer(double v) {
-    _tiltSteer = v;
-    _applyInput();
-  }
-
-  void setTouchSteer(double v) {
-    _touchSteer = v;
-    _applyInput();
-  }
-
-  void setTouchThrottle(bool v) {
-    _touchThrottle = v;
-    _applyInput();
-  }
-
-  void setTouchBrake(bool v) {
-    _touchBrake = v;
-    _applyInput();
-  }
-
   @override
   KeyEventResult onKeyEvent(
     KeyEvent event,
@@ -195,21 +145,9 @@ class RoadGame extends FlameGame with KeyboardEvents {
       onPauseKey?.call();
       return KeyEventResult.handled;
     }
-    bool any(List<LogicalKeyboardKey> list) => list.any(keysPressed.contains);
-    _keySteer = (any(_right) ? 1.0 : 0.0) - (any(_left) ? 1.0 : 0.0);
-    _keyThrottle = any(_up);
-    _keyBrake = any(_down);
-    _applyInput();
+    readKeys(keysPressed);
     return KeyEventResult.handled;
   }
-
-  static final _left = [LogicalKeyboardKey.arrowLeft, LogicalKeyboardKey.keyA];
-  static final _right = [
-    LogicalKeyboardKey.arrowRight,
-    LogicalKeyboardKey.keyD,
-  ];
-  static final _up = [LogicalKeyboardKey.arrowUp, LogicalKeyboardKey.keyW];
-  static final _down = [LogicalKeyboardKey.arrowDown, LogicalKeyboardKey.keyS];
 
   @override
   void lifecycleStateChange(AppLifecycleState state) {

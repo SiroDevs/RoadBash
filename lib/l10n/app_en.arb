@@ -532,6 +532,15 @@
       }
     }
   },
+  "statsPeak": "Max {peak}",
+  "@statsPeak": {
+    "description": "Highest value shown on a stats chart",
+    "placeholders": {
+      "peak": {
+        "type": "int"
+      }
+    }
+  },
   "statsVisitors": "Visitors",
   "@statsVisitors": {
     "description": "Visitors label"

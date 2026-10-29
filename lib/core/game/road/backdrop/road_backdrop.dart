@@ -50,27 +50,27 @@ class RoadBackdrop {
   }
 
   void draw(Canvas canvas, Vector2 size) {
-    final w = size.x;
+    final viewWidth = size.x;
     final horizon = size.y * RoadConfig.horizonRatio;
-    final k = size.y / 700;
+    final unit = size.y / 700;
 
-    canvas.drawRect(Rect.fromLTWH(0, 0, w, horizon + 1), _sky);
-    _clouds(canvas, w, horizon, big: theme.backdrop == BackdropKind.sky);
+    canvas.drawRect(Rect.fromLTWH(0, 0, viewWidth, horizon + 1), _sky);
+    _clouds(canvas, viewWidth, horizon, big: theme.backdrop == BackdropKind.sky);
 
     if (theme.backdrop == BackdropKind.skyline) {
       drawCityScape(
         canvas,
-        width: w,
+        width: viewWidth,
         baseY: horizon,
-        height: 110 * k,
-        scroll: scroll * 0.25 + 90 * k,
+        height: 110 * unit,
+        scroll: scroll * 0.25 + 90 * unit,
         haze: _farHaze,
       );
       drawCityScape(
         canvas,
-        width: w,
+        width: viewWidth,
         baseY: horizon,
-        height: 170 * k,
+        height: 170 * unit,
         scroll: scroll * 0.5,
         haze: _nearHaze,
       );
@@ -78,27 +78,27 @@ class RoadBackdrop {
       drawHills(
         canvas,
         _path,
-        width: w,
+        width: viewWidth,
         baseY: horizon,
-        amplitude: 50 * k,
+        amplitude: 50 * unit,
         frequency: 0.006,
         scroll: scroll * 0.5,
         paint: _far,
       );
       drawCityScape(
         canvas,
-        width: w,
+        width: viewWidth,
         baseY: horizon,
-        height: 70 * k,
-        scroll: scroll * 0.3 + 40 * k,
+        height: 70 * unit,
+        scroll: scroll * 0.3 + 40 * unit,
         haze: _farHaze,
       );
       drawHills(
         canvas,
         _path,
-        width: w,
+        width: viewWidth,
         baseY: horizon,
-        amplitude: 20 * k,
+        amplitude: 20 * unit,
         frequency: 0.011,
         scroll: scroll,
         paint: _near,
@@ -107,23 +107,23 @@ class RoadBackdrop {
       drawHills(
         canvas,
         _path,
-        width: w,
+        width: viewWidth,
         baseY: horizon,
-        amplitude: 78 * k,
+        amplitude: 78 * unit,
         frequency: 0.005,
         scroll: scroll * 0.35,
         paint: _far,
       );
       canvas.drawRect(
-        Rect.fromLTRB(0, horizon - 90 * k, w, horizon),
+        Rect.fromLTRB(0, horizon - 90 * unit, viewWidth, horizon),
         Paint()..color = _farHaze.withAlpha(60),
       );
       drawHills(
         canvas,
         _path,
-        width: w,
+        width: viewWidth,
         baseY: horizon,
-        amplitude: 54 * k,
+        amplitude: 54 * unit,
         frequency: 0.008,
         scroll: scroll * 0.6,
         paint: _near,
@@ -131,9 +131,9 @@ class RoadBackdrop {
       drawHills(
         canvas,
         _path,
-        width: w,
+        width: viewWidth,
         baseY: horizon,
-        amplitude: 30 * k,
+        amplitude: 30 * unit,
         frequency: 0.013,
         scroll: scroll,
         paint: _front,
@@ -142,9 +142,9 @@ class RoadBackdrop {
       drawHills(
         canvas,
         _path,
-        width: w,
+        width: viewWidth,
         baseY: horizon,
-        amplitude: 46 * k,
+        amplitude: 46 * unit,
         frequency: 0.007,
         scroll: scroll * 0.6,
         paint: _far,
@@ -152,9 +152,9 @@ class RoadBackdrop {
       drawHills(
         canvas,
         _path,
-        width: w,
+        width: viewWidth,
         baseY: horizon,
-        amplitude: 30 * k,
+        amplitude: 30 * unit,
         frequency: 0.012,
         scroll: scroll,
         paint: _near,
@@ -165,40 +165,40 @@ class RoadBackdrop {
       final drop = 1 - skylineRise;
       drawCityScape(
         canvas,
-        width: w,
-        baseY: horizon + 170 * k * drop,
-        height: 110 * k,
-        scroll: scroll * 0.25 + 90 * k,
+        width: viewWidth,
+        baseY: horizon + 170 * unit * drop,
+        height: 110 * unit,
+        scroll: scroll * 0.25 + 90 * unit,
         haze: _farHaze,
       );
       drawCityScape(
         canvas,
-        width: w,
-        baseY: horizon + 260 * k * drop,
-        height: 170 * k,
+        width: viewWidth,
+        baseY: horizon + 260 * unit * drop,
+        height: 170 * unit,
         scroll: scroll * 0.5,
         haze: _nearHaze,
       );
     }
-    canvas.drawRect(Rect.fromLTRB(0, horizon, w, size.y), _ground);
+    canvas.drawRect(Rect.fromLTRB(0, horizon, viewWidth, size.y), _ground);
   }
 
-  void _clouds(Canvas c, double w, double horizon, {bool big = false}) {
-    final span = w * 1.4;
+  void _clouds(Canvas canvas, double viewWidth, double horizon, {bool big = false}) {
+    final span = viewWidth * 1.4;
     final grow = big ? 1.9 : 1.0;
     for (var i = 0; i < _cloudX.length; i++) {
-      final x = (_cloudX[i] * span - scroll * 0.2) % span - w * 0.2;
-      final y = horizon * _cloudY[i];
-      final s = horizon * (0.10 + 0.02 * (i % 3)) * grow;
-      c.drawOval(
-        Rect.fromCenter(center: Offset(x, y), width: s * 3.2, height: s),
+      final cloudX = (_cloudX[i] * span - scroll * 0.2) % span - viewWidth * 0.2;
+      final cloudY = horizon * _cloudY[i];
+      final cloudSize = horizon * (0.10 + 0.02 * (i % 3)) * grow;
+      canvas.drawOval(
+        Rect.fromCenter(center: Offset(cloudX, cloudY), width: cloudSize * 3.2, height: cloudSize),
         _cloud,
       );
-      c.drawOval(
+      canvas.drawOval(
         Rect.fromCenter(
-          center: Offset(x + s * 0.7, y - s * 0.25),
-          width: s * 2.0,
-          height: s * 0.9,
+          center: Offset(cloudX + cloudSize * 0.7, cloudY - cloudSize * 0.25),
+          width: cloudSize * 2.0,
+          height: cloudSize * 0.9,
         ),
         _cloud,
       );

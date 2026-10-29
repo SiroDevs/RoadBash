@@ -3,10 +3,10 @@ import '../../../domain/models/scene_id.dart';
 
 String formatTime(double seconds, {bool short = false}) {
   final tenths = (seconds * 10).round();
-  final m = tenths ~/ 600;
+  final minutes = tenths ~/ 600;
   final rest = tenths % 600;
   final ss = '${(rest ~/ 10).toString().padLeft(2, '0')}.${rest % 10}';
-  return (short && m == 0) ? ss : '$m:$ss';
+  return (short && minutes == 0) ? ss : '$minutes:$ss';
 }
 
 class ResultRow {

@@ -30,120 +30,120 @@ class FootbridgePainter {
   final Path _path = Path();
 
   void draw(
-    Canvas c,
-    VisionSeg v,
-    Prop p,
-    double l,
-    double r, {
+    Canvas canvas,
+    VisionSeg vision,
+    Prop prop,
+    double left,
+    double right, {
     double? pillarX,
   }) {
-    final s = p.tint % _frame.length;
-    final k = v.k1, y = v.y1, f = v.fog;
-    final top = y - p.height * k;
-    final deck = top + 170 * k;
-    final pw = math.max(1.0, 120 * k);
-    final stair = 1500 * k;
+    final style = prop.tint % _frame.length;
+    final scale = vision.k1, groundY = vision.y1, fog = vision.fog;
+    final top = groundY - prop.height * scale;
+    final deck = top + 170 * scale;
+    final pw = math.max(1.0, 120 * scale);
+    final stair = 1500 * scale;
 
     // Stairs
     _path.reset();
     _path
-      ..moveTo(l, deck)
-      ..lineTo(l - stair, y)
-      ..lineTo(l, y)
+      ..moveTo(left, deck)
+      ..lineTo(left - stair, groundY)
+      ..lineTo(left, groundY)
       ..close()
-      ..moveTo(r, deck)
-      ..lineTo(r + stair, y)
-      ..lineTo(r, y)
+      ..moveTo(right, deck)
+      ..lineTo(right + stair, groundY)
+      ..lineTo(right, groundY)
       ..close();
-    c.drawPath(_path, fogged(_dark[s], f));
+    canvas.drawPath(_path, fogged(_dark[style], fog));
 
     // Centre pier, standing in the median
     if (pillarX != null) {
-      final pier = math.max(1.5, 170 * k);
-      c.drawRect(
-        Rect.fromLTRB(pillarX - pier, deck, pillarX + pier, y + 1),
-        fogged(_dark[s], f),
+      final pier = math.max(1.5, 170 * scale);
+      canvas.drawRect(
+        Rect.fromLTRB(pillarX - pier, deck, pillarX + pier, groundY + 1),
+        fogged(_dark[style], fog),
       );
-      c.drawRect(
+      canvas.drawRect(
         Rect.fromLTRB(
           pillarX - pier * 2.2,
           deck,
           pillarX + pier * 2.2,
-          deck + 110 * k,
+          deck + 110 * scale,
         ),
-        fogged(_dark[s], f),
+        fogged(_dark[style], fog),
       );
     }
 
     // Deck
-    c.drawRect(Rect.fromLTRB(l - pw, deck, l + pw, y + 1), fogged(_dark[s], f));
-    c.drawRect(Rect.fromLTRB(r - pw, deck, r + pw, y + 1), fogged(_dark[s], f));
-    c.drawRect(
-      Rect.fromLTRB(l - pw * 1.6, top, r + pw * 1.6, deck),
-      fogged(_frame[s], f),
+    canvas.drawRect(Rect.fromLTRB(left - pw, deck, left + pw, groundY + 1), fogged(_dark[style], fog));
+    canvas.drawRect(Rect.fromLTRB(right - pw, deck, right + pw, groundY + 1), fogged(_dark[style], fog));
+    canvas.drawRect(
+      Rect.fromLTRB(left - pw * 1.6, top, right + pw * 1.6, deck),
+      fogged(_frame[style], fog),
     );
 
     // Railing
-    final railTop = top - 250 * k;
-    final bar = math.max(1.0, 36 * k);
-    c.drawRect(
-      Rect.fromLTRB(l - pw * 1.6, railTop, r + pw * 1.6, railTop + bar),
-      fogged(_frame[s], f),
+    final railTop = top - 250 * scale;
+    final bar = math.max(1.0, 36 * scale);
+    canvas.drawRect(
+      Rect.fromLTRB(left - pw * 1.6, railTop, right + pw * 1.6, railTop + bar),
+      fogged(_frame[style], fog),
     );
-    final posts = ((r - l) / math.max(6.0, 300 * k)).floor().clamp(2, 28);
+    final posts = ((right - left) / math.max(6.0, 300 * scale)).floor().clamp(2, 28);
     _path.reset();
     for (var n = 0; n <= posts; n++) {
-      final x = l + (r - l) * n / posts;
-      _path.addRect(Rect.fromLTRB(x - bar * 0.5, railTop, x + bar * 0.5, top));
+      final postX = left + (right - left) * n / posts;
+      _path.addRect(Rect.fromLTRB(postX - bar * 0.5, railTop, postX + bar * 0.5, top));
     }
-    c.drawPath(_path, fogged(_frame[s], f));
+    canvas.drawPath(_path, fogged(_frame[style], fog));
 
-    if (s == _arch) {
-      _archSpan(c, f, s, l, r, railTop, k);
+    if (style == _arch) {
+      _archSpan(canvas, fog, style, left, right, railTop, scale);
     } else {
       // Covered walkway
-      final roof = railTop - 330 * k;
-      c.drawRect(
-        Rect.fromLTRB(l - pw * 1.6, roof, r + pw * 1.6, railTop),
-        fogged(_mesh[s], f),
+      final roof = railTop - 330 * scale;
+      canvas.drawRect(
+        Rect.fromLTRB(left - pw * 1.6, roof, right + pw * 1.6, railTop),
+        fogged(_mesh[style], fog),
       );
-      c.drawRect(
-        Rect.fromLTRB(l - pw * 2, roof - bar * 1.4, r + pw * 2, roof),
-        fogged(_dark[s], f),
+      canvas.drawRect(
+        Rect.fromLTRB(left - pw * 2, roof - bar * 1.4, right + pw * 2, roof),
+        fogged(_dark[style], fog),
       );
     }
   }
 
   void _archSpan(
-    Canvas c,
-    double f,
-    int s,
-    double l,
-    double r,
+    Canvas canvas,
+    double fog,
+    int style,
+    double left,
+    double right,
     double base,
-    double k,
+    double scale,
   ) {
-    final rise = 1150 * k;
-    final t = math.max(1.2, 70 * k);
-    final mid = (l + r) / 2;
+    final rise = 1150 * scale;
+    final thickness = math.max(1.2, 70 * scale);
+    final mid = (left + right) / 2;
     _path.reset();
     const steps = 10;
     for (var n = 0; n <= steps; n++) {
-      final u = n / steps;
-      final x = l + (r - l) * u;
-      final yy = base - rise * 4 * u * (1 - u);
-      n == 0 ? _path.moveTo(x, yy) : _path.lineTo(x, yy);
+      final fraction = n / steps;
+      final postX = left + (right - left) * fraction;
+      final yy = base - rise * 4 * fraction * (1 - fraction);
+      n == 0 ? _path.moveTo(postX, yy) : _path.lineTo(postX, yy);
     }
     for (var n = steps; n >= 0; n--) {
-      final u = n / steps;
-      final x = l + (r - l) * u;
-      _path.lineTo(x, base - rise * 4 * u * (1 - u) + t);
+      final fraction = n / steps;
+      final postX = left + (right - left) * fraction;
+      _path.lineTo(postX, base - rise * 4 * fraction * (1 - fraction) + thickness);
     }
     _path.close();
-    c.drawPath(_path, fogged(_frame[s], f));
-    c.drawRect(
-      Rect.fromLTRB(mid - t * 0.5, base - rise, mid + t * 0.5, base),
-      fogged(_frame[s], f),
+    canvas.drawPath(_path, fogged(_frame[style], fog));
+    canvas.drawRect(
+      Rect.fromLTRB(mid - thickness * 0.5, base - rise, mid + thickness * 0.5, base),
+      fogged(_frame[style], fog),
     );
   }
 }

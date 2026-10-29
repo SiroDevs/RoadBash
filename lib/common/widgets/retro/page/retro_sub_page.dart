@@ -26,7 +26,7 @@ class RetroSubPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -36,7 +36,7 @@ class RetroSubPage extends StatelessWidget {
             RetroButton(context.l10n.commonBack, onTap: onBack),
           ],
         ),
-        SizedBox(height: s.gap),
+        SizedBox(height: sizes.gap),
         ...children,
       ],
     ).constrained(maxWidth: maxWidth).alignment(Alignment.topCenter);

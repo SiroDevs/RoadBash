@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     final studio = AppConstants.appCredits.replaceFirst('© ', '');
     return BlocListener<SplashCubit, bool>(
       listener: (context, ready) {
@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Text(
                 l10n.splashPresents(studio),
                 textAlign: TextAlign.center,
-                style: retroBody(size: s.presents),
+                style: retroBody(size: sizes.presents),
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
@@ -66,20 +66,20 @@ class _SplashScreenState extends State<SplashScreen> {
                         child: child,
                       ),
                     ),
-                    child: RoadBashLogo(size: s.logo),
+                    child: RoadBashLogo(size: sizes.logo),
                   ),
-                  SizedBox(height: s.gap),
+                  SizedBox(height: sizes.gap),
                   Text(
                     l10n.splashTagline,
                     textAlign: TextAlign.center,
-                    style: retroBody(size: s.tagline, color: Retro.orange),
+                    style: retroBody(size: sizes.tagline, color: Retro.orange),
                   ),
                 ],
               ),
               Text(
                 l10n.splashRights(AppConstants.appCredits),
                 textAlign: TextAlign.center,
-                style: retroBody(size: s.rights, color: Retro.dim),
+                style: retroBody(size: sizes.rights, color: Retro.dim),
               ),
             ],
           ),

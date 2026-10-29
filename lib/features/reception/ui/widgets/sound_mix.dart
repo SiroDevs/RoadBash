@@ -37,8 +37,8 @@ class _SoundMixState extends State<SoundMix> {
   }
 
   void _listen(EngineFlavour flavour) {
-    final p = context.read<SettingsCubit>().state.profile;
-    unawaited(_preview.play(flavour, p.masterGain * p.engine));
+    final profile = context.read<SettingsCubit>().state.profile;
+    unawaited(_preview.play(flavour, profile.masterGain * profile.engine));
   }
 
   @override
@@ -47,14 +47,14 @@ class _SoundMixState extends State<SoundMix> {
     final cubit = context.read<SettingsCubit>();
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        final p = state.profile;
+        final profile = state.profile;
         return Column(
           children: [
-            _slider(context, l10n.volumeMaster, p.master, cubit.setMaster),
-            _slider(context, l10n.volumeMusic, p.music, cubit.setMusic),
-            _slider(context, l10n.volumeEngine, p.engine, cubit.setEngine),
-            _slider(context, l10n.volumeEffects, p.effects, cubit.setEffects),
-            _flavourPicker(context, p.flavour),
+            _slider(context, l10n.volumeMaster, profile.master, cubit.setMaster),
+            _slider(context, l10n.volumeMusic, profile.music, cubit.setMusic),
+            _slider(context, l10n.volumeEngine, profile.engine, cubit.setEngine),
+            _slider(context, l10n.volumeEffects, profile.effects, cubit.setEffects),
+            _flavourPicker(context, profile.flavour),
           ],
         );
       },
@@ -62,16 +62,16 @@ class _SoundMixState extends State<SoundMix> {
   }
 
   Widget _label(BuildContext context, String text, {Color? color}) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     return SizedBox(
-      width: s.labelW,
+      width: sizes.labelW,
       child: FittedBox(
         fit: BoxFit.scaleDown,
         alignment: Alignment.centerLeft,
         child: Text(
           text,
           maxLines: 1,
-          style: retroBody(size: s.small, color: color ?? Colors.white),
+          style: retroBody(size: sizes.small, color: color ?? Colors.white),
         ),
       ),
     );

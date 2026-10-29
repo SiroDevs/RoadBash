@@ -45,14 +45,14 @@ class DashboardFace {
     ..strokeWidth = width
     ..color = color;
 
-  static void _housing(Canvas canva, DashboardLayout l) {
-    final r = Rect.fromLTWH(l.left, l.top, l.pw, l.ph);
-    final dome = Radius.elliptical(l.pw * 0.5, l.ph * 0.8);
-    final rr = RRect.fromRectAndCorners(r, topLeft: dome, topRight: dome);
+  static void _housing(Canvas canva, DashboardLayout layout) {
+    final rect = Rect.fromLTWH(layout.left, layout.top, layout.pw, layout.ph);
+    final dome = Radius.elliptical(layout.pw * 0.5, layout.ph * 0.8);
+    final rr = RRect.fromRectAndCorners(rect, topLeft: dome, topRight: dome);
     canva.drawRRect(
       rr,
       Paint()
-        ..shader = Gradient.linear(r.topCenter, r.bottomCenter, const [
+        ..shader = Gradient.linear(rect.topCenter, rect.bottomCenter, const [
           Color(0xFF30303A),
           Color(0xFF0B0B10),
         ]),
@@ -88,18 +88,18 @@ class DashboardFace {
     final steps = (max ~/ major) * minors;
     for (var i = 0; i <= steps; i++) {
       final isMajor = i % minors == 0;
-      final a =
+      final angle =
           DashboardLayout.dialStart + DashboardLayout.dialSweep * i / steps;
       canva.drawLine(
-        DashboardLayout.polar(ctr, a, radius * 0.86),
-        DashboardLayout.polar(ctr, a, radius * (isMajor ? 0.70 : 0.78)),
+        DashboardLayout.polar(ctr, angle, radius * 0.86),
+        DashboardLayout.polar(ctr, angle, radius * (isMajor ? 0.70 : 0.78)),
         tick,
       );
       if (isMajor) {
         paintText(
           canva,
           '${(i ~/ minors) * major}',
-          DashboardLayout.polar(ctr, a, radius * 0.54),
+          DashboardLayout.polar(ctr, angle, radius * 0.54),
           math.max(radius * 0.18, 8.0),
           _ink,
         );
@@ -114,9 +114,9 @@ class DashboardFace {
     );
   }
 
-  static void _centre(Canvas c, DashboardLayout l) {
-    final rr = RRect.fromRectAndRadius(l.centre, Radius.circular(l.ph * 0.04));
-    c.drawRRect(rr, fillPaint(const Color(0xFF0B0B10)));
-    c.drawRRect(rr, _outline(const Color(0x66FFFFFF), 2));
+  static void _centre(Canvas canvas, DashboardLayout layout) {
+    final rr = RRect.fromRectAndRadius(layout.centre, Radius.circular(layout.ph * 0.04));
+    canvas.drawRRect(rr, fillPaint(const Color(0xFF0B0B10)));
+    canvas.drawRRect(rr, _outline(const Color(0x66FFFFFF), 2));
   }
 }

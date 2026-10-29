@@ -12,7 +12,6 @@ class RiderPose {
   double foot = 0;
 
   double speed = 0;
-
   double steer = 0;
 
   bool braking = false;

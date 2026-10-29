@@ -57,7 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, auth) {
         if (auth.isSignedIn) context.goNamed(RouteNames.menu);
@@ -72,7 +72,7 @@ class _SignInScreenState extends State<SignInScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RetroTitle(l10n.signInTitle),
-                SizedBox(height: s.gap),
+                SizedBox(height: sizes.gap),
                 _panel(context, st),
               ],
             ).constrained(maxWidth: 560).center(),
@@ -84,12 +84,12 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Widget _panel(BuildContext context, SignInState st) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     final cubit = context.read<SignInCubit>();
     final error = l10n.signInErrorText(st);
-    final gap = SizedBox(height: s.gap);
+    final gap = SizedBox(height: sizes.gap);
     final children = <Widget>[
-      Text(l10n.signInHint(st), style: retroBody(size: s.small)),
+      Text(l10n.signInHint(st), style: retroBody(size: sizes.small)),
       gap,
       ...switch (st.stage) {
         SignInStage.name => [
@@ -107,7 +107,7 @@ class _SignInScreenState extends State<SignInScreen> {
             st.stage == SignInStage.answer
                 ? st.question
                 : l10n.signInChallengeQuestion,
-            style: retroBody(size: s.body, color: Retro.yellow),
+            style: retroBody(size: sizes.body, color: Retro.yellow),
           ),
           gap,
           RetroField(
@@ -127,13 +127,13 @@ class _SignInScreenState extends State<SignInScreen> {
             label: l10n.signInQuestionLabel,
             maxLength: 80,
           ),
-          SizedBox(height: s.gapSmall),
+          SizedBox(height: sizes.gapSmall),
           RetroField(
             controller: _answer,
             label: l10n.signInAnswerLabel,
             secret: true,
           ),
-          SizedBox(height: s.gap),
+          SizedBox(height: sizes.gap),
           RetroField(
             controller: _confirm,
             label: l10n.signInConfirmLabel,
@@ -145,7 +145,7 @@ class _SignInScreenState extends State<SignInScreen> {
       },
       if (error != null) ...[
         gap,
-        Text(error, style: retroBody(size: s.small, color: Retro.red)),
+        Text(error, style: retroBody(size: sizes.small, color: Retro.red)),
       ],
       if (st.busy) ...[
         gap,
@@ -157,7 +157,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: children,
-    ).padding(all: s.gap * 1.2).decorated(
+    ).padding(all: sizes.gap * 1.2).decorated(
       color: Retro.panel,
       borderRadius: BorderRadius.circular(16),
     );
@@ -171,14 +171,14 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Widget _actions(BuildContext context, SignInState st) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     final cubit = context.read<SignInCubit>();
     void guarded(VoidCallback action) {
       if (!st.busy) action();
     }
     return Wrap(
-      spacing: s.gap * 0.75,
-      runSpacing: s.gap * 0.75,
+      spacing: sizes.gap * 0.75,
+      runSpacing: sizes.gap * 0.75,
       children: [
         if (st.stage != SignInStage.name)
           RetroButton(l10n.commonBack, onTap: () => guarded(cubit.back)),

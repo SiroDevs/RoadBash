@@ -21,6 +21,7 @@ import '../../../domain/models/load_status.dart';
 import '../../../domain/models/stats_models.dart';
 import '../cubit/stats_cubit.dart';
 import 'widgets/bar_chart.dart';
+import 'widgets/chart_skeleton.dart';
 import 'widgets/heatmap.dart';
 import 'widgets/range_labels.dart';
 import 'widgets/stats_table.dart';
@@ -46,23 +47,23 @@ class StatsScreen extends StatelessWidget {
 
   List<Widget> _body(BuildContext context, StatsState st) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     final summary = st.summary;
     if (st.status == LoadStatus.failed && summary == null) {
       return [RetroFailure(onRetry: context.read<StatsCubit>().load)];
     }
     if (summary == null) {
-      return const [RetroLoading()];
+      return const [ChartSkeleton(panels: 4)];
     }
     final locale = Localizations.localeOf(context).toString();
     final labels = [
       for (final p in st.series) _stamp(st.range, p.time, locale),
     ];
-    final gap = SizedBox(height: s.gap);
+    final gap = SizedBox(height: sizes.gap);
     return [
       Text(
         l10n.statsOnlineLine(summary.online, summary.onlinePlayers),
-        style: retroBody(size: s.body, color: Colors.lightGreenAccent),
+        style: retroBody(size: sizes.body, color: Colors.lightGreenAccent),
       ),
       gap,
       StatsTable(summary: summary, l10n: l10n),
@@ -74,7 +75,7 @@ class StatsScreen extends StatelessWidget {
       ),
       gap,
       if (st.status == LoadStatus.loading)
-        const LinearProgressIndicator(color: Retro.orange)
+        const ChartSkeleton()
       else ...[
         RetroBarChart(
           title: l10n.statsVisitors,
@@ -104,12 +105,12 @@ class StatsScreen extends StatelessWidget {
 
   Widget _heatmap(BuildContext context, StatsState st, String locale) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(l10n.statsHeatmapTitle, style: retroBody(size: s.small)),
-        SizedBox(height: s.gapSmall),
+        Text(l10n.statsHeatmapTitle, style: retroBody(size: sizes.small)),
+        SizedBox(height: sizes.gapSmall),
         RetroChips<HeatMetric>(
           items: {
             HeatMetric.visitors: l10n.statsVisitors,
@@ -118,7 +119,7 @@ class StatsScreen extends StatelessWidget {
           selected: st.metric,
           onSelected: context.read<StatsCubit>().setMetric,
         ),
-        SizedBox(height: s.gap),
+        SizedBox(height: sizes.gap),
         RetroHeatmap(
           cells: st.heat,
           metric: st.metric,
@@ -127,30 +128,30 @@ class StatsScreen extends StatelessWidget {
               _short(_format('E', locale, DateTime(2024, 1, 1 + i))),
           ],
         ),
-        SizedBox(height: s.gapSmall),
+        SizedBox(height: sizes.gapSmall),
         Text(
           l10n.statsHeatmapNote,
-          style: retroBody(size: s.caption, color: Retro.dim),
+          style: retroBody(size: sizes.caption, color: Retro.dim),
         ),
       ],
     )
-        .padding(all: s.gap)
+        .padding(all: sizes.gap)
         .decorated(color: Retro.panel, borderRadius: BorderRadius.circular(12));
   }
 
   String _short(String text) =>
       text.length > 2 ? text.substring(0, 2) : text;
 
-  String _stamp(StatsRange range, DateTime t, String locale) =>
+  String _stamp(StatsRange range, DateTime time, String locale) =>
       range == StatsRange.today
-      ? _format('HH:mm', locale, t)
-      : _format('d MMM', locale, t);
+      ? _format('HH:mm', locale, time)
+      : _format('d MMM', locale, time);
 
-  String _format(String pattern, String locale, DateTime t) {
+  String _format(String pattern, String locale, DateTime time) {
     try {
-      return DateFormat(pattern, locale).format(t);
+      return DateFormat(pattern, locale).format(time);
     } catch (_) {
-      return DateFormat(pattern).format(t);
+      return DateFormat(pattern).format(time);
     }
   }
 }

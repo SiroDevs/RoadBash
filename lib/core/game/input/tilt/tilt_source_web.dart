@@ -70,11 +70,11 @@ class _WebTilt implements TiltSource {
   }
 
   void _onMotion(_MotionEvent event) {
-    final a = event.accelerationIncludingGravity;
-    final x = a?.x?.toDartDouble;
-    final y = a?.y?.toDartDouble;
-    if (x == null || y == null || _out.isClosed) return;
-    _out.add(TiltSample(x * _sign, y * _sign));
+    final gravity = event.accelerationIncludingGravity;
+    final gravityX = gravity?.x?.toDartDouble;
+    final gravityY = gravity?.y?.toDartDouble;
+    if (gravityX == null || gravityY == null || _out.isClosed) return;
+    _out.add(TiltSample(gravityX * _sign, gravityY * _sign));
   }
 
   @override

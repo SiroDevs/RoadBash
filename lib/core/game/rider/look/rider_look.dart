@@ -37,8 +37,8 @@ class RiderLook {
   static const Color helmetGloss = Color(0x66FFFFFF);
 
   Color get helmetShade {
-    final o = helmetShadeOverride;
-    if (o != null) return o;
+    final shadeOverride = helmetShadeOverride;
+    if (shadeOverride != null) return shadeOverride;
     final hsl = HSLColor.fromColor(helmet);
     return hsl.withLightness((hsl.lightness * 0.77).clamp(0.0, 1.0)).toColor();
   }

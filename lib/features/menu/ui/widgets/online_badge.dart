@@ -21,16 +21,16 @@ class OnlineBadge extends StatelessWidget {
     child: BlocBuilder<OnlineCubit, int?>(
       builder: (context, count) {
         if (count == null) return const SizedBox.shrink();
-        final s = context.sizes;
+        final sizes = context.sizes;
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox.square(dimension: 10)
                 .decorated(color: Colors.lightGreenAccent, shape: BoxShape.circle),
-            SizedBox(width: s.gapSmall),
+            SizedBox(width: sizes.gapSmall),
             Text(
               context.l10n.menuOnline(count),
-              style: retroBody(size: s.body, color: Colors.lightGreenAccent),
+              style: retroBody(size: sizes.body, color: Colors.lightGreenAccent),
             ),
           ],
         );

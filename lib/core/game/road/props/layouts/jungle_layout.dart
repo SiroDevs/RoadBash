@@ -30,17 +30,17 @@ void _row(
   required int start,
   required bool near,
 }) {
-  var i = start;
-  while (i < count - 2) {
-    final seed = (i * 2 + (side > 0 ? 1 : 0)) * (near ? 23 : 41) + 9;
-    final r = pseudoRandom(seed);
+  var cursor = start;
+  while (cursor < count - 2) {
+    final seed = (cursor * 2 + (side > 0 ? 1 : 0)) * (near ? 23 : 41) + 9;
+    final roll = pseudoRandom(seed);
     final PropKind kind;
     if (near) {
-      kind = r < 0.38
+      kind = roll < 0.38
           ? PropKind.broadleaf
-          : (r < 0.66 ? PropKind.palm : PropKind.bush);
+          : (roll < 0.66 ? PropKind.palm : PropKind.bush);
     } else {
-      kind = r < 0.55 ? PropKind.broadleaf : PropKind.palm;
+      kind = roll < 0.55 ? PropKind.broadleaf : PropKind.palm;
     }
     final scale = kind == PropKind.bush
         ? 0.6 + 0.4 * pseudoRandom(seed + 2)
@@ -50,9 +50,9 @@ void _row(
       PropKind.palm => 3900.0,
       _ => 1500.0,
     };
-    slots[i].add(Prop(
+    slots[cursor].add(Prop(
       kind: kind,
-      anchor: i,
+      anchor: cursor,
       side: side,
       offset: near
           ? 1.55 + 0.9 * pseudoRandom(seed + 1)
@@ -61,6 +61,6 @@ void _row(
       height: base * scale,
       detail: pseudoRandom(seed + 3),
     ));
-    i += (near ? 3 : 4) + (pseudoRandom(seed + 4) * (near ? 5 : 6)).floor();
+    cursor += (near ? 3 : 4) + (pseudoRandom(seed + 4) * (near ? 5 : 6)).floor();
   }
 }

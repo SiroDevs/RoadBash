@@ -44,14 +44,11 @@ abstract final class FinishConfig {
     _ => FinishLook.plain,
   };
 
-  /// Cones and crowd start this far before the line.
   static const int approach = 64;
   static const int rowSegments = 2;
   static const int padColumns = 14;
   static const int zebraColumns = 9;
 
-  /// The last lap stops this far short of the lap's end, so the scene simply
-  /// carries on past the line and the start of the lap is never in view.
   static const double runOutMetres = 300;
 
   static int get runOut => math.max(
@@ -59,12 +56,9 @@ abstract final class FinishConfig {
     RoadConfig.drawDistance + 60,
   );
 
-  /// Thika only: the city blocks start this far before the line, and the
-  /// skyline climbs over the horizon during [skylineRise] segments before it.
   static const int cityLead = 160;
   static const int skylineRise = 260;
 
-  /// City blocks lining the Thika run-in: near-black and pale blue faces.
   static const List<Color> blockColors = [
     Color(0xFF1B1F2B),
     Color(0xFF8FA6C9),

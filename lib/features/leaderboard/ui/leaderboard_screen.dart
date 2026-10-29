@@ -20,6 +20,7 @@ import '../../../domain/models/leaderboard_entry.dart';
 import '../../../domain/models/load_status.dart';
 import '../../auth/cubit/auth_cubit.dart';
 import '../cubit/leaderboard_cubit.dart';
+import 'leaderboard_skeleton.dart';
 
 class LeaderboardScreen extends StatelessWidget {
   const LeaderboardScreen({super.key});
@@ -46,31 +47,31 @@ class LeaderboardScreen extends StatelessWidget {
 
   List<Widget> _body(BuildContext context, LeaderboardState st, String me) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     switch (st.status) {
       case LoadStatus.loading:
-        return const [RetroLoading()];
+        return const [LeaderboardSkeleton()];
       case LoadStatus.failed:
         return [RetroFailure(onRetry: context.read<LeaderboardCubit>().load)];
       case LoadStatus.ready:
         if (st.entries.isEmpty) {
-          return [Text(l10n.leaderboardEmpty, style: retroBody(size: s.body))];
+          return [Text(l10n.leaderboardEmpty, style: retroBody(size: sizes.body))];
         }
         return [
           Column(
             children: [
               _row(
-                s,
+                sizes,
                 '#',
                 l10n.leaderboardPlayer,
                 l10n.leaderboardGames,
                 l10n.leaderboardWins,
-                retroBody(size: s.caption, color: Retro.dim),
+                retroBody(size: sizes.caption, color: Retro.dim),
               ),
-              for (final e in st.entries) _entry(s, e, e.name.toLowerCase() == me),
+              for (final e in st.entries) _entry(sizes, e, e.name.toLowerCase() == me),
             ],
           )
-              .padding(all: s.gap)
+              .padding(all: sizes.gap)
               .decorated(
                 color: Retro.panel,
                 borderRadius: BorderRadius.circular(12),
@@ -79,20 +80,20 @@ class LeaderboardScreen extends StatelessWidget {
     }
   }
 
-  Widget _entry(RetroSizes s, LeaderboardEntry e, bool mine) => _row(
-    s,
-    '${e.rank}',
-    e.name,
-    '${e.games}',
-    '${e.wins}',
+  Widget _entry(RetroSizes sizes, LeaderboardEntry entry, bool mine) => _row(
+    sizes,
+    '${entry.rank}',
+    entry.name,
+    '${entry.games}',
+    '${entry.wins}',
     retroBody(
-      size: s.body,
+      size: sizes.body,
       color: mine ? Retro.yellow : Colors.white,
     ).copyWith(fontFamily: AppConstants.displayFont, fontWeight: FontWeight.w400),
   );
 
   Widget _row(
-    RetroSizes s,
+    RetroSizes sizes,
     String rank,
     String name,
     String games,
@@ -100,12 +101,12 @@ class LeaderboardScreen extends StatelessWidget {
     TextStyle style,
   ) => Row(
     children: [
-      Text(rank, style: style).width(s.resultPlaceW),
+      Text(rank, style: style).width(sizes.resultPlaceW),
       Text(name, style: style, overflow: TextOverflow.ellipsis).expanded(),
       Text(games, style: style, textAlign: TextAlign.right)
-          .width(s.resultTimeW * 0.9),
+          .width(sizes.resultTimeW * 0.9),
       Text(wins, style: style, textAlign: TextAlign.right)
-          .width(s.resultTimeW * 0.8),
+          .width(sizes.resultTimeW * 0.8),
     ],
-  ).padding(vertical: s.gapSmall * 0.5);
+  ).padding(vertical: sizes.gapSmall * 0.5);
 }

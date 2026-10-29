@@ -56,22 +56,22 @@ class SignInCubit extends Cubit<SignInState> {
     required String answer,
     required String confirm,
   }) async {
-    final q = question.trim();
-    final a = answer.trim();
-    if (q.length < 5 || q.length > 80) {
+    final trimmedQuestion = question.trim();
+    final trimmedAnswer = answer.trim();
+    if (trimmedQuestion.length < 5 || trimmedQuestion.length > 80) {
       return _reject(SignInError.invalidQuestion);
     }
-    if (a.length < 2 || a.length > 60) {
+    if (trimmedAnswer.length < 2 || trimmedAnswer.length > 60) {
       return _reject(SignInError.invalidAnswer);
     }
-    if (a.toLowerCase() != confirm.trim().toLowerCase()) {
+    if (trimmedAnswer.toLowerCase() != confirm.trim().toLowerCase()) {
       return _reject(SignInError.mismatch);
     }
     await _run(() async {
       final session = await _repo.register(
         name: state.name,
-        question: q,
-        answer: a,
+        question: trimmedQuestion,
+        answer: trimmedAnswer,
         challenge: _challenge.isEmpty ? null : _challenge,
       );
       await _auth.signedIn(session);
@@ -106,9 +106,9 @@ class SignInCubit extends Cubit<SignInState> {
     }
   }
 
-  int _number(ApiException e) => e.retryAfter != null
-      ? (e.retryAfter! / 60).ceil()
-      : (e.remaining ?? 0);
+  int _number(ApiException error) => error.retryAfter != null
+      ? (error.retryAfter! / 60).ceil()
+      : (error.remaining ?? 0);
 
   SignInError _map(String code) => switch (code) {
     'invalid_name' || 'unknown_name' => SignInError.invalidName,

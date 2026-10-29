@@ -19,8 +19,6 @@ abstract final class VehicleConfig {
   static const double centrifugal = 0.22;
   static const double maxOffRoad = 1.45;
 
-  /// Speed kept when the bike first hits a guardrail, and the speed lost per
-  /// second while it keeps scraping along it.
   static const double railImpactKeep = 0.9;
   static const double railScrape = -maxSpeed / 3;
 }

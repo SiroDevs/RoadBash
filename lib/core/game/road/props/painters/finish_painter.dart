@@ -37,61 +37,61 @@ class FinishPainter {
   final List<Paint> _black, _white, _trousers;
   final List<List<Paint>> _skin, _shirt;
 
-  void draw(Canvas c, VisionSeg v, Prop p, double x, double y, double w,
-      double h) {
-    switch (p.kind) {
+  void draw(Canvas canvas, VisionSeg vision, Prop prop, double anchorX, double anchorY, double width,
+      double height) {
+    switch (prop.kind) {
       case PropKind.post:
-        _post(c, v, x, y, w, h);
+        _post(canvas, vision, anchorX, anchorY, width, height);
       case PropKind.spectator:
-        _spectator(c, v, p, x, y, w, h);
+        _spectator(canvas, vision, prop, anchorX, anchorY, width, height);
       default:
         break;
     }
   }
 
-  void _post(Canvas c, VisionSeg v, double x, double y, double w, double h) {
+  void _post(Canvas canvas, VisionSeg vision, double anchorX, double anchorY, double width, double height) {
     const bands = 6;
-    final bh = h / bands;
+    final bh = height / bands;
     for (var i = 0; i < bands; i++) {
-      final top = y - h + bh * i;
+      final top = anchorY - height + bh * i;
       final even = i.isEven;
-      c.drawRect(
-        Rect.fromLTRB(x - w, top, x, top + bh + 0.5),
-        fogged(even ? _black : _white, v.fog),
+      canvas.drawRect(
+        Rect.fromLTRB(anchorX - width, top, anchorX, top + bh + 0.5),
+        fogged(even ? _black : _white, vision.fog),
       );
-      c.drawRect(
-        Rect.fromLTRB(x, top, x + w, top + bh + 0.5),
-        fogged(even ? _white : _black, v.fog),
+      canvas.drawRect(
+        Rect.fromLTRB(anchorX, top, anchorX + width, top + bh + 0.5),
+        fogged(even ? _white : _black, vision.fog),
       );
     }
-    c.drawRect(
-      Rect.fromLTRB(x - w * 1.5, y - bh * 0.4, x + w * 1.5, y + 1),
-      fogged(_white, v.fog),
+    canvas.drawRect(
+      Rect.fromLTRB(anchorX - width * 1.5, anchorY - bh * 0.4, anchorX + width * 1.5, anchorY + 1),
+      fogged(_white, vision.fog),
     );
   }
 
-  void _spectator(Canvas c, VisionSeg v, Prop p, double x, double y, double w,
-      double h) {
-    final shirt = fogged(_shirt[p.tint % _shirt.length], v.fog);
+  void _spectator(Canvas canvas, VisionSeg vision, Prop prop, double anchorX, double anchorY, double width,
+      double height) {
+    final shirt = fogged(_shirt[prop.tint % _shirt.length], vision.fog);
     final skin = fogged(
-      _skin[(p.detail * _skin.length).floor() % _skin.length],
-      v.fog,
+      _skin[(prop.detail * _skin.length).floor() % _skin.length],
+      vision.fog,
     );
-    final legH = h * 0.42, torsoH = h * 0.34, headR = math.max(1.0, h * 0.1);
-    final hip = y - legH, shoulder = hip - torsoH;
+    final legH = height * 0.42, torsoH = height * 0.34, headR = math.max(1.0, height * 0.1);
+    final hip = anchorY - legH, shoulder = hip - torsoH;
 
-    c.drawRect(
-      Rect.fromLTRB(x - w * 0.7, hip, x + w * 0.7, y + 1),
-      fogged(_trousers, v.fog),
+    canvas.drawRect(
+      Rect.fromLTRB(anchorX - width * 0.7, hip, anchorX + width * 0.7, anchorY + 1),
+      fogged(_trousers, vision.fog),
     );
-    c.drawRect(Rect.fromLTRB(x - w, shoulder, x + w, hip + 1), shirt);
-    if (p.detail > 0.5) {
+    canvas.drawRect(Rect.fromLTRB(anchorX - width, shoulder, anchorX + width, hip + 1), shirt);
+    if (prop.detail > 0.5) {
       // Cheering, one arm up.
-      c.drawRect(
-        Rect.fromLTRB(x + w, shoulder - torsoH * 0.5, x + w * 1.55, shoulder + 1),
+      canvas.drawRect(
+        Rect.fromLTRB(anchorX + width, shoulder - torsoH * 0.5, anchorX + width * 1.55, shoulder + 1),
         shirt,
       );
     }
-    c.drawCircle(Offset(x, shoulder - headR), headR, skin);
+    canvas.drawCircle(Offset(anchorX, shoulder - headR), headR, skin);
   }
 }

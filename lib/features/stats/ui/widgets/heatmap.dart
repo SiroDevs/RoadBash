@@ -24,11 +24,11 @@ class RetroHeatmap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     final grid = List<int>.filled(7 * 24, 0);
     for (final c in cells) {
-      final v = metric == HeatMetric.visitors ? c.visitors : c.players;
-      grid[(c.day - 1) * 24 + c.hour] = v;
+      final count = metric == HeatMetric.visitors ? c.visitors : c.players;
+      grid[(c.day - 1) * 24 + c.hour] = count;
     }
     final peak = grid.reduce(math.max);
     return LayoutBuilder(
@@ -42,7 +42,7 @@ class RetroHeatmap extends StatelessWidget {
             peak: peak,
             labels: dayLabels,
             labelW: labelW,
-            fontSize: s.caption * 0.7,
+            fontSize: sizes.caption * 0.7,
           ),
         );
       },
@@ -73,11 +73,11 @@ class _HeatPainter extends CustomPainter {
     for (var d = 0; d < 7; d++) {
       _text(canvas, labels[d], Offset(0, d * cell + (cell - fontSize) / 2));
       for (var h = 0; h < 24; h++) {
-        final v = grid[d * 24 + h];
+        final count = grid[d * 24 + h];
         final paint = Paint()
-          ..color = v == 0
+          ..color = count == 0
               ? const Color(0x22FFFFFF)
-              : Color.lerp(_low, Retro.yellow, v / peak)!;
+              : Color.lerp(_low, Retro.yellow, count / peak)!;
         canvas.drawRRect(
           RRect.fromRectAndRadius(
             Rect.fromLTWH(labelW + h * cell + 0.5, d * cell + 0.5, cell - 1, cell - 1),

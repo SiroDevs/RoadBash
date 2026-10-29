@@ -42,13 +42,11 @@ class SceneTile extends StatelessWidget {
   final bool mostPlayed;
   final VoidCallback onTap;
 
-  /// Highlights the tile without opening it: on hover with a mouse, on a long
-  /// press with a finger.
   final VoidCallback onHighlight;
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     final l10n = context.l10n;
     return InkWell(
       onTap: () {
@@ -96,7 +94,7 @@ class SceneTile extends StatelessWidget {
                         maxLines: 1,
                         style: TextStyle(
                           color: Retro.ink,
-                          fontSize: s.caption * 0.85,
+                          fontSize: sizes.caption * 0.85,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 0.5,
                           height: 1.1,
@@ -106,14 +104,14 @@ class SceneTile extends StatelessWidget {
                   ),
               ],
             ),
-            SizedBox(height: s.gapSmall),
+            SizedBox(height: sizes.gapSmall),
             FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
                 label,
                 maxLines: 1,
                 style: retroBody(
-                  size: s.small,
+                  size: sizes.small,
                   color: selected ? Colors.white : Retro.dim,
                 ),
               ),

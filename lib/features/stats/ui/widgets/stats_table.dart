@@ -19,7 +19,7 @@ class StatsTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     final header = ['', l10n.statsVisitors, l10n.statsPlayers, l10n.statsGames];
     final body = <List<String>>[
       for (final range in StatsRange.values)
@@ -39,27 +39,27 @@ class StatsTable extends StatelessWidget {
     ];
     return Column(
       children: [
-        _row(s, header, retroBody(size: s.caption, color: Retro.dim)),
+        _row(sizes, header, retroBody(size: sizes.caption, color: Retro.dim)),
         for (var i = 0; i < body.length; i++)
           _row(
-            s,
+            sizes,
             body[i],
             retroBody(
-              size: s.small,
+              size: sizes.small,
               color: i == body.length - 1 ? Retro.yellow : Colors.white,
             ),
           ),
       ],
     )
-        .padding(all: s.gap)
+        .padding(all: sizes.gap)
         .decorated(color: Retro.panel, borderRadius: BorderRadius.circular(12));
   }
 
-  Widget _row(RetroSizes s, List<String> cells, TextStyle style) => Row(
+  Widget _row(RetroSizes sizes, List<String> cells, TextStyle style) => Row(
     children: [
       Text(cells[0], style: style).expanded(flex: 3),
       for (final c in cells.skip(1))
         Text(c, style: style, textAlign: TextAlign.right).expanded(flex: 2),
     ],
-  ).padding(vertical: s.gapSmall * 0.5);
+  ).padding(vertical: sizes.gapSmall * 0.5);
 }

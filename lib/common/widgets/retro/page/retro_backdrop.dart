@@ -16,10 +16,8 @@ class RetroBackdrop extends StatelessWidget {
   final Widget child;
   final String? asset;
 
-  /// Shows the background image in black and white.
   final bool grayscale;
 
-  /// Darkens the background image, from 0 (none) to 1 (black).
   final double dim;
 
   @override
@@ -50,25 +48,25 @@ class _BackdropPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final r = Offset.zero & size;
+    final rect = Offset.zero & size;
     canvas.drawRect(
-      r,
+      rect,
       Paint()
         ..shader = const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [Color(0xFF0A0A1F), Color(0xFFFFFFFF), Color(0xFF000000)],
-        ).createShader(r),
+        ).createShader(rect),
     );
     final stripe = Paint()..color = const Color(0xFFB86918);
     canvas.drawPath(Path()..close(), stripe);
     canvas.drawRect(
-      r,
+      rect,
       Paint()
         ..shader = const RadialGradient(
           radius: 1.1,
           colors: [Color(0x00000000), Color(0xAA000000)],
-        ).createShader(r),
+        ).createShader(rect),
     );
   }
 

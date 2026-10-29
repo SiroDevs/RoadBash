@@ -27,8 +27,8 @@ void layOutFinish(List<List<Prop>> slots, RoadTrack track, SceneTheme theme) {
   _crowd(slots, track, theme, from, line, look);
 }
 
-bool _farRight(RoadTrack track, SceneTheme theme, int i) =>
-    theme.dualCarriageway && track.segments[i].section.hasOpposite;
+bool _farRight(RoadTrack track, SceneTheme theme, int index) =>
+    theme.dualCarriageway && track.segments[index].section.hasOpposite;
 
 /// Thika's own scenery from [from] to the end of the lap steps aside on the
 /// last lap for the city blocks. Median guardrails and lamps stay, they are
@@ -72,13 +72,13 @@ void _laneCones(List<List<Prop>> slots, int line, FinishLook look) {
   const lanes = [-0.62, -0.12, 0.38, 0.8];
   final end = line + look.padLength + 36;
   for (var i = line - 24; i < end; i += 5) {
-    final x = lanes[(pseudoRandom(i + 5) * lanes.length).floor()];
+    final lane = lanes[(pseudoRandom(i + 5) * lanes.length).floor()];
     slots[i].add(
       Prop(
         kind: PropKind.post,
         anchor: i,
-        side: x < 0 ? -1 : 1,
-        offset: x.abs(),
+        side: lane < 0 ? -1 : 1,
+        offset: lane.abs(),
         width: 55,
         height: 330,
         phase: PropPhase.finishOnly,
@@ -131,31 +131,31 @@ void _blocks(
 ) {
   final to = track.count - RoadConfig.maxPropDepth - 4;
   for (final side in const [-1, 1]) {
-    var i = from + 6 + (side < 0 ? 0 : 5);
-    while (i < to) {
-      final seed = (i * 2 + (side > 0 ? 1 : 0)) * 29 + 13;
+    var index = from + 6 + (side < 0 ? 0 : 5);
+    while (index < to) {
+      final seed = (index * 2 + (side > 0 ? 1 : 0)) * 29 + 13;
       if (pseudoRandom(seed + 7) < 0.12) {
-        i += 4;
+        index += 4;
         continue;
       }
-      final depth = math.min(8 + (pseudoRandom(seed) * 8).floor(), to - i);
+      final depth = math.min(8 + (pseudoRandom(seed) * 8).floor(), to - index);
       final storeys = 4 + (pseudoRandom(seed + 1) * 6).floor();
-      final setBack = side > 0 && _farRight(track, theme, i) ? 4.1 : 1.65;
-      slots[i].add(
+      final setBack = side > 0 && _farRight(track, theme, index) ? 4.1 : 1.65;
+      slots[index].add(
         Prop(
           kind: PropKind.block,
-          anchor: i,
+          anchor: index,
           side: side,
           offset: setBack + 0.45 * pseudoRandom(seed + 2),
           width: 2600 + 3000 * pseudoRandom(seed + 3),
           height: storeys * 460.0,
           depth: depth,
-          tint: i ~/ 7 + (side > 0 ? 1 : 0),
+          tint: index ~/ 7 + (side > 0 ? 1 : 0),
           detail: storeys.toDouble(),
           phase: PropPhase.finishOnly,
         ),
       );
-      i += depth + 1 + (pseudoRandom(seed + 4) * 3).floor();
+      index += depth + 1 + (pseudoRandom(seed + 4) * 3).floor();
     }
   }
 }

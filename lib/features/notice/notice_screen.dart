@@ -61,7 +61,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     return CallbackShortcuts(
       bindings: {
         const SingleActivator(LogicalKeyboardKey.enter): _continue,
@@ -72,7 +72,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
         child: RetroPage(
           onTap: _continue,
           asset: AppAssets.appSplash1,
-          padding: EdgeInsets.symmetric(horizontal: s.pad, vertical: s.pad * 0.6),
+          padding: EdgeInsets.symmetric(horizontal: sizes.pad, vertical: sizes.pad * 0.6),
           child: LayoutBuilder(
             builder: (context, box) => SingleChildScrollView(
               controller: _scroll,
@@ -85,7 +85,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 1000),
                   child: Container(
-                    padding: EdgeInsets.all(s.infoPad),
+                    padding: EdgeInsets.all(sizes.infoPad),
                     decoration: BoxDecoration(
                       color: const Color(0x99000000),
                       borderRadius: BorderRadius.circular(16),
@@ -93,28 +93,28 @@ class _NoticeScreenState extends State<NoticeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: s.gap * 0.6),
+                        SizedBox(height: sizes.gap * 0.6),
                         Text(
                           l10n.noticeTitle,
                           style: retroBody(
-                            size: s.noticeTitle,
+                            size: sizes.noticeTitle,
                             color: Retro.orange,
                           ),
                         ),
-                        SizedBox(height: s.noticeGap * 0.55),
+                        SizedBox(height: sizes.noticeGap * 0.55),
                         Text(
                           l10n.noticeFun,
-                          style: retroBody(size: s.noticeBody),
+                          style: retroBody(size: sizes.noticeBody),
                         ),
-                        SizedBox(height: s.noticeGap),
+                        SizedBox(height: sizes.noticeGap),
                         Text(
                           l10n.noticeWarning,
                           style: retroBody(
-                            size: s.noticeBody,
+                            size: sizes.noticeBody,
                             color: Retro.red,
                           ),
                         ),
-                        SizedBox(height: s.noticeGap),
+                        SizedBox(height: sizes.noticeGap),
                       ],
                     ),
                   ),

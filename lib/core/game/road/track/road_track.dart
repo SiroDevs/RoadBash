@@ -57,9 +57,9 @@ class RoadTrack {
 
   double get runOutLength => FinishConfig.runOut * RoadConfig.segmentLength;
 
-  int indexAt(double z) => (z / RoadConfig.segmentLength).floor() % count;
+  int indexAt(double position) => (position / RoadConfig.segmentLength).floor() % count;
 
-  RoadSegment at(double z) => segments[indexAt(z)];
+  RoadSegment at(double position) => segments[indexAt(position)];
 
   static double raceKm(SceneId scene) {
     final track = RoadTrack(scene);
@@ -69,14 +69,14 @@ class RoadTrack {
 
   void _mark() => sectionStarts.add(segments.length);
 
-  void _add(double curve, double y, Section section) {
-    segments.add(RoadSegment(segments.length, _lastY, y, curve, section));
-    _lastY = y;
+  void _add(double curve, double height, Section section) {
+    segments.add(RoadSegment(segments.length, _lastY, height, curve, section));
+    _lastY = height;
   }
 
-  static double _easeIn(double a, double b, double p) => a + (b - a) * p * p;
-  static double _easeInOut(double a, double b, double p) =>
-      a + (b - a) * (-math.cos(p * math.pi) / 2 + 0.5);
+  static double _easeIn(double start, double end, double progress) => start + (end - start) * progress * progress;
+  static double _easeInOut(double start, double end, double progress) =>
+      start + (end - start) * (-math.cos(progress * math.pi) / 2 + 0.5);
 
   void _addRoad(
     int enter,

@@ -12,6 +12,8 @@ class RetroPage extends StatelessWidget {
     super.key,
     required this.child,
     this.asset = AppAssets.appMain,
+    this.grayscale = false,
+    this.dim = 0,
     this.track = MusicTrack.menu,
     this.padding,
     this.onTap,
@@ -19,6 +21,8 @@ class RetroPage extends StatelessWidget {
 
   final Widget child;
   final String asset;
+  final bool grayscale;
+  final double dim;
   final MusicTrack track;
   final EdgeInsets? padding;
   final VoidCallback? onTap;
@@ -28,6 +32,8 @@ class RetroPage extends StatelessWidget {
     track: track,
     child: RetroScaffold(
       asset: asset,
+      grayscale: grayscale,
+      dim: dim,
       padding: padding,
       onTap: onTap,
       child: child,

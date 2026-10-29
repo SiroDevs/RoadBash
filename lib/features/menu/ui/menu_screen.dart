@@ -9,12 +9,13 @@ import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
 import '../../../common/constants/app_assets.dart';
-import '../../../common/l10n/l10n_extension.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
+import '../../../common/widgets/retro/brand/scene_preview.dart';
 import '../../../common/widgets/retro/page/music_scope.dart';
 import '../../../common/widgets/retro/page/retro_scaffold.dart';
 import '../../../common/widgets/retro/retro_style.dart';
+import '../../../common/l10n/l10n_extension.dart';
 import '../../../core/audio/audio_catalog.dart';
 import '../../../core/game/road/track/road_track.dart';
 import '../../../core/layout/responsive_layout_builder.dart';
@@ -24,9 +25,10 @@ import '../../progress/cubit/progress_cubit.dart';
 import '../cubit/menu_cubit.dart';
 import '../cubit/menu_target.dart';
 import '../cubit/scene_order.dart';
+import 'widgets/menu_grid.dart';
+import 'widgets/menu_target_info.dart';
 import 'widgets/rider_bar.dart';
 import 'widgets/scene_info.dart';
-import 'widgets/scene_tile.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -40,12 +42,7 @@ class _MenuScreenState extends State<MenuScreen> {
     for (final id in SceneId.values) id: RoadTrack.raceKm(id),
   };
 
-  /// Columns of the grid as last laid out, for the up/down arrow keys.
-  int _columns = 5;
-
-  /// 5 across on a laptop, 3 on wide phones and tablets, 2 on a phone.
-  static int _columnsFor(double width) =>
-      width >= 840 ? 5 : (width >= 520 ? 3 : 2);
+  static const double _cardScale = 0.75;
 
   void _open(MenuCubit menu, MenuTarget target) {
     menu.open(target);
@@ -57,9 +54,14 @@ class _MenuScreenState extends State<MenuScreen> {
     }
   }
 
+  /// First tap highlights an entry, a tap on the highlighted entry opens it.
+  void _tap(MenuCubit menu, MenuTarget selected, MenuTarget target) =>
+      target == selected ? _open(menu, target) : menu.select(target);
+
   @override
   Widget build(BuildContext context) {
     final menu = context.read<MenuCubit>();
+    final cols = MenuGrid.columnsFor(MediaQuery.sizeOf(context).width);
     return MusicScope(
       track: MusicTrack.menu,
       child: BlocBuilder<ProgressCubit, ProgressState>(
@@ -73,9 +75,9 @@ class _MenuScreenState extends State<MenuScreen> {
               const SingleActivator(LogicalKeyboardKey.arrowRight): () =>
                   menu.move(1, items),
               const SingleActivator(LogicalKeyboardKey.arrowUp): () =>
-                  menu.move(-_columns, items),
+                  menu.move(-cols, items),
               const SingleActivator(LogicalKeyboardKey.arrowDown): () =>
-                  menu.move(_columns, items),
+                  menu.move(cols, items),
               const SingleActivator(LogicalKeyboardKey.enter): () =>
                   _open(menu, menu.state ?? items.first),
             },
@@ -114,11 +116,14 @@ class _MenuScreenState extends State<MenuScreen> {
     final l10n = context.l10n;
     final s = context.sizes;
     final id = selected.scene;
-    final title = RetroTitle(
-      id == null ? l10n.receptionTitle : l10n.sceneTitle(id),
-    );
-    final grid = _grid(context, menu, order, selected);
     final info = SceneInfo(scene: id, km: id == null ? 0 : _km[id]!);
+    final card = ScenePreview(menuAsset(selected));
+    final title = RetroTitle(menuLabel(l10n, selected));
+    final entries = MenuGrid(
+      order: order,
+      selected: selected,
+      onTap: (target) => _tap(menu, selected, target),
+    );
 
     return ResponsiveLayoutBuilder(
       small: (_, __) => ResponsiveScrollBody(
@@ -127,70 +132,68 @@ class _MenuScreenState extends State<MenuScreen> {
           children: [
             title,
             SizedBox(height: s.gap),
-            grid,
+            Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: s.cardMaxW * _cardScale),
+                child: card,
+              ),
+            ),
             SizedBox(height: s.gap),
             info,
             SizedBox(height: s.gap),
             const RiderBar(),
+            SizedBox(height: s.gapSmall),
+            entries,
           ],
         ),
       ),
-      medium: (_, __) => _fixed(s, title, grid, info),
-      large: (_, __) => _fixed(s, title, grid, info),
+      medium: (_, __) => _fixed(s, title, info, card, entries),
+      large: (_, __) => _fixed(s, title, info, card, entries),
     );
   }
 
-  Widget _fixed(RetroSizes s, Widget title, Widget grid, Widget info) {
+  Widget _fixed(
+    RetroSizes s,
+    Widget title,
+    Widget info,
+    Widget card,
+    Widget entries,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         title,
         SizedBox(height: s.gapSmall),
-        SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [grid, SizedBox(height: s.gap), info],
-          ),
+        LayoutBuilder(
+          builder: (context, box) => box.maxWidth > 640
+              ? Row(
+                  children: [
+                    SingleChildScrollView(child: info).expanded(),
+                    SizedBox(width: s.gap * 1.5),
+                    _smaller(card).center().expanded(),
+                  ],
+                )
+              : Column(
+                  children: [
+                    _smaller(card).center().expanded(),
+                    SizedBox(height: s.gapSmall),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: box.maxHeight * 0.45,
+                      ),
+                      child: SingleChildScrollView(child: info),
+                    ),
+                  ],
+                ),
         ).expanded(),
         SizedBox(height: s.gapSmall),
         const RiderBar(),
+        SizedBox(height: s.gapSmall * 0.75),
+        entries,
       ],
     );
   }
 
-  Widget _grid(
-    BuildContext context,
-    MenuCubit menu,
-    SceneOrder order,
-    MenuTarget selected,
-  ) {
-    final l10n = context.l10n;
-    final gap = context.sizes.gap;
-    return LayoutBuilder(
-      builder: (context, box) {
-        final cols = _columns = _columnsFor(box.maxWidth);
-        final width = (box.maxWidth - gap * (cols - 1)) / cols;
-        return Wrap(
-          spacing: gap,
-          runSpacing: gap,
-          children: [
-            for (final item in order.items)
-              SizedBox(
-                width: width,
-                child: SceneTile(
-                  image: menuAsset(item),
-                  label: item.isReception
-                      ? l10n.receptionTitle
-                      : l10n.sceneTitle(item.scene!),
-                  selected: item == selected,
-                  mostPlayed: !item.isReception && item.scene == order.mostPlayed,
-                  onTap: () => _open(menu, item),
-                  onHighlight: () => menu.select(item),
-                ),
-              ),
-          ],
-        );
-      },
-    );
-  }
+  Widget _smaller(Widget card) =>
+      FractionallySizedBox(widthFactor: _cardScale, child: card);
 }

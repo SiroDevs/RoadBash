@@ -82,7 +82,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get blurbReception =>
-      'Njoo uweke jina la mwendeshaji, rekebisha sauti na uangalie vidhibiti.';
+      'Weka jina la mchezaji, rekebisha sauti, angalia vidhibiti, chagua lugha, tazama takwimu na washindi, au weka pendekezo kwenye sanduku la mapendekezo.';
 
   @override
   String lengthLabel(String km, int laps) {

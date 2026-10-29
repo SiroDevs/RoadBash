@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// Reception description
   ///
   /// In en, this message translates to:
-  /// **'Pop in to set your rider name, mix the sound and check the controls.'**
+  /// **'Set your player name, mix the sound, check the controls, pick a language, see your stats and the leaderboard, or drop a note in the suggestion box.'**
   String get blurbReception;
 
   /// Race length

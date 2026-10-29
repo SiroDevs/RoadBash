@@ -10,12 +10,16 @@ class RetroScaffold extends StatelessWidget {
     super.key,
     required this.child,
     this.asset,
+    this.grayscale = false,
+    this.dim = 0,
     this.padding,
     this.onTap,
   });
 
   final Widget child;
   final String? asset;
+  final bool grayscale;
+  final double dim;
   final EdgeInsets? padding;
   final VoidCallback? onTap;
 
@@ -23,6 +27,8 @@ class RetroScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget body = RetroBackdrop(
       asset: asset,
+      grayscale: grayscale,
+      dim: dim,
       child: SafeArea(
         child: Padding(
           padding: padding ?? EdgeInsets.all(context.sizes.pad),

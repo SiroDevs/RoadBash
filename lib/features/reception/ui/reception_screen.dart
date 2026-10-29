@@ -14,6 +14,7 @@ import '../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../common/widgets/retro/page/retro_page.dart';
 import '../../../common/widgets/retro/retro_style.dart';
 import '../../../core/layout/responsive_layout_builder.dart';
+import '../../../common/constants/app_assets.dart';
 import '../../../core/router/route_names.dart';
 import '../../suggestions/ui/suggestion_panel.dart';
 import '../cubit/reception_cubit.dart';
@@ -40,6 +41,9 @@ class ReceptionScreen extends StatelessWidget {
     };
     final s = context.sizes;
     return RetroPage(
+      asset: AppAssets.appMain,
+      grayscale: true,
+      dim: 0.55,
       child: BlocBuilder<ReceptionCubit, ReceptionTab>(
         builder: (context, tab) {
           final nav = [

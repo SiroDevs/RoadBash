@@ -23,6 +23,7 @@ class SceneOrder {
 
   final List<SceneId> scenes;
 
+  /// Menu targets: scenes ordered by races played, then the reception.
   List<MenuTarget> get items => [
     for (final id in scenes) MenuTarget.scene(id),
     const MenuTarget.reception(),

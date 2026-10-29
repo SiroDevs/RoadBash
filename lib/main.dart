@@ -11,6 +11,7 @@ import 'core/di/injectable.dart';
 import 'core/platform/display_setup.dart';
 import 'data/sources/remote/supabase_config.dart';
 
+/// App entry point; initializes services, then starts the app.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDisplay();
@@ -21,6 +22,7 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+/// Initializes Supabase when configured; failures are ignored.
 Future<void> _initSupabase() async {
   if (!SupabaseConfig.isConfigured) return;
   try {

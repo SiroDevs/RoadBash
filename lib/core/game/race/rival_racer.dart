@@ -12,6 +12,7 @@ import '../road/track/road_section.dart';
 import '../road/traffic/road_actor.dart';
 import 'race_controller.dart';
 
+/// Computer-controlled rival drawn as a bike on the road.
 class RivalRacer implements RoadActor {
   RivalRacer(this.rival, this.index, this.lanes)
       : sprite = RiderSprite(look: rival.look) {
@@ -48,12 +49,16 @@ class RivalRacer implements RoadActor {
   @override
   double get lateral => _lateral;
 
+  /// True once the rival has finished and come to rest.
   bool get settled => _crossed && _speed == 0;
 
+  /// Current speed of the rival.
   double get speed => _speed;
 
+  /// True while the rival's brake light is on.
   bool get braking => sprite.pose.braking;
 
+  /// Advances the rival for one frame.
   void update(double dt, RaceController race, RoadRenderer road) {
     if (dt <= 0) return;
     final clock = race.raceClock;
@@ -66,6 +71,7 @@ class RivalRacer implements RoadActor {
     _pose(dt, seg.curve, clock);
   }
 
+  /// Moves the rival along the track by the distance it should have covered.
   void _advance(double dt, RaceController race, RoadRenderer road) {
     if (!_crossed) {
       final distance = race.rivalDistance(rival, race.raceClock);
@@ -87,6 +93,7 @@ class RivalRacer implements RoadActor {
     _dist += _speed * dt;
   }
 
+  /// Returns the distance where the rival should stop after the finish.
   double _stopAt(RaceController race, RoadRenderer road) {
     if (race.finished) {
       final vision = road.speed;
@@ -96,6 +103,7 @@ class RivalRacer implements RoadActor {
     return race.raceLength + (0.26 + 0.03 * index) * VehicleConfig.maxSpeed;
   }
 
+  /// Steers the rival sideways, staying within the guardrail limit.
   void _steerLateral(
     double dt,
     RaceController race,
@@ -137,6 +145,7 @@ class RivalRacer implements RoadActor {
     _latVel = (_lateral - prev) / dt;
   }
 
+  /// Returns the sideways position where the rival parks near the player.
   double _parkAt(double playerX, double maxL) {
     final side = index.isEven ? 1.0 : -1.0;
     final off = 0.42 + 0.4 * (index ~/ 2);
@@ -145,6 +154,7 @@ class RivalRacer implements RoadActor {
     return playerX - side * off;
   }
 
+  /// Updates the rider pose from speed, curve and clock.
   void _pose(double dt, double curve, double clock) {
     final pose = sprite.pose;
     final sp = (_speed / VehicleConfig.maxSpeed).clamp(0.0, 1.0).toDouble();

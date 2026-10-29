@@ -11,6 +11,7 @@ import '../scene_theme.dart';
 import 'hills.dart';
 import 'skyline/skyline.dart';
 
+/// Sky, hills, clouds and skyline behind the road.
 class RoadBackdrop {
   RoadBackdrop(this.theme)
     : _far = fillPaint(Color.lerp(theme.backFar, theme.fog, 0.35)!),
@@ -36,6 +37,7 @@ class RoadBackdrop {
   static const _cloudX = [0.05, 0.28, 0.52, 0.74, 0.93];
   static const _cloudY = [0.20, 0.45, 0.15, 0.38, 0.25];
 
+  /// Rebuilds the sky shader for a new screen size.
   void resize(Vector2 size) {
     final horizon = size.y * RoadConfig.horizonRatio;
     _sky.shader = Gradient.linear(Offset.zero, Offset(0, horizon), [
@@ -49,6 +51,7 @@ class RoadBackdrop {
     );
   }
 
+  /// Draws the sky, hills, clouds and skyline.
   void draw(Canvas canvas, Vector2 size) {
     final viewWidth = size.x;
     final horizon = size.y * RoadConfig.horizonRatio;
@@ -183,6 +186,7 @@ class RoadBackdrop {
     canvas.drawRect(Rect.fromLTRB(0, horizon, viewWidth, size.y), _ground);
   }
 
+  /// Draws a band of clouds across the sky.
   void _clouds(Canvas canvas, double viewWidth, double horizon, {bool big = false}) {
     final span = viewWidth * 1.4;
     final grow = big ? 1.9 : 1.0;

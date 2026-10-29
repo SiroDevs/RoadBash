@@ -12,6 +12,7 @@ import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../core/di/injectable.dart';
 import '../../cubit/online_cubit.dart';
 
+/// Shows how many players are online.
 class OnlineBadge extends StatelessWidget {
   const OnlineBadge({super.key});
 

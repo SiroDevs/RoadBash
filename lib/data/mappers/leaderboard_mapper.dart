@@ -1,6 +1,7 @@
 // Project imports:
 import '../../domain/models/leaderboard_entry.dart';
 
+/// Builds a [LeaderboardEntry] from JSON.
 LeaderboardEntry leaderboardEntryFromJson(Map<String, dynamic> json) =>
     LeaderboardEntry(
       rank: (json['rank'] as num).toInt(),

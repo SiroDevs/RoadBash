@@ -6,6 +6,7 @@ import '../../../common/l10n/l10n_extension.dart';
 import '../../../common/layout/retro_sizes.dart';
 import '../../../common/widgets/retro/retro_style.dart';
 
+/// Warns that anonymous play skips saving progress, then confirms.
 Future<void> confirmAnonymous(
   BuildContext context,
   VoidCallback onConfirm,

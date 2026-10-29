@@ -17,6 +17,7 @@ import 'dashboard_face.dart';
 import 'dashboard_layout.dart';
 import 'hud_strings.dart';
 
+/// Dashboard overlay showing speed, rpm and race banners.
 class DashboardHud extends PositionComponent {
   DashboardHud(this.road, this.race, this.strings) : super(priority: 10);
 
@@ -68,6 +69,7 @@ class DashboardHud extends PositionComponent {
     _banner(canvas);
   }
 
+  /// Draws a gauge needle at a fraction of the dial.
   void _needleAt(Canvas canva, Offset ctr, double radius, double fraction) {
     _needle.strokeWidth = math.max(2.0, radius * 0.045);
     canva.drawLine(
@@ -164,6 +166,7 @@ class DashboardHud extends PositionComponent {
     );
   }
 
+  /// Draws the countdown, go and finish banner.
   void _banner(Canvas canva) {
     final big = math.min(size.y * 0.16, size.x * 0.2);
     final centre = Offset(size.x / 2, size.y * 0.12);

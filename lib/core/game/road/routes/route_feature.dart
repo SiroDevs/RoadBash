@@ -2,6 +2,7 @@
 import '../props/prop.dart';
 import '../props/sign_panel.dart';
 
+/// A roadside feature placed at a point along a route stretch.
 class RouteFeature {
   const RouteFeature._(
     this.kind,

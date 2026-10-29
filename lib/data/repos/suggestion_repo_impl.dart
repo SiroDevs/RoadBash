@@ -7,6 +7,7 @@ import '../../domain/repos/suggestion_repo.dart';
 import '../mappers/suggestion_mapper.dart';
 import '../sources/remote/api_client.dart';
 
+/// Sends suggestions and reads the inbox through the API.
 @LazySingleton(as: SuggestionRepo)
 class SuggestionRepoImpl implements SuggestionRepo {
   SuggestionRepoImpl(this._api);

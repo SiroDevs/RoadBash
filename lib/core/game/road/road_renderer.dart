@@ -21,6 +21,7 @@ import 'surface/road_segment_painter.dart';
 import 'track/road_track.dart';
 import 'traffic/road_traffic.dart';
 
+/// Draws the road, scenery and traffic of a scene and runs the rider physics.
 class RoadRenderer extends PositionComponent with RoadDynamics {
   RoadRenderer(this.theme)
     : track = RoadTrack(theme.id),
@@ -174,6 +175,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     }
   }
 
+  /// Draws the scenery and traffic from the far end back to the near end.
   void _drawDecor(Canvas canvas, int baseIdx) {
     final near = _byN[_firstN]!;
     final limit = math.min(RoadConfig.decorDistance, _lastN + 1);
@@ -201,6 +203,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     }
   }
 
+  /// Returns the nearest visible segment at or before an index.
   VisionSeg? _findBack(int index) {
     for (var i = index; i >= _firstN; i--) {
       final vision = _byN[i];

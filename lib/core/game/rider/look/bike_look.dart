@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:ui';
 
+/// Colors of the bike's body parts.
 class BikeLook {
   const BikeLook({
     this.frame = const Color(0xFF000000),
@@ -22,6 +23,7 @@ class BikeLook {
   final Color trim;
   final Color brakeLight;
 
+  /// Returns a copy with the given colors replaced.
   BikeLook copyWith({
     Color? frame,
     Color? panel,

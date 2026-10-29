@@ -1,3 +1,4 @@
+/// Time ranges for the stats screen.
 enum StatsRange {
   today(1),
   week(7),
@@ -9,9 +10,11 @@ enum StatsRange {
 
   final int days;
 
+  /// Number of days shown in the heatmap, at least 7.
   int get heatmapDays => days < 7 ? 7 : days;
 }
 
+/// Visitor and player totals for a period.
 class PeriodStats {
   const PeriodStats({
     required this.days,
@@ -26,6 +29,7 @@ class PeriodStats {
   final int games;
 }
 
+/// Overall stats: online count and totals per period.
 class StatsSummary {
   const StatsSummary({
     required this.online,
@@ -43,6 +47,7 @@ class StatsSummary {
   final int totalVisitors;
   final List<PeriodStats> periods;
 
+  /// Returns the stats for a period of [days], or null.
   PeriodStats? forDays(int days) {
     for (final p in periods) {
       if (p.days == days) return p;
@@ -51,6 +56,7 @@ class StatsSummary {
   }
 }
 
+/// Visitors and players at one point in time.
 class StatsPoint {
   const StatsPoint({
     required this.time,
@@ -65,6 +71,7 @@ class StatsPoint {
   final int games;
 }
 
+/// Activity at one day and hour of the heatmap.
 class HeatCell {
   const HeatCell({
     required this.day,

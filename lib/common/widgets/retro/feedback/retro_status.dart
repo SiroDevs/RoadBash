@@ -10,6 +10,7 @@ import '../../../layout/retro_sizes.dart';
 import '../controls/retro_controls.dart';
 import '../retro_style.dart';
 
+/// Placeholder shown while data loads.
 class RetroLoading extends StatelessWidget {
   const RetroLoading({super.key});
 
@@ -18,6 +19,7 @@ class RetroLoading extends StatelessWidget {
       const CircularProgressIndicator(color: Retro.orange).center();
 }
 
+/// Message with a retry button shown when loading fails.
 class RetroFailure extends StatelessWidget {
   const RetroFailure({super.key, required this.onRetry});
 

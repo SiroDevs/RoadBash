@@ -7,6 +7,7 @@ import '../../../domain/models/engine_flavour.dart';
 import 'engine_tune.dart';
 import 'engine_tunes.dart';
 
+/// A rendered engine loop and its base pitch.
 class EngineLoop {
   const EngineLoop(this.wav, this.baseHz);
 
@@ -14,6 +15,7 @@ class EngineLoop {
   final double baseHz;
 }
 
+/// Renders the engine loop audio.
 abstract final class EngineWave {
   static const int sampleRate = 22050;
   static const double _loopSeconds = 0.5;
@@ -22,6 +24,7 @@ abstract final class EngineWave {
 
   static final Map<EngineFlavour, List<EngineLoop>> _cache = {};
 
+  /// Returns the loops of a flavour, rendering them once.
   static List<EngineLoop> loopsFor(EngineFlavour flavour) {
     final tune = EngineTunes.of(flavour);
     return _cache[flavour] ??= [
@@ -29,6 +32,7 @@ abstract final class EngineWave {
     ];
   }
 
+  /// Renders one engine layer as a looping wave.
   static EngineLoop _render(EngineTune tune, EngineLayerSpec spec) {
     final period = (sampleRate / spec.fireHz).round();
     final cycle = tune.pattern.length;
@@ -109,11 +113,13 @@ abstract final class EngineWave {
     return EngineLoop(_wav(pcm), sampleRate / period);
   }
 
+  /// Smooth saturation curve.
   static double _tanh(double value) {
     final exponent = math.exp(2 * value.clamp(-20.0, 20.0));
     return (exponent - 1) / (exponent + 1);
   }
 
+  /// Wraps raw samples in a WAV file.
   static Uint8List _wav(Int16List pcm) {
     final data = pcm.lengthInBytes;
     final bytes = ByteData(44 + data);

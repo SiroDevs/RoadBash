@@ -1,6 +1,7 @@
 // Project imports:
 part of '../rider_painter.dart';
 
+/// Paints the rider's helmet.
 class Helmet extends RiderPartPainter {
   Helmet(super.look);
 
@@ -8,6 +9,7 @@ class Helmet extends RiderPartPainter {
 
   static const double _mid = RiderPartPainter.midX;
 
+  /// Paints the helmet for the given pose.
   void paint(Canvas canva, RiderPose pose) {
     final neckY = 15 + tuckOf(pose);
     final foot = pose.foot.clamp(0.0, 1.0);

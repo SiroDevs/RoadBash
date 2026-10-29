@@ -1,9 +1,11 @@
 // Project imports:
 part of '../rider_painter.dart';
 
+/// Paints the bike's shadow, handlebars and body.
 class RiderBike extends RiderPartPainter {
   RiderBike(super.look);
 
+  /// Paints the ground shadow, shifted by the lean.
   void paintShadow(Canvas canva, RiderPose pose) {
     final slip = pose.lean * 46;
     final squash = 1 - pose.lean.abs() * 0.5;
@@ -21,6 +23,7 @@ class RiderBike extends RiderPartPainter {
     );
   }
 
+  /// Paints the handlebars.
   void handleBars(Paint paint, Path path, Canvas canva, RiderPose pose) {
     // Left Handle
     path
@@ -81,6 +84,7 @@ class RiderBike extends RiderPartPainter {
     canva.drawPath(path, paint);
   }
 
+  /// Paints the bike body.
   void paintBody(Paint paint, Path path, Canvas canva, RiderPose pose) {
     path
       ..reset()

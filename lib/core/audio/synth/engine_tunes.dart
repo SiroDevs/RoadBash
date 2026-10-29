@@ -2,7 +2,9 @@
 import '../../../domain/models/engine_flavour.dart';
 import 'engine_tune.dart';
 
+/// Tuning data for every engine flavour.
 abstract final class EngineTunes {
+  /// Returns the tune of an engine flavour.
   static EngineTune of(EngineFlavour flavour) => switch (flavour) {
         EngineFlavour.classic => _classic,
         EngineFlavour.vTwin => _vTwin,

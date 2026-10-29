@@ -28,11 +28,17 @@ mixin RoadDynamics {
 
   static const double _analogRate = 24;
 
+  /// Speed as a share of the top speed.
   double get speedPercent => speed / VehicleConfig.maxSpeed;
+  /// Speed in kilometres per hour.
   double get speedKmh => speedPercent * VehicleConfig.topSpeedKmh;
+  /// True when the rider has left the road.
   bool get offRoad => playerX < -1 || playerX > 1;
+  /// True when the bike is almost stopped.
   bool get stopped => speed < VehicleConfig.stoppedSpeed;
+  /// True when stopped without throttle, so the rider has a foot down.
   bool get restingOnFoot => stopped && !throttle;
+  /// Engine load from the pedals: braking, idling or full throttle.
   double get engineLoad => brake ? 0.3 : (throttle ? 1.0 : 0.5);
 
   // Advances speed, lateral position and skid state by one frame.
@@ -80,9 +86,11 @@ mixin RoadDynamics {
     appliedSteer += (clamped - appliedSteer) * math.min(1.0, dt * rate);
   }
 
+  /// Eases the engine speed toward a target.
   void settleRpm(double dt, double target) =>
       rpm += (target - rpm) * math.min(1.0, dt * 8);
 
+  /// Updates the gear and engine speed from the road speed.
   void updateEngine(double dt, double speedRatio) {
     const gears = 6;
     gear = math.min(gears, 1 + (speedRatio * gears).floor());

@@ -5,6 +5,7 @@ import 'dart:ui';
 import '../shape_primitives.dart';
 import '../skyline_palette.dart';
 
+/// Draws the Co-op building.
 void drawCoopBuilding(Canvas canva, Paint paint) => drawPoly(canva, paint, const [
   162,
   90,

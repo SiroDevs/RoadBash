@@ -9,8 +9,10 @@ import '../../../domain/models/suggestion.dart';
 import '../../../domain/repos/auth_repo.dart';
 import '../../../domain/repos/suggestion_repo.dart';
 
+/// Errors a suggestion submission can show.
 enum SuggestionError { tooShort, rateLimited, signIn, network }
 
+/// State of the suggestion screen: admin, busy, sent, error and inbox.
 class SuggestionState extends Equatable {
   const SuggestionState({
     this.admin = false,
@@ -30,6 +32,7 @@ class SuggestionState extends Equatable {
   List<Object?> get props => [admin, busy, sent, error, inbox];
 }
 
+/// Sends suggestions and loads the admin inbox.
 @injectable
 class SuggestionCubit extends Cubit<SuggestionState> {
   SuggestionCubit(this._repo, this._auth)
@@ -38,6 +41,7 @@ class SuggestionCubit extends Cubit<SuggestionState> {
   final SuggestionRepo _repo;
   final AuthRepo _auth;
 
+  /// Loads the suggestion inbox for admins.
   Future<void> loadInbox() async {
     if (!state.admin) return;
     emit(SuggestionState(admin: true, busy: true, inbox: state.inbox));
@@ -51,6 +55,7 @@ class SuggestionCubit extends Cubit<SuggestionState> {
     }
   }
 
+  /// Validates and sends a suggestion, then updates the state.
   Future<void> send(String text) async {
     final message = text.trim();
     if (_auth.session == null) {
@@ -68,6 +73,7 @@ class SuggestionCubit extends Cubit<SuggestionState> {
     }
   }
 
+  /// Maps a server error code to a [SuggestionError].
   SuggestionError _map(ApiException error) => switch (error.code) {
     'invalid_message' => SuggestionError.tooShort,
     'rate_limited' => SuggestionError.rateLimited,

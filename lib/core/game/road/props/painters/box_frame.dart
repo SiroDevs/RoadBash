@@ -8,6 +8,7 @@ import 'package:flame/components.dart';
 import '../../road_projection.dart';
 import '../prop.dart';
 
+/// Screen corners of a prop's box between two segments.
 class BoxFrame {
   BoxFrame(VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
     xi1 = near.x1 + prop.side * near.w1 * prop.offset;

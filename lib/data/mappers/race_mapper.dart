@@ -2,6 +2,7 @@
 import '../../domain/models/race_record.dart';
 import '../../domain/models/scene_id.dart';
 
+/// Builds a [RaceRecord] from a backend row.
 RaceRecord raceRecordFromJson(Map<String, dynamic> row, String playerName) =>
     RaceRecord(
       scene: SceneId.values.asNameMap()[row['scene']] ?? SceneId.city,

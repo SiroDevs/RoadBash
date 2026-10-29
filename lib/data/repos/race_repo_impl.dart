@@ -10,6 +10,7 @@ import '../../domain/repos/race_repo.dart';
 import '../mappers/race_mapper.dart';
 import '../sources/remote/api_client.dart';
 
+/// Saves and loads race records through the API.
 @LazySingleton(as: RaceRepo)
 class RaceRepoImpl implements RaceRepo {
   RaceRepoImpl(this._api);

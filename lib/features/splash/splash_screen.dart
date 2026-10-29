@@ -17,6 +17,7 @@ import '../../core/constants/app_constants.dart';
 import '../../core/router/route_names.dart';
 import 'cubit/splash_cubit.dart';
 
+/// Splash screen shown while the app starts up.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -24,6 +25,7 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
+/// State for [SplashScreen]; runs startup and navigates when it finishes.
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {

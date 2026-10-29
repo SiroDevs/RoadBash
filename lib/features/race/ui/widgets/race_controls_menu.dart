@@ -12,12 +12,14 @@ import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../core/layout/responsive_layout_builder.dart';
 import '../../../settings/cubit/settings_cubit.dart';
 
+/// Shows the in-race controls dialog.
 Future<void> showRaceControlsMenu(BuildContext context) => showDialog<void>(
   context: context,
   barrierColor: Colors.black54,
   builder: (_) => const _RaceControlsDialog(),
 );
 
+/// Dialog with sound and steering switches shown during a race.
 class _RaceControlsDialog extends StatelessWidget {
   const _RaceControlsDialog();
 
@@ -129,6 +131,7 @@ class _RaceControlsDialog extends StatelessWidget {
   }
 }
 
+/// A titled switch row used by the controls dialog.
 class _SwitchRow extends StatelessWidget {
   const _SwitchRow({
     required this.title,

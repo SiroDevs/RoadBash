@@ -2,6 +2,7 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
+/// Draws layered hills across the horizon.
 void drawHills(
   Canvas canva,
   Path path, {

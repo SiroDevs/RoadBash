@@ -12,6 +12,7 @@ import 'prop.dart';
 
 export 'prop.dart';
 
+/// Places the roadside props along the track.
 class RoadProps {
   RoadProps(SceneTheme theme, RoadTrack track)
     : _bySegment = List.filled(track.count, const []) {
@@ -37,5 +38,6 @@ class RoadProps {
 
   final List<List<Prop>> _bySegment;
 
+  /// Returns the props anchored on a segment.
   List<Prop> at(int segment) => _bySegment[segment];
 }

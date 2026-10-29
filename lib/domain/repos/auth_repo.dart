@@ -2,6 +2,7 @@
 import '../models/name_status.dart';
 import '../models/player_session.dart';
 
+/// Contract for sign-in, sessions and name checks.
 abstract interface class AuthRepo {
   PlayerSession? get session;
   Stream<PlayerSession?> get sessionChanges;

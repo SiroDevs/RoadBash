@@ -2,6 +2,7 @@
 import '../../../utils/pseudo_random.dart';
 import '../prop.dart';
 
+/// Places buildings and trees for the suburbs scene.
 void layOutSuburbs(List<List<Prop>> slots, int count) {
   for (final side in const [-1, 1]) {
     var cursor = (side < 0) ? 3 : 11;

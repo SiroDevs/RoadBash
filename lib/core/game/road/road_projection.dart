@@ -5,6 +5,7 @@ import 'package:flame/components.dart' show Vector2;
 import 'config/road_config.dart';
 import 'track/road_track.dart';
 
+/// Screen position and scale of one projected road point.
 class ProjectionPoint {
   double x = 0, y = 0, w = 0, z = 0;
 
@@ -31,6 +32,7 @@ class ProjectionPoint {
   }
 }
 
+/// One visible road segment projected to the screen.
 class VisionSeg {
   late RoadSegment seg;
   int n = 0;
@@ -48,6 +50,7 @@ class VisionSeg {
     return amount < 0 ? 0.0 : (amount > 1 ? 1.0 : amount);
   }
 
+  /// Fills this record from a segment and its projected end points.
   void fill(
     RoadSegment segment,
     int index,
@@ -70,9 +73,11 @@ class VisionSeg {
   }
 }
 
+/// Interpolated screen point along a span.
 class SpanPoint {
   double x = 0, y = 0, k = 0;
 
+  /// Interpolates a point between two projected segments.
   void lerp(VisionSeg near, VisionSeg far, double fraction, double cx, double horizonY) {
     final an = (near.x1 - cx) / near.k1, af = (far.x1 - cx) / far.k1;
     final bn = (near.y1 - horizonY) / near.k1, bf = (far.y1 - horizonY) / far.k1;

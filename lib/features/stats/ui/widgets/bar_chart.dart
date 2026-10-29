@@ -13,6 +13,7 @@ import '../../../../common/l10n/l10n_extension.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 
+/// Bar chart that shows a series of counts.
 class RetroBarChart extends StatelessWidget {
   const RetroBarChart({
     super.key,
@@ -63,6 +64,7 @@ class RetroBarChart extends StatelessWidget {
   }
 }
 
+/// Paints the bars for [RetroBarChart].
 class _BarPainter extends CustomPainter {
   _BarPainter(this.values, this.color);
 

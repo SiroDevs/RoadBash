@@ -3,6 +3,7 @@ import 'dart:ui';
 
 final Path path = Path();
 
+/// Traces a path through a list of x, y points.
 void tracePoints(List<double> pts) {
   path
     ..reset()
@@ -13,6 +14,7 @@ void tracePoints(List<double> pts) {
   path.close();
 }
 
+/// Sets the paint to fill with a color.
 void fillContainer(Canvas canva, Paint paint, Color color) {
   paint
     ..style = PaintingStyle.fill
@@ -20,6 +22,7 @@ void fillContainer(Canvas canva, Paint paint, Color color) {
   canva.drawPath(path, paint);
 }
 
+/// Sets the paint to a thin outline in a color.
 void drawEdge(Canvas canva, Paint paint, Color color, [double width = 0.25]) {
   paint
     ..style = PaintingStyle.stroke
@@ -28,6 +31,7 @@ void drawEdge(Canvas canva, Paint paint, Color color, [double width = 0.25]) {
   canva.drawPath(path, paint);
 }
 
+/// Draws a filled polygon with an optional edge.
 void drawPoly(
   Canvas canva,
   Paint paint,
@@ -40,6 +44,7 @@ void drawPoly(
   if (edge != null) drawEdge(canva, paint, edge);
 }
 
+/// Draws a filled rectangle.
 void drawRect(Canvas canva, Paint paint, Rect rect, Color color) {
   path
     ..reset()
@@ -47,6 +52,7 @@ void drawRect(Canvas canva, Paint paint, Rect rect, Color color) {
   fillContainer(canva, paint, color);
 }
 
+/// Draws a filled oval.
 void drawOval(Canvas canva, Paint paint, Rect rect, Color color) {
   path
     ..reset()
@@ -54,6 +60,7 @@ void drawOval(Canvas canva, Paint paint, Rect rect, Color color) {
   fillContainer(canva, paint, color);
 }
 
+/// Draws line segments from a list of x1, y1, x2, y2 values.
 void drawLines(
   Canvas canva,
   Paint paint,

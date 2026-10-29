@@ -23,6 +23,7 @@ void layOutJungle(List<List<Prop>> slots, int count) {
   }
 }
 
+/// Places a row of jungle trees along one side.
 void _row(
   List<List<Prop>> slots,
   int count,

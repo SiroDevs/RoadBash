@@ -8,6 +8,7 @@ export 'route_scenery.dart';
 
 const int segmentsPerShot = 18;
 
+/// One weighted piece of a stretch with its curve and hill.
 class RoutePiece {
   const RoutePiece(this.weight, {this.curve = 0, this.hill = 0, this.section});
 
@@ -17,6 +18,7 @@ class RoutePiece {
   final Section? section;
 }
 
+/// A named part of a route made of road pieces and scenery.
 class RouteStretch {
   const RouteStretch(
     this.name,
@@ -35,5 +37,6 @@ class RouteStretch {
   final List<SideScenery> left, right;
   final List<RouteFeature> features;
 
+  /// Length of the stretch in segments.
   int get length => shots * segmentsPerShot;
 }

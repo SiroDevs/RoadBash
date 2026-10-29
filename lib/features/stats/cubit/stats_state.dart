@@ -1,7 +1,9 @@
 part of 'stats_cubit.dart';
 
+/// Metric the activity heatmap can show.
 enum HeatMetric { visitors, players }
 
+/// State of the stats screen: status, range, metric and summary.
 class StatsState extends Equatable {
   const StatsState({
     this.status = LoadStatus.loading,
@@ -19,6 +21,7 @@ class StatsState extends Equatable {
   final List<StatsPoint> series;
   final List<HeatCell> heat;
 
+  /// Returns a copy with the given fields replaced.
   StatsState copyWith({
     LoadStatus? status,
     StatsRange? range,

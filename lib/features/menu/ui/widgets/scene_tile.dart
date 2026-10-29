@@ -10,6 +10,7 @@ import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../domain/models/scene_id.dart';
 import '../../cubit/menu_target.dart';
 
+/// Returns the preview image asset for a scene.
 String sceneAsset(SceneId id) => switch (id) {
   SceneId.city => AppAssets.sceneCity,
   SceneId.suburbs => AppAssets.sceneSuburbs,

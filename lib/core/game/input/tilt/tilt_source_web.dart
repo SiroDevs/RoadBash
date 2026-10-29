@@ -10,25 +10,30 @@ import 'package:flutter/foundation.dart'
     show TargetPlatform, defaultTargetPlatform;
 
 
+/// Creates the browser tilt source.
 TiltSource createTiltSource() => _WebTilt();
 
 @JS('window')
 external _Window get _window;
 
+/// JavaScript window object used for motion events.
 extension type _Window._(JSObject _) implements JSObject {
   external void addEventListener(String type, JSFunction listener);
   external void removeEventListener(String type, JSFunction listener);
 }
 
+/// JavaScript acceleration values from the browser.
 extension type _Acceleration._(JSObject _) implements JSObject {
   external JSNumber? get x;
   external JSNumber? get y;
 }
 
+/// JavaScript device motion event.
 extension type _MotionEvent._(JSObject _) implements JSObject {
   external _Acceleration? get accelerationIncludingGravity;
 }
 
+/// JavaScript device motion permission API.
 @JS('DeviceMotionEvent')
 extension type _DeviceMotion._(JSObject _) implements JSObject {
   @JS('requestPermission')
@@ -37,11 +42,13 @@ extension type _DeviceMotion._(JSObject _) implements JSObject {
   external static JSPromise<JSString> requestPermission();
 }
 
+/// Tilt source backed by the browser's devicemotion events.
 class _WebTilt implements TiltSource {
   _WebTilt() : needsPermission = _permissionRequired() {
     if (!needsPermission) _attach();
   }
 
+  /// True when the browser requires a permission prompt for motion.
   static bool _permissionRequired() {
     try {
       return _DeviceMotion.permissionApi != null;
@@ -63,12 +70,14 @@ class _WebTilt implements TiltSource {
   @override
   Stream<TiltSample> get samples => _out.stream;
 
+  /// Starts listening to browser motion events once.
   void _attach() {
     if (_attached) return;
     _attached = true;
     _window.addEventListener('devicemotion', _listener);
   }
 
+  /// Converts a browser motion event into a tilt sample.
   void _onMotion(_MotionEvent event) {
     final gravity = event.accelerationIncludingGravity;
     final gravityX = gravity?.x?.toDartDouble;

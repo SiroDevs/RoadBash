@@ -27,6 +27,7 @@ void layOutFinish(List<List<Prop>> slots, RoadTrack track, SceneTheme theme) {
   _crowd(slots, track, theme, from, line, look);
 }
 
+/// True when a segment lies on the far right of a dual carriageway.
 bool _farRight(RoadTrack track, SceneTheme theme, int index) =>
     theme.dualCarriageway && track.segments[index].section.hasOpposite;
 
@@ -48,6 +49,7 @@ void _clearScenery(List<List<Prop>> slots, int count, int from) {
   }
 }
 
+/// Places the finish gantry posts along the pad.
 void _posts(List<List<Prop>> slots, int from, int line, FinishLook look) {
   final end = line + look.padLength + 14;
   for (var i = from; i < end; i += 3) {
@@ -87,6 +89,10 @@ void _laneCones(List<List<Prop>> slots, int line, FinishLook look) {
   }
 }
 
+/// Places the crowd beside the finish pad.
+///
+/// [from] is the first segment to fill, [line] the finish line segment and
+/// [look] the finish style that sets the pad length.
 void _crowd(
   List<List<Prop>> slots,
   RoadTrack track,

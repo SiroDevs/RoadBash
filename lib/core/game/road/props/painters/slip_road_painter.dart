@@ -10,6 +10,7 @@ import '../../road_projection.dart';
 import '../../scene_theme.dart';
 import '../prop.dart';
 
+/// Paints slip roads that branch off the main road.
 class SlipRoadPainter {
   SlipRoadPainter(SceneTheme theme)
       : _asphalt = fogRamp(theme.roadDark, theme.fog),
@@ -25,6 +26,7 @@ class SlipRoadPainter {
   static const double _gap = 0.12;
   static const double _spread = 0.9;
 
+  /// Draws a slip road between two segments.
   void draw(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
     final aNear = _edge + _gapAt(prop, near.seg.index);
     final aFar = _edge + _gapAt(prop, far.seg.index);
@@ -47,12 +49,18 @@ class SlipRoadPainter {
     canvas.restore();
   }
 
+  /// Returns the gap to the main road at a segment.
   double _gapAt(Prop prop, int index) {
     if (prop.detail == 0) return _gap;
     final progress = ((index - prop.anchor) / prop.depth).clamp(0.0, 1.0);
     return _spread * (prop.detail > 0 ? progress : 1 - progress);
   }
 
+  /// Draws one quad of the slip road.
+  ///
+  /// [side] is the side of the road. [n0] and [n1] are the offsets of the near
+  /// edge, [f0] and [f1] those of the far edge, and [ramp] holds the fogged
+  /// paints.
   void _quad(Canvas canvas, VisionSeg near, VisionSeg far, int side, double n0,
       double n1, double f0, double f1, List<Paint> ramp) {
     drawQuad(

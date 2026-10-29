@@ -13,6 +13,7 @@ import '../../../../core/game/road/scene_theme.dart';
 import '../../../../domain/models/scene_id.dart';
 import '../../../progress/cubit/progress_cubit.dart';
 
+/// Shows the name, length and best stats of the selected scene.
 class SceneInfo extends StatelessWidget {
   const SceneInfo({super.key, required this.scene, required this.km});
 

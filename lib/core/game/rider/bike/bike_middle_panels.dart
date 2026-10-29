@@ -1,9 +1,11 @@
 // Project imports:
 part of '../rider_painter.dart';
 
+/// Paints the middle fairing panels of the bike.
 class BikeMiddlePanels extends RiderPartPainter {
   BikeMiddlePanels(super.look);
 
+  /// Paints the middle panels.
   void paint(
     Paint paint,
     Path path,

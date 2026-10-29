@@ -10,6 +10,7 @@ import '../../../domain/errors/api_exception.dart';
 import '../../../domain/models/player_session.dart';
 import 'supabase_config.dart';
 
+/// Calls backend functions and publishes session changes.
 @lazySingleton
 class ApiClient {
   ApiClient() : _client = SupabaseConfig.ready ? Supabase.instance.client : null;
@@ -19,15 +20,19 @@ class ApiClient {
 
   PlayerSession? session;
 
+  /// True when the backend is configured.
   bool get isConfigured => _client != null;
 
+  /// Emits the current player session whenever it changes.
   Stream<PlayerSession?> get sessionChanges => _changes.stream;
 
+  /// Stores the session and notifies listeners.
   void setSession(PlayerSession? value) {
     session = value;
     _changes.add(value);
   }
 
+  /// Calls a public backend function and returns its result.
   Future<Map<String, dynamic>> call(
     String fn, [
     Map<String, dynamic>? params,
@@ -54,6 +59,7 @@ class ApiClient {
     return map;
   }
 
+  /// Calls a backend function with the player's session token.
   Future<Map<String, dynamic>> callAuthed(
     String fn, [
     Map<String, dynamic>? params,
@@ -69,7 +75,9 @@ class ApiClient {
   }
 }
 
+/// Reads rows from a backend result.
 extension ApiRows on Map<String, dynamic> {
+  /// Parses each row of the result with [parse].
   List<T> rows<T>(T Function(Map<String, dynamic> row) parse) => [
     for (final e in this['data'] as List) parse(Map<String, dynamic>.from(e as Map)),
   ];

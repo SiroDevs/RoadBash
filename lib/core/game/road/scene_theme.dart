@@ -4,10 +4,13 @@ import 'dart:ui';
 // Project imports:
 import '../../../domain/models/scene_id.dart';
 
+/// Kinds of scene backdrop.
 enum BackdropKind { skyline, hills, hillsAndSkyline, sky, ridges }
 
+/// Kinds of roadside decoration.
 enum DecorKind { buildings, trees, corridor, jungle, savanna }
 
+/// Colors and settings that define a scene's look.
 class SceneTheme {
   const SceneTheme({
     required this.id,
@@ -202,6 +205,7 @@ class SceneTheme {
     trunk: Color(0xFF4A3828),
   );
 
+  /// Returns the theme for a scene.
   static SceneTheme of(SceneId id) => switch (id) {
     SceneId.city => city,
     SceneId.suburbs => suburbs,

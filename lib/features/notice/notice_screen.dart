@@ -15,6 +15,7 @@ import '../../common/widgets/retro/retro_style.dart';
 import '../../core/router/route_names.dart';
 import '../auth/cubit/auth_cubit.dart';
 
+/// Notice screen with scrolling text shown before sign-in.
 class NoticeScreen extends StatefulWidget {
   const NoticeScreen({super.key});
 
@@ -22,6 +23,7 @@ class NoticeScreen extends StatefulWidget {
   State<NoticeScreen> createState() => _NoticeScreenState();
 }
 
+/// State for [NoticeScreen]; owns the auto-scroll animation.
 class _NoticeScreenState extends State<NoticeScreen> {
   static const double _speed = 30;
 
@@ -40,6 +42,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
     super.dispose();
   }
 
+  /// Scrolls the notice text upward at a steady speed.
   Future<void> _rise() async {
     if (!mounted || !_scroll.hasClients) return;
     final end = _scroll.position.maxScrollExtent;
@@ -51,6 +54,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
     _continue();
   }
 
+  /// Leaves the notice screen once, to the menu or sign-in.
   void _continue() {
     if (!mounted || _left) return;
     _left = true;

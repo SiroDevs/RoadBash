@@ -1,7 +1,9 @@
 part of 'sign_in_cubit.dart';
 
+/// Steps of the sign-in flow.
 enum SignInStage { name, answer, create, challenge }
 
+/// Errors the sign-in flow can show.
 enum SignInError {
   invalidName,
   wrongAnswer,
@@ -16,6 +18,7 @@ enum SignInError {
   generic,
 }
 
+/// State of the sign-in flow: stage, name, question, busy and error.
 class SignInState extends Equatable {
   const SignInState({
     this.stage = SignInStage.name,
@@ -33,6 +36,7 @@ class SignInState extends Equatable {
   final SignInError? error;
   final int number;
 
+  /// Returns a copy with the given fields replaced.
   SignInState copyWith({
     SignInStage? stage,
     String? name,

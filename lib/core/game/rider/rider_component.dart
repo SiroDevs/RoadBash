@@ -15,6 +15,7 @@ import 'rider_pose.dart';
 import 'rider_rig.dart';
 import 'rider_sprite.dart';
 
+/// Flame component that draws the player's bike and rider.
 class RiderComponent extends PositionComponent {
   RiderComponent(this.road, {RiderRig? rig, this.look = RiderLook.main})
       : rig = rig ?? RiderRig(),
@@ -27,6 +28,7 @@ class RiderComponent extends PositionComponent {
   final RiderRig rig;
   final RiderLook look;
   late final RiderSprite _sprite = RiderSprite(look: look, rig: rig);
+  /// Returns the rider's current pose.
   RiderPose get _pose => _sprite.pose;
   double _t = 0;
 

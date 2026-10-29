@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import '../../../core/game/race/race_result.dart';
 import '../../progress/cubit/progress_cubit.dart';
 
+/// Result of a finished race and whether it set a new best time.
 class RaceOutcome extends Equatable {
   const RaceOutcome({required this.result, required this.newBest});
 
@@ -17,12 +18,14 @@ class RaceOutcome extends Equatable {
   List<Object?> get props => [result, newBest];
 }
 
+/// Receives a finished race and records it once.
 @injectable
 class RaceCubit extends Cubit<RaceOutcome?> {
   RaceCubit(this._progress) : super(null);
 
   final ProgressCubit _progress;
 
+  /// Records the result and emits the outcome.
   Future<void> finish(RaceResult result) async {
     if (state != null) return;
     final newBest = await _progress.record(result);

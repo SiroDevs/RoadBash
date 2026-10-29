@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'touch_hold.dart';
 
+/// Ridge pattern drawn on a pedal.
 enum TouchRidges { bars, dots }
 
+/// A labelled pedal button that reports presses.
 class TouchPedal extends StatelessWidget {
   const TouchPedal({
     required this.label,
@@ -95,6 +97,7 @@ class TouchPedal extends StatelessWidget {
   }
 }
 
+/// Paints the ridge pattern on a pedal.
 class TouchRidgePainter extends CustomPainter {
   const TouchRidgePainter(this.kind);
 

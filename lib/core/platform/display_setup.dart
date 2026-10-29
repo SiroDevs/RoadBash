@@ -6,6 +6,7 @@ import '../utils/app_util.dart';
 
 // Package imports:
 
+/// Applies the device's screen orientation and system UI mode.
 Future<void> configureDisplay() async {
   if (isMobile) {
     await SystemChrome.setPreferredOrientations(DeviceOrientation.values);

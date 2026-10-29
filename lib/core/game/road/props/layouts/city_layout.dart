@@ -3,6 +3,7 @@ import '../../../utils/pseudo_random.dart';
 import '../../config/road_config.dart';
 import '../prop.dart';
 
+/// Places buildings and trees for the city scene.
 void layOutCity(List<List<Prop>> slots, int count) {
   for (final side in const [-1, 1]) {
     var cursor = (side < 0) ? 0 : 7;

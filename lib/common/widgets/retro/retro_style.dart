@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../layout/retro_sizes.dart';
 
+/// Colors and styles of the retro look.
 class Retro {
   Retro._();
 
@@ -16,6 +17,7 @@ class Retro {
   static const ink = Color(0xFF0A0A1F);
 }
 
+/// Returns the retro body text style.
 TextStyle retroBody({double size = 20, Color color = Colors.white}) =>
     TextStyle(
       color: color,
@@ -27,6 +29,7 @@ TextStyle retroBody({double size = 20, Color color = Colors.white}) =>
       ],
     );
 
+/// Retro-styled title text.
 class RetroTitle extends StatelessWidget {
   const RetroTitle(this.text, {super.key, this.size});
 

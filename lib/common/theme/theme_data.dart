@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_constants.dart';
 import 'theme_colors.dart';
 
+/// Builds the light and dark Material themes.
 class AppTheme {
   AppTheme._();
 
+  /// Builds a theme from the given colors.
   static ThemeData _build({
     required Color scaffold,
     required ColorScheme scheme,
@@ -47,6 +49,7 @@ class AppTheme {
     );
   }
 
+  /// Returns the light theme.
   static ThemeData lightTheme() => _build(
         scaffold: ThemeColors.lightGray,
         scheme: const ColorScheme.light(
@@ -91,6 +94,7 @@ class AppTheme {
         dialog: Colors.white,
       );
 
+  /// Returns the dark theme.
   static ThemeData darkTheme() => _build(
         scaffold: Colors.black,
         scheme: const ColorScheme.dark(

@@ -12,6 +12,7 @@ import '../race/rival_racer.dart';
 import '../road/road_renderer.dart';
 import 'rival_audio.dart';
 
+/// Plays engine, skid, gravel, wind and countdown sounds during a race.
 class RideAudio {
   RideAudio({
     required this.mix,
@@ -45,16 +46,20 @@ class RideAudio {
   bool _wasFinished = false;
   bool? _wasOnFoot;
 
+  /// Effects volume from the current mix.
   double get _fx => mix.effectsGain;
 
+  /// Looping effect players.
   List<LoopPlayer> get _loops => [_skid, _gravel, _wind];
 
+  /// Starts all audio loops.
   Future<void> start() => Future.wait([
         _engine.start(),
         _rivals.start(),
         if (useAssetLoops) ..._loops.map((p) => p.start()),
       ]);
 
+  /// Updates the sounds from the bike's state each frame.
   void update(double dt) {
     _events();
     _engine.update(
@@ -83,6 +88,7 @@ class RideAudio {
     _wind.set(volume: _clamp(_fx * sp * 0.5), rate: 0.8 + 0.5 * sp);
   }
 
+  /// Plays one-shot sounds such as the countdown.
   void _events() {
     if (race.countdown > 0) {
       final seconds = race.countdown.ceil();
@@ -107,8 +113,10 @@ class RideAudio {
     _wasOnFoot = onFoot;
   }
 
+  /// Clamps a value between 0 and 1.
   static double _clamp(double value) => math.min(1.0, math.max(0.0, value));
 
+  /// Pauses all race audio.
   void pause() {
     _engine.pause();
     _rivals.pause();
@@ -117,6 +125,7 @@ class RideAudio {
     }
   }
 
+  /// Resumes all race audio.
   void resume() {
     _engine.resume();
     _rivals.resume();
@@ -125,6 +134,7 @@ class RideAudio {
     }
   }
 
+  /// Releases all audio resources.
   Future<void> dispose() => Future.wait([
         _engine.dispose(),
         _rivals.dispose(),

@@ -19,6 +19,7 @@ import '../road/config/road_config.dart';
 import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 
+/// Engine voice and playback handle for one rival.
 class _RivalVoice {
   _RivalVoice(this.racer, this.flavour, this.loop)
       : voice = EngineVoice([loop.baseHz], EngineTunes.of(flavour));
@@ -32,6 +33,7 @@ class _RivalVoice {
   double doppler = 1, volume = -1, pan = 2, rate = 1;
 }
 
+/// Plays a positional engine sound for each rival.
 class RivalAudio {
   RivalAudio(
     List<RivalRacer> racers,
@@ -65,6 +67,7 @@ class RivalAudio {
   double _acc = 0;
   bool _disposed = false;
 
+  /// Starts the rival engine sounds.
   Future<void> start() async {
     if (_voices.isEmpty || !await EngineSynth.ensureReady()) return;
     final so = SoLoud.instance;
@@ -83,6 +86,7 @@ class RivalAudio {
     if (_disposed) await dispose();
   }
 
+  /// Updates rival sounds at a fixed interval.
   void update(double dt, {required double volume}) {
     _acc += dt;
     if (_acc < _tick) return;
@@ -93,6 +97,7 @@ class RivalAudio {
     }
   }
 
+  /// Sets one rival's engine pitch and volume from its speed.
   void _tune(_RivalVoice voice, double step, double volume) {
     final racer = voice.racer;
     final grid = race.countdown > 0;
@@ -130,6 +135,7 @@ class RivalAudio {
     _apply(voice, vol.toDouble(), pan.toDouble(), rate.toDouble());
   }
 
+  /// Applies volume, pan and rate to a voice.
   void _apply(_RivalVoice voice, double vol, double pan, double rate) {
     final handle = voice.handle;
     if (handle == null) return;
@@ -148,11 +154,13 @@ class RivalAudio {
     }
   }
 
+  /// Smooth saturation curve.
   static double _tanh(double value) {
     final exponent = math.exp(2 * value.clamp(-10.0, 10.0).toDouble());
     return (exponent - 1) / (exponent + 1);
   }
 
+  /// Pauses the rival sounds.
   void pause() {
     for (final v in _voices) {
       final handle = v.handle;
@@ -160,6 +168,7 @@ class RivalAudio {
     }
   }
 
+  /// Resumes the rival sounds.
   void resume() {
     for (final v in _voices) {
       final handle = v.handle;
@@ -167,6 +176,7 @@ class RivalAudio {
     }
   }
 
+  /// Stops and releases the rival sounds.
   Future<void> dispose() async {
     _disposed = true;
     final handles = [for (final v in _voices) v.handle];

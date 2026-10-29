@@ -16,6 +16,7 @@ import '../../../domain/models/player_profile.dart';
 import '../../settings/cubit/settings_cubit.dart';
 import 'audio_state.dart';
 
+/// Plays music and applies volume changes from settings.
 @lazySingleton
 class AudioCubit extends Cubit<AudioState>
     with WidgetsBindingObserver
@@ -29,8 +30,10 @@ class AudioCubit extends Cubit<AudioState>
   final SettingsCubit _settings;
   late final StreamSubscription<dynamic> _sub;
 
+  /// Returns the current audio mix from the profile.
   PlayerProfile get _mix => _settings.state.profile;
 
+  /// Returns the volume for a music track.
   double _musicVolume(MusicTrack track) => _mix.musicGain * track.gain;
 
   @override
@@ -42,6 +45,7 @@ class AudioCubit extends Cubit<AudioState>
   @override
   void sfx(Sfx sfx) => _audio.playSfx(sfx, _mix.effectsGain);
 
+  /// Re-applies the current music volume.
   void _applyVolume() {
     final track = state.track;
     if (track != null) _audio.setMusicVolume(_musicVolume(track));

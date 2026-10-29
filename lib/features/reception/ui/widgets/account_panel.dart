@@ -14,6 +14,7 @@ import '../../../../core/router/route_names.dart';
 import '../../../auth/cubit/auth_cubit.dart';
 import '../../../settings/cubit/settings_cubit.dart';
 
+/// Reception panel showing the current account and sign-in actions.
 class AccountPanel extends StatelessWidget {
   const AccountPanel({super.key});
 

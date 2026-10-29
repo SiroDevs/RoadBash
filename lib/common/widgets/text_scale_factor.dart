@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+/// Applies the app's text scaling to its child.
 class TextScaleFactor extends StatelessWidget {
   final Widget child;
 

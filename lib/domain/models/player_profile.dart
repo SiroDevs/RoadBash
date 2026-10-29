@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 // Project imports:
 import 'engine_flavour.dart';
 
+/// Player's name, volumes and control settings.
 class PlayerProfile extends Equatable {
   const PlayerProfile({
     this.name = '',
@@ -38,11 +39,16 @@ class PlayerProfile extends Equatable {
   final bool invertTilt;
   final String language;
 
+  /// Master volume, zero when muted.
   double get masterGain => mute ? 0.0 : master;
+  /// Music volume after master and on/off.
   double get musicGain => musicOn ? masterGain * music : 0.0;
+  /// Sound effects volume after master and on/off.
   double get effectsGain => effectsOn ? masterGain * effects : 0.0;
+  /// Engine volume after master and on/off.
   double get engineGain => engineOn ? masterGain * engine : 0.0;
 
+  /// Returns a copy with the given fields replaced.
   PlayerProfile copyWith({
     String? name,
     double? master,

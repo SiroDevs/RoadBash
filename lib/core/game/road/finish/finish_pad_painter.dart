@@ -18,6 +18,7 @@ class FinishPadPainter {
   final List<Paint> _black, _white;
   final Path _path = Path();
 
+  /// Draws one row of the finish pad.
   void draw(Canvas canvas, VisionSeg vision, int row, {required bool zebra}) {
     final cols = zebra ? FinishConfig.zebraColumns : FinishConfig.padColumns;
     const left = -1 - RoadConfig.shoulder;

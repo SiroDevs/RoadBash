@@ -1,3 +1,4 @@
+/// Keys used in local storage.
 class PrefKeys {
   PrefKeys._();
 

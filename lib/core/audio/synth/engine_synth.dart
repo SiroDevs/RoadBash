@@ -14,6 +14,7 @@ import 'engine_voice.dart';
 import 'engine_wave.dart';
 import 'soloud_loop.dart';
 
+/// Synthesizes the live engine sound from rpm and gear.
 class EngineSynth {
   EngineSynth(EngineFlavour flavour) {
     final loops = EngineWave.loopsFor(flavour);
@@ -48,6 +49,7 @@ class EngineSynth {
     }
   }();
 
+  /// Prepares the audio engine ahead of the race.
   static Future<bool> ensureReady() => _ensureSoLoud();
 
   /// Does the slow, one-off work ahead of the race (builds the engine loops,
@@ -58,11 +60,13 @@ class EngineSynth {
     await _ensureSoLoud();
   }
 
+  /// Starts the engine sound.
   Future<void> start() async {
     if (!await _ensureSoLoud()) return;
     await Future.wait(_layers.map((l) => l.start()));
   }
 
+  /// Updates the engine sound from volume, rpm, gear and load.
   void update(
     double dt, {
     required double volume,
@@ -100,17 +104,20 @@ class EngineSynth {
     }
   }
 
+  /// Pauses the engine sound.
   void pause() {
     for (final l in _layers) {
       l.pause();
     }
   }
 
+  /// Resumes the engine sound.
   void resume() {
     for (final l in _layers) {
       l.resume();
     }
   }
 
+  /// Stops the engine sound and releases its resources.
   Future<void> dispose() => Future.wait(_layers.map((l) => l.dispose()));
 }

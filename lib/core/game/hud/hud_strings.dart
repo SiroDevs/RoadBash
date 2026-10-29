@@ -1,3 +1,4 @@
+/// Localized texts shown on the dashboard.
 class HudStrings {
   const HudStrings({
     required this.go,

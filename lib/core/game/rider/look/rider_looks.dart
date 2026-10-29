@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'bike_look.dart';
 import 'rider_look.dart';
 
+/// Predefined rider looks for the player and rivals.
 abstract final class RiderLooks {
   static const RiderLook player = RiderLook.main;
 

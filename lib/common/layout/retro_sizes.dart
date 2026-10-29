@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 // Project imports:
 import '../../core/layout/responsive_layout_builder.dart';
 
+/// Size values for padding, text and controls at one screen tier.
 class RetroSizes {
   const RetroSizes._({
     required this.pad,
@@ -125,12 +126,19 @@ class RetroSizes {
     cardMaxW: 520,
   );
 
-  static RetroSizes forLayout(ResponsiveLayoutSize size) =>
-      size.pick(small: smallSizes, medium: mediumSizes, large: largeSizes);
+  /// Returns the sizes for a screen tier.
+  static RetroSizes forLayout(ResponsiveLayoutSize size) => size.pick(
+    small: smallSizes,
+    medium: mediumSizes,
+    large: largeSizes,
+  );
 
+  /// Returns the sizes for the current screen.
   static RetroSizes of(BuildContext context) => forLayout(context.layoutSize);
 }
 
+/// Adds a `sizes` shortcut to [BuildContext].
 extension RetroSizesContext on BuildContext {
+  /// Returns the sizes for this context's screen.
   RetroSizes get sizes => RetroSizes.of(this);
 }

@@ -1,8 +1,10 @@
 part of '../rider_painter.dart';
 
+/// Paints the rider's gloves.
 class Gloves extends RiderPartPainter {
   Gloves(super.look);
 
+  /// Paints the gloves for the given pose.
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final foot = pose.foot.clamp(0.0, 1.0);
 

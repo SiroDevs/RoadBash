@@ -5,6 +5,7 @@ import 'dart:ui';
 import '../shape_primitives.dart';
 import '../skyline_palette.dart';
 
+/// Draws the KICC tower.
 void drawKicc(Canvas canva, Paint paint) {
   drawPoly(
     canva,

@@ -8,6 +8,7 @@ import '../../../road_projection.dart';
 import '../../../scene_theme.dart';
 import '../../prop.dart';
 
+/// Paints overpass bridges over the road.
 class OverpassPainter {
   OverpassPainter(SceneTheme theme)
       : _concrete = fogRamp(theme.bridgeColor, theme.fog),

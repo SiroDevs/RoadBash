@@ -1,3 +1,4 @@
+/// Pose of the rider: lean, steer, pitch and foot state.
 class RiderPose {
   double lean = 0;
 
@@ -12,6 +13,7 @@ class RiderPose {
   double foot = 0;
 
   double speed = 0;
+
   double steer = 0;
 
   bool braking = false;

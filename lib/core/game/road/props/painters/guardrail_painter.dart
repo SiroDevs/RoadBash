@@ -30,6 +30,7 @@ class GuardrailPainter {
   static const double _postFog = 0.55;
   static const double _farRailFog = 0.7;
 
+  /// Draws the guardrail between two segments.
   void draw(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
     final detailed = near.fog < _detailFog;
     // A clamped anchor (prop starts behind the camera) must not grow a post
@@ -54,6 +55,11 @@ class GuardrailPainter {
     canvas.restore();
   }
 
+  /// Draws one rail with its posts at a lateral offset.
+  ///
+  /// [offset] is the rail's lateral position. [post] and [detailed] choose
+  /// whether to draw posts and fine detail, [postPaint] holds the fogged post
+  /// paints and [size] is the screen size.
   void _rail(
     Canvas canvas,
     VisionSeg near,
@@ -101,6 +107,10 @@ class GuardrailPainter {
     canvas.drawPath(_path, fogged(_dark, far.fog));
   }
 
+  /// Adds a quad for one band of a rail.
+  ///
+  /// [xn] and [xf] are the near and far x positions and [h0] and [h1] the
+  /// bottom and top heights of the band.
   void _band(
     VisionSeg near,
     VisionSeg far,

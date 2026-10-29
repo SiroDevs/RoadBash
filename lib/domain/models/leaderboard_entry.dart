@@ -1,3 +1,4 @@
+/// One row of the leaderboard.
 class LeaderboardEntry {
   const LeaderboardEntry({
     required this.rank,

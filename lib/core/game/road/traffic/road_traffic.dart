@@ -12,6 +12,7 @@ import '../config/road_config.dart';
 import '../road_projection.dart';
 import 'road_actor.dart';
 
+/// Places and paints the other bikes on the road.
 class RoadTraffic {
   RoadTraffic(this.actors, this.lanes)
       : _n = List.filled(actors.length, -1),
@@ -22,6 +23,7 @@ class RoadTraffic {
   final List<int> _n;
   final List<double> _t;
 
+  /// Prepares the actors that are in view.
   void prepare(double trkPosition, double fullDistance, double playerZ) {
     const len = RoadConfig.segmentLength;
     final reach = RoadConfig.decorDistance * len;
@@ -38,6 +40,7 @@ class RoadTraffic {
     }
   }
 
+  /// Paints one row of actors for a segment.
   void paintAt(Canvas canvas, int index, VisionSeg vision, Vector2 size) {
     final playerLane = DashboardLayout.lanePx(size, lanes);
     final playerH = RiderRig.heightFor(playerLane, size.y);

@@ -14,6 +14,7 @@ class RetroShimmer extends StatefulWidget {
   State<RetroShimmer> createState() => _RetroShimmerState();
 }
 
+/// State for [RetroShimmer]; drives the shimmer animation.
 class _RetroShimmerState extends State<RetroShimmer>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(

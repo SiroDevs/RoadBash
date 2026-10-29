@@ -13,6 +13,7 @@ abstract final class SignText {
   static const Color amber = SignGlyphs.amber;
   static const Color ink = SignGlyphs.ink;
 
+  /// Draws centered text lines inside a box.
   static void draw(
     Canvas canvas,
     Rect box,
@@ -40,6 +41,7 @@ abstract final class SignText {
     }
   }
 
+  /// Draws vertical text columns inside a box.
   static void drawVertical(
     Canvas canvas,
     Rect box,
@@ -67,6 +69,7 @@ abstract final class SignText {
     }
   }
 
+  /// Draws a full sign panel.
   static void drawPanel(Canvas canvas, Rect box, SignPanel panel) {
     if (panel.arrow == SignArrow.upLeft) {
       SignArrows.board(canvas, box, panel);

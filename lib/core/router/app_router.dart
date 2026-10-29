@@ -31,6 +31,7 @@ import '../../features/stats/ui/stats_screen.dart';
 import '../di/injectable.dart';
 import 'route_names.dart';
 
+/// Notifies the router when the sign-in state changes.
 class _AuthListenable extends ChangeNotifier {
   _AuthListenable(Stream<AuthState> stream) {
     _sub = stream.listen((_) => notifyListeners());
@@ -45,6 +46,7 @@ class _AuthListenable extends ChangeNotifier {
   }
 }
 
+/// Creates the app's routes and redirects.
 class AppRouter {
   AppRouter._();
 
@@ -57,9 +59,11 @@ class AppRouter {
   static final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: 'root');
 
+  /// Provides a cubit to a route's page.
   static Widget _provide<C extends Cubit<Object?>>(Widget child) =>
       BlocProvider<C>(create: (_) => getIt<C>(), child: child);
 
+  /// Builds the router.
   static GoRouter create({String initialLocation = RouteNames.splash}) {
     final auth = getIt<AuthCubit>();
     return GoRouter(

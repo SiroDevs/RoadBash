@@ -65,6 +65,7 @@ abstract final class SignArrows {
     }
   }
 
+  /// Draws a number disc on a sign.
   static void _disc(Canvas canvas, String label, Offset centre, double size) {
     canvas.drawCircle(centre, size / 2, SignGlyphs.fill);
     final textPainter = SignGlyphs.painter(label, _roundelInk);
@@ -83,6 +84,7 @@ abstract final class SignArrows {
     canvas.restore();
   }
 
+  /// Draws a diagonal arrow.
   static void diagonal(Canvas canvas, Offset centre, double length) {
     final shaft = length * 0.27;
     final head = length * 0.82;
@@ -107,6 +109,7 @@ abstract final class SignArrows {
     canvas.restore();
   }
 
+  /// Draws an up or exit arrow.
   static void upArrow(Canvas canvas, Rect area, SignArrow kind) {
     final width = area.width;
     final height = area.height;

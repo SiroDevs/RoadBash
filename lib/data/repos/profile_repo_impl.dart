@@ -8,6 +8,7 @@ import '../../domain/repos/profile_repo.dart';
 import '../sources/local/pref_keys.dart';
 import '../sources/local/prefs_source.dart';
 
+/// Loads and saves the player profile in local storage.
 @LazySingleton(as: ProfileRepo)
 class ProfileRepoImpl implements ProfileRepo {
   ProfileRepoImpl(this._prefs);

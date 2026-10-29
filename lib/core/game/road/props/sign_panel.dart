@@ -1,5 +1,7 @@
+/// Arrow styles on road signs.
 enum SignArrow { none, up, exit, upLeft, upRight }
 
+/// One line of a road sign with an optional code and tail.
 class SignRow {
   const SignRow(this.text, {this.code, this.tail});
 
@@ -10,6 +12,7 @@ class SignRow {
 
 const List<SignRow> _exitRows = [SignRow('EXIT'), SignRow('KUTOKA')];
 
+/// One sign panel with rows, side text, footer and arrow.
 class SignPanel {
   const SignPanel(
     this.rows, {
@@ -54,9 +57,11 @@ class SignPanel {
 
   final bool framed;
 
+  /// All texts shown on the panel.
   List<String> get texts => [for (final r in rows) r.text];
 }
 
+/// A board made of vertical text columns.
 class SignBoard {
   const SignBoard(this.columns);
 

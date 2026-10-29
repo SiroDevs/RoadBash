@@ -9,6 +9,7 @@ import 'injectable.config.dart';
 
 final getIt = GetIt.instance;
 
+/// Sets up dependency injection.
 @InjectableInit(initializerName: r'initGetIt', generateForDir: ['lib'])
 Future<void> configureDependencies(String environment) async {
   logger('Using environment: $environment');
@@ -16,8 +17,10 @@ Future<void> configureDependencies(String environment) async {
   await getIt.allReady();
 }
 
+/// Registers services that need manual setup.
 @module
 abstract class RegisterModule {
+  /// Loads shared preferences once at startup.
   @singleton
   @preResolve
   Future<SharedPreferences> sharedPrefs() => SharedPreferences.getInstance();

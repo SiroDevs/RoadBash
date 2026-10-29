@@ -23,20 +23,20 @@ class RetroChips<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     return Wrap(
-      spacing: s.gapSmall,
-      runSpacing: s.gapSmall,
+      spacing: sizes.gapSmall,
+      runSpacing: sizes.gapSmall,
       children: [
         for (final entry in items.entries)
           Text(
             entry.value,
             style: retroBody(
-              size: s.caption,
+              size: sizes.caption,
               color: entry.key == selected ? Retro.ink : Colors.white,
             ),
           )
-              .padding(horizontal: s.gap, vertical: s.gapSmall)
+              .padding(horizontal: sizes.gap, vertical: sizes.gapSmall)
               .decorated(
                 color: entry.key == selected ? Retro.orange : Retro.panel,
                 borderRadius: BorderRadius.circular(20),

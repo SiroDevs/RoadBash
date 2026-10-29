@@ -40,55 +40,55 @@ class PropPainter {
   final SlipRoadPainter _slipRoads;
   final TunnelPainter _tunnels;
 
-  void drawBox(Canvas c, VisionSeg near, VisionSeg far, Prop p, Vector2 size) {
-    switch (p.kind) {
+  void drawBox(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
+    switch (prop.kind) {
       case PropKind.wall:
-        _walls.draw(c, near, far, p, size);
+        _walls.draw(canvas, near, far, prop, size);
       case PropKind.guardrail:
-        _guardrails.draw(c, near, far, p, size);
+        _guardrails.draw(canvas, near, far, prop, size);
       case PropKind.slipRoad:
-        _slipRoads.draw(c, near, far, p, size);
+        _slipRoads.draw(canvas, near, far, prop, size);
       case PropKind.tunnel:
-        _tunnels.draw(c, near, far, p, size);
+        _tunnels.draw(canvas, near, far, prop, size);
       default:
-        _buildings.draw(c, near, far, p, size);
+        _buildings.draw(canvas, near, far, prop, size);
     }
   }
 
-  void drawBillboard(Canvas c, VisionSeg v, Prop p, Vector2 size) {
-    if (p.kind.spansRoad) {
-      _span.draw(c, v, p, size);
+  void drawBillboard(Canvas canvas, VisionSeg vision, Prop prop, Vector2 size) {
+    if (prop.kind.spansRoad) {
+      _span.draw(canvas, vision, prop, size);
       return;
     }
-    final halfW = p.width * v.k1;
-    final x = v.x1 + p.side * v.w1 * p.offset;
-    if (x + halfW * 2 < 0 || x - halfW * 2 > size.x) return;
+    final halfW = prop.width * vision.k1;
+    final anchorX = vision.x1 + prop.side * vision.w1 * prop.offset;
+    if (anchorX + halfW * 2 < 0 || anchorX - halfW * 2 > size.x) return;
 
-    final y = v.y1;
-    final h = p.height * v.k1;
-    if (h < 1.5) return;
+    final anchorY = vision.y1;
+    final height = prop.height * vision.k1;
+    if (height < 1.5) return;
 
-    c.save();
-    c.clipRect(Rect.fromLTRB(0, 0, size.x, v.clip));
-    switch (p.kind) {
+    canvas.save();
+    canvas.clipRect(Rect.fromLTRB(0, 0, size.x, vision.clip));
+    switch (prop.kind) {
       case PropKind.broadleaf:
       case PropKind.pine:
       case PropKind.acacia:
       case PropKind.bush:
       case PropKind.palm:
       case PropKind.rock:
-        _trees.draw(c, v, p, x, y, halfW, h);
+        _trees.draw(canvas, vision, prop, anchorX, anchorY, halfW, height);
       case PropKind.post:
       case PropKind.spectator:
-        _finish.draw(c, v, p, x, y, halfW, h);
+        _finish.draw(canvas, vision, prop, anchorX, anchorY, halfW, height);
       case PropKind.lamp:
       case PropKind.sign:
       case PropKind.billboard:
       case PropKind.exitSign:
-        _furniture.draw(c, v, p, x, y, halfW, h);
+        _furniture.draw(canvas, vision, prop, anchorX, anchorY, halfW, height);
       default:
         break;
     }
-    c.restore();
+    canvas.restore();
   }
 }

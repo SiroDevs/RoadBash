@@ -2,13 +2,13 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../../../utils/pseudo_random.dart';
 import '../../config/guardrail_config.dart';
 import '../../config/road_config.dart';
 import '../../routes/route_stretch.dart';
 import '../../track/road_track.dart';
 import '../prop.dart';
 import '../sign_panel.dart';
+import 'scenery_layout.dart';
 
 void layOutRoute(
   List<List<Prop>> slots,
@@ -21,15 +21,18 @@ void layOutRoute(
   _medianLamps(slots, segments, limit);
   _guardrails(slots, segments);
 
-  for (var z = 0; z < route.length; z++) {
-    final stretch = route[z];
-    final base = starts[z];
-    final len = (z + 1 < starts.length ? starts[z + 1] : count) - base;
+  for (var stretchIndex = 0; stretchIndex < route.length; stretchIndex++) {
+    final stretch = route[stretchIndex];
+    final base = starts[stretchIndex];
+    final next = stretchIndex + 1 < starts.length
+        ? starts[stretchIndex + 1]
+        : count;
+    final len = next - base;
     for (final span in stretch.left) {
-      _scenery(slots, limit, base, len, span, -1, z);
+      layOutScenery(slots, limit, base, len, span, -1, stretchIndex);
     }
     for (final span in stretch.right) {
-      _scenery(slots, limit, base, len, span, 1, z);
+      layOutScenery(slots, limit, base, len, span, 1, stretchIndex);
     }
     for (final feature in stretch.features) {
       _feature(slots, limit, base, len, feature);
@@ -37,7 +40,11 @@ void layOutRoute(
   }
 }
 
-void _medianLamps(List<List<Prop>> slots, List<RoadSegment> segments, int limit) {
+void _medianLamps(
+  List<List<Prop>> slots,
+  List<RoadSegment> segments,
+  int limit,
+) {
   for (var i = 6; i < limit; i += 18) {
     if (!segments[i].section.hasOpposite) continue;
     slots[i].add(Prop(
@@ -70,162 +77,46 @@ void _guardrails(List<List<Prop>> slots, List<RoadSegment> segments) {
   }
 }
 
-void _scenery(
-  List<List<Prop>> slots,
-  int limit,
-  int base,
-  int len,
-  SideScenery span,
-  int side,
-  int z,
-) {
-  final a = base + (span.from * len).round();
-  final b = math.min(base + (span.to * len).round(), limit);
-  for (final wall in span.walls) {
-    _walls(slots, limit, base, len, wall, side);
-  }
-  if (span.service) _service(slots, a, b, side);
-
-  var i = a + 1;
-  while (i < b) {
-    final seed = ((i * 2 + (side > 0 ? 1 : 0)) * 31 + z * 7 + 5);
-    if (span.lots > 0 && pseudoRandom(seed) < span.lots) {
-      i += _building(slots, i, seed, span, side, z) + 1;
-      continue;
-    }
-    if (span.treeStep != null) {
-      _tree(slots, i, seed, span, side);
-      i += pickInt(span.treeStep!, pseudoRandom(seed + 4));
-    } else {
-      i += 5 + (pseudoRandom(seed + 4) * 6).floor();
-    }
-  }
-}
-
-int _building(
-  List<List<Prop>> slots,
-  int i,
-  int seed,
-  SideScenery span,
-  int side,
-  int z,
-) {
-  final depth = 7 + (pseudoRandom(seed + 1) * 14).floor();
-  final storeys = pickInt(span.storeys, pseudoRandom(seed + 2));
-  slots[i].add(Prop(
-    kind: PropKind.building,
-    anchor: i,
-    side: side,
-    offset: pickIn(span.setBack, pseudoRandom(seed + 5)),
-    width: 2600 + 3400 * pseudoRandom(seed + 6),
-    height: storeys * 450.0,
-    depth: depth,
-    tint: z + i ~/ 9,
-    detail: storeys.toDouble(),
-    drop: span.drop,
-  ));
-  return depth + (pseudoRandom(seed + 3) * 4).floor();
-}
-
-void _tree(List<List<Prop>> slots, int i, int seed, SideScenery span, int side) {
-  final kind = span.mix.pick(pseudoRandom(seed + 2));
-  final scale = kind == PropKind.bush
-      ? 0.5 + 0.3 * pseudoRandom(seed + 7)
-      : 0.8 + 0.6 * pseudoRandom(seed + 7);
-  final (width, height) = switch (kind) {
-    PropKind.acacia => (900.0, 1500.0),
-    PropKind.pine => (620.0, 2700.0),
-    _ => (620.0, 2050.0),
-  };
-  slots[i].add(Prop(
-    kind: kind,
-    anchor: i,
-    side: side,
-    offset: pickIn(span.treeSetBack, pseudoRandom(seed + 8)),
-    width: width * scale,
-    height: height * scale,
-    detail: pseudoRandom(seed + 9),
-  ));
-}
-
-void _walls(
-  List<List<Prop>> slots,
-  int limit,
-  int base,
-  int len,
-  WallRun run,
-  int side,
-) {
-  final a = base + (run.from * len).round();
-  final b = math.min(base + (run.to * len).round(), limit);
-  for (var i = a; i < b; i += 12) {
-    slots[i].add(Prop(
-      kind: PropKind.wall,
-      anchor: i,
-      side: side,
-      offset: run.offset,
-      width: 200,
-      height: run.style.height,
-      depth: math.min(12, b - i),
-      tint: run.style.index,
-    ));
-  }
-}
-
-void _service(List<List<Prop>> slots, int a, int b, int side) {
-  for (var i = a; i < b; i += 24) {
-    slots[i].add(Prop(
-      kind: PropKind.slipRoad,
-      anchor: i,
-      side: side,
-      offset: 1.2,
-      width: 0,
-      height: 0,
-      depth: math.min(24, b - i),
-    ));
-  }
-}
-
 void _feature(
   List<List<Prop>> slots,
   int limit,
   int base,
   int len,
-  RouteFeature f,
+  RouteFeature feature,
 ) {
-  final i = (base + (f.at * len).round()).clamp(base + 1, limit);
-  if (f.kind == PropKind.tunnel) {
-    for (var k = 0; k < f.depth && i + k < limit; k++) {
-      slots[i + k].add(Prop(
+  final slotIndex = (base + (feature.at * len).round()).clamp(base + 1, limit);
+  if (feature.kind == PropKind.tunnel) {
+    for (var k = 0; k < feature.depth && slotIndex + k < limit; k++) {
+      slots[slotIndex + k].add(Prop(
         kind: PropKind.tunnel,
-        anchor: i + k,
+        anchor: slotIndex + k,
         side: 1,
         offset: 0,
         width: 0,
-        height: f.height,
+        height: feature.height,
         depth: 1,
         detail: k % 4 == 0 ? 1 : 0,
       ));
     }
     return;
   }
-  slots[i].add(Prop(
-    kind: f.kind,
-    anchor: i,
-    side: f.side,
-    offset: f.offset,
-    width: f.width,
-    height: f.height,
-    depth: math.min(f.depth, RoadConfig.maxPropDepth),
-    tint: f.tint,
-    detail: f.detail,
-    signs: f.sign != null
-        ? [f.sign!]
-        : f.panels.isNotEmpty
-        ? f.panels
-        : (f.lines.isEmpty
+  slots[slotIndex].add(Prop(
+    kind: feature.kind,
+    anchor: slotIndex,
+    side: feature.side,
+    offset: feature.offset,
+    width: feature.width,
+    height: feature.height,
+    depth: math.min(feature.depth, RoadConfig.maxPropDepth),
+    tint: feature.tint,
+    detail: feature.detail,
+    signs: feature.sign != null
+        ? [feature.sign!]
+        : feature.panels.isNotEmpty
+        ? feature.panels
+        : (feature.lines.isEmpty
               ? const []
-              : [SignPanel([for (final line in f.lines) SignRow(line)])]),
-    boards: f.boards,
+              : [SignPanel([for (final line in feature.lines) SignRow(line)])]),
+    boards: feature.boards,
   ));
 }

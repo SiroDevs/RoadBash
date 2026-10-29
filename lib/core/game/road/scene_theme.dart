@@ -63,10 +63,8 @@ class SceneTheme {
   final Color bridgeColor, bridgeRail, signGreen;
   final bool dualCarriageway;
 
-  /// False on unpaved roads: no lane lines or centre line.
   final bool markings;
 
-  /// Wheel ruts and a centre ridge painted on the surface (dirt road).
   final bool ruts;
   final Color rutColor, rockColor;
 

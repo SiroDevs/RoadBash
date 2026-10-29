@@ -16,11 +16,9 @@ class FinishZone {
     required this.look,
   });
 
-  /// Index of the first pad segment: the race ends here on the last lap.
   final int line;
   final int laps;
 
-  /// Length of the whole track, which every lap loops over.
   final double lapLength;
   final FinishLook look;
 
@@ -39,7 +37,7 @@ class FinishZone {
         : 0.0;
   }
 
-  bool shows(Prop p) => switch (p.phase) {
+  bool shows(Prop prop) => switch (prop.phase) {
     PropPhase.always => true,
     PropPhase.finishOnly => on,
     PropPhase.hiddenAtFinish => !on,
@@ -47,9 +45,9 @@ class FinishZone {
 
   /// Row of the pad this segment belongs to, or -1 when it is not on the pad.
   int padRow(int index) {
-    final d = index - line;
-    if (d < 0 || d >= look.padLength) return -1;
-    return d ~/ FinishConfig.rowSegments;
+    final offset = index - line;
+    if (offset < 0 || offset >= look.padLength) return -1;
+    return offset ~/ FinishConfig.rowSegments;
   }
 
   bool isZebra(int row) => look.zebraCrossing && row >= look.chequerRows;

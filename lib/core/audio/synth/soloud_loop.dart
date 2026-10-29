@@ -31,36 +31,36 @@ class SoloudLoop {
   }
 
   void set({required double volume, required double speed}) {
-    final h = _handle;
-    if (h == null) return;
+    final handle = _handle;
+    if (handle == null) return;
     if ((volume - _volume).abs() > 0.004 || (volume == 0 && _volume != 0)) {
       _volume = volume;
-      SoLoud.instance.setVolume(h, volume);
+      SoLoud.instance.setVolume(handle, volume);
     }
     if ((speed - _speed).abs() > 0.002) {
       _speed = speed;
-      SoLoud.instance.setRelativePlaySpeed(h, speed);
+      SoLoud.instance.setRelativePlaySpeed(handle, speed);
     }
   }
 
   void pause() {
-    final h = _handle;
-    if (h != null) SoLoud.instance.setPause(h, true);
+    final handle = _handle;
+    if (handle != null) SoLoud.instance.setPause(handle, true);
   }
 
   void resume() {
-    final h = _handle;
-    if (h != null) SoLoud.instance.setPause(h, false);
+    final handle = _handle;
+    if (handle != null) SoLoud.instance.setPause(handle, false);
   }
 
   Future<void> dispose() async {
-    final h = _handle;
+    final handle = _handle;
     final source = _source;
     _handle = null;
     _source = null;
     if (!SoLoud.instance.isInitialized) return;
     try {
-      if (h != null) await SoLoud.instance.stop(h);
+      if (handle != null) await SoLoud.instance.stop(handle);
       if (source != null) await SoLoud.instance.disposeSource(source);
     } catch (_) {}
   }

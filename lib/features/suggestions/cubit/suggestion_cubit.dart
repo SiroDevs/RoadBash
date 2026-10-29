@@ -68,7 +68,7 @@ class SuggestionCubit extends Cubit<SuggestionState> {
     }
   }
 
-  SuggestionError _map(ApiException e) => switch (e.code) {
+  SuggestionError _map(ApiException error) => switch (error.code) {
     'invalid_message' => SuggestionError.tooShort,
     'rate_limited' => SuggestionError.rateLimited,
     'invalid_session' => SuggestionError.signIn,

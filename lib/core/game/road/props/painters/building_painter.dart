@@ -43,66 +43,66 @@ class BuildingPainter {
   static const double _windowCutoff = 0.55;
   static const double _minWindowPixels = 46;
 
-  void draw(Canvas c, VisionSeg near, VisionSeg far, Prop p, Vector2 size) {
+  void draw(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
     final cx = size.x / 2;
     final horizonY = size.y * RoadConfig.horizonRatio;
 
-    final box = BoxFrame(near, far, p, size);
+    final box = BoxFrame(near, far, prop, size);
     if (!box.visible) return;
     final xi1 = box.xi1, xo1 = box.xo1, xi2 = box.xi2;
     final t1 = box.top1, t2 = box.top2;
 
-    c.save();
-    c.clipRect(Rect.fromLTRB(0, 0, size.x, near.clip));
+    canvas.save();
+    canvas.clipRect(Rect.fromLTRB(0, 0, size.x, near.clip));
 
-    final block = p.kind == PropKind.block;
+    final block = prop.kind == PropKind.block;
     final sides = block ? _blockSide : _wallSide;
     final fronts = block ? _blockFront : _wallFront;
-    final tint = p.tint % sides.length;
+    final tint = prop.tint % sides.length;
     // Faces
-    drawQuad(c, _path, fogged(sides[tint], far.fog), xi1, box.base1, xi2,
+    drawQuad(canvas, _path, fogged(sides[tint], far.fog), xi1, box.base1, xi2,
         box.base2, xi2, t2, xi1, t1);
-    drawQuad(c, _path, fogged(fronts[tint], near.fog), xi1, box.base1, xo1,
+    drawQuad(canvas, _path, fogged(fronts[tint], near.fog), xi1, box.base1, xo1,
         box.base1, xo1, t1, xi1, t1);
 
     // Parapet
-    final cap = p.height * 0.035;
-    drawQuad(c, _path, fogged(_parapet, far.fog), xi1, t1, xi2, t2, xi2,
+    final cap = prop.height * 0.035;
+    drawQuad(canvas, _path, fogged(_parapet, far.fog), xi1, t1, xi2, t2, xi2,
         t2 - cap * far.k1, xi1, t1 - cap * near.k1);
 
     // Windows
     if (near.fog < _windowCutoff && (near.y1 - t1) > _minWindowPixels) {
-      _windows(c, near, far, p, cx, horizonY);
+      _windows(canvas, near, far, prop, cx, horizonY);
     }
-    c.restore();
+    canvas.restore();
   }
 
-  void _windows(Canvas c, VisionSeg near, VisionSeg far, Prop p, double cx,
+  void _windows(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, double cx,
       double horizonY) {
-    final storeys = p.detail.round().clamp(2, 10);
-    final cols = (p.depth ~/ 3).clamp(2, 8);
+    final storeys = prop.detail.round().clamp(2, 10);
+    final cols = (prop.depth ~/ 3).clamp(2, 8);
     _grid.reset();
 
     for (var col = 0; col < cols; col++) {
       _a.lerp(near, far, (col + 0.2) / cols, cx, horizonY);
       _b.lerp(near, far, (col + 0.8) / cols, cx, horizonY);
-      final xa = _a.x + p.side * _spanHalfWidth(near, far, _a.k) * p.offset;
-      final xb = _b.x + p.side * _spanHalfWidth(near, far, _b.k) * p.offset;
+      final xa = _a.x + prop.side * _spanHalfWidth(near, far, _a.k) * prop.offset;
+      final xb = _b.x + prop.side * _spanHalfWidth(near, far, _b.k) * prop.offset;
 
       for (var row = 0; row < storeys; row++) {
         final f0 = (row + 0.28) / storeys, f1 = (row + 0.76) / storeys;
         addQuad(
           _grid,
-          xa, _a.y - p.height * f0 * _a.k,
-          xb, _b.y - p.height * f0 * _b.k,
-          xb, _b.y - p.height * f1 * _b.k,
-          xa, _a.y - p.height * f1 * _a.k,
+          xa, _a.y - prop.height * f0 * _a.k,
+          xb, _b.y - prop.height * f0 * _b.k,
+          xb, _b.y - prop.height * f1 * _b.k,
+          xa, _a.y - prop.height * f1 * _a.k,
         );
       }
     }
-    c.drawPath(_grid, fogged(_window, near.fog));
+    canvas.drawPath(_grid, fogged(_window, near.fog));
   }
 
-  double _spanHalfWidth(VisionSeg near, VisionSeg far, double k) =>
-      k * (near.w1 / near.k1);
+  double _spanHalfWidth(VisionSeg near, VisionSeg far, double scale) =>
+      scale * (near.w1 / near.k1);
 }

@@ -758,6 +758,12 @@ abstract class AppLocalizations {
   /// **'Online now: {online} ({players} players)'**
   String statsOnlineLine(int online, int players);
 
+  /// Highest value shown on a stats chart
+  ///
+  /// In en, this message translates to:
+  /// **'Max {peak}'**
+  String statsPeak(int peak);
+
   /// Visitors label
   ///
   /// In en, this message translates to:

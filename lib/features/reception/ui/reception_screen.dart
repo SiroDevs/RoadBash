@@ -39,7 +39,7 @@ class ReceptionScreen extends StatelessWidget {
       ReceptionTab.suggestions: l10n.receptionSuggestions,
       ReceptionTab.exit: l10n.exitLabel,
     };
-    final s = context.sizes;
+    final sizes = context.sizes;
     return RetroPage(
       asset: AppAssets.appMain,
       grayscale: true,
@@ -66,19 +66,19 @@ class ReceptionScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   title,
-                  SizedBox(height: s.gap),
+                  SizedBox(height: sizes.gap),
                   ...nav,
-                  SizedBox(height: s.gap),
+                  SizedBox(height: sizes.gap),
                   Container(
                     color: Retro.panel,
-                    padding: EdgeInsets.all(s.gap),
+                    padding: EdgeInsets.all(sizes.gap),
                     child: _detail(context, tab),
                   ),
                 ],
               ),
             ),
-            medium: (_, __) => _sideBySide(context, s, title, nav, tab),
-            large: (_, __) => _sideBySide(context, s, title, nav, tab),
+            medium: (_, __) => _sideBySide(context, sizes, title, nav, tab),
+            large: (_, __) => _sideBySide(context, sizes, title, nav, tab),
           );
         },
       ),
@@ -98,7 +98,7 @@ class ReceptionScreen extends StatelessWidget {
 
   Widget _sideBySide(
     BuildContext context,
-    RetroSizes s,
+    RetroSizes sizes,
     Widget title,
     List<Widget> nav,
     ReceptionTab tab,
@@ -107,7 +107,7 @@ class ReceptionScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         title,
-        SizedBox(height: s.gap),
+        SizedBox(height: sizes.gap),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -117,10 +117,10 @@ class ReceptionScreen extends StatelessWidget {
                 children: nav,
               ),
             ).expanded(flex: 2),
-            SizedBox(width: s.gap),
+            SizedBox(width: sizes.gap),
             Container(
               color: Retro.panel,
-              padding: EdgeInsets.all(s.gap),
+              padding: EdgeInsets.all(sizes.gap),
               child: SingleChildScrollView(child: _detail(context, tab)),
             ).expanded(flex: 3),
           ],

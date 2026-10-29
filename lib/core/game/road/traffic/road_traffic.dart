@@ -32,28 +32,28 @@ class RoadTraffic {
         _n[i] = -1;
         continue;
       }
-      final z = (trkPosition + playerZ + dz) / len;
-      _n[i] = z.floor() - base;
-      _t[i] = z - z.floor();
+      final trackRow = (trkPosition + playerZ + dz) / len;
+      _n[i] = trackRow.floor() - base;
+      _t[i] = trackRow - trackRow.floor();
     }
   }
 
-  void paintAt(Canvas canvas, int n, VisionSeg v, Vector2 size) {
+  void paintAt(Canvas canvas, int index, VisionSeg vision, Vector2 size) {
     final playerLane = DashboardLayout.lanePx(size, lanes);
     final playerH = RiderRig.heightFor(playerLane, size.y);
     for (var i = 0; i < actors.length; i++) {
-      if (_n[i] != n) continue;
-      final t = _t[i];
-      final x = v.x1 + (v.x2 - v.x1) * t;
-      final y = v.y1 + (v.y2 - v.y1) * t;
-      final w = v.w1 + (v.w2 - v.w1) * t;
-      final a = actors[i];
-      final lanePx = 2 * w / lanes;
-      final h = playerH * math.min(lanePx / playerLane, 1.6);
-      if (h < 3) continue;
+      if (_n[i] != index) continue;
+      final blend = _t[i];
+      final laneX = vision.x1 + (vision.x2 - vision.x1) * blend;
+      final laneY = vision.y1 + (vision.y2 - vision.y1) * blend;
+      final laneWidth = vision.w1 + (vision.w2 - vision.w1) * blend;
+      final actor = actors[i];
+      final lanePx = 2 * laneWidth / lanes;
+      final bikeHeight = playerH * math.min(lanePx / playerLane, 1.6);
+      if (bikeHeight < 3) continue;
       canvas.save();
-      canvas.clipRect(Rect.fromLTRB(0, 0, size.x, math.max(v.clip, y + 1)));
-      a.paint(canvas, Offset(x + w * a.lateral, y), h);
+      canvas.clipRect(Rect.fromLTRB(0, 0, size.x, math.max(vision.clip, laneY + 1)));
+      actor.paint(canvas, Offset(laneX + laneWidth * actor.lateral, laneY), bikeHeight);
       canvas.restore();
     }
   }

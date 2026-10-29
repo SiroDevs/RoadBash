@@ -23,23 +23,23 @@ class SettingsCubit extends Cubit<SettingsState> {
   Future<void> load() async =>
       emit(SettingsState(profile: await _repo.load(), loaded: true));
 
-  void setName(String v) => _update(state.profile.copyWith(name: v));
-  void setMaster(double v) => _update(state.profile.copyWith(master: v));
-  void setMusic(double v) => _update(state.profile.copyWith(music: v));
-  void setEngine(double v) => _update(state.profile.copyWith(engine: v));
-  void setEffects(double v) => _update(state.profile.copyWith(effects: v));
-  void setFlavour(EngineFlavour v) =>
-      _update(state.profile.copyWith(flavour: v));
+  void setName(String value) => _update(state.profile.copyWith(name: value));
+  void setMaster(double value) => _update(state.profile.copyWith(master: value));
+  void setMusic(double value) => _update(state.profile.copyWith(music: value));
+  void setEngine(double value) => _update(state.profile.copyWith(engine: value));
+  void setEffects(double value) => _update(state.profile.copyWith(effects: value));
+  void setFlavour(EngineFlavour value) =>
+      _update(state.profile.copyWith(flavour: value));
 
-  void setUseScreenTouch(bool v) =>
-      _update(state.profile.copyWith(useScreenTouch: v));
-  void setMute(bool v) => _update(state.profile.copyWith(mute: v));
-  void setMusicOn(bool v) => _update(state.profile.copyWith(musicOn: v));
-  void setEffectsOn(bool v) => _update(state.profile.copyWith(effectsOn: v));
-  void setEngineOn(bool v) => _update(state.profile.copyWith(engineOn: v));
-  void setInvertTilt(bool v) =>
-      _update(state.profile.copyWith(invertTilt: v));
-  void setLanguage(String v) => _update(state.profile.copyWith(language: v));
+  void setUseScreenTouch(bool value) =>
+      _update(state.profile.copyWith(useScreenTouch: value));
+  void setMute(bool value) => _update(state.profile.copyWith(mute: value));
+  void setMusicOn(bool value) => _update(state.profile.copyWith(musicOn: value));
+  void setEffectsOn(bool value) => _update(state.profile.copyWith(effectsOn: value));
+  void setEngineOn(bool value) => _update(state.profile.copyWith(engineOn: value));
+  void setInvertTilt(bool value) =>
+      _update(state.profile.copyWith(invertTilt: value));
+  void setLanguage(String value) => _update(state.profile.copyWith(language: value));
 
   void _update(PlayerProfile profile) {
     emit(SettingsState(profile: profile, loaded: state.loaded));

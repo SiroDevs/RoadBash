@@ -58,8 +58,8 @@ class RivalRacer implements RoadActor {
     if (dt <= 0) return;
     final clock = race.raceClock;
     _advance(dt, race, road);
-    final k = (1 - clock / 4).clamp(0.0, 1.0).toDouble();
-    _visLead = _lead * k * k;
+    final remaining = (1 - clock / 4).clamp(0.0, 1.0).toDouble();
+    _visLead = _lead * remaining * remaining;
 
     final seg = road.track.at(distance + road.playerZ);
     _steerLateral(dt, race, road, seg.section, clock);
@@ -68,10 +68,10 @@ class RivalRacer implements RoadActor {
 
   void _advance(double dt, RaceController race, RoadRenderer road) {
     if (!_crossed) {
-      final d = race.rivalDistance(rival, race.raceClock);
-      _speed = (d - _dist) / dt;
-      _dist = d;
-      _crossed = d >= race.raceLength;
+      final distance = race.rivalDistance(rival, race.raceClock);
+      _speed = (distance - _dist) / dt;
+      _dist = distance;
+      _crossed = distance >= race.raceLength;
       return;
     }
     if (_speed <= VehicleConfig.stoppedSpeed) {
@@ -89,8 +89,8 @@ class RivalRacer implements RoadActor {
 
   double _stopAt(RaceController race, RoadRenderer road) {
     if (race.finished) {
-      final v = road.speed;
-      final player = road.fullDistance + v * v / (2 * -VehicleConfig.braking);
+      final vision = road.speed;
+      final player = road.fullDistance + vision * vision / (2 * -VehicleConfig.braking);
       return player - 180 * (1 + index ~/ 2);
     }
     return race.raceLength + (0.26 + 0.03 * index) * VehicleConfig.maxSpeed;
@@ -115,8 +115,8 @@ class RivalRacer implements RoadActor {
       final width = 2 / lanes;
       final lane = -1 + width * ((index % lanes) + 0.5);
       final weave = width * 0.22 * math.sin(clock * 0.6 + rival.phase);
-      final t = (clock / 6).clamp(0.0, 1.0).toDouble();
-      final blend = t * t * (3 - 2 * t);
+      final progress = (clock / 6).clamp(0.0, 1.0).toDouble();
+      final blend = progress * progress * (3 - 2 * progress);
       target = _gridLateral + (lane + weave - _gridLateral) * blend;
 
       final dz = distance - road.fullDistance;
@@ -140,13 +140,13 @@ class RivalRacer implements RoadActor {
   double _parkAt(double playerX, double maxL) {
     final side = index.isEven ? 1.0 : -1.0;
     final off = 0.42 + 0.4 * (index ~/ 2);
-    final a = playerX + side * off;
-    if (a >= -_edge && a <= maxL) return a;
+    final laneX = playerX + side * off;
+    if (laneX >= -_edge && laneX <= maxL) return laneX;
     return playerX - side * off;
   }
 
   void _pose(double dt, double curve, double clock) {
-    final p = sprite.pose;
+    final pose = sprite.pose;
     final sp = (_speed / VehicleConfig.maxSpeed).clamp(0.0, 1.0).toDouble();
     final stopped = _speed < VehicleConfig.stoppedSpeed;
     final resting = stopped && (clock == 0 || _crossed);
@@ -154,19 +154,19 @@ class RivalRacer implements RoadActor {
     final ease = math.min(1.0, dt * 8);
     _t += dt;
 
-    p.speed = sp;
-    p.braking = braking;
-    p.steer += ((_latVel / 0.7).clamp(-1.0, 1.0).toDouble() - p.steer) * ease;
-    p.foot += ((resting ? 1.0 : 0.0) - p.foot) * math.min(1.0, dt * 5);
-    final bank = (p.steer * 0.30 + curve * 0.040) * (0.3 + 0.7 * sp) -
-        0.12 * p.foot;
+    pose.speed = sp;
+    pose.braking = braking;
+    pose.steer += ((_latVel / 0.7).clamp(-1.0, 1.0).toDouble() - pose.steer) * ease;
+    pose.foot += ((resting ? 1.0 : 0.0) - pose.foot) * math.min(1.0, dt * 5);
+    final bank = (pose.steer * 0.30 + curve * 0.040) * (0.3 + 0.7 * sp) -
+        0.12 * pose.foot;
     final lean = bank.clamp(-RiderPainter.maxLean, RiderPainter.maxLean).toDouble();
-    p.lean += (lean - p.lean) * math.min(1.0, dt * 6);
+    pose.lean += (lean - pose.lean) * math.min(1.0, dt * 6);
     final pitch = braking ? -1.0 : 0.5;
-    p.pitch += (pitch * sp - p.pitch) * math.min(1.0, dt * 6);
-    p.bob = math.sin(_t * 13 + index) * 1.1 * sp +
-        math.max(0.0, -p.pitch) * 2.5;
-    p.phase = (p.phase + _speed * dt / 900) % 1;
+    pose.pitch += (pitch * sp - pose.pitch) * math.min(1.0, dt * 6);
+    pose.bob = math.sin(_t * 13 + index) * 1.1 * sp +
+        math.max(0.0, -pose.pitch) * 2.5;
+    pose.phase = (pose.phase + _speed * dt / 900) % 1;
   }
 
   @override

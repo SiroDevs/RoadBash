@@ -40,17 +40,17 @@ void drawPoly(
   if (edge != null) drawEdge(canva, paint, edge);
 }
 
-void drawRect(Canvas canva, Paint paint, Rect r, Color color) {
+void drawRect(Canvas canva, Paint paint, Rect rect, Color color) {
   path
     ..reset()
-    ..addRect(r);
+    ..addRect(rect);
   fillContainer(canva, paint, color);
 }
 
-void drawOval(Canvas canva, Paint paint, Rect r, Color color) {
+void drawOval(Canvas canva, Paint paint, Rect rect, Color color) {
   path
     ..reset()
-    ..addOval(r);
+    ..addOval(rect);
   fillContainer(canva, paint, color);
 }
 

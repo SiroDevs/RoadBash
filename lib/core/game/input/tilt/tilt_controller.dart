@@ -10,10 +10,10 @@ import 'tilt_source.dart';
 
 const double _minInPlane = 2.5;
 
-double? rollFromGravity(double x, double y) {
-  if (math.sqrt(x * x + y * y) < _minInPlane) return null;
+double? rollFromGravity(double gravityX, double gravityY) {
+  if (math.sqrt(gravityX * gravityX + gravityY * gravityY) < _minInPlane) return null;
   const quarter = math.pi / 2;
-  final angle = math.atan2(x, y);
+  final angle = math.atan2(gravityX, gravityY);
   final upright = (angle / quarter).roundToDouble() * quarter;
   return upright - angle;
 }
@@ -24,10 +24,6 @@ class TiltController {
   static const double _fullLock = 26 * math.pi / 180;
   static const double _deadZone = 2.0 * math.pi / 180;
 
-  /// Smoothing time constant in seconds. Time based rather than per-sample, so
-  /// it feels the same whether the browser delivers 30, 60 or 100 readings a
-  /// second (phone browsers vary a lot). The old per-sample 0.28 on top of the
-  /// road's own steering ramp made tilt feel like it lagged by half a second.
   static const double _tau = 0.035;
 
   final ValueChanged<double> onSteer;
@@ -94,9 +90,9 @@ class TiltController {
     _sub = source.samples.listen(_onSample, onError: (Object _) {});
   }
 
-  void _onSample(TiltSample s) {
+  void _onSample(TiltSample sample) {
     if (_paused) return;
-    final roll = rollFromGravity(s.x, s.y);
+    final roll = rollFromGravity(sample.x, sample.y);
     if (roll == null) return;
     final target = _shape(invert ? -roll : roll);
     if (!_clock.isRunning) _clock.start();
@@ -110,9 +106,9 @@ class TiltController {
   }
 
   static double _shape(double roll) {
-    final a = roll.abs();
-    if (a <= _deadZone) return 0;
-    final t = math.min(1.0, (a - _deadZone) / (_fullLock - _deadZone));
-    return roll < 0 ? -t : t;
+    final magnitude = roll.abs();
+    if (magnitude <= _deadZone) return 0;
+    final blend = math.min(1.0, (magnitude - _deadZone) / (_fullLock - _deadZone));
+    return roll < 0 ? -blend : blend;
   }
 }

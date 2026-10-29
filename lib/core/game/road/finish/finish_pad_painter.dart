@@ -18,7 +18,7 @@ class FinishPadPainter {
   final List<Paint> _black, _white;
   final Path _path = Path();
 
-  void draw(Canvas c, VisionSeg v, int row, {required bool zebra}) {
+  void draw(Canvas canvas, VisionSeg vision, int row, {required bool zebra}) {
     final cols = zebra ? FinishConfig.zebraColumns : FinishConfig.padColumns;
     const left = -1 - RoadConfig.shoulder;
     const width = 2 + 2 * RoadConfig.shoulder;
@@ -26,21 +26,21 @@ class FinishPadPainter {
       _path.reset();
       for (var col = 0; col < cols; col++) {
         if ((zebra ? col.isEven : (col + row).isEven) != dark) continue;
-        final a = left + width * col / cols;
-        final b = left + width * (col + 1) / cols;
+        final cellLeft = left + width * col / cols;
+        final cellRight = left + width * (col + 1) / cols;
         addQuad(
           _path,
-          v.x1 + v.w1 * a,
-          v.y1,
-          v.x1 + v.w1 * b,
-          v.y1,
-          v.x2 + v.w2 * b,
-          v.y2,
-          v.x2 + v.w2 * a,
-          v.y2,
+          vision.x1 + vision.w1 * cellLeft,
+          vision.y1,
+          vision.x1 + vision.w1 * cellRight,
+          vision.y1,
+          vision.x2 + vision.w2 * cellRight,
+          vision.y2,
+          vision.x2 + vision.w2 * cellLeft,
+          vision.y2,
         );
       }
-      c.drawPath(_path, fogged(dark ? _black : _white, v.fog));
+      canvas.drawPath(_path, fogged(dark ? _black : _white, vision.fog));
     }
   }
 }

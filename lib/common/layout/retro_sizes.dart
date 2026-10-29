@@ -125,11 +125,8 @@ class RetroSizes {
     cardMaxW: 520,
   );
 
-  static RetroSizes forLayout(ResponsiveLayoutSize size) => size.pick(
-    small: smallSizes,
-    medium: mediumSizes,
-    large: largeSizes,
-  );
+  static RetroSizes forLayout(ResponsiveLayoutSize size) =>
+      size.pick(small: smallSizes, medium: mediumSizes, large: largeSizes);
 
   static RetroSizes of(BuildContext context) => forLayout(context.layoutSize);
 }

@@ -8,21 +8,21 @@ Paint fillPaint(Color color, {bool antiAlias = true}) => Paint()
   ..color = color
   ..isAntiAlias = antiAlias;
 
-Color shade(Color c, double amount) => Color.lerp(
-  c,
+Color shade(Color color, double amount) => Color.lerp(
+  color,
   amount < 0 ? const Color(0xFF000000) : const Color(0xFFFFFFFF),
   amount.abs(),
 )!;
 
 List<Paint> fogRamp(Color base, Color fog, {bool antiAlias = false}) =>
     List.generate(RoadConfig.fogSteps, (i) {
-      final t = i / (RoadConfig.fogSteps - 1);
-      return fillPaint(Color.lerp(base, fog, t)!, antiAlias: antiAlias);
+      final fraction = i / (RoadConfig.fogSteps - 1);
+      return fillPaint(Color.lerp(base, fog, fraction)!, antiAlias: antiAlias);
     });
 
 Paint fogged(List<Paint> ramp, double fog) {
-  final i = (fog * (ramp.length - 1)).round();
-  return ramp[i < 0 ? 0 : (i >= ramp.length ? ramp.length - 1 : i)];
+  final step = (fog * (ramp.length - 1)).round();
+  return ramp[step < 0 ? 0 : (step >= ramp.length ? ramp.length - 1 : step)];
 }
 
 void addQuad(

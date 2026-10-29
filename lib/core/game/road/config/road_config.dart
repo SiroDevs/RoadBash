@@ -5,9 +5,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import '../../../utils/app_util.dart';
 
 abstract final class RoadConfig {
-  /// Phone browsers draw through the browser's canvas, where every road
-  /// segment costs several calls, so they draw fewer segments than desktop or
-  /// a native app. Fog hides the shorter distance.
   static final bool _lite = kIsWeb && isTouchDevice;
 
   static const double segmentLength = 200;
@@ -19,7 +16,6 @@ abstract final class RoadConfig {
   static final int decorDistance = _lite ? 130 : 200;
   static const int rumbleLength = 4;
 
-  // Near-zero depth makes polygons huge and corrupts GPU rendering.
   static const double nearClip = 200;
 
   static const int maxPropDepth = 26;

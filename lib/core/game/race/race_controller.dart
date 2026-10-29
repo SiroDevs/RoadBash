@@ -42,8 +42,6 @@ class RaceController {
   final int laps;
   final double lapLength;
 
-  /// Road after the finish line that the last lap still has left, which is
-  /// not part of the race.
   final double runOut;
   final String playerName;
   final List<RiderRival> rivals;
@@ -58,16 +56,16 @@ class RaceController {
   double get raceLength => lapLength * laps - runOut;
   bool get running => countdown <= 0 && !finished;
 
-  double rivalDistance(RiderRival r, double t) =>
-      r.pace * VehicleConfig.maxSpeed * t +
-      _surgeAmp * (math.sin(_surgeFreq * t + r.phase) - math.sin(r.phase));
+  double rivalDistance(RiderRival rival, double time) =>
+      rival.pace * VehicleConfig.maxSpeed * time +
+      _surgeAmp * (math.sin(_surgeFreq * time + rival.phase) - math.sin(rival.phase));
 
-  double rivalFinishTime(RiderRival r) {
+  double rivalFinishTime(RiderRival rival) {
     var lo = 0.0;
-    var hi = raceLength / (r.pace * VehicleConfig.maxSpeed) + 20;
+    var hi = raceLength / (rival.pace * VehicleConfig.maxSpeed) + 20;
     for (var i = 0; i < 40; i++) {
       final mid = (lo + hi) / 2;
-      if (rivalDistance(r, mid) < raceLength) {
+      if (rivalDistance(rival, mid) < raceLength) {
         lo = mid;
       } else {
         hi = mid;

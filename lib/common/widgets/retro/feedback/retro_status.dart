@@ -25,15 +25,15 @@ class RetroFailure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           context.l10n.errNetwork,
-          style: retroBody(size: s.body, color: Retro.red),
+          style: retroBody(size: sizes.body, color: Retro.red),
         ),
-        SizedBox(height: s.gap),
+        SizedBox(height: sizes.gap),
         RetroButton(context.l10n.commonRetry, onTap: onRetry),
       ],
     );

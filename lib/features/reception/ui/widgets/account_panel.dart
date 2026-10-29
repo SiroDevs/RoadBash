@@ -20,7 +20,7 @@ class AccountPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     final session = context.watch<AuthCubit>().state.session;
     final name = session?.name ??
         context.read<SettingsCubit>().state.profile.displayName(l10n);
@@ -29,16 +29,16 @@ class AccountPanel extends StatelessWidget {
       children: [
         Text(
           session == null ? l10n.accountAnonymous : l10n.accountSignedInAs(name),
-          style: retroBody(size: s.body),
+          style: retroBody(size: sizes.body),
         ),
         if (session?.isAdmin ?? false) ...[
-          SizedBox(height: s.gapSmall),
+          SizedBox(height: sizes.gapSmall),
           Text(
             l10n.accountAdmin,
-            style: retroBody(size: s.small, color: Retro.yellow),
+            style: retroBody(size: sizes.small, color: Retro.yellow),
           ),
         ],
-        SizedBox(height: s.gap),
+        SizedBox(height: sizes.gap),
         RetroButton(
           l10n.switchPlayer,
           onTap: () {

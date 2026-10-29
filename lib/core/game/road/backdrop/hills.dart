@@ -16,11 +16,11 @@ void drawHills(
     ..reset()
     ..moveTo(0, baseY + 1);
   for (double x = 0; x <= width + 8; x += 8) {
-    final s = x + scroll;
+    final shifted = x + scroll;
     final wave =
         1 +
-        0.5 * math.sin(s * frequency) +
-        0.3 * math.sin(s * frequency * 2.7 + 1.3);
+        0.5 * math.sin(shifted * frequency) +
+        0.3 * math.sin(shifted * frequency * 2.7 + 1.3);
     path.lineTo(x, baseY - amplitude * wave);
   }
   path

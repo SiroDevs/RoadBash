@@ -389,6 +389,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String statsPeak(int peak) {
+    return 'Max $peak';
+  }
+
+  @override
   String get statsVisitors => 'Visitors';
 
   @override

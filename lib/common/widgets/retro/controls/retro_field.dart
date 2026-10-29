@@ -36,7 +36,7 @@ class _RetroFieldState extends State<RetroField> {
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     return TextField(
       controller: widget.controller,
       obscureText: widget.secret && _hidden,
@@ -49,10 +49,10 @@ class _RetroFieldState extends State<RetroField> {
       textInputAction: widget.action,
       onSubmitted: widget.onSubmitted,
       cursorColor: Retro.orange,
-      style: TextStyle(color: Colors.white, fontSize: s.body),
+      style: TextStyle(color: Colors.white, fontSize: sizes.body),
       decoration: InputDecoration(
         labelText: widget.label,
-        labelStyle: TextStyle(color: Retro.dim, fontSize: s.small),
+        labelStyle: TextStyle(color: Retro.dim, fontSize: sizes.small),
         floatingLabelStyle: const TextStyle(color: Retro.orange),
         counterStyle: const TextStyle(color: Retro.dim),
         enabledBorder: const OutlineInputBorder(

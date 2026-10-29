@@ -10,9 +10,9 @@ enum ResponsiveLayoutSize {
   large;
 
   static ResponsiveLayoutSize fromDimensions(double width, double height) {
-    final w = AppBreakpoints.layoutWidth(width, height);
-    if (w <= AppBreakpoints.small) return small;
-    if (w <= AppBreakpoints.medium) return medium;
+    final layoutWidth = AppBreakpoints.layoutWidth(width, height);
+    if (layoutWidth <= AppBreakpoints.small) return small;
+    if (layoutWidth <= AppBreakpoints.medium) return medium;
     return large;
   }
 

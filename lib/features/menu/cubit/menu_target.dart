@@ -9,7 +9,6 @@ class MenuTarget extends Equatable {
   const MenuTarget.scene(SceneId this.scene);
   const MenuTarget.reception() : scene = null;
 
-  /// Null for the reception.
   final SceneId? scene;
 
   bool get isReception => scene == null;

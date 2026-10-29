@@ -24,7 +24,7 @@ class _RaceControlsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     final cubit = context.read<SettingsCubit>();
     final maxWidth = context.layoutSize.pick(
       small: double.infinity,
@@ -34,7 +34,7 @@ class _RaceControlsDialog extends StatelessWidget {
 
     return Dialog(
       backgroundColor: const Color(0xF2101020),
-      insetPadding: EdgeInsets.all(s.gap),
+      insetPadding: EdgeInsets.all(sizes.gap),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: const BorderSide(color: Retro.orange, width: 2),
@@ -43,7 +43,7 @@ class _RaceControlsDialog extends StatelessWidget {
         constraints: BoxConstraints(maxWidth: maxWidth),
         child: BlocBuilder<SettingsCubit, SettingsState>(
           builder: (context, state) {
-            final p = state.profile;
+            final profile = state.profile;
             return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,12 +52,12 @@ class _RaceControlsDialog extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.fromLTRB(
-                        s.gap,
-                        s.gap,
-                        s.gap,
-                        s.gapSmall,
+                        sizes.gap,
+                        sizes.gap,
+                        sizes.gap,
+                        sizes.gapSmall,
                       ),
-                      child: RetroTitle(l10n.controlsTitle, size: s.title * 0.75),
+                      child: RetroTitle(l10n.controlsTitle, size: sizes.title * 0.75),
                     ),
                     const Spacer(),
                     Padding(
@@ -70,40 +70,40 @@ class _RaceControlsDialog extends StatelessWidget {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: s.gap),
+                  padding: EdgeInsets.symmetric(horizontal: sizes.gap),
                   child: Text(
                     l10n.racePaused,
-                    style: retroBody(size: s.caption, color: Retro.dim),
+                    style: retroBody(size: sizes.caption, color: Retro.dim),
                   ),
                 ),
                 Flexible(
                   child: SingleChildScrollView(
-                    padding: EdgeInsets.symmetric(vertical: s.gapSmall),
+                    padding: EdgeInsets.symmetric(vertical: sizes.gapSmall),
                     child: Column(
                       children: [
                         _SwitchRow(
                           title: l10n.useScreenTouch,
-                          value: p.useScreenTouch,
+                          value: profile.useScreenTouch,
                           onChanged: cubit.setUseScreenTouch,
                         ),
                         _SwitchRow(
                           title: l10n.muteSound,
-                          value: p.mute,
+                          value: profile.mute,
                           onChanged: cubit.setMute,
                         ),
                         _SwitchRow(
                           title: l10n.playMusic,
-                          value: p.musicOn,
+                          value: profile.musicOn,
                           onChanged: cubit.setMusicOn,
                         ),
                         _SwitchRow(
                           title: l10n.soundEffects,
-                          value: p.effectsOn,
+                          value: profile.effectsOn,
                           onChanged: cubit.setEffectsOn,
                         ),
                         _SwitchRow(
                           title: l10n.engineSound,
-                          value: p.engineOn,
+                          value: profile.engineOn,
                           onChanged: cubit.setEngineOn,
                         ),
                       ],
@@ -111,7 +111,7 @@ class _RaceControlsDialog extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(s.gap),
+                  padding: EdgeInsets.all(sizes.gap),
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: RetroButton(
@@ -142,7 +142,7 @@ class _SwitchRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     return Semantics(
       toggled: value,
       label: title,
@@ -150,18 +150,18 @@ class _SwitchRow extends StatelessWidget {
         onTap: () => onChanged(!value),
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: s.gap,
-            vertical: s.gapSmall,
+            horizontal: sizes.gap,
+            vertical: sizes.gapSmall,
           ),
           child: Row(
             children: [
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text(title, style: retroBody(size: s.body))],
+                  children: [Text(title, style: retroBody(size: sizes.body))],
                 ),
               ),
-              SizedBox(width: s.gap),
+              SizedBox(width: sizes.gap),
               Switch(
                 value: value,
                 onChanged: onChanged,

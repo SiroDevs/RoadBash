@@ -23,9 +23,9 @@ class SceneInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final id = scene;
-    final s = context.sizes;
+    final sizes = context.sizes;
     return Container(
-      padding: EdgeInsets.all(s.infoPad),
+      padding: EdgeInsets.all(sizes.infoPad),
       decoration: BoxDecoration(
         color: const Color(0x99000000),
         borderRadius: BorderRadius.circular(16),
@@ -36,15 +36,15 @@ class SceneInfo extends StatelessWidget {
         children: [
           Text(
             id == null ? l10n.blurbReception : l10n.sceneBlurb(id),
-            style: retroBody(size: s.body),
+            style: retroBody(size: sizes.body),
           ),
           if (id != null) ...[
-            SizedBox(height: s.gap * 0.9),
+            SizedBox(height: sizes.gap * 0.9),
             Text(
               SceneTheme.of(id).laps == 1
                   ? l10n.lengthOneWayLabel(km.toStringAsFixed(1))
                   : l10n.lengthLabel(km.toStringAsFixed(1), SceneTheme.of(id).laps),
-              style: retroBody(size: s.small, color: Retro.yellow),
+              style: retroBody(size: sizes.small, color: Retro.yellow),
             ),
             BlocBuilder<ProgressCubit, ProgressState>(
               builder: (context, progress) {
@@ -55,7 +55,7 @@ class SceneInfo extends StatelessWidget {
                     : l10n.bestTimeLabel(formatTime(best / 1000));
                 return Text(
                   '$time  |  ${l10n.racesWinsLabel(stats.races, stats.wins)}',
-                  style: retroBody(size: s.caption, color: Retro.dim),
+                  style: retroBody(size: sizes.caption, color: Retro.dim),
                 );
               },
             ),

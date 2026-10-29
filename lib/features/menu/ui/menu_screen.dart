@@ -114,7 +114,7 @@ class _MenuScreenState extends State<MenuScreen> {
     MenuTarget selected,
   ) {
     final l10n = context.l10n;
-    final s = context.sizes;
+    final sizes = context.sizes;
     final id = selected.scene;
     final info = SceneInfo(scene: id, km: id == null ? 0 : _km[id]!);
     final card = ScenePreview(menuAsset(selected));
@@ -131,29 +131,29 @@ class _MenuScreenState extends State<MenuScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             title,
-            SizedBox(height: s.gap),
+            SizedBox(height: sizes.gap),
             Center(
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: s.cardMaxW * _cardScale),
+                constraints: BoxConstraints(maxWidth: sizes.cardMaxW * _cardScale),
                 child: card,
               ),
             ),
-            SizedBox(height: s.gap),
+            SizedBox(height: sizes.gap),
             info,
-            SizedBox(height: s.gap),
+            SizedBox(height: sizes.gap),
             const RiderBar(),
-            SizedBox(height: s.gapSmall),
+            SizedBox(height: sizes.gapSmall),
             entries,
           ],
         ),
       ),
-      medium: (_, __) => _fixed(s, title, info, card, entries),
-      large: (_, __) => _fixed(s, title, info, card, entries),
+      medium: (_, __) => _fixed(sizes, title, info, card, entries),
+      large: (_, __) => _fixed(sizes, title, info, card, entries),
     );
   }
 
   Widget _fixed(
-    RetroSizes s,
+    RetroSizes sizes,
     Widget title,
     Widget info,
     Widget card,
@@ -163,20 +163,20 @@ class _MenuScreenState extends State<MenuScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         title,
-        SizedBox(height: s.gapSmall),
+        SizedBox(height: sizes.gapSmall),
         LayoutBuilder(
           builder: (context, box) => box.maxWidth > 640
               ? Row(
                   children: [
                     SingleChildScrollView(child: info).expanded(),
-                    SizedBox(width: s.gap * 1.5),
+                    SizedBox(width: sizes.gap * 1.5),
                     _smaller(card).center().expanded(),
                   ],
                 )
               : Column(
                   children: [
                     _smaller(card).center().expanded(),
-                    SizedBox(height: s.gapSmall),
+                    SizedBox(height: sizes.gapSmall),
                     ConstrainedBox(
                       constraints: BoxConstraints(
                         maxHeight: box.maxHeight * 0.45,
@@ -186,9 +186,9 @@ class _MenuScreenState extends State<MenuScreen> {
                   ],
                 ),
         ).expanded(),
-        SizedBox(height: s.gapSmall),
+        SizedBox(height: sizes.gapSmall),
         const RiderBar(),
-        SizedBox(height: s.gapSmall * 0.75),
+        SizedBox(height: sizes.gapSmall * 0.75),
         entries,
       ],
     );

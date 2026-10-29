@@ -14,7 +14,7 @@ class RetroButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     return FilledButton(
       onPressed: () {
         playClick(context);
@@ -23,8 +23,8 @@ class RetroButton extends StatelessWidget {
       style: FilledButton.styleFrom(
         backgroundColor: Retro.orange,
         foregroundColor: Retro.ink,
-        padding: EdgeInsets.symmetric(horizontal: s.buttonH, vertical: s.buttonV),
-        textStyle: TextStyle(fontSize: s.buttonText, fontWeight: FontWeight.w700),
+        padding: EdgeInsets.symmetric(horizontal: sizes.buttonH, vertical: sizes.buttonV),
+        textStyle: TextStyle(fontSize: sizes.buttonText, fontWeight: FontWeight.w700),
       ),
       child: Text(label.toUpperCase()),
     );
@@ -47,24 +47,24 @@ class RetroMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final s = context.sizes;
+    final sizes = context.sizes;
     return InkWell(
       onTap: () {
         playClick(context);
         onTap();
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: s.menuItemV),
+        padding: EdgeInsets.symmetric(vertical: sizes.menuItemV),
         child: Row(
           mainAxisAlignment:
               center ? MainAxisAlignment.center : MainAxisAlignment.start,
           children: [
             Icon(
               Icons.arrow_forward,
-              size: s.icon,
+              size: sizes.icon,
               color: selected ? Retro.yellow : Colors.transparent,
             ),
-            SizedBox(width: s.gapSmall * 0.75),
+            SizedBox(width: sizes.gapSmall * 0.75),
             Flexible(
               child: FittedBox(
                 fit: BoxFit.scaleDown,
@@ -72,7 +72,7 @@ class RetroMenuItem extends StatelessWidget {
                   label,
                   maxLines: 1,
                   style: retroBody(
-                    size: s.body,
+                    size: sizes.body,
                     color: selected ? Colors.white : Retro.dim,
                   ),
                 ),

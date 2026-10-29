@@ -10,11 +10,11 @@ class LowerBody extends RiderPartPainter {
   }
 
   void _leftLeg(Paint paint, Path path, Canvas canva, RiderPose pose) {
-    final f = pose.foot.clamp(0.0, 1.0);
+    final foot = pose.foot.clamp(0.0, 1.0);
 
-    double m(double moving, double stopped) => moving + (stopped - moving) * f;
+    double m(double moving, double stopped) => moving + (stopped - moving) * foot;
 
-    final kick = -5 * math.sin(math.pi * f);
+    final kick = -5 * math.sin(math.pi * foot);
 
     // Left Leg
     path
@@ -73,9 +73,9 @@ class LowerBody extends RiderPartPainter {
   }
 
   void _rightLeg(Paint paint, Path path, Canvas canva, RiderPose pose) {
-    final f = pose.foot.clamp(0.0, 1.0);
+    final foot = pose.foot.clamp(0.0, 1.0);
 
-    double m(double moving, double stopped) => moving + (stopped - moving) * f;
+    double m(double moving, double stopped) => moving + (stopped - moving) * foot;
 
     // Right Leg
     path

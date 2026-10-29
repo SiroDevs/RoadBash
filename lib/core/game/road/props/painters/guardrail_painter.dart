@@ -26,22 +26,21 @@ class GuardrailPainter {
   final List<Paint> _light, _dark, _flat, _nearPost, _farPost;
   final Path _path = Path();
 
-  /// Past this fog the corrugation is too small to see: one flat band.
   static const double _detailFog = 0.3;
   static const double _postFog = 0.55;
   static const double _farRailFog = 0.7;
 
-  void draw(Canvas c, VisionSeg near, VisionSeg far, Prop p, Vector2 size) {
+  void draw(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
     final detailed = near.fog < _detailFog;
     // A clamped anchor (prop starts behind the camera) must not grow a post
     // at the wrong place.
-    final post = near.seg.index == p.anchor && near.fog < _postFog;
+    final post = near.seg.index == prop.anchor && near.fog < _postFog;
 
-    c.save();
-    c.clipRect(Rect.fromLTRB(0, 0, size.x, near.clip));
+    canvas.save();
+    canvas.clipRect(Rect.fromLTRB(0, 0, size.x, near.clip));
     if (near.fog < _farRailFog) {
       _rail(
-        c,
+        canvas,
         near,
         far,
         GuardrailConfig.farOffset,
@@ -51,12 +50,12 @@ class GuardrailPainter {
         size,
       );
     }
-    _rail(c, near, far, p.offset, post, detailed, _nearPost, size);
-    c.restore();
+    _rail(canvas, near, far, prop.offset, post, detailed, _nearPost, size);
+    canvas.restore();
   }
 
   void _rail(
-    Canvas c,
+    Canvas canvas,
     VisionSeg near,
     VisionSeg far,
     double offset,
@@ -71,7 +70,7 @@ class GuardrailPainter {
 
     if (post) {
       final pw = math.max(0.7, GuardrailConfig.postHalfWidth * near.k1);
-      c.drawRect(
+      canvas.drawRect(
         Rect.fromLTRB(
           xn - pw,
           near.y1 - GuardrailConfig.beamBottom * near.k1,
@@ -90,16 +89,16 @@ class GuardrailPainter {
     if (!detailed) {
       _path.reset();
       _band(near, far, xn, xf, bottom, top);
-      c.drawPath(_path, fogged(_flat, far.fog));
+      canvas.drawPath(_path, fogged(_flat, far.fog));
       return;
     }
     _path.reset();
     _band(near, far, xn, xf, bottom, valleyLo);
     _band(near, far, xn, xf, valleyHi, top);
-    c.drawPath(_path, fogged(_light, far.fog));
+    canvas.drawPath(_path, fogged(_light, far.fog));
     _path.reset();
     _band(near, far, xn, xf, valleyLo, valleyHi);
-    c.drawPath(_path, fogged(_dark, far.fog));
+    canvas.drawPath(_path, fogged(_dark, far.fog));
   }
 
   void _band(

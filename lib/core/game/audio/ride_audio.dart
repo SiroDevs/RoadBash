@@ -70,9 +70,9 @@ class RideAudio {
 
     _rivals.update(dt, volume: mix.engineGain);
 
-    final k = math.min(1.0, dt * 12);
-    _skidLevel += ((road.skidding ? 1.0 : 0.0) - _skidLevel) * k;
-    _gravelLevel += ((road.offRoad ? 1.0 : 0.0) - _gravelLevel) * k;
+    final blend = math.min(1.0, dt * 12);
+    _skidLevel += ((road.skidding ? 1.0 : 0.0) - _skidLevel) * blend;
+    _gravelLevel += ((road.offRoad ? 1.0 : 0.0) - _gravelLevel) * blend;
 
     _acc += dt;
     if (_acc < 0.07) return;
@@ -85,9 +85,9 @@ class RideAudio {
 
   void _events() {
     if (race.countdown > 0) {
-      final n = race.countdown.ceil();
-      if (n != _count) {
-        _count = n;
+      final seconds = race.countdown.ceil();
+      if (seconds != _count) {
+        _count = seconds;
         service.playSfx(Sfx.beep, _fx);
       }
     } else if (!_wentGo) {
@@ -107,7 +107,7 @@ class RideAudio {
     _wasOnFoot = onFoot;
   }
 
-  static double _clamp(double v) => math.min(1.0, math.max(0.0, v));
+  static double _clamp(double value) => math.min(1.0, math.max(0.0, value));
 
   void pause() {
     _engine.pause();

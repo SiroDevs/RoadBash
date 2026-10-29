@@ -28,6 +28,5 @@ class SceneOrder {
     const MenuTarget.reception(),
   ];
 
-  /// Null until the player has finished at least one race.
   final SceneId? mostPlayed;
 }

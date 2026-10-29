@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
 import '../../../common/l10n/l10n_extension.dart';
-import '../../../common/layout/retro_sizes.dart';
 import '../../../common/widgets/retro/page/music_scope.dart';
 import '../../../core/audio/audio_catalog.dart';
 import '../../../core/audio/audio_service.dart';
@@ -24,6 +22,8 @@ import '../../../domain/models/scene_id.dart';
 import '../../settings/cubit/settings_cubit.dart';
 import '../cubit/race_cubit.dart';
 import 'widgets/race_controls_menu.dart';
+import 'widgets/race_pause_overlay.dart';
+import 'widgets/race_top_bar.dart';
 import 'widgets/touch_controls.dart';
 
 class RaceScreen extends StatefulWidget {
@@ -126,7 +126,6 @@ class _RaceScreenState extends State<RaceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     final screenTouch = context.select<SettingsCubit, bool>(
       (c) => c.state.profile.useScreenTouch,
     );
@@ -173,84 +172,14 @@ class _RaceScreenState extends State<RaceScreen> {
                     ),
                   ),
                 if (_paused)
-                  Positioned.fill(
-                    child:
-                        Text(
-                              l10n.racePaused,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Anton',
-                                fontSize: context.sizes.title,
-                              ),
-                            )
-                            .alignment(Alignment.center)
-                            .backgroundColor(Colors.black54)
-                            .gestures(onTap: _togglePause),
-                  ),
-                SafeArea(
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Row(
-                      children: [
-                        IconButton(
-                          tooltip: context.l10n.quitRace,
-                          icon: const Icon(Icons.close, color: Colors.white70),
-                          onPressed: () => context.goNamed(RouteNames.menu),
-                        ),
-                        StreamBuilder<int>(
-                          stream: _laps,
-                          builder: (context, snap) => Text(
-                            _game.isLoaded
-                                ? context.l10n.hudLap(
-                                    _game.race.lap,
-                                    _game.race.laps,
-                                  )
-                                : '',
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontFamily: 'Anton',
-                              fontSize: context.sizes.body,
-                            ),
-                          ).padding(left: 4),
-                        ),
-                        const Spacer(),
-                        if (showTouchUi) ...[
-                          BlocBuilder<SettingsCubit, SettingsState>(
-                            buildWhen: (a, b) =>
-                                a.profile.mute != b.profile.mute,
-                            builder: (context, state) {
-                              final muted = state.profile.mute;
-                              return IconButton(
-                                tooltip: muted
-                                    ? l10n.unmuteSound
-                                    : l10n.muteSound,
-                                icon: Icon(
-                                  muted ? Icons.volume_off : Icons.volume_up,
-                                  color: Colors.white70,
-                                ),
-                                onPressed: () => context
-                                    .read<SettingsCubit>()
-                                    .setMute(!muted),
-                              );
-                            },
-                          ),
-                          IconButton(
-                            tooltip: _paused ? l10n.raceResume : l10n.pauseRace,
-                            icon: Icon(
-                              _paused ? Icons.play_arrow : Icons.pause,
-                              color: Colors.white70,
-                            ),
-                            onPressed: _togglePause,
-                          ),
-                        ],
-                        IconButton(
-                          tooltip: l10n.controlsTitle,
-                          icon: const Icon(Icons.tune, color: Colors.white70),
-                          onPressed: _openControls,
-                        ),
-                      ],
-                    ),
-                  ),
+                  Positioned.fill(child: RacePauseOverlay(onTap: _togglePause)),
+                RaceTopBar(
+                  game: _game,
+                  laps: _laps,
+                  paused: _paused,
+                  showTouchActions: showTouchUi,
+                  onTogglePause: _togglePause,
+                  onOpenControls: _openControls,
                 ),
               ],
             ),

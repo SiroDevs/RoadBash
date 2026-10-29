@@ -4,9 +4,9 @@ class Gloves extends RiderPartPainter {
   Gloves(super.look);
 
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
-    final f = pose.foot.clamp(0.0, 1.0);
+    final foot = pose.foot.clamp(0.0, 1.0);
 
-    double m(double moving, double stopped) => moving + (stopped - moving) * f;
+    double m(double moving, double stopped) => moving + (stopped - moving) * foot;
 
     path
       ..reset()

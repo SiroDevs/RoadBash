@@ -48,14 +48,10 @@ class SignPanel {
   const SignPanel.named(List<SignRow> rows)
     : this(rows, arrow: SignArrow.upLeft, aspect: 3.1, framed: true);
 
-  /// Number shown in a white disc on the right of the board (e.g. exit "17").
   final String? roundel;
 
-  /// Board width / height. When set, the board is drawn at this shape
-  /// instead of the default tall panel.
   final double? aspect;
 
-  /// Draws a thin white rim around the board.
   final bool framed;
 
   List<String> get texts => [for (final r in rows) r.text];

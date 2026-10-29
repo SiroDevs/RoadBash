@@ -26,28 +26,28 @@ class SpanPainter {
   final GantryPainter _gantry;
   final OverpassPainter _overpass;
 
-  void draw(Canvas c, VisionSeg v, Prop p, Vector2 size) {
-    final overpass = p.kind == PropKind.overpass;
+  void draw(Canvas canvas, VisionSeg vision, Prop prop, Vector2 size) {
+    final overpass = prop.kind == PropKind.overpass;
     final reachUnits = overpass ? 1.5 : 1.22;
-    var left = v.x1 - v.w1 * reachUnits;
-    var right = v.x1 + v.w1 * reachUnits;
+    var left = vision.x1 - vision.w1 * reachUnits;
+    var right = vision.x1 + vision.w1 * reachUnits;
 
     // Footbridges and overpasses cross the whole highway: over the near
     // carriageway, the median and the opposite carriageway, from one verge to
     // the other. A single pier stands in the median.
     double? medianPier;
     double? farPier;
-    final crossesAll = (p.kind == PropKind.footbridge || overpass) &&
+    final crossesAll = (prop.kind == PropKind.footbridge || overpass) &&
         _dual &&
-        v.seg.section.hasOpposite;
+        vision.seg.section.hasOpposite;
     if (crossesAll) {
       const sh = RoadConfig.shoulder;
       const median = RoadConfig.medianWidth;
       const farEdge = 1 + sh + median + RoadConfig.oppositeWidth + sh;
       // Same overhang past the outer shoulder as on the near side.
-      right = v.x1 + v.w1 * (farEdge + (reachUnits - (1 + sh)));
-      medianPier = v.x1 + v.w1 * (1 + sh + median / 2);
-      farPier = v.x1 + v.w1 * (farEdge + 0.17);
+      right = vision.x1 + vision.w1 * (farEdge + (reachUnits - (1 + sh)));
+      medianPier = vision.x1 + vision.w1 * (1 + sh + median / 2);
+      farPier = vision.x1 + vision.w1 * (farEdge + 0.17);
     }
     // An overpass is a road crossing above the highway: its deck runs from
     // the far left of the view to the far right, past both screen edges.
@@ -57,17 +57,17 @@ class SpanPainter {
       right = math.max(right, size.x + 16);
     }
     if (right < 0 || left > size.x) return;
-    if (p.height * v.k1 < 5) return;
+    if (prop.height * vision.k1 < 5) return;
 
-    c.save();
-    c.clipRect(Rect.fromLTRB(0, 0, size.x, v.clip));
-    switch (p.kind) {
+    canvas.save();
+    canvas.clipRect(Rect.fromLTRB(0, 0, size.x, vision.clip));
+    switch (prop.kind) {
       case PropKind.footbridge:
-        _footbridge.draw(c, v, p, left, right, pillarX: medianPier);
+        _footbridge.draw(canvas, vision, prop, left, right, pillarX: medianPier);
       case PropKind.gantry:
-        _gantry.draw(c, v, p, left, right);
+        _gantry.draw(canvas, vision, prop, left, right);
       case PropKind.overpass:
-        _overpass.draw(c, v, p, left, right,
+        _overpass.draw(canvas, vision, prop, left, right,
             spanL: spanLeft,
             spanR: spanRight,
             medianPier: medianPier,
@@ -75,6 +75,6 @@ class SpanPainter {
       default:
         break;
     }
-    c.restore();
+    canvas.restore();
   }
 }

@@ -8,10 +8,13 @@ import 'look/rider_look.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
 
+part 'bike/bike_middle_panels.dart';
 part 'bike/bike_panel.dart';
+part 'bike/tail_covers.dart';
 part 'bike/tail_parts.dart';
 part 'bike/rider_bike.dart';
 part 'body/gloves.dart';
+part 'body/helmet.dart';
 part 'body/lower_body.dart';
 part 'body/upper_body.dart';
 
@@ -92,18 +95,18 @@ abstract class RiderPartPainter {
   Offset handOf(int side, RiderPose pose) =>
       Offset(midX + side * 40, 65 + tuckOf(pose) + side * pose.steer * 4);
 
-  void fill(Canvas canva, Rect r, Color color, [double radius = 3]) {
+  void fill(Canvas canva, Rect rect, Color color, [double radius = 3]) {
     ink
       ..style = PaintingStyle.fill
       ..color = color;
-    canva.drawRRect(RRect.fromRectXY(r, radius, radius), ink);
+    canva.drawRRect(RRect.fromRectXY(rect, radius, radius), ink);
   }
 
-  void oval(Canvas canva, Rect r, Color color) {
+  void oval(Canvas canva, Rect rect, Color color) {
     ink
       ..style = PaintingStyle.fill
       ..color = color;
-    canva.drawOval(r, ink);
+    canva.drawOval(rect, ink);
   }
 
   void quad(Canvas canva, Color color, List<Offset> pts) {
@@ -119,13 +122,13 @@ abstract class RiderPartPainter {
     canva.drawPath(scratch, ink);
   }
 
-  void limb(Canvas canva, Offset a, Offset b, double w, Color color) {
+  void limb(Canvas canva, Offset start, Offset end, double width, Color color) {
     ink
       ..style = PaintingStyle.stroke
-      ..strokeWidth = w
+      ..strokeWidth = width
       ..strokeCap = StrokeCap.round
       ..color = color;
-    canva.drawLine(a, b, ink);
+    canva.drawLine(start, end, ink);
     ink.style = PaintingStyle.fill;
   }
 }

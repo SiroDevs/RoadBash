@@ -4,6 +4,7 @@ import 'dart:math' as math;
 // Project imports:
 import '../../../../domain/models/scene_id.dart';
 import '../config/road_config.dart';
+import '../finish/finish_config.dart';
 import '../routes/route_stretch.dart';
 import '../routes/thika/thika_route.dart';
 import '../scene_theme.dart';
@@ -49,14 +50,22 @@ class RoadTrack {
 
   int get count => segments.length;
 
+  /// Index of the finish line. The last lap stops [FinishConfig.runOut]
+  /// segments short of the lap's end, so the scene's own road carries on past
+  /// the line.
+  int get finishIndex => count - FinishConfig.runOut;
+
+  double get runOutLength => FinishConfig.runOut * RoadConfig.segmentLength;
+
   int indexAt(double z) => (z / RoadConfig.segmentLength).floor() % count;
 
   RoadSegment at(double z) => segments[indexAt(z)];
 
-  static double raceKm(SceneId scene) =>
-      RoadTrack(scene).length *
-      SceneTheme.of(scene).laps *
-      RoadConfig.unitKm;
+  static double raceKm(SceneId scene) {
+    final track = RoadTrack(scene);
+    final laps = SceneTheme.of(scene).laps;
+    return (track.length * laps - track.runOutLength) * RoadConfig.unitKm;
+  }
 
   void _mark() => sectionStarts.add(segments.length);
 

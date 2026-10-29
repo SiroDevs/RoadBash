@@ -2,6 +2,8 @@
 part of '../rider_painter.dart';
 
 class RiderBike extends RiderPartPainter {
+  RiderBike(super.look);
+
   void paintShadow(Canvas canva, RiderPose pose) {
     final slip = pose.lean * 46;
     final squash = 1 - pose.lean.abs() * 0.5;
@@ -41,7 +43,7 @@ class RiderBike extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF000000);
+      ..color = bike.frame;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -70,7 +72,7 @@ class RiderBike extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF000000);
+      ..color = bike.frame;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -141,7 +143,7 @@ class RiderBike extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF000000);
+      ..color = bike.frame;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke

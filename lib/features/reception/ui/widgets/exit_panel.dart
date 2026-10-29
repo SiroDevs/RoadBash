@@ -2,19 +2,19 @@
 import 'dart:ui' show AppExitType;
 
 // Flutter imports:
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import '../../../../core/router/route_names.dart';
+import '../../../../common/l10n/l10n_extension.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
-import '../../../../common/l10n/l10n_extension.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/utils/app_util.dart';
 
 class ExitPanel extends StatelessWidget {

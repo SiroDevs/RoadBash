@@ -2,12 +2,13 @@
 import 'dart:async';
 import 'dart:js_interop';
 
+// Project imports:
+import 'tilt_source_base.dart';
+
 // Flutter imports:
 import 'package:flutter/foundation.dart'
     show TargetPlatform, defaultTargetPlatform;
 
-// Project imports:
-import 'tilt_source_base.dart';
 
 TiltSource createTiltSource() => _WebTilt();
 

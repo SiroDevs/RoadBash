@@ -7,13 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import '../../core/router/route_names.dart';
 import '../../common/constants/app_assets.dart';
+import '../../common/l10n/l10n_extension.dart';
 import '../../common/layout/retro_sizes.dart';
 import '../../common/widgets/retro/page/retro_page.dart';
 import '../../common/widgets/retro/retro_style.dart';
+import '../../core/router/route_names.dart';
 import '../auth/cubit/auth_cubit.dart';
-import '../../common/l10n/l10n_extension.dart';
 
 class NoticeScreen extends StatefulWidget {
   const NoticeScreen({super.key});

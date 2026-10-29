@@ -1,10 +1,12 @@
+// Project imports:
+import '../finish/finish_layout.dart';
 import '../routes/thika/thika_route.dart';
 import '../scene_theme.dart';
 import '../track/road_track.dart';
 import 'layouts/city_layout.dart';
 import 'layouts/jungle_layout.dart';
-import 'layouts/savanna_layout.dart';
 import 'layouts/route_layout.dart';
+import 'layouts/savanna_layout.dart';
 import 'layouts/suburbs_layout.dart';
 import 'prop.dart';
 
@@ -27,6 +29,7 @@ class RoadProps {
       case DecorKind.savanna:
         layOutSavanna(slots, count);
     }
+    layOutFinish(slots, track, theme);
     for (var i = 0; i < count; i++) {
       _bySegment[i] = slots[i].isEmpty ? const [] : List.unmodifiable(slots[i]);
     }

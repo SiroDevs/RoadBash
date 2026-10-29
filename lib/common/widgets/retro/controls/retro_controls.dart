@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import '../../../layout/retro_sizes.dart';
-import 'click_sound.dart';
 import '../retro_style.dart';
+import 'click_sound.dart';
 
 class RetroButton extends StatelessWidget {
   const RetroButton(this.label, {super.key, required this.onTap});

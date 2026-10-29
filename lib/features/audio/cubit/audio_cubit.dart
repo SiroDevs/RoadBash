@@ -9,11 +9,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
+import '../../../core/audio/audio_catalog.dart';
+import '../../../core/audio/audio_service.dart';
+import '../../../core/audio/sound_player.dart';
 import '../../../domain/models/player_profile.dart';
 import '../../settings/cubit/settings_cubit.dart';
-import '../../../core/audio/audio_catalog.dart';
-import '../../../core/audio/sound_player.dart';
-import '../../../core/audio/audio_service.dart';
 import 'audio_state.dart';
 
 @lazySingleton

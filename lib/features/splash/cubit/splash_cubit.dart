@@ -6,10 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
+import '../../../domain/repos/stats_repo.dart';
 import '../../auth/cubit/auth_cubit.dart';
 import '../../progress/cubit/progress_cubit.dart';
 import '../../settings/cubit/settings_cubit.dart';
-import '../../../domain/repos/stats_repo.dart';
 
 @injectable
 class SplashCubit extends Cubit<bool> {

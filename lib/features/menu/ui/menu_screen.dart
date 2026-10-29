@@ -8,25 +8,23 @@ import 'package:go_router/go_router.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
-import '../../../core/router/route_names.dart';
 import '../../../common/constants/app_assets.dart';
-import '../../../core/layout/responsive_layout_builder.dart';
+import '../../../common/l10n/l10n_extension.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
+import '../../../common/widgets/retro/brand/scene_preview.dart';
 import '../../../common/widgets/retro/controls/retro_controls.dart';
+import '../../../common/widgets/retro/page/music_scope.dart';
 import '../../../common/widgets/retro/page/retro_scaffold.dart';
 import '../../../common/widgets/retro/retro_style.dart';
-import '../../../common/widgets/retro/brand/scene_preview.dart';
 import '../../../core/audio/audio_catalog.dart';
-import '../../../common/widgets/retro/page/music_scope.dart';
-import '../../../core/game/road/config/road_config.dart';
-import '../../../core/game/road/scene_theme.dart';
 import '../../../core/game/road/track/road_track.dart';
-import '../../progress/cubit/progress_cubit.dart';
-import '../../settings/cubit/settings_cubit.dart';
+import '../../../core/layout/responsive_layout_builder.dart';
+import '../../../core/router/route_names.dart';
 import '../../../domain/models/scene_id.dart';
 import '../../../l10n/gen/app_localizations.dart';
-import '../../../common/l10n/l10n_extension.dart';
+import '../../progress/cubit/progress_cubit.dart';
+import '../../settings/cubit/settings_cubit.dart';
 import '../cubit/menu_cubit.dart';
 import 'widgets/online_badge.dart';
 import 'widgets/scene_info.dart';
@@ -41,7 +39,7 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   final Map<SceneId, double> _km = {
     for (final id in SceneId.values)
-      id: RoadTrack(id).length * SceneTheme.of(id).laps * RoadConfig.unitKm,
+      id: RoadTrack.raceKm(id),
   };
 
   static const double _cardScale = 0.75;

@@ -10,29 +10,43 @@ import '../hud/dashboard_layout.dart';
 import 'backdrop/road_backdrop.dart';
 import 'config/guardrail_config.dart';
 import 'config/road_config.dart';
+import 'config/vehicle_config.dart';
+import 'finish/finish_config.dart';
+import 'finish/finish_pad_painter.dart';
+import 'finish/finish_zone.dart';
 import 'props/painters/prop_painter.dart';
-import 'road_projection.dart';
 import 'props/road_props.dart';
+import 'road_projection.dart';
 import 'scene_theme.dart';
 import 'surface/road_segment_painter.dart';
 import 'track/road_track.dart';
-import 'config/vehicle_config.dart';
+import 'traffic/road_traffic.dart';
 
 class RoadRenderer extends PositionComponent {
   RoadRenderer(this.theme)
     : track = RoadTrack(theme.id),
       _backdrop = RoadBackdrop(theme),
       _roads = RoadSegmentPainter(theme),
-      _decor = PropPainter(theme) {
+      _decor = PropPainter(theme),
+      _pad = FinishPadPainter(theme) {
     props = RoadProps(theme, track);
+    finish = FinishZone(
+      line: track.finishIndex,
+      laps: theme.laps,
+      lapLength: track.length,
+      look: FinishConfig.lookFor(theme.id),
+    );
   }
 
   final SceneTheme theme;
   final RoadTrack track;
   late final RoadProps props;
+  late final FinishZone finish;
   final RoadBackdrop _backdrop;
   final RoadSegmentPainter _roads;
   final PropPainter _decor;
+  final FinishPadPainter _pad;
+  RoadTraffic? traffic;
 
   double trkPosition = 0, fullDistance = 0;
   double playerX = -0.25, speed = 0;
@@ -94,6 +108,7 @@ class RoadRenderer extends PositionComponent {
     final step = dt * speed;
     trkPosition = (trkPosition + step) % track.length;
     fullDistance += step;
+    finish.update(trkPosition, fullDistance);
 
     curveFelt += (seg.curve - curveFelt) * math.min(1.0, dt * 3.5);
 
@@ -199,6 +214,7 @@ class RoadRenderer extends PositionComponent {
   @override
   void render(Canvas canvas) {
     if (size.x <= 0 || size.y <= 0) return;
+    _backdrop.skylineRise = finish.rise;
     _backdrop.draw(canvas, size);
 
     const len = RoadConfig.segmentLength;
@@ -261,11 +277,18 @@ class RoadRenderer extends PositionComponent {
       if (_firstN < 0) _firstN = n;
       _lastN = n;
       _roads.draw(canvas, v, size.x);
+      if (finish.on) {
+        final row = finish.padRow(seg.index);
+        if (row >= 0) _pad.draw(canvas, v, row, zebra: finish.isZebra(row));
+      }
       maxY = _p2.y;
       if (v.fog >= 1) break;
     }
 
-    if (_visCount > 0) _drawDecor(canvas, baseIdx);
+    if (_visCount > 0) {
+      traffic?.prepare(trkPosition, fullDistance, playerZ);
+      _drawDecor(canvas, baseIdx);
+    }
   }
 
   void _drawDecor(Canvas canvas, int baseIdx) {
@@ -273,13 +296,15 @@ class RoadRenderer extends PositionComponent {
     final limit = math.min(RoadConfig.decorDistance, _lastN + 1);
 
     for (var n = limit - 1; n >= -RoadConfig.maxPropDepth; n--) {
+      final anchor = n < _firstN ? near : _byN[n];
+      if (anchor != null) traffic?.paintAt(canvas, n, anchor, size);
+
       final list = props.at((baseIdx + n + track.count * 2) % track.count);
       if (list.isEmpty) continue;
-
-      final anchor = n < _firstN ? near : _byN[n];
       if (anchor == null) continue;
 
       for (final prop in list) {
+        if (!finish.shows(prop)) continue;
         if (prop.depth == 0) {
           _decor.drawBillboard(canvas, anchor, prop, size);
           continue;

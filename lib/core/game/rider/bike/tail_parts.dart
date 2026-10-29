@@ -2,6 +2,8 @@
 part of '../rider_painter.dart';
 
 class TailParts extends RiderPartPainter {
+  TailParts(super.look);
+
   void paint(Paint paint, Path path, Canvas canva, RiderPose pose) {
     final tail = tailLift(pose);
     _tailUnit(paint, path, canva, pose, tail);
@@ -30,7 +32,7 @@ class TailParts extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFED1C24);
+      ..color = bike.brakeLight;
     canva.drawPath(path, paint);
 
     // Back Seat Handle
@@ -50,7 +52,7 @@ class TailParts extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF7F7F7F);
+      ..color = bike.panelDark;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -68,7 +70,7 @@ class TailParts extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFC3C3C3);
+      ..color = bike.panel;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -105,7 +107,7 @@ class TailParts extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF7F7F7F);
+      ..color = bike.panelDark;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -136,7 +138,7 @@ class TailParts extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFFC3C3C3);
+      ..color = bike.panel;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -161,7 +163,7 @@ class TailParts extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF7F7F7F);
+      ..color = bike.panelDark;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -183,7 +185,7 @@ class TailParts extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF7F7F7F);
+      ..color = bike.panelDark;
     canva.drawPath(path, paint);
   }
 
@@ -202,7 +204,7 @@ class TailParts extends RiderPartPainter {
       ..close();
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF7F7F7F);
+      ..color = bike.panelDark;
     canva.drawPath(path, paint);
     paint
       ..style = PaintingStyle.stroke
@@ -222,7 +224,7 @@ class TailParts extends RiderPartPainter {
     // Exhaust Inner Hole
     paint
       ..style = PaintingStyle.fill
-      ..color = const Color(0xFF7F7F7F);
+      ..color = bike.panelDark;
     canva.drawOval(const Rect.fromLTRB(82.0, 94.0, 88.0, 105.0), paint);
   }
 

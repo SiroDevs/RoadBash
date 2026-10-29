@@ -6,8 +6,8 @@ import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
 import '../../../layout/retro_sizes.dart';
-import 'click_sound.dart';
 import '../retro_style.dart';
+import 'click_sound.dart';
 
 class RetroChips<T> extends StatelessWidget {
   const RetroChips({

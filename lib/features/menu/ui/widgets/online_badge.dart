@@ -6,10 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
+import '../../../../common/l10n/l10n_extension.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../core/di/injectable.dart';
-import '../../../../common/l10n/l10n_extension.dart';
 import '../../cubit/online_cubit.dart';
 
 class OnlineBadge extends StatelessWidget {

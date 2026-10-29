@@ -6,15 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import '../../core/router/route_names.dart';
 import '../../common/constants/app_assets.dart';
-import '../../core/constants/app_constants.dart';
+import '../../common/l10n/l10n_extension.dart';
 import '../../common/layout/responsive_scroll_body.dart';
 import '../../common/layout/retro_sizes.dart';
 import '../../common/widgets/retro/brand/logo_mark.dart';
 import '../../common/widgets/retro/page/retro_scaffold.dart';
 import '../../common/widgets/retro/retro_style.dart';
-import '../../common/l10n/l10n_extension.dart';
+import '../../core/constants/app_constants.dart';
+import '../../core/router/route_names.dart';
 import 'cubit/splash_cubit.dart';
 
 class SplashScreen extends StatefulWidget {

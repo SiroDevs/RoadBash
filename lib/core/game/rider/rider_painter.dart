@@ -3,30 +3,35 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
+import 'look/bike_look.dart';
+import 'look/rider_look.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
 
 part 'bike/bike_panel.dart';
 part 'bike/tail_parts.dart';
 part 'bike/rider_bike.dart';
+part 'body/gloves.dart';
 part 'body/lower_body.dart';
 part 'body/upper_body.dart';
 
 class RiderPainter {
-  RiderPainter(this.rig);
+  RiderPainter(this.rig, {this.look = RiderLook.main});
 
   final RiderRig rig;
+  final RiderLook look;
 
   static const double width = RiderPartPainter.canvasWidth;
   static const double height = RiderPartPainter.canvasHeight;
 
   static const double maxLean = math.pi / 7;
 
-  final RiderBike _bikeFrame = RiderBike();
-  final UpperBody _upperBody = UpperBody();
-  final LowerBody _lowerBody = LowerBody();
-  final BikePanels _bikePanels = BikePanels();
-  final TailParts _tailParts = TailParts();
+  late final RiderBike _bikeFrame = RiderBike(look);
+  late final UpperBody _upperBody = UpperBody(look);
+  late final Gloves _gloves = Gloves(look);
+  late final LowerBody _lowerBody = LowerBody(look);
+  late final BikePanels _bikePanels = BikePanels(look);
+  late final TailParts _tailParts = TailParts(look);
 
   final Paint _paint = Paint()
     ..isAntiAlias = true
@@ -51,6 +56,7 @@ class RiderPainter {
     canva.translate(0, -rig.riderLift);
     _upperBody.paint(_paint, _path, canva, pose);
     _lowerBody.paint(_paint, _path, canva, pose);
+    _gloves.paint(_paint, _path, canva, pose);
     canva.restore();
 
     canva.save();
@@ -66,12 +72,15 @@ class RiderPainter {
 }
 
 abstract class RiderPartPainter {
+  RiderPartPainter(this.look);
+
+  final RiderLook look;
+  BikeLook get bike => look.bike;
+
   static const double canvasWidth = 120;
   static const double canvasHeight = 170;
   static const double groundY = 166;
   static const double midX = canvasWidth / 2;
-
-  static const leather = Color(0xFF23242B);
 
   final Paint ink = Paint()..isAntiAlias = true;
   final Path scratch = Path();

@@ -8,13 +8,15 @@ import 'package:flame/components.dart';
 // Project imports:
 import '../hud/dashboard_layout.dart';
 import '../road/road_renderer.dart';
+import 'look/rider_look.dart';
 import 'rider_painter.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
+import 'rider_sprite.dart';
 import '../road/config/vehicle_config.dart';
 
 class RiderComponent extends PositionComponent {
-  RiderComponent(this.road, {RiderRig? rig})
+  RiderComponent(this.road, {RiderRig? rig, this.look = RiderLook.main})
       : rig = rig ?? RiderRig(),
         super(
           anchor: Anchor(0.5, RiderPartPainter.groundY / RiderPainter.height),
@@ -23,19 +25,16 @@ class RiderComponent extends PositionComponent {
 
   final RoadRenderer road;
   final RiderRig rig;
-  late final RiderPainter _painter = RiderPainter(rig);
-  final RiderPose _pose = RiderPose();
+  final RiderLook look;
+  late final RiderSprite _sprite = RiderSprite(look: look, rig: rig);
+  RiderPose get _pose => _sprite.pose;
   double _t = 0;
 
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
     final lane = DashboardLayout.lanePx(size, road.theme.lanes);
-    final h = RiderRig.sizeFactor *
-        math.min(
-          lane * RiderRig.laneFill * RiderPainter.height / RiderPainter.width,
-          size.y * RiderRig.screenFill,
-        );
+    final h = RiderRig.heightFor(lane, size.y);
     this.size = Vector2(h * RiderPainter.width / RiderPainter.height, h);
     position = Vector2(size.x / 2, DashboardLayout.riderTyresGround(size));
   }
@@ -77,6 +76,6 @@ class RiderComponent extends PositionComponent {
   @override
   void render(Canvas canvas) {
     canvas.scale(size.y / RiderPainter.height);
-    _painter.paint(canvas, _pose);
+    _sprite.painter.paint(canvas, _pose);
   }
 }

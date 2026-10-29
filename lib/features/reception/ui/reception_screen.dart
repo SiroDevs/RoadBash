@@ -7,16 +7,16 @@ import 'package:go_router/go_router.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
-import '../../../core/router/route_names.dart';
-import '../../../core/layout/responsive_layout_builder.dart';
+import '../../../common/l10n/l10n_extension.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
 import '../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../common/widgets/retro/page/retro_page.dart';
 import '../../../common/widgets/retro/retro_style.dart';
-import '../../../common/l10n/l10n_extension.dart';
-import '../cubit/reception_cubit.dart';
+import '../../../core/layout/responsive_layout_builder.dart';
+import '../../../core/router/route_names.dart';
 import '../../suggestions/ui/suggestion_panel.dart';
+import '../cubit/reception_cubit.dart';
 import 'widgets/account_panel.dart';
 import 'widgets/exit_panel.dart';
 import 'widgets/language_picker.dart';

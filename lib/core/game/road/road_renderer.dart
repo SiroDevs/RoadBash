@@ -20,6 +20,7 @@ import 'scene_theme.dart';
 import 'surface/road_segment_painter.dart';
 import 'track/road_track.dart';
 import 'traffic/road_traffic.dart';
+import 'traffic/road_view.dart';
 
 /// Draws the road, scenery and traffic of a scene and runs the rider physics.
 class RoadRenderer extends PositionComponent with RoadDynamics {
@@ -48,6 +49,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
   final PropPainter _decor;
   final FinishPadPainter _pad;
   RoadTraffic? traffic;
+  late final RoadView view = RoadView(track, props);
 
   double trkPosition = 0;
   double fullDistance = 0;
@@ -111,7 +113,8 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     final pz = trkPosition + playerZ;
     final pSeg = track.at(pz);
     final playerY = pSeg.y1 + (pSeg.y2 - pSeg.y1) * ((pz % len) / len);
-
+    final camY = playerY + RoadConfig.cameraHeight;
+    view.begin(size, trkPosition, camY, _spread, baseIdx);
     var curveOffset = 0.0;
     var dx = -(base.curve * basePercent);
     var maxY = size.y;
@@ -124,7 +127,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
       final seg = track.segments[(baseIdx + n) % track.count];
       final looped = seg.index < baseIdx;
       final camX = playerX * RoadConfig.roadWidth - curveOffset;
-      final camY = playerY + RoadConfig.cameraHeight;
+      view.note(n, camX, dx);
       final camZ = trkPosition - (looped ? track.length : 0);
 
       final camX2 = camX - dx;
@@ -158,6 +161,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
 
       final vision = _vis[_visCount++]..fill(seg, n, _p1, _p2, maxY);
       _byN[n] = vision;
+      view.markSeen(n, maxY);
       if (_firstN < 0) _firstN = n;
       _lastN = n;
       _roads.draw(canvas, vision, size.x);
@@ -170,36 +174,37 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     }
 
     if (_visCount > 0) {
-      traffic?.prepare(trkPosition, fullDistance, playerZ);
+      traffic?.prepare(view, fullDistance, playerZ);
       _drawDecor(canvas, baseIdx);
     }
   }
 
-  /// Draws the scenery and traffic from the far end back to the near end.
+  /// Draws the scenery and rivals from the far end back to the near end.
   void _drawDecor(Canvas canvas, int baseIdx) {
     final near = _byN[_firstN]!;
     final limit = math.min(RoadConfig.decorDistance, _lastN + 1);
 
     for (var n = limit - 1; n >= -RoadConfig.maxPropDepth; n--) {
       final anchor = n < _firstN ? near : _byN[n];
-      if (anchor != null) traffic?.paintAt(canvas, n, anchor, size);
+      if (anchor != null) _drawProps(canvas, baseIdx, n, anchor);
+      traffic?.paintAhead(canvas, n);
+    }
+  }
 
-      final list = props.at((baseIdx + n + track.count * 2) % track.count);
-      if (list.isEmpty) continue;
-      if (anchor == null) continue;
-
-      for (final prop in list) {
-        if (!finish.shows(prop)) continue;
-        if (prop.depth == 0) {
-          _decor.drawBillboard(canvas, anchor, prop, size);
-          continue;
-        }
-        final backN = math.min(n + prop.depth, _lastN);
-        if (backN <= _firstN) continue;
-        final back = _byN[backN] ?? _findBack(backN);
-        if (back == null || back == anchor) continue;
-        _decor.drawBox(canvas, anchor, back, prop, size);
+  /// Draws the props anchored on [row] using the segment [anchor].
+  void _drawProps(Canvas canvas, int baseIdx, int row, VisionSeg anchor) {
+    final list = props.at((baseIdx + row + track.count * 2) % track.count);
+    for (final prop in list) {
+      if (!finish.shows(prop)) continue;
+      if (prop.depth == 0) {
+        _decor.drawBillboard(canvas, anchor, prop, size);
+        continue;
       }
+      final backN = math.min(row + prop.depth, _lastN);
+      if (backN <= _firstN) continue;
+      final back = _byN[backN] ?? _findBack(backN);
+      if (back == null || back == anchor) continue;
+      _decor.drawBox(canvas, anchor, back, prop, size);
     }
   }
 

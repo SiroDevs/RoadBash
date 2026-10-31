@@ -245,6 +245,15 @@
       }
     }
   },
+  "hudRemaining": "-{km} KM",
+  "@hudRemaining": {
+    "description": "Kilometres left on a scene without laps",
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
   "hudSpeedUnit": "KM/H",
   "@hudSpeedUnit": {
     "description": "Speedometer unit"

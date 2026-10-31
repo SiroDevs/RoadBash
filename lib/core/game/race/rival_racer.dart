@@ -12,6 +12,7 @@ import '../road/track/road_section.dart';
 import '../road/traffic/road_actor.dart';
 import 'race_controller.dart';
 import 'rival_brain.dart';
+import 'rival_ground.dart';
 import 'rival_lookout.dart';
 import 'rival_parking.dart';
 import 'rival_pose_driver.dart';
@@ -51,6 +52,7 @@ class RivalRacer implements RoadActor {
   final CrashState _crash = CrashState();
   late final RivalPoseDriver _poseDriver = RivalPoseDriver(sprite.pose, index);
   final RivalLookout _lookout = RivalLookout();
+  final RivalGround _ground = RivalGround();
 
   List<RivalRacer> peers = const [];
 
@@ -108,6 +110,7 @@ class RivalRacer implements RoadActor {
       crossed: _crossed,
     );
     sprite.pose.tumble = _crash.tilt;
+    _ground.updateDust(dt, _speed, down: _crash.down);
   }
 
   /// Slows the rival and shoves it sideways after a hit.
@@ -140,7 +143,14 @@ class RivalRacer implements RoadActor {
       _speed = 0;
       return;
     }
-    final remaining = _stopAt(race, road) - _dist;
+    final remaining = rivalStopDistance(
+          raceFinished: race.finished,
+          raceLength: race.raceLength,
+          playerDistance: road.fullDistance,
+          playerSpeed: road.speed,
+          index: index,
+        ) -
+        _dist;
     final decel = (_speed * _speed / (2 * math.max(remaining, 60))).clamp(
       VehicleConfig.maxSpeed * 0.6,
       VehicleConfig.maxSpeed * 3.5,
@@ -161,20 +171,12 @@ class RivalRacer implements RoadActor {
       _speed = math.max(target, _speed + VehicleConfig.decel * dt);
     }
     _dist += _speed * dt;
+    _speed = _ground.ride(dt, road, _dist, lateral, _speed, rival.focus);
+    if (_ground.fell) _crash.start(index.isEven ? 1.0 : -1.0, 2.0);
     if (_dist < race.raceLength) return;
     _crossed = true;
     final overshoot = (_dist - race.raceLength) / math.max(_speed, 1);
     race.rivalTracker.markFinished(rival.name, race.raceClock - overshoot);
-  }
-
-  /// Returns the distance where the rival should stop after the finish.
-  double _stopAt(RaceController race, RoadRenderer road) {
-    if (race.finished) {
-      final vision = road.speed;
-      final player = road.fullDistance + vision * vision / (2 * -VehicleConfig.braking);
-      return player - 180 * (1 + index ~/ 2);
-    }
-    return race.raceLength + (0.26 + 0.03 * index) * VehicleConfig.maxSpeed;
   }
 
   /// Steers the rival sideways, staying within the guardrail limit.
@@ -212,5 +214,6 @@ class RivalRacer implements RoadActor {
   @override
   void paint(Canvas canvas, Offset ground, double height) {
     sprite.paintAt(canvas, ground, height / RiderSprite.height);
+    _ground.dust.paint(canvas, ground, height, _ground.terrain.dustTone);
   }
 }

@@ -8,6 +8,11 @@ import '../finish/finish_config.dart';
 import '../routes/route_stretch.dart';
 import '../routes/thika/thika_route.dart';
 import '../scene_theme.dart';
+import '../terrain/dirt_zones.dart';
+import '../terrain/terrain.dart';
+import '../terrain/terrain_zones.dart';
+import 'dirt_steps.dart';
+import 'jungle_steps.dart';
 import 'road_section.dart';
 
 /// One road segment with start and end height, curve and section.
@@ -18,12 +23,18 @@ class RoadSegment {
     this.y2,
     this.curve, [
     this.section = Section.plain,
+    this.ground = Ground.firm,
   ]);
   final int index;
   final double y1;
   final double y2;
   final double curve;
   final Section section;
+  final Ground ground;
+
+  /// Returns a copy lying on different ground.
+  RoadSegment withGround(Ground ground) =>
+      RoadSegment(index, y1, y2, curve, section, ground);
 }
 
 /// Builds the list of road segments for a scene.
@@ -148,34 +159,37 @@ class RoadTrack {
     _addRoad(45, 70, 45, 0, 0);
   }
 
-  // Tight, twisting and steep. Hills sum to zero so the lap closes cleanly.
+  // The jungle is one long road, so its old lap is run three times in a row.
   void _buildJungle() {
-    _addRoad(40, 50, 40, 0, 0);
-    _addRoad(40, 40, 40, 3.2, 6);
-    _addRoad(35, 30, 35, -4.0, -6);
-    _addRoad(40, 35, 40, 4.6, 9);
-    _addRoad(35, 30, 35, -3.6, -3);
-    _addRoad(40, 40, 40, -4.8, -6);
-    _addRoad(35, 30, 35, 3.0, 4);
-    _addRoad(45, 40, 45, 0, -4);
-    _addRoad(40, 45, 40, 4.2, 0);
-    _addRoad(40, 40, 40, -3.4, 0);
-    _addRoad(45, 60, 45, 0, 0);
+    for (var repeat = 0; repeat < 3; repeat++) {
+      _addSteps(jungleSteps);
+    }
   }
 
-  // Long open stretches, rolling crests and a few wide bends.
+  /// Adds a list of road steps one after the other.
+  void _addSteps(List<RoadStep> steps) {
+    for (final step in steps) {
+      _addRoad(step.enter, step.hold, step.leave, step.curve, step.hill);
+    }
+  }
+
+  // Long bends, steep climbs and drops, then a flat finish. Loose soil,
+  // stones, potholes and mud pools lie along the way.
   void _buildDirtRoad() {
-    _addRoad(45, 70, 45, 0, 0);
-    _addRoad(50, 50, 50, 1.8, 7);
-    _addRoad(45, 45, 45, -2.2, -3);
-    _addRoad(40, 40, 40, 2.8, -4);
-    _addRoad(45, 60, 45, 0, 5);
-    _addRoad(45, 40, 45, -3.0, -5);
-    _addRoad(40, 50, 40, 3.4, 8);
-    _addRoad(45, 40, 45, -3.8, -8);
-    _addRoad(40, 40, 40, 2.0, 3);
-    _addRoad(45, 40, 45, -1.8, -3);
-    _addRoad(45, 80, 45, 0, 0);
+    _addSteps(dirtSteps);
+    _applyZones(dirtZones, segments.length - FinishConfig.runOut);
+  }
+
+  /// Lays the ground of each zone over the segments built so far.
+  void _applyZones(List<TerrainZone> zones, int courseEnd) {
+    for (final zone in zones) {
+      final start = (zone.from * courseEnd).round();
+      final end = (zone.to * courseEnd).round();
+      for (var index = start; index < end && index < segments.length; index++) {
+        final progress = (index - start) / math.max(1, end - start - 1);
+        segments[index] = segments[index].withGround(zone.groundAt(progress));
+      }
+    }
   }
 
   /// Builds a road from a list of route stretches.

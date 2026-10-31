@@ -8,6 +8,7 @@ import '../props/prop.dart';
 import '../scene_theme.dart';
 import '../track/road_track.dart';
 import 'finish_config.dart';
+import 'kiosk_layout.dart';
 
 /// Dresses the finish of the last lap. Every scene gets chequered cones and a
 /// crowd on its own road; Thika Road also eases into city blocks, because
@@ -21,6 +22,10 @@ void layOutFinish(List<List<Prop>> slots, RoadTrack track, SceneTheme theme) {
     final cityFrom = math.max(1, line - FinishConfig.cityLead);
     _clearScenery(slots, track.count, cityFrom);
     _blocks(slots, track, theme, cityFrom);
+  }
+  if (look.hasMarket) {
+    _clearScenery(slots, track.count, from - 6);
+    layOutKiosks(slots, line, look);
   }
   _posts(slots, from, line, look);
   _laneCones(slots, line, look);

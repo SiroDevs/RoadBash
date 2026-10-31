@@ -12,6 +12,7 @@ import '../../../../common/layout/retro_sizes.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/game/road_game.dart';
 import '../../../../core/router/route_names.dart';
+import '../../../../l10n/gen/app_localizations.dart';
 import '../../../settings/cubit/settings_cubit.dart';
 
 // Quit, lap counter and quick actions shown above the race.
@@ -33,6 +34,14 @@ class RaceTopBar extends StatelessWidget {
   final VoidCallback onTogglePause;
   final VoidCallback onOpenControls;
 
+  /// Returns the lap counter, or the kilometres left on a one-road scene.
+  String _progress(AppLocalizations l10n) {
+    final race = game.race;
+    if (race.countsLaps) return l10n.hudLap(race.lap, race.laps);
+    final km = race.remainingKm(game.road.fullDistance);
+    return l10n.hudRemaining(km.toStringAsFixed(1));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -49,7 +58,7 @@ class RaceTopBar extends StatelessWidget {
             StreamBuilder<int>(
               stream: laps,
               builder: (context, snapshot) => Text(
-                game.isLoaded ? l10n.hudLap(game.race.lap, game.race.laps) : '',
+                game.isLoaded ? _progress(l10n) : '',
                 style: TextStyle(
                   color: Colors.white70,
                   fontFamily: AppConstants.displayFont,

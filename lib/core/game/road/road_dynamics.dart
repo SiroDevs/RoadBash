@@ -4,6 +4,7 @@ import 'dart:math' as math;
 // Project imports:
 import '../rider/crash_state.dart';
 import 'config/guardrail_config.dart';
+import 'terrain/terrain_ride.dart';
 import 'config/vehicle_config.dart';
 import 'scene_theme.dart';
 import 'track/road_track.dart';
@@ -29,6 +30,7 @@ mixin RoadDynamics {
   bool _railLatched = false;
 
   final CrashState crash = CrashState();
+  final TerrainRide ride = TerrainRide();
 
   static const double _analogRate = 24;
 
@@ -36,6 +38,10 @@ mixin RoadDynamics {
   double get speedPercent => speed / VehicleConfig.maxSpeed;
   /// Speed in kilometres per hour.
   double get speedKmh => speedPercent * VehicleConfig.topSpeedKmh;
+  /// True while the bike is kicking up dust or spray.
+  bool get kickingDust =>
+      ride.current.dusty && !crashed && speed > VehicleConfig.maxSpeed * 0.12;
+
   /// True while the rider is thrown off the bike.
   bool get crashed => crash.down;
   /// True when the rider has left the road.
@@ -71,6 +77,14 @@ mixin RoadDynamics {
     if (offRoad && speed > VehicleConfig.offRoadLimit) {
       speed += VehicleConfig.offRoadDecel * dt;
     }
+    speed = ride.step(
+      dt: dt,
+      segment: segment,
+      lateral: playerX,
+      speed: speed,
+      skill: VehicleConfig.playerSkill,
+    );
+    if (ride.fell && !crashed) fall(appliedSteer >= 0 ? 1.0 : -1.0, 2.2);
     const edge = VehicleConfig.maxOffRoad;
     playerX = math.max(-edge, math.min(edge, playerX));
     speed = math.max(0.0, math.min(VehicleConfig.maxSpeed, speed));

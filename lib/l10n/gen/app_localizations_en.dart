@@ -183,6 +183,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String hudRemaining(String km) {
+    return '-$km KM';
+  }
+
+  @override
   String get hudSpeedUnit => 'KM/H';
 
   @override

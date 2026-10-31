@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import '../../../domain/models/scene_id.dart';
 import '../rider/look/rider_look.dart';
 import '../rider/look/rider_looks.dart';
+import '../road/config/road_config.dart';
 import 'race_result.dart';
 import 'rival_tracker.dart';
 
@@ -66,6 +67,13 @@ class RaceController {
 
   /// Total race distance.
   double get raceLength => lapLength * laps - runOut;
+  /// True when the scene is run in laps rather than as one long road.
+  bool get countsLaps => laps > 1;
+
+  /// Kilometres left to the finish line.
+  double remainingKm(double playerDistance) =>
+      math.max(0.0, raceLength - playerDistance) * RoadConfig.unitKm;
+
   /// True while the race is underway.
   bool get running => countdown <= 0 && !finished;
 

@@ -23,7 +23,8 @@ enum PropKind {
   overpass,
   block,
   post,
-  spectator;
+  spectator,
+  kiosk;
 
   /// True for props that cross the whole road.
   bool get spansRoad =>

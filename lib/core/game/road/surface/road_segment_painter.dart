@@ -8,6 +8,7 @@ import '../road_projection.dart';
 import '../scene_theme.dart';
 import '../track/road_section.dart';
 import 'road_surface_palette.dart';
+import 'terrain_painter.dart';
 
 /// Paints the road surface, verges and markings.
 class RoadSegmentPainter {
@@ -22,13 +23,15 @@ class RoadSegmentPainter {
       _ridge = fogRamp(shade(theme.roadLight, 0.08), theme.fog),
       _lane = fogRamp(theme.laneColor, theme.fog),
       _center = fogRamp(theme.centerColor, theme.fog),
-      _palette = RoadSurfacePalette(theme);
+      _palette = RoadSurfacePalette(theme),
+      _terrain = TerrainPainter(theme);
 
   final SceneTheme theme;
   final List<Paint> _shoulder, _shoulderAlt;
   final List<Paint> _kerbLight, _kerbDark;
   final List<Paint> _roadLight, _roadDark, _lane, _center, _rut, _ridge;
   final RoadSurfacePalette _palette;
+  final TerrainPainter _terrain;
   final Path _path = Path();
 
   static const double _kerb = 0.032;
@@ -68,6 +71,7 @@ class RoadSegmentPainter {
     );
 
     if (theme.ruts) _ruts(canvas, vision, fog);
+    _terrain.draw(canvas, vision, fog);
     if (!theme.markings || fog >= _markingCutoff) return;
 
     _path.reset();

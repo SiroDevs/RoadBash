@@ -44,17 +44,15 @@ class RoadProps {
 
   /// Returns the first row of the roadside boxes that run alongside [row].
   ///
-  /// Rows count from the camera's segment [baseIndex]. A box is drawn at its
-  /// first row, so something standing on the road beside it must be drawn
-  /// no earlier than that row. Returns [row] when no box is alongside.
+  /// A box is drawn at its first row, so something standing on the road beside
+  /// it must be drawn no earlier than that row. Returns [row] when none is.
   int coverStart(int baseIndex, int row) {
     final count = _bySegment.length;
     for (var start = row - RoadConfig.maxPropDepth; start < row; start++) {
       final list = _bySegment[(baseIndex + start + count * 2) % count];
       for (final prop in list) {
-        final isBox = prop.depth > 0 &&
-            !prop.kind.spansRoad &&
-            prop.kind != PropKind.tunnel;
+        final isBox =
+            prop.depth > 0 && !prop.kind.spansRoad && prop.kind != PropKind.tunnel;
         if (isBox && start + prop.depth >= row) return start;
       }
     }

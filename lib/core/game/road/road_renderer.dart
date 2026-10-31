@@ -20,7 +20,6 @@ import 'scene_theme.dart';
 import 'surface/road_segment_painter.dart';
 import 'track/road_track.dart';
 import 'traffic/road_traffic.dart';
-import 'traffic/road_view.dart';
 
 /// Draws the road, scenery and traffic of a scene and runs the rider physics.
 class RoadRenderer extends PositionComponent with RoadDynamics {
@@ -49,7 +48,6 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
   final PropPainter _decor;
   final FinishPadPainter _pad;
   RoadTraffic? traffic;
-  late final RoadView view = RoadView(track, props);
 
   double trkPosition = 0;
   double fullDistance = 0;
@@ -113,8 +111,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     final pz = trkPosition + playerZ;
     final pSeg = track.at(pz);
     final playerY = pSeg.y1 + (pSeg.y2 - pSeg.y1) * ((pz % len) / len);
-    final camY = playerY + RoadConfig.cameraHeight;
-    view.begin(size, trkPosition, camY, _spread, baseIdx);
+
     var curveOffset = 0.0;
     var dx = -(base.curve * basePercent);
     var maxY = size.y;
@@ -127,7 +124,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
       final seg = track.segments[(baseIdx + n) % track.count];
       final looped = seg.index < baseIdx;
       final camX = playerX * RoadConfig.roadWidth - curveOffset;
-      view.note(n, camX, dx);
+      final camY = playerY + RoadConfig.cameraHeight;
       final camZ = trkPosition - (looped ? track.length : 0);
 
       final camX2 = camX - dx;
@@ -161,7 +158,6 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
 
       final vision = _vis[_visCount++]..fill(seg, n, _p1, _p2, maxY);
       _byN[n] = vision;
-      view.markSeen(n, maxY);
       if (_firstN < 0) _firstN = n;
       _lastN = n;
       _roads.draw(canvas, vision, size.x);
@@ -174,7 +170,8 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     }
 
     if (_visCount > 0) {
-      traffic?.prepare(view, fullDistance, playerZ);
+      traffic?.prepare(trkPosition, fullDistance, playerZ, props, baseIdx);
+      traffic?.locateBehind(_visionAt, size);
       _drawDecor(canvas, baseIdx);
     }
   }
@@ -187,7 +184,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     for (var n = limit - 1; n >= -RoadConfig.maxPropDepth; n--) {
       final anchor = n < _firstN ? near : _byN[n];
       if (anchor != null) _drawProps(canvas, baseIdx, n, anchor);
-      traffic?.paintAhead(canvas, n);
+      traffic?.paintAt(canvas, n, _visionAt, size);
     }
   }
 
@@ -207,6 +204,9 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
       _decor.drawBox(canvas, anchor, back, prop, size);
     }
   }
+
+  /// Returns the drawn segment of a row, or the nearest one before the road.
+  VisionSeg? _visionAt(int row) => row < _firstN ? _byN[_firstN] : _byN[row];
 
   /// Returns the nearest visible segment at or before an index.
   VisionSeg? _findBack(int index) {

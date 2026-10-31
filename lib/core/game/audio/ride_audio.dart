@@ -88,6 +88,12 @@ class RideAudio {
     _wind.set(volume: _clamp(_fx * sp * 0.5), rate: 0.8 + 0.5 * sp);
   }
 
+  /// Plays the sound of bikes hitting; a fall sounds heavier.
+  void impact(double strength, bool knockedOff) {
+    final loudness = _fx * (0.55 + 0.45 * strength);
+    service.playSfx(knockedOff ? Sfx.crash : Sfx.bump, loudness);
+  }
+
   /// Plays one-shot sounds such as the countdown.
   void _events() {
     if (race.countdown > 0) {

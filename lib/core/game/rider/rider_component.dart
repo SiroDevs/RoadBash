@@ -56,6 +56,7 @@ class RiderComponent extends PositionComponent {
     final spin = math.min(road.speed, VehicleConfig.maxSpeed * 0.2);
     pose.phase = (pose.phase + spin * dt / 900) % 1;
 
+    pose.tumble = road.crash.tilt;
     pose.foot += ((road.restingOnFoot ? 1.0 : 0.0) - pose.foot) * math.min(1.0, dt * 5);
 
     final bank = (road.appliedSteer * 0.30 + road.curveFelt * 0.040) *

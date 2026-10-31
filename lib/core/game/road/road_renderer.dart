@@ -78,7 +78,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
   @override
   void update(double dt) {
     final seg = track.at(trkPosition + playerZ);
-    steerToward(dt, locked ? 0 : steer);
+    steerToward(dt, locked || crashed ? 0 : steer);
     if (locked) {
       speed = 0;
       skidding = false;

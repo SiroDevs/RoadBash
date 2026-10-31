@@ -19,6 +19,7 @@ import 'hud/hud_strings.dart';
 import 'input/road_input.dart';
 import 'race/race_controller.dart';
 import 'race/race_result.dart';
+import 'race/rider_contacts.dart';
 import 'race/rival_racer.dart';
 import 'rider/rider_component.dart';
 import 'road/road_renderer.dart';
@@ -51,6 +52,9 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
   late final RaceController race;
   late final List<RivalRacer> racers;
   RideAudio? _ride;
+  late final RiderContacts _contacts = RiderContacts(
+    onImpact: (strength, knockedOff) => _ride?.impact(strength, knockedOff),
+  );
 
   bool _menuPaused = false;
   bool _notified = false;
@@ -105,6 +109,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     for (final r in racers) {
       r.update(dt, race, road);
     }
+    _contacts.update(dt, race, road, racers);
 
     if (race.finished && !finishing) {
       finishing = true;

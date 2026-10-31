@@ -5,17 +5,28 @@ import 'dart:math' as math;
 import '../../../domain/models/scene_id.dart';
 import '../rider/look/rider_look.dart';
 import '../rider/look/rider_looks.dart';
-import '../road/config/vehicle_config.dart';
 import 'race_result.dart';
+import 'rival_tracker.dart';
 
-/// A rival rider's name, pace, phase and look.
+/// A rival rider's name, pace, phase, look and temperament.
 class RiderRival {
-  const RiderRival(this.name, this.pace, this.phase, [this.look = RiderLook.main]);
+  const RiderRival(
+    this.name,
+    this.pace,
+    this.phase, [
+    this.look = RiderLook.main,
+    this.aggression = 0.5,
+    this.focus = 0.5,
+    this.grit = 0.5,
+  ]);
 
   final String name;
   final double pace;
   final double phase;
   final RiderLook look;
+  final double aggression;
+  final double focus;
+  final double grit;
 }
 
 /// Tracks the countdown, laps, finish and rival positions.
@@ -30,15 +41,12 @@ class RaceController {
   });
 
   static const List<RiderRival> defaultRivals = [
-    RiderRival('Mike', 0.86, 0.0, RiderLooks.mike),
-    RiderRival('Bose', 0.82, 1.7, RiderLooks.bose),
-    RiderRival('Sam', 0.78, 3.1, RiderLooks.sam),
-    RiderRival('Kamau', 0.72, 4.4, RiderLooks.kamau),
-    RiderRival('Brayo', 0.66, 5.6, RiderLooks.brayo),
+    RiderRival('Mike', 0.86, 0.0, RiderLooks.mike, 0.8, 0.8, 0.7),
+    RiderRival('Bose', 0.82, 1.7, RiderLooks.bose, 0.5, 0.6, 0.8),
+    RiderRival('Sam', 0.78, 3.1, RiderLooks.sam, 0.65, 0.4, 0.5),
+    RiderRival('Kamau', 0.72, 4.4, RiderLooks.kamau, 0.3, 0.85, 0.4),
+    RiderRival('Brayo', 0.66, 5.6, RiderLooks.brayo, 0.9, 0.3, 0.6),
   ];
-
-  static const double _surgeAmp = 2500;
-  static const double _surgeFreq = 0.35;
 
   final SceneId scene;
   final int laps;
@@ -47,6 +55,7 @@ class RaceController {
   final double runOut;
   final String playerName;
   final List<RiderRival> rivals;
+  final RivalTracker rivalTracker = RivalTracker();
 
   double countdown = 3.0, elapsed = 0, raceClock = 0;
   double finishTime = 0, progress = 0;
@@ -59,26 +68,6 @@ class RaceController {
   double get raceLength => lapLength * laps - runOut;
   /// True while the race is underway.
   bool get running => countdown <= 0 && !finished;
-
-  /// Returns how far a rival has gone at [time], with pace surges.
-  double rivalDistance(RiderRival rival, double time) =>
-      rival.pace * VehicleConfig.maxSpeed * time +
-      _surgeAmp * (math.sin(_surgeFreq * time + rival.phase) - math.sin(rival.phase));
-
-  /// Returns the time when a rival reaches the finish.
-  double rivalFinishTime(RiderRival rival) {
-    var lo = 0.0;
-    var hi = raceLength / (rival.pace * VehicleConfig.maxSpeed) + 20;
-    for (var i = 0; i < 40; i++) {
-      final mid = (lo + hi) / 2;
-      if (rivalDistance(rival, mid) < raceLength) {
-        lo = mid;
-      } else {
-        hi = mid;
-      }
-    }
-    return hi;
-  }
 
   /// Advances the countdown, clock and finish state.
   void update(double dt, double playerDistance, double playerSpeed) {
@@ -97,7 +86,7 @@ class RaceController {
     var bestSigned = 0.0;
     RiderRival? best;
     for (final r in rivals) {
-      final signed = rivalDistance(r, elapsed) - playerDistance;
+      final signed = rivalTracker.distanceOf(r.name) - playerDistance;
       if (signed > 0) ahead++;
       if (signed.abs() < bestDiff) {
         bestDiff = signed.abs();
@@ -120,7 +109,7 @@ class RaceController {
   RaceResult buildResult() {
     final times = <(String, double, bool)>[
       (playerName, finishTime, true),
-      for (final r in rivals) (r.name, rivalFinishTime(r), false),
+      for (final r in rivals) (r.name, rivalTracker.finishTimeOf(r.name, raceLength, elapsed), false),
     ]..sort((a, b) => a.$2.compareTo(b.$2));
     return RaceResult(
       scene: scene,

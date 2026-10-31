@@ -72,6 +72,9 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
       for (var i = 0; i < race.rivals.length; i++)
         RivalRacer(race.rivals[i], i, theme.lanes),
     ];
+    for (final racer in racers) {
+      racer.peers = racers;
+    }
     road.traffic = RoadTraffic(racers, theme.lanes);
     await addAll([
       road,

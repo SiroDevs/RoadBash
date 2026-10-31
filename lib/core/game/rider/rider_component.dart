@@ -9,6 +9,7 @@ import 'package:flame/components.dart';
 import '../hud/dashboard_layout.dart';
 import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
+import 'dust_trail.dart';
 import 'look/rider_look.dart';
 import 'rider_painter.dart';
 import 'rider_pose.dart';
@@ -30,6 +31,7 @@ class RiderComponent extends PositionComponent {
   late final RiderSprite _sprite = RiderSprite(look: look, rig: rig);
   /// Returns the rider's current pose.
   RiderPose get _pose => _sprite.pose;
+  final DustTrail _dust = DustTrail();
   double _t = 0;
 
   @override
@@ -56,6 +58,7 @@ class RiderComponent extends PositionComponent {
     final spin = math.min(road.speed, VehicleConfig.maxSpeed * 0.2);
     pose.phase = (pose.phase + spin * dt / 900) % 1;
 
+    _dust.update(dt, emitting: road.kickingDust, strength: sp);
     pose.tumble = road.crash.tilt;
     pose.foot += ((road.restingOnFoot ? 1.0 : 0.0) - pose.foot) * math.min(1.0, dt * 5);
 
@@ -69,7 +72,7 @@ class RiderComponent extends PositionComponent {
     final pitch = road.brake ? -1.0 : (road.throttle ? 0.5 : 0.0);
     pose.pitch += (pitch * sp - pose.pitch) * math.min(1.0, dt * 6);
 
-    final rough = road.offRoad ? sp : 0.0;
+    final rough = road.offRoad || road.ride.current.rough ? sp : 0.0;
     pose.shake = rough == 0 ? 0 : math.sin(_t * 57) * 2.6 * rough;
     pose.bob = math.sin(_t * 13) * 1.1 * sp +
         math.sin(_t * 41) * 2.2 * rough +
@@ -80,5 +83,11 @@ class RiderComponent extends PositionComponent {
   void render(Canvas canvas) {
     canvas.scale(size.y / RiderPainter.height);
     _sprite.painter.paint(canvas, _pose);
+    _dust.paint(
+      canvas,
+      const Offset(RiderPartPainter.midX, RiderPartPainter.groundY),
+      RiderPainter.height,
+      road.ride.current.dustTone,
+    );
   }
 }

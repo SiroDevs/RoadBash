@@ -18,7 +18,10 @@ enum FinishLook {
 
   /// Thika Road: Museum Hill is the way into Nairobi, so the last stretch
   /// eases into city blocks and a skyline instead of changing at the line.
-  cityEntry(padRows: 4, chequerRows: 4);
+  cityEntry(padRows: 4, chequerRows: 4),
+
+  /// The dirt road: flat ground with shops and kiosks lined up either side.
+  market(padRows: 4, chequerRows: 4);
 
   const FinishLook({required this.padRows, required this.chequerRows});
 
@@ -29,6 +32,8 @@ enum FinishLook {
   int get padLength => padRows * FinishConfig.rowSegments;
   /// True for the city entry finish.
   bool get city => this == cityEntry;
+  /// True for the finish lined with shops and kiosks.
+  bool get hasMarket => this == FinishLook.market;
   /// True for the zebra crossing finish.
   bool get zebraCrossing => this == zebra;
 
@@ -45,6 +50,7 @@ abstract final class FinishConfig {
   static FinishLook lookFor(SceneId scene) => switch (scene) {
     SceneId.city => FinishLook.zebra,
     SceneId.thikaRoad => FinishLook.cityEntry,
+    SceneId.dirtRoad => FinishLook.market,
     _ => FinishLook.plain,
   };
 

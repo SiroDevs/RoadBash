@@ -25,4 +25,8 @@ abstract final class VehicleConfig {
 
   static const double crashDrag = -maxSpeed * 1.4;
   static const double shoveDecay = 4;
+
+  static const double climbDrag = maxSpeed * 0.75;
+  static const double terrainDrag = maxSpeed * 1.3;
+  static const double playerSkill = 0.5;
 }

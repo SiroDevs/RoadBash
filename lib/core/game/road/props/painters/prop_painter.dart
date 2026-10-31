@@ -11,6 +11,7 @@ import '../prop.dart';
 import 'building_painter.dart';
 import 'finish_painter.dart';
 import 'guardrail_painter.dart';
+import 'kiosk_painter.dart';
 import 'slip_road_painter.dart';
 import 'span/span_painter.dart';
 import 'street_furniture_painter.dart';
@@ -29,7 +30,8 @@ class PropPainter {
         _walls = WallPainter(theme),
         _guardrails = GuardrailPainter(theme),
         _slipRoads = SlipRoadPainter(theme),
-        _tunnels = TunnelPainter(theme);
+        _tunnels = TunnelPainter(theme),
+        _kiosks = KioskPainter(theme);
 
   final BuildingPainter _buildings;
   final TreePainter _trees;
@@ -40,6 +42,7 @@ class PropPainter {
   final GuardrailPainter _guardrails;
   final SlipRoadPainter _slipRoads;
   final TunnelPainter _tunnels;
+  final KioskPainter _kiosks;
 
   /// Draws box-shaped props such as buildings and walls.
   void drawBox(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
@@ -52,6 +55,8 @@ class PropPainter {
         _slipRoads.draw(canvas, near, far, prop, size);
       case PropKind.tunnel:
         _tunnels.draw(canvas, near, far, prop, size);
+      case PropKind.kiosk:
+        _kiosks.draw(canvas, near, far, prop, size);
       default:
         _buildings.draw(canvas, near, far, prop, size);
     }

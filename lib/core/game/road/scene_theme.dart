@@ -157,7 +157,7 @@ class SceneTheme {
 
   static const SceneTheme jungle = SceneTheme(
     id: SceneId.jungle,
-    laps: 3,
+    laps: 1,
     lanes: 2,
     skyTop: Color(0xFF5E9DB0),
     skyHorizon: Color(0xFFCFE6D2),
@@ -181,7 +181,7 @@ class SceneTheme {
 
   static const SceneTheme dirtRoad = SceneTheme(
     id: SceneId.dirtRoad,
-    laps: 4,
+    laps: 1,
     lanes: 2,
     skyTop: Color(0xFF5B96D9),
     skyHorizon: Color(0xFFF3DDB8),

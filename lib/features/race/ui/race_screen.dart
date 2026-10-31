@@ -69,6 +69,7 @@ class _RaceScreenState extends State<RaceScreen> {
         speedUnit: l10n.hudSpeedUnit,
         rpmUnit: l10n.hudRpmUnit,
         lap: l10n.hudLap,
+        remaining: l10n.hudRemaining,
       ),
     );
   }

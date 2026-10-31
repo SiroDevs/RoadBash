@@ -140,10 +140,12 @@ class DashboardHud extends PositionComponent {
       _white,
     );
 
-    // Laps
+    // Laps, or the kilometres left when the scene is one long road
     paintText(
       canva,
-      strings.lap(race.lap, race.laps),
+      race.countsLaps
+          ? strings.lap(race.lap, race.laps)
+          : strings.remaining(race.remainingKm(road.fullDistance).toStringAsFixed(1)),
       at(0.13, 0.4),
       layout.ph * 0.1,
       _white,

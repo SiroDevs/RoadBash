@@ -392,6 +392,12 @@ abstract class AppLocalizations {
   /// **'LAP {lap}/{laps}'**
   String hudLap(int lap, int laps);
 
+  /// Kilometres left on a scene without laps
+  ///
+  /// In en, this message translates to:
+  /// **'-{km} KM'**
+  String hudRemaining(String km);
+
   /// Speedometer unit
   ///
   /// In en, this message translates to:

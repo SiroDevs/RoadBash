@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
 import '../../../common/constants/app_assets.dart';

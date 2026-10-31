@@ -40,6 +40,7 @@ class RiderProfile extends ProfileInk {
     for (final side in const [-1.0, 1.0]) {
       final center = Offset(side * ProfileBike.wheelOffset, -radius);
       disc(canvas, const Color(0xFF1A1A1A), center, radius);
+      _treadTicks(canvas, center, spin);
       disc(canvas, const Color(0xFFBDBDBD), center, radius - 9);
       disc(canvas, const Color(0xFF2A2A2A), center, radius - 13);
       for (var spoke = 0; spoke < 4; spoke++) {
@@ -49,6 +50,23 @@ class RiderProfile extends ProfileInk {
         stroke(canvas, const Color(0xFF8A8A8A), 2.2, center, tip);
       }
       disc(canvas, const Color(0xFF555555), center, 5);
+    }
+  }
+
+  /// Draws the tread blocks around the tyre so they turn with the wheel.
+  void _treadTicks(Canvas canvas, Offset center, double spin) {
+    const radius = ProfileBike.wheelRadius;
+    const blocks = 20;
+    for (var block = 0; block < blocks; block++) {
+      final angle = spin + block * 2 * math.pi / blocks;
+      final direction = Offset(math.cos(angle), math.sin(angle));
+      stroke(
+        canvas,
+        const Color(0xFF4A4A4A),
+        2.4,
+        center + direction * (radius - 5),
+        center + direction * (radius - 1),
+      );
     }
   }
 

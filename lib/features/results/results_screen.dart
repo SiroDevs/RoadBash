@@ -26,10 +26,7 @@ class ResultsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final result = outcome.result;
-    final rows = [
-      ...result.rows.take(3),
-      if (result.player.place > 3) result.player,
-    ];
+    final rows = result.rows;
     final sizes = context.sizes;
     return RetroPage(
       child: ResponsiveScrollBody(

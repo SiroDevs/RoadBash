@@ -134,6 +134,7 @@ class TailParts extends RiderPartPainter {
       ),
       paint,
     );
+    _treadMarks(paint, canva, pose);
     paint
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.25
@@ -146,5 +147,28 @@ class TailParts extends RiderPartPainter {
       ),
       paint,
     );
+  }
+
+  /// Paints the tread chevrons that roll down the rear tyre with the wheel.
+  void _treadMarks(Paint paint, Canvas canva, RiderPose pose) {
+    const tyre = Rect.fromLTRB(48.0, 78.0, 72.0, 164.0);
+    const pitch = 7.0;
+    const tilt = 3.0;
+    final roll = (pose.phase * 3 % 1) * pitch;
+    paint
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.3
+      ..strokeCap = StrokeCap.butt
+      ..color = const Color(0xFF454545);
+    canva
+      ..save()
+      ..clipRRect(RRect.fromRectXY(tyre, 11.5, 11.5));
+    for (var row = tyre.top - pitch + roll; row < tyre.bottom; row += pitch) {
+      canva
+        ..drawLine(Offset(tyre.left + 2, row), Offset(tyre.center.dx, row + tilt), paint)
+        ..drawLine(Offset(tyre.center.dx, row + tilt), Offset(tyre.right - 2, row), paint);
+    }
+    canva.restore();
+    paint.strokeCap = StrokeCap.round;
   }
 }

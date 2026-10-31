@@ -22,4 +22,7 @@ abstract final class VehicleConfig {
 
   static const double railImpactKeep = 0.9;
   static const double railScrape = -maxSpeed / 3;
+
+  static const double crashDrag = -maxSpeed * 1.4;
+  static const double shoveDecay = 4;
 }

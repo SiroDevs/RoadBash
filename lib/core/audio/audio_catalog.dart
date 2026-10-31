@@ -32,7 +32,9 @@ enum Sfx {
   go,
   shift,
   finish,
-  foot;
+  foot,
+  bump,
+  crash;
 
   /// Returns the asset path of the sound effect.
   String get asset => 'audio/sfx/$name.wav';

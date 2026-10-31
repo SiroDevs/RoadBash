@@ -6,6 +6,8 @@ class RiderPose {
 
   double shake = 0;
 
+  double tumble = 0;
+
   double bob = 0;
 
   double pitch = 0;

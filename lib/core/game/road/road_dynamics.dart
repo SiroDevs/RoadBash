@@ -2,6 +2,7 @@
 import 'dart:math' as math;
 
 // Project imports:
+import '../rider/crash_state.dart';
 import 'config/guardrail_config.dart';
 import 'config/vehicle_config.dart';
 import 'scene_theme.dart';
@@ -24,7 +25,10 @@ mixin RoadDynamics {
   bool skidding = false;
   bool railContact = false;
   int gear = 1;
+  double shove = 0;
   bool _railLatched = false;
+
+  final CrashState crash = CrashState();
 
   static const double _analogRate = 24;
 
@@ -32,24 +36,32 @@ mixin RoadDynamics {
   double get speedPercent => speed / VehicleConfig.maxSpeed;
   /// Speed in kilometres per hour.
   double get speedKmh => speedPercent * VehicleConfig.topSpeedKmh;
+  /// True while the rider is thrown off the bike.
+  bool get crashed => crash.down;
   /// True when the rider has left the road.
   bool get offRoad => playerX < -1 || playerX > 1;
   /// True when the bike is almost stopped.
   bool get stopped => speed < VehicleConfig.stoppedSpeed;
   /// True when stopped without throttle, so the rider has a foot down.
-  bool get restingOnFoot => stopped && !throttle;
+  bool get restingOnFoot => stopped && !throttle && !crashed;
   /// Engine load from the pedals: braking, idling or full throttle.
   double get engineLoad => brake ? 0.3 : (throttle ? 1.0 : 0.5);
 
   // Advances speed, lateral position and skid state by one frame.
   void stepDynamics(double dt, RoadSegment segment, double speedRatio) {
+    crash.update(dt);
     final authority = 1 - VehicleConfig.steerHighSpeedDamp * speedRatio;
     playerX +=
         dt * VehicleConfig.steerRate * appliedSteer * speedRatio * authority;
     playerX -=
         dt * VehicleConfig.centrifugal * segment.curve * speedRatio * speedRatio;
 
-    if (brake) {
+    playerX += shove * dt;
+    shove *= math.exp(-VehicleConfig.shoveDecay * dt);
+
+    if (crashed) {
+      speed += VehicleConfig.crashDrag * dt;
+    } else if (brake) {
       speed += VehicleConfig.braking * dt;
     } else if (throttle) {
       speed += VehicleConfig.accel * dt;
@@ -71,9 +83,19 @@ mixin RoadDynamics {
     final cornering = brake || sharpTurn;
     skidding =
         (speed > VehicleConfig.maxSpeed * 0.3 && cornering) ||
-        (railContact && speed > VehicleConfig.maxSpeed * 0.15);
+        (railContact && speed > VehicleConfig.maxSpeed * 0.15) ||
+        (crashed && speed > VehicleConfig.maxSpeed * 0.1);
     updateEngine(dt, speedRatio);
   }
+
+  /// Takes a hit from another bike: loses speed and is shoved sideways.
+  void bump({required double speedLoss, required double sideShove}) {
+    speed *= 1 - speedLoss;
+    shove += sideShove;
+  }
+
+  /// Throws the rider off the bike toward [side] for [seconds].
+  void fall(double side, double seconds) => crash.start(side, seconds);
 
   // Eases the applied steering toward the requested target.
   void steerToward(double dt, double target) {

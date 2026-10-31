@@ -49,7 +49,7 @@ class RiderPainter {
 
     canva.save();
     canva.translate(RiderPartPainter.midX + pose.shake, RiderPartPainter.groundY);
-    canva.rotate(pose.lean);
+    canva.rotate(pose.lean + pose.tumble);
     canva.translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
 
     canva.save();

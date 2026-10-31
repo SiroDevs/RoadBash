@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,14 +20,17 @@ import '../../../common/widgets/retro/page/retro_scaffold.dart';
 import '../../../common/widgets/retro/retro_style.dart';
 import '../../../common/l10n/l10n_extension.dart';
 import '../../../core/audio/audio_catalog.dart';
+import '../../../core/game/input/tilt/tilt_access.dart';
 import '../../../core/game/road/track/road_track.dart';
 import '../../../core/layout/responsive_layout_builder.dart';
 import '../../../core/router/route_names.dart';
 import '../../../domain/models/scene_id.dart';
 import '../../progress/cubit/progress_cubit.dart';
+import '../../settings/cubit/settings_cubit.dart';
 import '../cubit/menu_cubit.dart';
 import '../cubit/menu_target.dart';
 import '../cubit/scene_order.dart';
+import 'widgets/menu_fixed_layout.dart';
 import 'widgets/menu_grid.dart';
 import 'widgets/menu_target_info.dart';
 import 'widgets/rider_bar.dart';
@@ -44,7 +50,17 @@ class _MenuScreenState extends State<MenuScreen> {
     for (final id in SceneId.values) id: RoadTrack.raceKm(id),
   };
 
-  static const double _cardScale = 0.75;
+  @override
+  void initState() {
+    super.initState();
+    _prepareTilt();
+  }
+
+  /// Asks for tilt access early so steering is ready when a race starts.
+  void _prepareTilt() {
+    final profile = context.read<SettingsCubit>().state.profile;
+    unawaited(TiltAccess.instance.prepareFor(profile));
+  }
 
   /// Selects a menu target and opens the scene's race or reception.
   void _open(MenuCubit menu, MenuTarget target) {
@@ -58,8 +74,10 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   /// First tap highlights an entry, a tap on the highlighted entry opens it.
-  void _tap(MenuCubit menu, MenuTarget selected, MenuTarget target) =>
-      target == selected ? _open(menu, target) : menu.select(target);
+  void _tap(MenuCubit menu, MenuTarget selected, MenuTarget target) {
+    _prepareTilt();
+    target == selected ? _open(menu, target) : menu.select(target);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +147,13 @@ class _MenuScreenState extends State<MenuScreen> {
       onTap: (target) => _tap(menu, selected, target),
     );
 
+    final fixed = MenuFixedLayout(
+      title: title,
+      info: info,
+      card: card,
+      entries: entries,
+    );
+
     return ResponsiveLayoutBuilder(
       small: (_, __) => ResponsiveScrollBody(
         child: Column(
@@ -138,7 +163,9 @@ class _MenuScreenState extends State<MenuScreen> {
             SizedBox(height: sizes.gap),
             Center(
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: sizes.cardMaxW * _cardScale),
+                constraints: BoxConstraints(
+                  maxWidth: sizes.cardMaxW * MenuFixedLayout.cardScale,
+                ),
                 child: card,
               ),
             ),
@@ -151,55 +178,8 @@ class _MenuScreenState extends State<MenuScreen> {
           ],
         ),
       ),
-      medium: (_, __) => _fixed(sizes, title, info, card, entries),
-      large: (_, __) => _fixed(sizes, title, info, card, entries),
+      medium: (_, __) => fixed,
+      large: (_, __) => fixed,
     );
   }
-
-  /// Lays out the title, info, card and entries in a fixed column.
-  Widget _fixed(
-    RetroSizes sizes,
-    Widget title,
-    Widget info,
-    Widget card,
-    Widget entries,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        title,
-        SizedBox(height: sizes.gapSmall),
-        LayoutBuilder(
-          builder: (context, box) => box.maxWidth > 640
-              ? Row(
-                  children: [
-                    SingleChildScrollView(child: info).expanded(),
-                    SizedBox(width: sizes.gap * 1.5),
-                    _smaller(card).center().expanded(),
-                  ],
-                )
-              : Column(
-                  children: [
-                    _smaller(card).center().expanded(),
-                    SizedBox(height: sizes.gapSmall),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight: box.maxHeight * 0.45,
-                      ),
-                      child: SingleChildScrollView(child: info),
-                    ),
-                  ],
-                ),
-        ).expanded(),
-        SizedBox(height: sizes.gapSmall),
-        const RiderBar(),
-        SizedBox(height: sizes.gapSmall * 0.75),
-        entries,
-      ],
-    );
-  }
-
-  /// Shrinks the scene card to fit beside the entries.
-  Widget _smaller(Widget card) =>
-      FractionallySizedBox(widthFactor: _cardScale, child: card);
 }

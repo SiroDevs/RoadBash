@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:async';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,8 +15,10 @@ import '../../common/l10n/l10n_extension.dart';
 import '../../common/layout/retro_sizes.dart';
 import '../../common/widgets/retro/page/retro_page.dart';
 import '../../common/widgets/retro/retro_style.dart';
+import '../../core/game/input/tilt/tilt_access.dart';
 import '../../core/router/route_names.dart';
 import '../auth/cubit/auth_cubit.dart';
+import '../settings/cubit/settings_cubit.dart';
 
 /// Notice screen with scrolling text shown before sign-in.
 class NoticeScreen extends StatefulWidget {
@@ -55,9 +60,13 @@ class _NoticeScreenState extends State<NoticeScreen> {
   }
 
   /// Leaves the notice screen once, to the menu or sign-in.
+  ///
+  /// Also asks for tilt access, because a tap is when browsers allow it.
   void _continue() {
     if (!mounted || _left) return;
     _left = true;
+    final profile = context.read<SettingsCubit>().state.profile;
+    unawaited(TiltAccess.instance.prepareFor(profile));
     final signedIn = context.read<AuthCubit>().state.isSignedIn;
     context.goNamed(signedIn ? RouteNames.menu : RouteNames.signIn);
   }

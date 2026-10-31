@@ -6,6 +6,7 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 
 // Project imports:
+import 'tilt_access.dart';
 import 'tilt_source.dart';
 
 const double _minInPlane = 2.5;
@@ -47,12 +48,13 @@ class TiltController {
   /// Starts listening to tilt sensor samples.
   void start() {
     if (_source != null) return;
-    final source = createTiltSource();
+    final access = TiltAccess.instance;
+    final source = access.source;
     _source = source;
-    if (source.needsPermission) {
-      needsPermission.value = true;
-    } else {
+    if (access.ready || !source.needsPermission) {
       _listen(source);
+    } else {
+      needsPermission.value = true;
     }
   }
 
@@ -60,9 +62,9 @@ class TiltController {
   Future<void> requestPermission() async {
     final source = _source;
     if (source == null) return;
-    final granted = await source.requestPermission();
+    await TiltAccess.instance.request();
     if (_source != source) return;
-    if (granted) {
+    if (TiltAccess.instance.ready) {
       needsPermission.value = false;
       _listen(source);
     }
@@ -79,7 +81,6 @@ class TiltController {
   void stop() {
     _sub?.cancel();
     _sub = null;
-    _source?.dispose();
     _source = null;
     _value = 0;
     _lastMicros = 0;

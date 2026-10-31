@@ -2,27 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../../../common/constants/app_assets.dart';
 import '../../../../common/l10n/l10n_extension.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/controls/click_sound.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
-import '../../../../domain/models/scene_id.dart';
-import '../../cubit/menu_target.dart';
-
-/// Returns the preview image asset for a scene.
-String sceneAsset(SceneId id) => switch (id) {
-  SceneId.city => AppAssets.sceneCity,
-  SceneId.suburbs => AppAssets.sceneSuburbs,
-  SceneId.thikaRoad => AppAssets.sceneThikaRoad,
-  SceneId.jungle => AppAssets.sceneJungle,
-  SceneId.dirtRoad => AppAssets.sceneDirtRoad,
-};
-
-/// The picture of a menu entry; the reception has its own.
-String menuAsset(MenuTarget target) => target.isReception
-    ? AppAssets.restroom
-    : sceneAsset(target.scene!);
 
 /// One entry of the menu grid: its picture and name, highlighted when
 /// selected, with a small "most played" hint on the player's favourite scene.

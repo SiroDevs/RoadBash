@@ -11,7 +11,6 @@ import '../road/road_renderer.dart';
 import '../road/track/road_section.dart';
 import '../road/traffic/road_actor.dart';
 import 'race_controller.dart';
-import 'shown_offset.dart';
 
 /// Computer-controlled rival drawn as a bike on the road.
 class RivalRacer implements RoadActor {
@@ -39,15 +38,13 @@ class RivalRacer implements RoadActor {
   final int lanes;
   final RiderSprite sprite;
 
-  final ShownOffset _shown = ShownOffset();
   double _dist = 0, _speed = 0, _visLead = 0, _lead = 0;
-  double _drawnDistance = 0;
   double _lateral = 0, _gridLateral = 0, _latVel = 0, _t = 0;
   bool _crossed = false;
   double _swing = 0;
 
   @override
-  double get distance => _drawnDistance;
+  double get distance => _dist + _visLead;
 
   @override
   double get lateral => _lateral;
@@ -68,8 +65,6 @@ class RivalRacer implements RoadActor {
     _advance(dt, race, road);
     final remaining = (1 - clock / 4).clamp(0.0, 1.0).toDouble();
     _visLead = _lead * remaining * remaining;
-    final offset = _shown.follow(dt, _dist + _visLead - road.fullDistance);
-    _drawnDistance = road.fullDistance + offset;
 
     final seg = road.track.at(distance + road.playerZ);
     _steerLateral(dt, race, road, seg.section, clock);

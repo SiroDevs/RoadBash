@@ -170,7 +170,8 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     }
 
     if (_visCount > 0) {
-      traffic?.prepare(trkPosition, fullDistance, playerZ);
+      traffic?.prepare(trkPosition, fullDistance, playerZ, props, baseIdx);
+      traffic?.locateBehind(_visionAt, size);
       _drawDecor(canvas, baseIdx);
     }
   }
@@ -182,26 +183,30 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
 
     for (var n = limit - 1; n >= -RoadConfig.maxPropDepth; n--) {
       final anchor = n < _firstN ? near : _byN[n];
-      if (anchor != null) traffic?.paintAt(canvas, n, anchor, size);
-
-      final list = props.at((baseIdx + n + track.count * 2) % track.count);
-      if (list.isEmpty) continue;
-      if (anchor == null) continue;
-
-      for (final prop in list) {
-        if (!finish.shows(prop)) continue;
-        if (prop.depth == 0) {
-          _decor.drawBillboard(canvas, anchor, prop, size);
-          continue;
-        }
-        final backN = math.min(n + prop.depth, _lastN);
-        if (backN <= _firstN) continue;
-        final back = _byN[backN] ?? _findBack(backN);
-        if (back == null || back == anchor) continue;
-        _decor.drawBox(canvas, anchor, back, prop, size);
-      }
+      if (anchor != null) _drawProps(canvas, baseIdx, n, anchor);
+      traffic?.paintAt(canvas, n, _visionAt, size);
     }
   }
+
+  /// Draws the props anchored on [row] using the segment [anchor].
+  void _drawProps(Canvas canvas, int baseIdx, int row, VisionSeg anchor) {
+    final list = props.at((baseIdx + row + track.count * 2) % track.count);
+    for (final prop in list) {
+      if (!finish.shows(prop)) continue;
+      if (prop.depth == 0) {
+        _decor.drawBillboard(canvas, anchor, prop, size);
+        continue;
+      }
+      final backN = math.min(row + prop.depth, _lastN);
+      if (backN <= _firstN) continue;
+      final back = _byN[backN] ?? _findBack(backN);
+      if (back == null || back == anchor) continue;
+      _decor.drawBox(canvas, anchor, back, prop, size);
+    }
+  }
+
+  /// Returns the drawn segment of a row, or the nearest one before the road.
+  VisionSeg? _visionAt(int row) => row < _firstN ? _byN[_firstN] : _byN[row];
 
   /// Returns the nearest visible segment at or before an index.
   VisionSeg? _findBack(int index) {

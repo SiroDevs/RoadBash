@@ -1,4 +1,5 @@
 // Project imports:
+import '../config/road_config.dart';
 import '../finish/finish_layout.dart';
 import '../routes/thika/thika_route.dart';
 import '../scene_theme.dart';
@@ -40,4 +41,21 @@ class RoadProps {
 
   /// Returns the props anchored on a segment.
   List<Prop> at(int segment) => _bySegment[segment];
+
+  /// Returns the first row of the roadside boxes that run alongside [row].
+  ///
+  /// A box is drawn at its first row, so something standing on the road beside
+  /// it must be drawn no earlier than that row. Returns [row] when none is.
+  int coverStart(int baseIndex, int row) {
+    final count = _bySegment.length;
+    for (var start = row - RoadConfig.maxPropDepth; start < row; start++) {
+      final list = _bySegment[(baseIndex + start + count * 2) % count];
+      for (final prop in list) {
+        final isBox =
+            prop.depth > 0 && !prop.kind.spansRoad && prop.kind != PropKind.tunnel;
+        if (isBox && start + prop.depth >= row) return start;
+      }
+    }
+    return row;
+  }
 }

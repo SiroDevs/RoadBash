@@ -185,7 +185,7 @@ class RivalRacer implements RoadActor {
   }
 
   @override
-  void paint(Canvas canvas, Offset ground, double height, double yaw) {
-    sprite.paintAt(canvas, ground, height / RiderSprite.height, yaw: yaw);
+  void paint(Canvas canvas, Offset ground, double height) {
+    sprite.paintAt(canvas, ground, height / RiderSprite.height);
   }
 }

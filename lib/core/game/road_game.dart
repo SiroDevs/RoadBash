@@ -23,7 +23,6 @@ import 'race/rival_racer.dart';
 import 'rider/rider_component.dart';
 import 'road/road_renderer.dart';
 import 'road/scene_theme.dart';
-import 'road/traffic/rival_overlay.dart';
 import 'road/traffic/road_traffic.dart';
 
 /// Flame game that runs a race on the road.
@@ -76,7 +75,6 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     await addAll([
       road,
       RiderComponent(road),
-      RivalOverlay(road),
       DashboardHud(road, race, strings),
     ]);
     if (_shutDown) return;

@@ -3,16 +3,27 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
+import '../../../../domain/models/scene_id.dart';
 import '../../utils/paint_utils.dart';
 import '../../utils/pseudo_random.dart';
 import '../road_projection.dart';
 import '../scene_theme.dart';
+import '../config/road_config.dart';
 import '../terrain/terrain.dart';
 
 /// Paints the loose soil, stones, potholes and mud pools on the road.
 class TerrainPainter {
   TerrainPainter(SceneTheme theme)
-    : _soil = fogRamp(shade(theme.roadLight, 0.16), theme.fog),
+    : _bare = theme.id == SceneId.jungle,
+      _dirt = fogRamp(shade(theme.shoulder, -0.04), theme.fog),
+      _soil = fogRamp(
+        shade(theme.id == SceneId.jungle ? theme.shoulder : theme.roadLight, 0.16),
+        theme.fog,
+      ),
+      _packed = fogRamp(shade(theme.id == SceneId.jungle ? theme.shoulder : theme.roadLight, -0.1), theme.fog),
+      _wheel = fogRamp(shade(theme.id == SceneId.jungle ? theme.shoulder : theme.roadLight, -0.24), theme.fog),
+      _water = fogRamp(const Color(0xFF4A7C82), theme.fog),
+      _ripple = fogRamp(const Color(0xFF9CC4C6), theme.fog),
       _stone = fogRamp(const Color(0xFF9A9288), theme.fog),
       _stoneShade = fogRamp(const Color(0xFF5E5850), theme.fog),
       _pothole = fogRamp(const Color(0xFF3A2616), theme.fog),
@@ -20,7 +31,8 @@ class TerrainPainter {
       _mud = fogRamp(const Color(0xFF58391F), theme.fog),
       _shine = fogRamp(const Color(0xFF93704D), theme.fog);
 
-  final List<Paint> _soil, _stone, _stoneShade, _pothole, _rim, _mud, _shine;
+  final bool _bare;
+  final List<Paint> _dirt, _packed, _wheel, _water, _ripple, _soil, _stone, _stoneShade, _pothole, _rim, _mud, _shine;
   final Path _path = Path();
 
   static const double _detailCutoff = 0.75;
@@ -33,9 +45,12 @@ class TerrainPainter {
       case Terrain.firm:
         return;
       case Terrain.loose:
-        if (fog < _detailCutoff) _drifts(canvas, vision, fog);
+        if (_bare) _paintBand(canvas, vision, fog, _dirt, -1, 1);
+        if (fog < _detailCutoff) _drifts(canvas, vision, fog, ground);
       case Terrain.stony:
-        if (fog < _detailCutoff) _stones(canvas, vision, fog);
+        if (fog < _detailCutoff) _stones(canvas, vision, fog, ground);
+      case Terrain.water:
+        if (fog < _poolCutoff) _river(canvas, vision, fog);
       case Terrain.potholed:
         if (fog < _detailCutoff) _potholes(canvas, vision, fog, ground);
       case Terrain.muddy:
@@ -44,19 +59,67 @@ class TerrainPainter {
   }
 
   /// Draws streaks of loose soil lying across the road.
-  void _drifts(Canvas canvas, VisionSeg vision, double fog) {
+  void _drifts(Canvas canvas, VisionSeg vision, double fog, Ground ground) {
     final seed = vision.seg.index * 5;
     _path.reset();
     for (var streak = 0; streak < 3; streak++) {
       final at = pseudoRandom(seed + streak) * 1.7 - 0.85;
       final width = 0.04 + 0.07 * pseudoRandom(seed + streak + 40);
+      if (_onLane(ground, at, width)) continue;
       _band(vision, at - width, at + width);
     }
     canvas.drawPath(_path, fogged(_soil, fog));
+    _goodLine(canvas, vision, fog, ground);
+  }
+
+  /// True when something at [lateral] would lie on the firm vehicle line.
+  bool _onLane(Ground ground, double lateral, double radius) =>
+      ground.hasLane && (lateral - ground.laneCenter).abs() < ground.laneHalf + radius;
+
+  /// Draws the firm line where vehicles have packed the ground down, with two
+  /// wheel tracks in it.
+  void _goodLine(Canvas canvas, VisionSeg vision, double fog, Ground ground) {
+    if (!ground.hasLane) return;
+    final centre = ground.laneCenter;
+    final half = ground.laneHalf;
+    _paintBand(canvas, vision, fog, _packed, centre - half, centre + half);
+    final track = half * 0.55;
+    _path.reset();
+    _band(vision, centre - track - 0.03, centre - track + 0.03);
+    _band(vision, centre + track - 0.03, centre + track + 0.03);
+    canvas.drawPath(_path, fogged(_wheel, fog));
+  }
+
+  /// Fills a band between two lateral offsets.
+  void _paintBand(Canvas canvas, VisionSeg vision, double fog, List<Paint> ramp, double from, double to) {
+    _path.reset();
+    _band(vision, from, to);
+    canvas.drawPath(_path, fogged(ramp, fog));
+  }
+
+  /// Draws the river: water over the road and out across both sides.
+  void _river(Canvas canvas, VisionSeg vision, double fog) {
+    const edge = 1 + RoadConfig.shoulder;
+    _path.reset();
+    _band(vision, -40, 40);
+    canvas.drawPath(_path, fogged(_water, fog));
+    if (fog > _detailCutoff) return;
+    final seed = vision.seg.index * 3;
+    _path.reset();
+    for (var streak = 0; streak < 3; streak++) {
+      final at = pseudoRandom(seed + streak) * 2 - 1;
+      _band(vision, at - 0.05, at + 0.05);
+    }
+    canvas.drawPath(_path, fogged(_ripple, fog));
+    _path.reset();
+    _band(vision, edge, edge + 0.05);
+    _band(vision, -edge - 0.05, -edge);
+    canvas.drawPath(_path, fogged(_ripple, fog));
   }
 
   /// Draws a scatter of stones.
-  void _stones(Canvas canvas, VisionSeg vision, double fog) {
+  void _stones(Canvas canvas, VisionSeg vision, double fog, Ground ground) {
+    _goodLine(canvas, vision, fog, ground);
     final seed = vision.seg.index * 7 + 3;
     final count = 2 + (pseudoRandom(seed) * 3).floor();
     for (var stone = 0; stone < count; stone++) {
@@ -64,6 +127,7 @@ class TerrainPainter {
       final lateral = pseudoRandom(base + 1) * 1.7 - 0.85;
       final along = pseudoRandom(base + 2);
       final radius = 0.012 + 0.03 * pseudoRandom(base + 3);
+      if (_onLane(ground, lateral, radius)) continue;
       _spot(canvas, vision, _stoneShade, fog, lateral + radius * 0.3, along, radius * 1.1, 0.4);
       _spot(canvas, vision, _stone, fog, lateral, along, radius, 0.32);
     }

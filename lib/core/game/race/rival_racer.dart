@@ -201,7 +201,7 @@ class RivalRacer implements RoadActor {
       playerLateral: road.playerX,
       line: parked
           ? parkingLateral(index, road.playerX, -_edge, maxLateral)
-          : _brain.preferredLine,
+          : _brain.preferredLine ?? _ground.goodLine(road, distance),
       parked: parked,
       attacking: _brain.mood == RivalMood.attack,
       frozen: _crash.down,

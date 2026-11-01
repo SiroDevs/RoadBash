@@ -138,7 +138,7 @@ class _MenuScreenState extends State<MenuScreen> {
     final sizes = context.sizes;
     final id = selected.scene;
     final info = SceneInfo(scene: id, km: id == null ? 0 : _km[id]!);
-    final card = ScenePreview(menuAsset(selected));
+    final card = ScenePreview(sceneImg: menuAsset(selected), scene: selected.scene);
     final title = RetroTitle(menuLabel(l10n, selected));
     final entries = MenuGrid(
       order: order,

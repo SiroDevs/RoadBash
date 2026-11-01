@@ -10,6 +10,7 @@ import '../../../config/road_config.dart';
 import '../../../road_projection.dart';
 import '../../../scene_theme.dart';
 import '../../prop.dart';
+import 'canopy_painter.dart';
 import 'footbridge_painter.dart';
 import 'gantry_painter.dart';
 import 'overpass_painter.dart';
@@ -20,17 +21,19 @@ class SpanPainter {
       : _dual = theme.dualCarriageway,
         _footbridge = FootbridgePainter(theme),
         _gantry = GantryPainter(theme),
-        _overpass = OverpassPainter(theme);
+        _overpass = OverpassPainter(theme),
+        _canopy = CanopyPainter(theme);
 
   final bool _dual;
   final FootbridgePainter _footbridge;
   final GantryPainter _gantry;
   final OverpassPainter _overpass;
+  final CanopyPainter _canopy;
 
   /// Draws the span prop for a segment.
   void draw(Canvas canvas, VisionSeg vision, Prop prop, Vector2 size) {
     final overpass = prop.kind == PropKind.overpass;
-    final reachUnits = overpass ? 1.5 : 1.22;
+    final reachUnits = overpass ? 1.5 : (prop.kind == PropKind.canopy ? 1.8 : 1.22);
     var left = vision.x1 - vision.w1 * reachUnits;
     var right = vision.x1 + vision.w1 * reachUnits;
 
@@ -68,6 +71,8 @@ class SpanPainter {
         _footbridge.draw(canvas, vision, prop, left, right, pillarX: medianPier);
       case PropKind.gantry:
         _gantry.draw(canvas, vision, prop, left, right);
+      case PropKind.canopy:
+        _canopy.draw(canvas, vision, prop, left, right);
       case PropKind.overpass:
         _overpass.draw(canvas, vision, prop, left, right,
             spanL: spanLeft,

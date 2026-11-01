@@ -12,6 +12,7 @@ class TerrainZone {
     this.terrain, {
     this.center = 0,
     this.half = 0,
+    this.goodLine = false,
   });
 
   final double from;
@@ -19,12 +20,15 @@ class TerrainZone {
   final Terrain terrain;
   final double center;
   final double half;
+  final bool goodLine;
 
   /// Returns the ground at [progress] (0 to 1) along the zone; mud pools taper.
   Ground groundAt(double progress) {
     final width = terrain == Terrain.muddy
         ? half * math.sin(progress * math.pi)
         : half;
-    return Ground(terrain, center: center, half: width);
+    if (!goodLine) return Ground(terrain, center: center, half: width);
+    final lane = 0.36 * math.sin(progress * math.pi * 3);
+    return Ground(terrain, center: center, half: width, laneCenter: lane, laneHalf: 0.2);
   }
 }

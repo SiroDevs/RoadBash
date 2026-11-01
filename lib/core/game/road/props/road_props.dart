@@ -27,7 +27,7 @@ class RoadProps {
       case DecorKind.corridor:
         layOutRoute(slots, track.segments, track.sectionStarts, thikaRoute);
       case DecorKind.jungle:
-        layOutJungle(slots, count);
+        layOutJungle(slots, count, track.finishIndex);
       case DecorKind.savanna:
         layOutSavanna(slots, count);
     }

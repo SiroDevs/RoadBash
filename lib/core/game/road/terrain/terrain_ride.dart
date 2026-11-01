@@ -4,6 +4,7 @@ import 'dart:math' as math;
 // Project imports:
 import '../config/road_config.dart';
 import '../config/vehicle_config.dart';
+import '../track/road_section.dart';
 import '../track/road_track.dart';
 import 'terrain.dart';
 
@@ -13,11 +14,13 @@ class TerrainRide {
 
   static const double _fallFrom = 0.62;
   static const double _skillWeight = 1.3;
+  static const double _cliffEdge = 1.12;
 
   final math.Random _luck;
 
   Terrain current = Terrain.firm;
   bool fell = false;
+  bool overCliff = false;
 
   /// Returns the speed after one frame on [segment]; sets [fell] when the
   /// bike is thrown. Faster riders fall more, skilled riders less.
@@ -29,6 +32,13 @@ class TerrainRide {
     required double skill,
   }) {
     fell = false;
+    final section = segment.section;
+    overCliff = (lateral < -_cliffEdge && section.left == VergeKind.cliff) ||
+        (lateral > _cliffEdge && section.right == VergeKind.cliff);
+    if (overCliff) {
+      fell = true;
+      return speed;
+    }
     final slope = (segment.y2 - segment.y1) / RoadConfig.segmentLength;
     var next = speed - slope * VehicleConfig.climbDrag * dt;
     final ground = segment.ground;

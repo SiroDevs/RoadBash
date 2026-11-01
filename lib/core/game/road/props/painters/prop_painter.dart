@@ -5,13 +5,16 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
+import '../../../../../domain/models/scene_id.dart';
 import '../../road_projection.dart';
 import '../../scene_theme.dart';
 import '../prop.dart';
 import 'building_painter.dart';
 import 'finish_painter.dart';
+import '../../surface/cliff_painter.dart';
 import 'guardrail_painter.dart';
 import 'kiosk_painter.dart';
+import 'mountain_painter.dart';
 import 'slip_road_painter.dart';
 import 'span/span_painter.dart';
 import 'street_furniture_painter.dart';
@@ -31,7 +34,9 @@ class PropPainter {
         _guardrails = GuardrailPainter(theme),
         _slipRoads = SlipRoadPainter(theme),
         _tunnels = TunnelPainter(theme),
-        _kiosks = KioskPainter(theme);
+        _kiosks = KioskPainter(theme),
+        _mountains = MountainPainter(theme),
+        _cliffs = theme.id == SceneId.jungle ? CliffPainter(theme) : null;
 
   final BuildingPainter _buildings;
   final TreePainter _trees;
@@ -43,6 +48,12 @@ class PropPainter {
   final SlipRoadPainter _slipRoads;
   final TunnelPainter _tunnels;
   final KioskPainter _kiosks;
+  final MountainPainter _mountains;
+  final CliffPainter? _cliffs;
+
+  /// Draws the cliff edges beside the road, behind the scenery.
+  void drawCliffs(Canvas canvas, List<VisionSeg> visions, int count, Vector2 size) =>
+      _cliffs?.draw(canvas, visions, count, size);
 
   /// Draws box-shaped props such as buildings and walls.
   void drawBox(Canvas canvas, VisionSeg near, VisionSeg far, Prop prop, Vector2 size) {
@@ -57,6 +68,8 @@ class PropPainter {
         _tunnels.draw(canvas, near, far, prop, size);
       case PropKind.kiosk:
         _kiosks.draw(canvas, near, far, prop, size);
+      case PropKind.mountain:
+        _mountains.draw(canvas, near, far, prop, size);
       default:
         _buildings.draw(canvas, near, far, prop, size);
     }

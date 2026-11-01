@@ -1,5 +1,5 @@
 /// Kinds of road verge.
-enum VergeKind { dirt, grass, paved }
+enum VergeKind { dirt, grass, paved, cliff, water }
 
 /// Kinds of road median.
 enum MedianKind { guardrail, planted, barrier, none }

@@ -9,11 +9,12 @@ import '../routes/route_stretch.dart';
 import '../routes/thika/thika_route.dart';
 import '../scene_theme.dart';
 import '../terrain/dirt_zones.dart';
+import '../terrain/jungle_zones.dart';
 import '../terrain/terrain.dart';
-import '../terrain/terrain_zones.dart';
 import 'dirt_steps.dart';
 import 'jungle_steps.dart';
 import 'road_section.dart';
+import 'track_zones.dart';
 
 /// One road segment with start and end height, curve and section.
 class RoadSegment {
@@ -34,6 +35,10 @@ class RoadSegment {
 
   /// Returns a copy lying on different ground.
   RoadSegment withGround(Ground ground) =>
+      RoadSegment(index, y1, y2, curve, section, ground);
+
+  /// Returns a copy with different verges.
+  RoadSegment withSection(Section section) =>
       RoadSegment(index, y1, y2, curve, section, ground);
 }
 
@@ -159,11 +164,12 @@ class RoadTrack {
     _addRoad(45, 70, 45, 0, 0);
   }
 
-  // The jungle is one long road, so its old lap is run three times in a row.
+  // The jungle is one long road: mountains, a river ford, canopy and a pass.
   void _buildJungle() {
-    for (var repeat = 0; repeat < 3; repeat++) {
-      _addSteps(jungleSteps);
-    }
+    _addSteps(jungleSteps);
+    final courseEnd = segments.length - FinishConfig.runOut;
+    applySites(jungleZones, courseEnd);
+    applyTerrain(jungleTerrain, courseEnd);
   }
 
   /// Adds a list of road steps one after the other.
@@ -177,19 +183,7 @@ class RoadTrack {
   // stones, potholes and mud pools lie along the way.
   void _buildDirtRoad() {
     _addSteps(dirtSteps);
-    _applyZones(dirtZones, segments.length - FinishConfig.runOut);
-  }
-
-  /// Lays the ground of each zone over the segments built so far.
-  void _applyZones(List<TerrainZone> zones, int courseEnd) {
-    for (final zone in zones) {
-      final start = (zone.from * courseEnd).round();
-      final end = (zone.to * courseEnd).round();
-      for (var index = start; index < end && index < segments.length; index++) {
-        final progress = (index - start) / math.max(1, end - start - 1);
-        segments[index] = segments[index].withGround(zone.groundAt(progress));
-      }
-    }
+    applyTerrain(dirtZones, segments.length - FinishConfig.runOut);
   }
 
   /// Builds a road from a list of route stretches.

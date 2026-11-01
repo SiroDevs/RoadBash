@@ -172,6 +172,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     if (_visCount > 0) {
       traffic?.prepare(trkPosition, fullDistance, playerZ, props, baseIdx);
       traffic?.locateBehind(_visionAt, size);
+      _decor.drawCliffs(canvas, _vis, _visCount, size);
       _drawDecor(canvas, baseIdx);
     }
   }

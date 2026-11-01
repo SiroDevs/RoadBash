@@ -27,6 +27,7 @@ class TerrainZone {
     final width = terrain == Terrain.muddy
         ? half * math.sin(progress * math.pi)
         : half;
+    if (terrain == Terrain.water) return Ground(terrain, half: progress);
     if (!goodLine) return Ground(terrain, center: center, half: width);
     final lane = 0.36 * math.sin(progress * math.pi * 3);
     return Ground(terrain, center: center, half: width, laneCenter: lane, laneHalf: 0.2);

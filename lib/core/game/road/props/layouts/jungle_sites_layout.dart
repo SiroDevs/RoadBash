@@ -21,8 +21,8 @@ void layOutJungleSites(List<List<Prop>> slots, int courseEnd) {
         _mountains(slots, from, to, -1, 4200);
       case JungleSite.pass:
         _clear(slots, from, to);
-        _mountains(slots, from, to, 1, 5200);
-        _mountains(slots, from, to, -1, 5200);
+        _mountains(slots, from, to, -1, 7000, rock: 3, offset: 1.1);
+        _mountains(slots, from, to, 1, 7000, rock: 4, offset: 1.1);
       case JungleSite.canopy:
         _canopy(slots, from, to);
       case JungleSite.river:
@@ -39,7 +39,15 @@ void _clear(List<List<Prop>> slots, int from, int to) {
 }
 
 /// Raises a run of mountain boxes of varying height along one side.
-void _mountains(List<List<Prop>> slots, int from, int to, int side, double tallest) {
+void _mountains(
+  List<List<Prop>> slots,
+  int from,
+  int to,
+  int side,
+  double tallest, {
+  int? rock,
+  double offset = 1.16,
+}) {
   var index = from;
   while (index < to) {
     final seed = index * 13 + (side > 0 ? 7 : 3);
@@ -49,12 +57,12 @@ void _mountains(List<List<Prop>> slots, int from, int to, int side, double talle
         kind: PropKind.mountain,
         anchor: index,
         side: side,
-        offset: 1.16 + 0.04 * pseudoRandom(seed + 1),
+        offset: offset + 0.04 * pseudoRandom(seed + 1),
         width: 3600,
         height: tallest * (0.75 + 0.45 * pseudoRandom(seed + 2)),
         depth: depth,
-        tint: (pseudoRandom(seed + 3) * 3).floor(),
-        detail: pseudoRandom(seed + 4),
+        tint: rock ?? (pseudoRandom(seed + 3) * 3).floor(),
+        detail: rock == null ? pseudoRandom(seed + 4) : (side > 0 ? 0.5 + 0.5 * pseudoRandom(seed + 4) : 0.2 * pseudoRandom(seed + 4)),
       ),
     );
     index += depth;

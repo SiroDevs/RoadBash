@@ -22,7 +22,9 @@ class TerrainPainter {
       ),
       _packed = fogRamp(shade(theme.id == SceneId.jungle ? theme.shoulder : theme.roadLight, -0.1), theme.fog),
       _wheel = fogRamp(shade(theme.id == SceneId.jungle ? theme.shoulder : theme.roadLight, -0.24), theme.fog),
-      _water = fogRamp(const Color(0xFF4A7C82), theme.fog),
+      _water = fogRamp(Color.lerp(const Color(0xFF4A7C82), theme.skyHorizon, 0.3)!, theme.fog),
+      _bed = fogRamp(const Color(0xFF8E9C86), theme.fog),
+      _foam = fogRamp(const Color(0xFFE6F1F2), theme.fog),
       _ripple = fogRamp(const Color(0xFF9CC4C6), theme.fog),
       _stone = fogRamp(const Color(0xFF9A9288), theme.fog),
       _stoneShade = fogRamp(const Color(0xFF5E5850), theme.fog),
@@ -32,7 +34,7 @@ class TerrainPainter {
       _shine = fogRamp(const Color(0xFF93704D), theme.fog);
 
   final bool _bare;
-  final List<Paint> _dirt, _packed, _wheel, _water, _ripple, _soil, _stone, _stoneShade, _pothole, _rim, _mud, _shine;
+  final List<Paint> _bed, _foam, _dirt, _packed, _wheel, _water, _ripple, _soil, _stone, _stoneShade, _pothole, _rim, _mud, _shine;
   final Path _path = Path();
 
   static const double _detailCutoff = 0.75;
@@ -50,7 +52,7 @@ class TerrainPainter {
       case Terrain.stony:
         if (fog < _detailCutoff) _stones(canvas, vision, fog, ground);
       case Terrain.water:
-        if (fog < _poolCutoff) _river(canvas, vision, fog);
+        if (fog < _poolCutoff) _river(canvas, vision, fog, ground);
       case Terrain.potholed:
         if (fog < _detailCutoff) _potholes(canvas, vision, fog, ground);
       case Terrain.muddy:
@@ -97,24 +99,37 @@ class TerrainPainter {
     canvas.drawPath(_path, fogged(ramp, fog));
   }
 
-  /// Draws the river: water over the road and out across both sides.
-  void _river(Canvas canvas, VisionSeg vision, double fog) {
+  /// Draws the ford: shallow water across the road and out over both banks,
+  /// with the submerged road showing through, rocks, ripples and foam at the
+  /// entry and exit.
+  void _river(Canvas canvas, VisionSeg vision, double fog, Ground ground) {
     const edge = 1 + RoadConfig.shoulder;
     _path.reset();
     _band(vision, -40, 40);
     canvas.drawPath(_path, fogged(_water, fog));
     if (fog > _detailCutoff) return;
     final seed = vision.seg.index * 3;
+    _paintBand(canvas, vision, fog, _bed, -0.5, 0.5);
     _path.reset();
-    for (var streak = 0; streak < 3; streak++) {
-      final at = pseudoRandom(seed + streak) * 2 - 1;
-      _band(vision, at - 0.05, at + 0.05);
+    _band(vision, -0.42, -0.34);
+    _band(vision, 0.34, 0.42);
+    canvas.drawPath(_path, fogged(_wheel, fog));
+    _path.reset();
+    for (var streak = 0; streak < 4; streak++) {
+      final at = pseudoRandom(seed + streak) * 6 - 3;
+      _band(vision, at - 0.18, at + 0.18);
     }
     canvas.drawPath(_path, fogged(_ripple, fog));
-    _path.reset();
-    _band(vision, edge, edge + 0.05);
-    _band(vision, -edge - 0.05, -edge);
-    canvas.drawPath(_path, fogged(_ripple, fog));
+    for (var rock = 0; rock < 3; rock++) {
+      final base = seed + 20 + rock * 3;
+      final side = pseudoRandom(base) < 0.5 ? -1.0 : 1.0;
+      final lateral = side * (edge + 0.1 + 2.5 * pseudoRandom(base + 1));
+      final radius = 0.03 + 0.05 * pseudoRandom(base + 2);
+      _spot(canvas, vision, _stoneShade, fog, lateral, 0.5, radius * 1.15, 0.34);
+      _spot(canvas, vision, _stone, fog, lateral, 0.45, radius, 0.28);
+    }
+    final edgeness = math.min(ground.half, 1 - ground.half);
+    if (edgeness < 0.07) _paintBand(canvas, vision, fog, _foam, -1.6, 1.6);
   }
 
   /// Draws a scatter of stones.

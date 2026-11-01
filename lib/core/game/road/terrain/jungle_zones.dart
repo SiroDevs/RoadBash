@@ -6,7 +6,7 @@ import 'terrain_zones.dart';
 /// A roadside setting along the jungle road.
 enum JungleSite {
   mountainRight(Section(left: VergeKind.cliff, right: VergeKind.dirt)),
-  mountainLeft(Section(left: VergeKind.dirt, right: VergeKind.cliff)),
+  mountainLeft(Section(left: VergeKind.dirt, right: VergeKind.ledge)),
   river(Section(left: VergeKind.water, right: VergeKind.water)),
   pass(Section(left: VergeKind.dirt, right: VergeKind.dirt)),
   canopy(Section(left: VergeKind.grass, right: VergeKind.grass));
@@ -37,7 +37,9 @@ const List<JungleZone> jungleZones = [
 /// Where the jungle road loses its tarmac, and where it fords the river.
 const List<TerrainZone> jungleTerrain = [
   TerrainZone(0.26, 0.33, Terrain.loose, goodLine: true),
+  TerrainZone(0.338, 0.356, Terrain.stony),
   TerrainZone(0.356, 0.377, Terrain.water),
+  TerrainZone(0.377, 0.395, Terrain.stony),
   TerrainZone(0.45, 0.50, Terrain.loose, goodLine: true),
   TerrainZone(0.675, 0.715, Terrain.loose, goodLine: true),
 ];

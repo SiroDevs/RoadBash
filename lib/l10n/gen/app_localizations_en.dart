@@ -178,13 +178,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hudHoldGas => 'Hold the gas to ride';
 
   @override
-  String hudRemaining(String km) {
-    return '-$km KM';
+  String hudLap(int lap, int laps) {
+    return 'LAP $lap/$laps';
   }
 
   @override
-  String hudLap(int lap, int laps) {
-    return 'LAP $lap/$laps';
+  String hudRemaining(String km) {
+    return '-$km KM';
   }
 
   @override

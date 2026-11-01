@@ -22,6 +22,9 @@ class TerrainRide {
   bool fell = false;
   bool overCliff = false;
 
+  /// True when a verge ends in a drop.
+  bool _drops(VergeKind kind) => kind == VergeKind.cliff || kind == VergeKind.ledge;
+
   /// Returns the speed after one frame on [segment]; sets [fell] when the
   /// bike is thrown. Faster riders fall more, skilled riders less.
   double step({
@@ -33,8 +36,8 @@ class TerrainRide {
   }) {
     fell = false;
     final section = segment.section;
-    overCliff = (lateral < -_cliffEdge && section.left == VergeKind.cliff) ||
-        (lateral > _cliffEdge && section.right == VergeKind.cliff);
+    overCliff = (lateral < -_cliffEdge && _drops(section.left)) ||
+        (lateral > _cliffEdge && _drops(section.right));
     if (overCliff) {
       fell = true;
       return speed;

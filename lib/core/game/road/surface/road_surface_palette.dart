@@ -25,6 +25,7 @@ class RoadSurfacePalette {
     VergeKind.grass => grass,
     VergeKind.paved => paved,
     VergeKind.cliff => dirt,
+    VergeKind.ledge => dirt,
     VergeKind.water => dirt,
   };
 

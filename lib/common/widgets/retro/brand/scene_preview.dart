@@ -1,11 +1,17 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-/// Shows a scene's preview image.
-class ScenePreview extends StatelessWidget {
-  const ScenePreview(this.sceneImg, {super.key});
+// Project imports:
+import '../../../../domain/models/scene_id.dart';
+import 'live_scene_image.dart';
 
-  final String sceneImg;
+/// Shows a scene's preview: a still drawn by the game for a scene, or an
+/// image asset for the reception.
+class ScenePreview extends StatelessWidget {
+  const ScenePreview({super.key, this.sceneImg, this.scene});
+
+  final String? sceneImg;
+  final SceneId? scene;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,9 @@ class ScenePreview extends StatelessWidget {
         ),
         child: AspectRatio(
           aspectRatio: 4 / 3,
-          child: Image.asset(sceneImg, fit: BoxFit.cover),
+          child: scene != null
+              ? LiveSceneImage(scene: scene!)
+              : Image.asset(sceneImg!, fit: BoxFit.cover),
         ),
       ),
     );

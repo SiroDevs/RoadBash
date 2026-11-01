@@ -7,6 +7,8 @@ import '../road/terrain/terrain_ride.dart';
 
 /// A rival's contact with the ground: terrain drag, falls and dust.
 class RivalGround {
+  static const double _lookAhead = 600;
+
   final TerrainRide _ride = TerrainRide();
   final DustTrail dust = DustTrail();
 
@@ -31,6 +33,12 @@ class RivalGround {
     speed: speed,
     skill: skill,
   );
+
+  /// Returns the firm vehicle line a little way ahead, if the ground has one.
+  double? goodLine(RoadRenderer road, double ridden) {
+    final ground = road.track.at(ridden + road.playerZ + _lookAhead).ground;
+    return ground.hasLane ? ground.laneCenter : null;
+  }
 
   /// Keeps the dust going while the rival rolls over loose ground.
   void updateDust(double dt, double speed, {required bool down}) {

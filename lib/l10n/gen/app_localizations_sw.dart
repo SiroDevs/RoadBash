@@ -178,13 +178,13 @@ class AppLocalizationsSw extends AppLocalizations {
   String get hudHoldGas => 'Shikilia mafuta kuendesha';
 
   @override
-  String hudLap(int lap, int laps) {
-    return 'MZUNGUKO $lap/$laps';
+  String hudRemaining(String km) {
+    return '-$km KM';
   }
 
   @override
-  String hudRemaining(String km) {
-    return '-$km KM';
+  String hudLap(int lap, int laps) {
+    return 'MZUNGUKO $lap/$laps';
   }
 
   @override

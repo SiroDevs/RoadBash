@@ -159,6 +159,7 @@ class SceneTheme {
     id: SceneId.jungle,
     laps: 1,
     lanes: 2,
+    markings: false,
     skyTop: Color(0xFF5E9DB0),
     skyHorizon: Color(0xFFCFE6D2),
     backFar: Color(0xFF4F7A5C),

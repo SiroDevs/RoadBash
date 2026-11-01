@@ -24,11 +24,13 @@ enum PropKind {
   block,
   post,
   spectator,
-  kiosk;
+  kiosk,
+  mountain,
+  canopy;
 
   /// True for props that cross the whole road.
   bool get spansRoad =>
-      this == footbridge || this == gantry || this == overpass;
+      this == footbridge || this == gantry || this == overpass || this == canopy;
 }
 
 /// When a prop is drawn relative to the finish plaza on the last lap.

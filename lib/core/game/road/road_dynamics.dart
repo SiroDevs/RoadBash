@@ -84,7 +84,13 @@ mixin RoadDynamics {
       speed: speed,
       skill: VehicleConfig.playerSkill,
     );
-    if (ride.fell && !crashed) fall(appliedSteer >= 0 ? 1.0 : -1.0, 2.2);
+    if (ride.fell && !crashed) {
+      if (ride.overCliff) {
+        playerX = playerX.clamp(-1.0, 1.0);
+        speed *= 0.3;
+      }
+      fall(appliedSteer >= 0 ? 1.0 : -1.0, ride.overCliff ? 3 : 2.2);
+    }
     const edge = VehicleConfig.maxOffRoad;
     playerX = math.max(-edge, math.min(edge, playerX));
     speed = math.max(0.0, math.min(VehicleConfig.maxSpeed, speed));

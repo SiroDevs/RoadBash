@@ -1,7 +1,7 @@
 // Project imports:
 import 'dirt_steps.dart';
 
-/// One lap of the old jungle road: tight, twisting and steep.
+/// The jungle road: one long, twisting run with a dip to the river ford.
 const List<RoadStep> jungleSteps = [
   RoadStep(40, 50, 40, 0, 0),
   RoadStep(40, 40, 40, 3.2, 6),
@@ -11,7 +11,32 @@ const List<RoadStep> jungleSteps = [
   RoadStep(40, 40, 40, -4.8, -6),
   RoadStep(35, 30, 35, 3.0, 4),
   RoadStep(45, 40, 45, 0, -4),
-  RoadStep(40, 45, 40, 4.2, 0),
-  RoadStep(40, 40, 40, -3.4, 0),
-  RoadStep(45, 60, 45, 0, 0),
+  RoadStep(40, 45, 40, 4.2, 2),
+  RoadStep(40, 40, 40, -3.4, -2),
+  RoadStep(45, 60, 45, 0, -2),
+  RoadStep(40, 40, 40, 2.6, -6),
+  RoadStep(40, 60, 40, -1.0, -14),
+  RoadStep(30, 60, 30, 0, 0),
+  RoadStep(40, 60, 40, 1.0, 14),
+  RoadStep(40, 40, 40, -3.0, 6),
+  RoadStep(35, 40, 35, 3.8, 3),
+  RoadStep(40, 40, 40, -4.2, -4),
+  RoadStep(35, 50, 35, 3.4, 6),
+  RoadStep(40, 45, 40, -3.6, -3),
+  RoadStep(35, 50, 35, 2.6, 2),
+  RoadStep(45, 60, 45, 0, 4),
+  RoadStep(40, 40, 40, -4.4, -6),
+  RoadStep(35, 40, 35, 4.0, 5),
+  RoadStep(40, 50, 40, -3.2, -5),
+  RoadStep(40, 70, 40, 0, 8),
+  RoadStep(35, 40, 35, 3.4, -4),
+  RoadStep(40, 40, 40, -3.8, 2),
+  RoadStep(35, 45, 35, 4.2, 4),
+  RoadStep(40, 50, 40, -3.0, -6),
+  RoadStep(40, 60, 40, 2.4, 0),
+  RoadStep(40, 50, 40, -3.6, -3),
+  RoadStep(35, 50, 35, 3.2, 5),
+  RoadStep(40, 60, 40, -2.6, -2),
+  RoadStep(45, 70, 45, 0, 0),
+  RoadStep(60, 300, 60, 0, 0),
 ];

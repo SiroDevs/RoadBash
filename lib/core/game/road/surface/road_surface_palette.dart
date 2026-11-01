@@ -24,6 +24,8 @@ class RoadSurfacePalette {
     VergeKind.dirt => dirt,
     VergeKind.grass => grass,
     VergeKind.paved => paved,
+    VergeKind.cliff => dirt,
+    VergeKind.water => dirt,
   };
 
   /// Returns the paints for a median kind.

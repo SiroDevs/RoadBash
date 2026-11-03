@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// Reception description
   ///
   /// In en, this message translates to:
-  /// **'Set your player name, mix the sound, check the controls, pick a language, see your stats and the leaderboard, or drop a note in the suggestion box.'**
+  /// **'Set your player name, mix the sound, check the controls, pick a language, or see your stats and the leaderboard.'**
   String get blurbReception;
 
   /// Race length
@@ -755,7 +755,7 @@ abstract class AppLocalizations {
   /// Admin badge
   ///
   /// In en, this message translates to:
-  /// **'Admin: you can read the suggestion box.'**
+  /// **'Admin: you run the boardroom.'**
   String get accountAdmin;
 
   /// Switch player button
@@ -775,12 +775,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Leaderboard'**
   String get receptionLeaderboard;
-
-  /// Reception item
-  ///
-  /// In en, this message translates to:
-  /// **'Suggestion Box'**
-  String get receptionSuggestions;
 
   /// Stats heading
   ///
@@ -896,59 +890,161 @@ abstract class AppLocalizations {
   /// **'No races finished yet. Be the first!'**
   String get leaderboardEmpty;
 
-  /// Suggestion hint
+  /// Menu section label
   ///
   /// In en, this message translates to:
-  /// **'Tell me what to fix, add or remove. Every suggestion lands in my inbox.'**
-  String get suggestionHint;
+  /// **'Scenes'**
+  String get menuScenes;
+
+  /// Boardroom title
+  ///
+  /// In en, this message translates to:
+  /// **'Boardroom'**
+  String get boardroomTitle;
+
+  /// Boardroom blurb
+  ///
+  /// In en, this message translates to:
+  /// **'Read announcements, send me a suggestion, and join the conversation under the public posts.'**
+  String get blurbBoardroom;
+
+  /// Boardroom hint
+  ///
+  /// In en, this message translates to:
+  /// **'Tell me what to fix, add or remove. Suggestions stay private until an admin makes them public.'**
+  String get boardroomHint;
+
+  /// Boardroom admin hint
+  ///
+  /// In en, this message translates to:
+  /// **'Post an announcement, reply to suggestions, make them public or delete what is not appropriate.'**
+  String get boardroomAdminHint;
 
   /// Suggestion field
   ///
   /// In en, this message translates to:
   /// **'Your suggestion'**
-  String get suggestionLabel;
+  String get boardroomSuggestionLabel;
 
-  /// Send button
+  /// Announcement field
+  ///
+  /// In en, this message translates to:
+  /// **'Your announcement'**
+  String get boardroomAnnouncementLabel;
+
+  /// Send suggestion button
   ///
   /// In en, this message translates to:
   /// **'Send'**
-  String get suggestionSend;
+  String get boardroomSend;
 
-  /// Thanks
+  /// Post announcement button
   ///
   /// In en, this message translates to:
-  /// **'Thanks, it is in the box!'**
-  String get suggestionThanks;
+  /// **'Announce'**
+  String get boardroomAnnounce;
 
-  /// Needs sign-in
+  /// Posts heading
   ///
   /// In en, this message translates to:
-  /// **'Sign in to leave a suggestion.'**
-  String get suggestionSignIn;
+  /// **'Posts'**
+  String get boardroomPosts;
 
-  /// Too short
+  /// Empty boardroom
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here yet.'**
+  String get boardroomEmpty;
+
+  /// Reply button
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get boardroomReply;
+
+  /// Reply field
+  ///
+  /// In en, this message translates to:
+  /// **'Your reply'**
+  String get boardroomReplyLabel;
+
+  /// Make a suggestion public
+  ///
+  /// In en, this message translates to:
+  /// **'Make public'**
+  String get boardroomMakePublic;
+
+  /// Make a suggestion private
+  ///
+  /// In en, this message translates to:
+  /// **'Make private'**
+  String get boardroomMakePrivate;
+
+  /// Delete button
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get boardroomDelete;
+
+  /// Delete dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this?'**
+  String get boardroomDeleteTitle;
+
+  /// Delete dialog body
+  ///
+  /// In en, this message translates to:
+  /// **'It will be removed for everyone, together with any replies under it.'**
+  String get boardroomDeleteBody;
+
+  /// Admin tag
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get boardroomAdminTag;
+
+  /// Announcement tag
+  ///
+  /// In en, this message translates to:
+  /// **'Announcement'**
+  String get boardroomAnnouncementTag;
+
+  /// Public tag
+  ///
+  /// In en, this message translates to:
+  /// **'Public'**
+  String get boardroomPublicTag;
+
+  /// Private tag
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get boardroomPrivateTag;
+
+  /// Sign in error
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to use the boardroom.'**
+  String get boardroomSignIn;
+
+  /// Too short error
   ///
   /// In en, this message translates to:
   /// **'Write a few more words.'**
-  String get suggestionTooShort;
+  String get boardroomTooShort;
 
-  /// Rate limited
+  /// Rate limit error
   ///
   /// In en, this message translates to:
   /// **'That is enough for now. Try again in a while.'**
-  String get suggestionRateLimited;
+  String get boardroomRateLimited;
 
-  /// Admin inbox heading
+  /// Forbidden error
   ///
   /// In en, this message translates to:
-  /// **'Suggestions received'**
-  String get suggestionInbox;
-
-  /// Empty inbox
-  ///
-  /// In en, this message translates to:
-  /// **'The box is empty.'**
-  String get suggestionInboxEmpty;
+  /// **'Only admins can do that.'**
+  String get boardroomForbidden;
 
   /// Cancel button
   ///

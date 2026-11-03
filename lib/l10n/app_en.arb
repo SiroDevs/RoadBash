@@ -90,7 +90,7 @@
   "@blurbDirtRoad": {
     "description": "Dirt road description"
   },
-  "blurbReception": "Set your player name, mix the sound, check the controls, pick a language, see your stats and the leaderboard, or drop a note in the suggestion box.",
+  "blurbReception": "Set your player name, mix the sound, check the controls, pick a language, or see your stats and the leaderboard.",
   "@blurbReception": {
     "description": "Reception description"
   },
@@ -530,7 +530,7 @@
   "@accountAnonymous": {
     "description": "Anonymous account line"
   },
-  "accountAdmin": "Admin: you can read the suggestion box.",
+  "accountAdmin": "Admin: you run the boardroom.",
   "@accountAdmin": {
     "description": "Admin badge"
   },
@@ -544,10 +544,6 @@
   },
   "receptionLeaderboard": "Leaderboard",
   "@receptionLeaderboard": {
-    "description": "Reception item"
-  },
-  "receptionSuggestions": "Suggestion Box",
-  "@receptionSuggestions": {
     "description": "Reception item"
   },
   "statsTitle": "Stats",
@@ -639,41 +635,109 @@
   "@leaderboardEmpty": {
     "description": "Empty board"
   },
-  "suggestionHint": "Tell me what to fix, add or remove. Every suggestion lands in my inbox.",
-  "@suggestionHint": {
-    "description": "Suggestion hint"
+  "menuScenes": "Scenes",
+  "@menuScenes": {
+    "description": "Menu section label"
   },
-  "suggestionLabel": "Your suggestion",
-  "@suggestionLabel": {
+  "boardroomTitle": "Boardroom",
+  "@boardroomTitle": {
+    "description": "Boardroom title"
+  },
+  "blurbBoardroom": "Read announcements, send me a suggestion, and join the conversation under the public posts.",
+  "@blurbBoardroom": {
+    "description": "Boardroom blurb"
+  },
+  "boardroomHint": "Tell me what to fix, add or remove. Suggestions stay private until an admin makes them public.",
+  "@boardroomHint": {
+    "description": "Boardroom hint"
+  },
+  "boardroomAdminHint": "Post an announcement, reply to suggestions, make them public or delete what is not appropriate.",
+  "@boardroomAdminHint": {
+    "description": "Boardroom admin hint"
+  },
+  "boardroomSuggestionLabel": "Your suggestion",
+  "@boardroomSuggestionLabel": {
     "description": "Suggestion field"
   },
-  "suggestionSend": "Send",
-  "@suggestionSend": {
-    "description": "Send button"
+  "boardroomAnnouncementLabel": "Your announcement",
+  "@boardroomAnnouncementLabel": {
+    "description": "Announcement field"
   },
-  "suggestionThanks": "Thanks, it is in the box!",
-  "@suggestionThanks": {
-    "description": "Thanks"
+  "boardroomSend": "Send",
+  "@boardroomSend": {
+    "description": "Send suggestion button"
   },
-  "suggestionSignIn": "Sign in to leave a suggestion.",
-  "@suggestionSignIn": {
-    "description": "Needs sign-in"
+  "boardroomAnnounce": "Announce",
+  "@boardroomAnnounce": {
+    "description": "Post announcement button"
   },
-  "suggestionTooShort": "Write a few more words.",
-  "@suggestionTooShort": {
-    "description": "Too short"
+  "boardroomPosts": "Posts",
+  "@boardroomPosts": {
+    "description": "Posts heading"
   },
-  "suggestionRateLimited": "That is enough for now. Try again in a while.",
-  "@suggestionRateLimited": {
-    "description": "Rate limited"
+  "boardroomEmpty": "Nothing here yet.",
+  "@boardroomEmpty": {
+    "description": "Empty boardroom"
   },
-  "suggestionInbox": "Suggestions received",
-  "@suggestionInbox": {
-    "description": "Admin inbox heading"
+  "boardroomReply": "Reply",
+  "@boardroomReply": {
+    "description": "Reply button"
   },
-  "suggestionInboxEmpty": "The box is empty.",
-  "@suggestionInboxEmpty": {
-    "description": "Empty inbox"
+  "boardroomReplyLabel": "Your reply",
+  "@boardroomReplyLabel": {
+    "description": "Reply field"
+  },
+  "boardroomMakePublic": "Make public",
+  "@boardroomMakePublic": {
+    "description": "Make a suggestion public"
+  },
+  "boardroomMakePrivate": "Make private",
+  "@boardroomMakePrivate": {
+    "description": "Make a suggestion private"
+  },
+  "boardroomDelete": "Delete",
+  "@boardroomDelete": {
+    "description": "Delete button"
+  },
+  "boardroomDeleteTitle": "Delete this?",
+  "@boardroomDeleteTitle": {
+    "description": "Delete dialog title"
+  },
+  "boardroomDeleteBody": "It will be removed for everyone, together with any replies under it.",
+  "@boardroomDeleteBody": {
+    "description": "Delete dialog body"
+  },
+  "boardroomAdminTag": "Admin",
+  "@boardroomAdminTag": {
+    "description": "Admin tag"
+  },
+  "boardroomAnnouncementTag": "Announcement",
+  "@boardroomAnnouncementTag": {
+    "description": "Announcement tag"
+  },
+  "boardroomPublicTag": "Public",
+  "@boardroomPublicTag": {
+    "description": "Public tag"
+  },
+  "boardroomPrivateTag": "Private",
+  "@boardroomPrivateTag": {
+    "description": "Private tag"
+  },
+  "boardroomSignIn": "Sign in to use the boardroom.",
+  "@boardroomSignIn": {
+    "description": "Sign in error"
+  },
+  "boardroomTooShort": "Write a few more words.",
+  "@boardroomTooShort": {
+    "description": "Too short error"
+  },
+  "boardroomRateLimited": "That is enough for now. Try again in a while.",
+  "@boardroomRateLimited": {
+    "description": "Rate limit error"
+  },
+  "boardroomForbidden": "Only admins can do that.",
+  "@boardroomForbidden": {
+    "description": "Forbidden error"
   },
   "commonCancel": "Cancel",
   "@commonCancel": {

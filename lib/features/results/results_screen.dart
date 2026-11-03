@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
+import '../../common/constants/app_assets.dart';
 import '../../l10n/l10n_extension.dart';
 import '../../common/layout/responsive_scroll_body.dart';
 import '../../common/layout/retro_sizes.dart';
@@ -29,6 +30,9 @@ class ResultsScreen extends StatelessWidget {
     final rows = result.rows;
     final sizes = context.sizes;
     return RetroPage(
+      asset: AppAssets.appMain,
+      grayscale: true,
+      dim: 0.55,
       child: ResponsiveScrollBody(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

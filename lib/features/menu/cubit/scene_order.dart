@@ -4,8 +4,8 @@ import '../../progress/cubit/progress_cubit.dart';
 import 'menu_target.dart';
 
 /// The menu entries in display order: the scenes most raced first (ties, and
-/// a fresh install, in the usual [SceneId] order), then the reception, which
-/// always stays last.
+/// a fresh install, in the usual [SceneId] order), then the reception and the
+/// boardroom, which always stay last.
 class SceneOrder {
   const SceneOrder(this.scenes, this.mostPlayed);
 
@@ -23,11 +23,19 @@ class SceneOrder {
 
   final List<SceneId> scenes;
 
-  /// Menu targets: scenes ordered by races played, then the reception.
-  List<MenuTarget> get items => [
+  /// The scene targets, ordered by races played.
+  List<MenuTarget> get sceneItems => [
     for (final id in scenes) MenuTarget.scene(id),
-    const MenuTarget.reception(),
   ];
+
+  /// The targets after the scenes: the reception, then the boardroom.
+  List<MenuTarget> get otherItems => const [
+    MenuTarget.reception(),
+    MenuTarget.boardroom(),
+  ];
+
+  /// Every menu target in display order.
+  List<MenuTarget> get items => [...sceneItems, ...otherItems];
 
   final SceneId? mostPlayed;
 }

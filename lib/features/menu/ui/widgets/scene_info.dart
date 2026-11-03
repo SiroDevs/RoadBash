@@ -10,20 +10,20 @@ import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../core/game/race/race_result.dart';
 import '../../../../core/game/road/scene_theme.dart';
-import '../../../../domain/models/scene_id.dart';
 import '../../../progress/cubit/progress_cubit.dart';
+import '../../cubit/menu_target.dart';
 
 /// Shows the name, length and best stats of the selected scene.
 class SceneInfo extends StatelessWidget {
-  const SceneInfo({super.key, required this.scene, required this.km});
+  const SceneInfo({super.key, required this.target, required this.km});
 
-  final SceneId? scene;
+  final MenuTarget target;
   final double km;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final id = scene;
+    final id = target.scene;
     final sizes = context.sizes;
     return Container(
       padding: EdgeInsets.all(sizes.infoPad),
@@ -36,7 +36,11 @@ class SceneInfo extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            id == null ? l10n.blurbReception : l10n.sceneBlurb(id),
+            id == null
+                ? (target.isBoardroom
+                      ? l10n.blurbBoardroom
+                      : l10n.blurbReception)
+                : l10n.sceneBlurb(id),
             style: retroBody(size: sizes.body),
           ),
           if (id != null) ...[

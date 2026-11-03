@@ -16,7 +16,6 @@ import '../../../common/widgets/retro/page/retro_page.dart';
 import '../../../common/widgets/retro/retro_style.dart';
 import '../../../core/layout/responsive_layout_builder.dart';
 import '../../../core/router/route_names.dart';
-import '../../suggestions/ui/suggestion_panel.dart';
 import '../cubit/reception_cubit.dart';
 import 'widgets/account_panel.dart';
 import 'widgets/exit_panel.dart';
@@ -37,7 +36,6 @@ class ReceptionScreen extends StatelessWidget {
       ReceptionTab.language: l10n.languageTitle,
       ReceptionTab.stats: l10n.receptionStats,
       ReceptionTab.leaderboard: l10n.receptionLeaderboard,
-      ReceptionTab.suggestions: l10n.receptionSuggestions,
       ReceptionTab.exit: l10n.exitLabel,
     };
     final sizes = context.sizes;
@@ -137,7 +135,6 @@ class ReceptionScreen extends StatelessWidget {
     ReceptionTab.name => const AccountPanel(),
     ReceptionTab.sound => const SoundMix(),
     ReceptionTab.language => const LanguagePicker(),
-    ReceptionTab.suggestions => const SuggestionPanel(),
     ReceptionTab.stats || ReceptionTab.leaderboard => const SizedBox.shrink(),
     ReceptionTab.exit => const ExitPanel(),
     ReceptionTab.controls => Text(

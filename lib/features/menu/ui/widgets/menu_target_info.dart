@@ -14,11 +14,15 @@ String sceneAsset(SceneId id) => switch (id) {
   SceneId.dirtRoad => AppAssets.sceneDirtRoad,
 };
 
-/// The preview picture of a menu entry; the reception has its own.
+/// The preview picture of a menu entry; the reception and the boardroom use
+/// the restroom picture.
 String menuAsset(MenuTarget target) =>
-    target.isReception ? AppAssets.restroom : sceneAsset(target.scene!);
+    target.isScene ? sceneAsset(target.scene!) : AppAssets.restroom;
 
 /// Returns the localized label for a menu target.
-String menuLabel(AppLocalizations l10n, MenuTarget target) => target.isReception
-    ? l10n.receptionTitle
-    : l10n.sceneTitle(target.scene!);
+String menuLabel(AppLocalizations l10n, MenuTarget target) =>
+    switch (target.place) {
+      MenuPlace.scene => l10n.sceneTitle(target.scene!),
+      MenuPlace.reception => l10n.receptionTitle,
+      MenuPlace.boardroom => l10n.boardroomTitle,
+    };

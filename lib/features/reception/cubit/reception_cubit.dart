@@ -10,7 +10,6 @@ enum ReceptionTab {
   language,
   stats,
   leaderboard,
-  suggestions,
   exit,
 }
 

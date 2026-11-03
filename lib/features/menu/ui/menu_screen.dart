@@ -35,7 +35,7 @@ import 'widgets/menu_target_info.dart';
 import 'widgets/rider_bar.dart';
 import 'widgets/scene_info.dart';
 
-/// Main menu where the player picks a scene or reception.
+/// Main menu where the player picks a scene, the reception or the boardroom.
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
 
@@ -61,14 +61,20 @@ class _MenuScreenState extends State<MenuScreen> {
     unawaited(TiltAccess.instance.prepareFor(profile));
   }
 
-  /// Selects a menu target and opens the scene's race or reception.
+  /// Selects a menu target and opens the scene's race, the reception or the
+  /// boardroom.
   void _open(MenuCubit menu, MenuTarget target) {
     menu.open(target);
-    final id = target.scene;
-    if (id == null) {
-      context.goNamed(RouteNames.reception);
-    } else {
-      context.goNamed(RouteNames.race, pathParameters: {'scene': id.name});
+    switch (target.place) {
+      case MenuPlace.scene:
+        context.goNamed(
+          RouteNames.race,
+          pathParameters: {'scene': target.scene!.name},
+        );
+      case MenuPlace.reception:
+        context.goNamed(RouteNames.reception);
+      case MenuPlace.boardroom:
+        context.goNamed(RouteNames.boardroom);
     }
   }
 
@@ -95,9 +101,9 @@ class _MenuScreenState extends State<MenuScreen> {
               const SingleActivator(LogicalKeyboardKey.arrowRight): () =>
                   menu.move(1, items),
               const SingleActivator(LogicalKeyboardKey.arrowUp): () =>
-                  menu.move(-cols, items),
+                  menu.moveVertical(-1, items, cols),
               const SingleActivator(LogicalKeyboardKey.arrowDown): () =>
-                  menu.move(cols, items),
+                  menu.moveVertical(1, items, cols),
               const SingleActivator(LogicalKeyboardKey.enter): () =>
                   _open(menu, menu.state ?? items.first),
             },
@@ -137,7 +143,7 @@ class _MenuScreenState extends State<MenuScreen> {
     final l10n = context.l10n;
     final sizes = context.sizes;
     final id = selected.scene;
-    final info = SceneInfo(scene: id, km: id == null ? 0 : _km[id]!);
+    final info = SceneInfo(target: selected, km: id == null ? 0 : _km[id]!);
     final card = ScenePreview(sceneImg: menuAsset(selected), scene: selected.scene);
     final title = RetroTitle(menuLabel(l10n, selected));
     final entries = MenuGrid(

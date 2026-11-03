@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:

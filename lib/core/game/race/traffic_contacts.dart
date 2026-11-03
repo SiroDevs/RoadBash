@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 // Project imports:
 import '../police/police_chase.dart';
+import '../police/police_cop.dart';
 import '../road/road_renderer.dart';
 import '../road/traffic/civilian_car.dart';
 import '../road/traffic/traffic_flow.dart';

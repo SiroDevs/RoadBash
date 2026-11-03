@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
-import '../../../l10n/l10n_extension.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../../layout/retro_sizes.dart';
 import '../controls/retro_controls.dart';
 import '../retro_style.dart';

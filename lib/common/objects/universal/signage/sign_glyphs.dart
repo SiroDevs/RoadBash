@@ -5,7 +5,7 @@ import 'dart:ui' hide TextStyle;
 import 'package:flutter/painting.dart' show TextPainter, TextSpan, TextStyle;
 
 // Project imports:
-import '../../../../core/constants/app_constants.dart';
+import '../../../constants/app_constants.dart';
 
 // Shared text painters and drawing primitives for road signs.
 abstract final class SignGlyphs {

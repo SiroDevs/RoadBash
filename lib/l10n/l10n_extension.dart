@@ -2,9 +2,9 @@
 import 'package:flutter/widgets.dart';
 
 // Project imports:
-import '../../domain/models/player_profile.dart';
-import '../../domain/models/scene_id.dart';
-import '../../l10n/gen/app_localizations.dart';
+import '../domain/models/player_profile.dart';
+import '../domain/models/scene_id.dart';
+import 'gen/app_localizations.dart';
 
 /// Adds an `l10n` shortcut to [BuildContext].
 extension L10nContext on BuildContext {

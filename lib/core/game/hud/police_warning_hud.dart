@@ -6,7 +6,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
-import '../../constants/app_constants.dart';
+import '../../../common/constants/app_constants.dart';
 import '../police/police_chase.dart';
 import '../race/race_controller.dart';
 import '../utils/canvas_text.dart';

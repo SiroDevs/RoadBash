@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
-import '../../../core/constants/app_constants.dart';
+import '../../../common/constants/app_constants.dart';
 import '../../../domain/models/player_session.dart';
 import '../../../domain/repos/auth_repo.dart';
 import '../../progress/cubit/progress_cubit.dart';

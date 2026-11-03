@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import '../utils/app_util.dart';
+import '../../common/utils/app_util.dart';
 import 'injectable.config.dart';
 
 final getIt = GetIt.instance;

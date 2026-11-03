@@ -5,7 +5,7 @@ import 'dart:ui' hide TextStyle;
 import 'package:flutter/painting.dart' show TextPainter, TextSpan, TextStyle;
 
 // Project imports:
-import '../../constants/app_constants.dart';
+import '../../../common/constants/app_constants.dart';
 
 final Map<String, TextPainter> _painters = {};
 const int _painterLimit = 96;

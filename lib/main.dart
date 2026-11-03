@@ -8,7 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 // Project imports:
 import 'app.dart';
 import 'core/di/injectable.dart';
-import 'core/platform/display_setup.dart';
+import 'core/layout/display_setup.dart';
 import 'data/sources/remote/supabase_config.dart';
 
 /// App entry point; initializes services, then starts the app.

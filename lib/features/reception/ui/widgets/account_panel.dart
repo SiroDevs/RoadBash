@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import '../../../../common/l10n/l10n_extension.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../../common/widgets/retro/retro_style.dart';

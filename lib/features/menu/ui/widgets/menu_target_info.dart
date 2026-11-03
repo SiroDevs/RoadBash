@@ -1,6 +1,6 @@
 // Project imports:
 import '../../../../common/constants/app_assets.dart';
-import '../../../../common/l10n/l10n_extension.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../../../domain/models/scene_id.dart';
 import '../../../../l10n/gen/app_localizations.dart';
 import '../../cubit/menu_target.dart';

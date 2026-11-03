@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 // Project imports:
-import '../../../utils/app_util.dart';
+import '../../../../common/utils/app_util.dart';
 
 /// Road drawing constants.
 abstract final class RoadConfig {

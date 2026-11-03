@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
-import '../../../../common/l10n/l10n_extension.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../../../common/layout/retro_sizes.dart';
-import '../../../../core/constants/app_constants.dart';
+import '../../../../common/constants/app_constants.dart';
 
 // Dimmed full-screen label shown while the race is paused.
 class RacePauseOverlay extends StatelessWidget {

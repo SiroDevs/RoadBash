@@ -7,9 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
-import '../../../../common/l10n/l10n_extension.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../../../common/layout/retro_sizes.dart';
-import '../../../../core/constants/app_constants.dart';
+import '../../../../common/constants/app_constants.dart';
 import '../../../../core/game/road_game.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../l10n/gen/app_localizations.dart';

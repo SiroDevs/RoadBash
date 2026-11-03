@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flame/components.dart' show Vector2;
 
 // Project imports:
-import '../../../../common/l10n/l10n_extension.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../../../core/game/hud/dashboard_layout.dart';
 import 'touch_pedal.dart';
 import 'touch_steer_pad.dart';

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../../core/constants/app_constants.dart';
+import '../../constants/app_constants.dart';
 import '../../layout/retro_sizes.dart';
 
 /// Colors and styles of the retro look.

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../../../core/constants/app_constants.dart';
+import '../../../constants/app_constants.dart';
 
 /// RoadBash logo drawn as license plates.
 class RoadBashLogo extends StatelessWidget {

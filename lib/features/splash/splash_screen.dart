@@ -7,13 +7,13 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../common/constants/app_assets.dart';
-import '../../common/l10n/l10n_extension.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../common/layout/responsive_scroll_body.dart';
 import '../../common/layout/retro_sizes.dart';
 import '../../common/widgets/retro/brand/logo_mark.dart';
 import '../../common/widgets/retro/page/retro_scaffold.dart';
 import '../../common/widgets/retro/retro_style.dart';
-import '../../core/constants/app_constants.dart';
+import '../../common/constants/app_constants.dart';
 import '../../core/router/route_names.dart';
 import 'cubit/splash_cubit.dart';
 

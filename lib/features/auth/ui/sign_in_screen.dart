@@ -7,14 +7,14 @@ import 'package:go_router/go_router.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
-import '../../../common/l10n/l10n_extension.dart';
+import '../../../l10n/l10n_extension.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
 import '../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../common/widgets/retro/controls/retro_field.dart';
 import '../../../common/widgets/retro/page/retro_page.dart';
 import '../../../common/widgets/retro/retro_style.dart';
-import '../../../core/constants/app_constants.dart';
+import '../../../common/constants/app_constants.dart';
 import '../../../core/router/route_names.dart';
 import '../../settings/cubit/settings_cubit.dart';
 import '../cubit/auth_cubit.dart';

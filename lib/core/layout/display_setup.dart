@@ -2,7 +2,7 @@
 import 'package:flutter/services.dart';
 
 // Project imports:
-import '../utils/app_util.dart';
+import '../../common/utils/app_util.dart';
 
 // Package imports:
 

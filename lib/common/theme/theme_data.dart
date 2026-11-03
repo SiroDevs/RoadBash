@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../core/constants/app_constants.dart';
+import '../constants/app_constants.dart';
 import 'theme_colors.dart';
 
 /// Builds the light and dark Material themes.

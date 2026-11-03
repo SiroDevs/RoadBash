@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../common/constants/app_assets.dart';
-import '../../common/l10n/l10n_extension.dart';
+import '../../l10n/l10n_extension.dart';
 import '../../common/layout/retro_sizes.dart';
 import '../../common/widgets/retro/page/retro_page.dart';
 import '../../common/widgets/retro/retro_style.dart';

@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
-import '../../core/utils/uuid.dart';
+import '../../common/utils/uuid.dart';
 import '../../domain/models/stats_models.dart';
 import '../../domain/repos/stats_repo.dart';
 import '../mappers/stats_mapper.dart';

@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
-import '../../../common/l10n/l10n_extension.dart';
+import '../../../l10n/l10n_extension.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
 import '../../../common/widgets/retro/controls/retro_chips.dart';

@@ -10,12 +10,12 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import '../../../../common/l10n/l10n_extension.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../core/router/route_names.dart';
-import '../../../../core/utils/app_util.dart';
+import '../../../../common/utils/app_util.dart';
 
 /// Reception panel that exits the game.
 class ExitPanel extends StatelessWidget {

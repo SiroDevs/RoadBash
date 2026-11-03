@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../../../common/l10n/l10n_extension.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 import '../../cubit/menu_target.dart';
 import '../../cubit/scene_order.dart';

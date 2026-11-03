@@ -1,6 +1,6 @@
 // Project imports:
-import '../universal/ground/terrain.dart';
-import '../universal/ground/terrain_zones.dart';
+import '../ground/terrain.dart';
+import '../ground/terrain_zones.dart';
 
 /// Where the dirt road turns loose, stony, potholed or muddy.
 const List<TerrainZone> dirtZones = [

@@ -2,11 +2,11 @@
 import 'dart:math' as math;
 
 // Project imports:
+import '../common/guardrail/guardrail_config.dart';
 import '../race/race_controller.dart';
-import '../road/guardrail/guardrail_config.dart';
+import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 import '../road/traffic/traffic_flow.dart';
-import '../road/universal/config/vehicle_config.dart';
 import 'police_cop.dart';
 
 /// Whether a patrol is on the player's tail.

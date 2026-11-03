@@ -2,7 +2,7 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../road/universal/config/vehicle_config.dart';
+import '../road/config/vehicle_config.dart';
 import 'race_controller.dart';
 import 'rival_sight.dart';
 

@@ -3,14 +3,14 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
-import '../vehicle/civilian_kind.dart';
-import '../vehicle/matatu_painter.dart';
-import '../vehicle/sedan_painter.dart';
-import '../vehicle/truck_painter.dart';
-import '../vehicle/vehicle_canvas.dart';
+import '../../common/vehicle/civilian_kind.dart';
+import '../../common/vehicle/matatu_painter.dart';
+import '../../common/vehicle/sedan_painter.dart';
+import '../../common/vehicle/truck_painter.dart';
+import '../../common/vehicle/vehicle_canvas.dart';
 import 'road_actor.dart';
 
-export '../vehicle/civilian_kind.dart';
+export '../../common/vehicle/civilian_kind.dart';
 
 /// A civilian car, matatu or truck driving the same way as the race.
 ///

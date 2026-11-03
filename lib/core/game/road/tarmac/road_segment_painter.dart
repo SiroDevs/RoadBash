@@ -3,11 +3,11 @@ import 'dart:ui';
 
 // Project imports:
 import '../../utils/paint_utils.dart';
+import '../config/road_config.dart';
+import '../ground/ground_painter.dart';
+import '../road_projection.dart';
 import '../scene_theme.dart';
 import '../track/road_section.dart';
-import '../universal/config/road_config.dart';
-import '../universal/ground_painter.dart';
-import '../universal/road_projection.dart';
 import 'road_surface_palette.dart';
 
 /// Paints the road surface, verges and markings.

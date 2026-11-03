@@ -6,20 +6,20 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
+import '../common/universal/prop_painter.dart';
 import '../hud/dashboard_layout.dart';
 import 'backdrop/road_backdrop.dart';
+import 'config/road_config.dart';
 import 'finish/finish_config.dart';
 import 'finish/finish_pad_painter.dart';
 import 'finish/finish_zone.dart';
 import 'road_dynamics.dart';
+import 'road_projection.dart';
+import 'road_props.dart';
 import 'scene_theme.dart';
 import 'tarmac/road_segment_painter.dart';
 import 'track/road_track.dart';
 import 'traffic/road_traffic.dart';
-import 'universal/config/road_config.dart';
-import 'universal/prop_painter.dart';
-import 'universal/road_projection.dart';
-import 'universal/road_props.dart';
 
 /// Draws the road, scenery and traffic of a scene and runs the rider physics.
 class RoadRenderer extends PositionComponent with RoadDynamics {

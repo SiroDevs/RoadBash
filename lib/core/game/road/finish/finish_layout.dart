@@ -2,12 +2,12 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../building/city_blocks_layout.dart';
-import '../kiosk/kiosk_layout.dart';
+import '../../common/building/city_blocks_layout.dart';
+import '../../common/kiosk/kiosk_layout.dart';
+import '../../common/universal/prop.dart';
+import '../config/road_config.dart';
 import '../scene_theme.dart';
 import '../track/road_track.dart';
-import '../universal/config/road_config.dart';
-import '../universal/prop.dart';
 import 'cone_layout.dart';
 import 'crowd_layout.dart';
 import 'finish_config.dart';

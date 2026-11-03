@@ -1,7 +1,7 @@
 // Project imports:
+import '../../../common/tree/jungle_tree_layout.dart';
+import '../../../common/universal/prop.dart';
 import '../../../utils/pseudo_random.dart';
-import '../../tree/jungle_tree_layout.dart';
-import '../../universal/prop.dart';
 import 'jungle_sites_layout.dart';
 
 /// Dense tropical growth: a close row of big trees and palms hugging the

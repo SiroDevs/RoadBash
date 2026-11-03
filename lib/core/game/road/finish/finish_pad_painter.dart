@@ -3,9 +3,9 @@ import 'dart:ui';
 
 // Project imports:
 import '../../utils/paint_utils.dart';
+import '../config/road_config.dart';
+import '../road_projection.dart';
 import '../scene_theme.dart';
-import '../universal/config/road_config.dart';
-import '../universal/road_projection.dart';
 import 'finish_config.dart';
 
 /// The finish strip painted over the road (and its shoulders): chequered, or

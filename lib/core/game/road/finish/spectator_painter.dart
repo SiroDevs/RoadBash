@@ -3,10 +3,10 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
+import '../../common/universal/prop.dart';
 import '../../utils/paint_utils.dart';
+import '../road_projection.dart';
 import '../scene_theme.dart';
-import '../universal/prop.dart';
-import '../universal/road_projection.dart';
 
 /// Paints a spectator in the finish crowd.
 class SpectatorPainter {

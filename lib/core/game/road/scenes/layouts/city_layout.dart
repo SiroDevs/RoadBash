@@ -1,7 +1,7 @@
 // Project imports:
+import '../../../common/universal/prop.dart';
 import '../../../utils/pseudo_random.dart';
-import '../../universal/config/road_config.dart';
-import '../../universal/prop.dart';
+import '../../config/road_config.dart';
 
 /// Places buildings and trees for the city scene.
 void layOutCity(List<List<Prop>> slots, int count) {

@@ -5,7 +5,7 @@ import 'dart:math' as math;
 import '../../../domain/models/scene_id.dart';
 import '../rider/look/rider_look.dart';
 import '../rider/look/rider_looks.dart';
-import '../road/universal/config/road_config.dart';
+import '../road/config/road_config.dart';
 import 'race_result.dart';
 import 'rival_tracker.dart';
 

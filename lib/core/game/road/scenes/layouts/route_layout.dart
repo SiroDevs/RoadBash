@@ -2,13 +2,13 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../../guardrail/guardrail_layout.dart';
-import '../../lamp/lamp_layout.dart';
+import '../../../common/guardrail/guardrail_layout.dart';
+import '../../../common/lamp/lamp_layout.dart';
+import '../../../common/universal/prop.dart';
+import '../../../common/universal/sign_panel.dart';
+import '../../config/road_config.dart';
 import '../../routes/route_stretch.dart';
 import '../../track/road_track.dart';
-import '../../universal/config/road_config.dart';
-import '../../universal/prop.dart';
-import '../../universal/sign_panel.dart';
 import 'scenery_layout.dart';
 
 /// Places scenery and features along a route from its stretches.

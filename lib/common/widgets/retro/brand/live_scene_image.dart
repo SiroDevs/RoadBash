@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/widgets.dart';
 
 // Project imports:
-import '../../../../core/game/preview/scene_snapshot.dart';
+import '../../../../core/game/common/preview/scene_snapshot.dart';
 import '../../../../domain/models/scene_id.dart';
 import '../feedback/retro_skeleton.dart';
 

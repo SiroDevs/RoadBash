@@ -4,7 +4,7 @@ import 'dart:math' as math;
 // Project imports:
 import '../rider/rider_painter.dart';
 import '../rider/rider_pose.dart';
-import '../road/universal/config/vehicle_config.dart';
+import '../road/config/vehicle_config.dart';
 
 /// Animates a rival's rider pose from its speed, steering and the road curve.
 class RivalPoseDriver {

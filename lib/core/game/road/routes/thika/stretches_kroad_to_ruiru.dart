@@ -1,6 +1,6 @@
 // Project imports:
-import '../../universal/sign_panel.dart';
-import '../../wall/wall_style.dart';
+import '../../../common/universal/sign_panel.dart';
+import '../../../common/wall/wall_style.dart';
 import '../route_stretch.dart';
 import 'exits.dart';
 import 'presets.dart';

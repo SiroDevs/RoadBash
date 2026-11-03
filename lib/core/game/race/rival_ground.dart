@@ -1,9 +1,9 @@
 // Project imports:
 import '../rider/dust_trail.dart';
+import '../road/config/vehicle_config.dart';
+import '../road/ground/terrain.dart';
+import '../road/ground/terrain_ride.dart';
 import '../road/road_renderer.dart';
-import '../road/universal/config/vehicle_config.dart';
-import '../road/universal/ground/terrain.dart';
-import '../road/universal/ground/terrain_ride.dart';
 
 /// A rival's contact with the ground: terrain drag, falls and dust.
 class RivalGround {

@@ -1,5 +1,5 @@
 // Project imports:
-import '../../universal/sign_panel.dart';
+import '../../../common/universal/sign_panel.dart';
 
 const List<SignBoard> pelicanBoards = [
   SignBoard(['SPEED THRILLS', 'BUT KILLS']),

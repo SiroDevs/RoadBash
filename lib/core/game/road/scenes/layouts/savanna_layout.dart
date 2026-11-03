@@ -1,6 +1,6 @@
 // Project imports:
+import '../../../common/universal/prop.dart';
 import '../../../utils/pseudo_random.dart';
-import '../../universal/prop.dart';
 
 /// Open dry country: scattered flat-topped acacias, thorn bushes and
 /// boulders, with plenty of empty space between them.

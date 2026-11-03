@@ -1,9 +1,9 @@
 // Project imports:
+import '../../common/universal/prop.dart';
 import '../../utils/pseudo_random.dart';
 import '../scene_theme.dart';
+import '../track/road_side.dart';
 import '../track/road_track.dart';
-import '../universal/prop.dart';
-import '../universal/road_side.dart';
 import 'finish_config.dart';
 
 /// Places the crowd beside the finish pad.

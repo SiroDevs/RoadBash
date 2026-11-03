@@ -1,6 +1,6 @@
 // Project imports:
+import '../../../common/universal/prop.dart';
 import '../../../utils/pseudo_random.dart';
-import '../../universal/prop.dart';
 
 /// Places buildings and trees for the suburbs scene.
 void layOutSuburbs(List<List<Prop>> slots, int count) {

@@ -1,7 +1,7 @@
 // Project imports:
+import '../ground/terrain.dart';
+import '../ground/terrain_zones.dart';
 import '../track/road_section.dart';
-import '../universal/ground/terrain.dart';
-import '../universal/ground/terrain_zones.dart';
 
 /// A roadside setting along the jungle road.
 enum JungleSite {

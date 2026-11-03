@@ -2,13 +2,13 @@
 import 'dart:math' as math;
 
 // Project imports:
+import '../../../common/building/building_layout.dart';
+import '../../../common/slip_road/slip_road_layout.dart';
+import '../../../common/tree/tree_layout.dart';
+import '../../../common/universal/prop.dart';
+import '../../../common/wall/wall_layout.dart';
 import '../../../utils/pseudo_random.dart';
-import '../../building/building_layout.dart';
 import '../../routes/route_stretch.dart';
-import '../../slip_road/slip_road_layout.dart';
-import '../../tree/tree_layout.dart';
-import '../../universal/prop.dart';
-import '../../wall/wall_layout.dart';
 
 /// Places the side scenery of one stretch.
 ///

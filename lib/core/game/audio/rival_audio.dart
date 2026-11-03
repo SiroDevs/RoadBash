@@ -15,9 +15,9 @@ import '../../audio/synth/engine_voice.dart';
 import '../../audio/synth/engine_wave.dart';
 import '../race/race_controller.dart';
 import '../race/rival_racer.dart';
+import '../road/config/road_config.dart';
+import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
-import '../road/universal/config/road_config.dart';
-import '../road/universal/config/vehicle_config.dart';
 
 /// Engine voice and playback handle for one rival.
 class _RivalVoice {

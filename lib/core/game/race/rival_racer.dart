@@ -3,14 +3,14 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
+import '../common/guardrail/guardrail_config.dart';
 import '../rider/crash_state.dart';
 import '../rider/rider_sprite.dart';
-import '../road/guardrail/guardrail_config.dart';
+import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 import '../road/track/road_section.dart';
 import '../road/traffic/road_actor.dart';
 import '../road/traffic/traffic_flow.dart';
-import '../road/universal/config/vehicle_config.dart';
 import 'race_controller.dart';
 import 'rival_brain.dart';
 import 'rival_ground.dart';

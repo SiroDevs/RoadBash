@@ -7,8 +7,8 @@ import '../race/rival_pose_driver.dart';
 import '../rider/look/rider_looks.dart';
 import '../rider/rider_painter.dart';
 import '../rider/rider_sprite.dart';
+import '../road/config/vehicle_config.dart';
 import '../road/traffic/road_actor.dart';
-import '../road/universal/config/vehicle_config.dart';
 
 /// A police rider with flashing lights, drawn like a rival.
 class PoliceCop implements RoadActor {

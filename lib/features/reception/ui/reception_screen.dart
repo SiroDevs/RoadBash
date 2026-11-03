@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
+import '../../../common/constants/app_assets.dart';
 import '../../../common/l10n/l10n_extension.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
@@ -14,7 +15,6 @@ import '../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../common/widgets/retro/page/retro_page.dart';
 import '../../../common/widgets/retro/retro_style.dart';
 import '../../../core/layout/responsive_layout_builder.dart';
-import '../../../common/constants/app_assets.dart';
 import '../../../core/router/route_names.dart';
 import '../../suggestions/ui/suggestion_panel.dart';
 import '../cubit/reception_cubit.dart';

@@ -1,5 +1,5 @@
 // Project imports:
-import '../road/universal/config/vehicle_config.dart';
+import '../road/config/vehicle_config.dart';
 
 /// How a rival rider is behaving at the moment.
 enum RivalMood { cruise, chase, draft, overtake, defend, slip, attack }

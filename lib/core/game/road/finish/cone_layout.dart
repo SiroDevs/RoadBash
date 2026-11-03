@@ -1,6 +1,6 @@
 // Project imports:
+import '../../common/universal/prop.dart';
 import '../../utils/pseudo_random.dart';
-import '../universal/prop.dart';
 import 'finish_config.dart';
 
 /// Cones standing in the road itself around the finish, on the lane lines.

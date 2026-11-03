@@ -3,7 +3,9 @@ import 'dart:math' as math;
 
 // Project imports:
 import '../../../../domain/models/scene_id.dart';
+import '../config/road_config.dart';
 import '../finish/finish_config.dart';
+import '../ground/terrain.dart';
 import '../routes/route_stretch.dart';
 import '../routes/thika/thika_route.dart';
 import '../scene_theme.dart';
@@ -11,8 +13,6 @@ import '../scenes/dirt_steps.dart';
 import '../scenes/dirt_zones.dart';
 import '../scenes/jungle_steps.dart';
 import '../scenes/jungle_zones.dart';
-import '../universal/config/road_config.dart';
-import '../universal/ground/terrain.dart';
 import 'road_section.dart';
 import 'track_zones.dart';
 

@@ -3,8 +3,8 @@ import 'dart:ui';
 
 // Project imports:
 import '../../utils/paint_utils.dart';
+import '../road_projection.dart';
 import '../scene_theme.dart';
-import '../universal/road_projection.dart';
 
 /// Paints a black and white striped finish post.
 class PostPainter {

@@ -2,7 +2,7 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../road/config/vehicle_config.dart';
+import '../road/universal/config/vehicle_config.dart';
 
 /// Latest distance, speed and finish time reported by each rival.
 class RivalTracker {

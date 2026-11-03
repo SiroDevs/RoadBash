@@ -4,7 +4,7 @@ import 'dart:ui';
 
 // Project imports:
 import '../../../../domain/models/scene_id.dart';
-import '../config/road_config.dart';
+import '../universal/config/road_config.dart';
 
 /// How a scene dresses its finish. Nothing here builds a foreign scene: every
 /// scene keeps its own road and scenery, and only gets the race furniture

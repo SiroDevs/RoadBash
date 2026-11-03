@@ -262,6 +262,31 @@
   "@hudRpmUnit": {
     "description": "Rev counter unit"
   },
+  "hudPolice": "POLICE!",
+  "@hudPolice": {
+    "description": "Warning shown while a cop chases the player"
+  },
+  "hudPullOver": "PULL OVER!",
+  "@hudPullOver": {
+    "description": "Shown while the cop is arresting the player"
+  },
+  "hudBusted": "BUSTED!",
+  "@hudBusted": {
+    "description": "Banner and title when the player is arrested"
+  },
+  "bustedNote": "A cop caught up with you. Race over.",
+  "@bustedNote": {
+    "description": "Results text after an arrest"
+  },
+  "bustedFine": "Fine: KSh {amount}",
+  "@bustedFine": {
+    "description": "Fine after an arrest",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "quitRace": "Quit race",
   "@quitRace": {
     "description": "Close button label"

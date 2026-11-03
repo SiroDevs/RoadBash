@@ -7,7 +7,7 @@ import 'package:flame/components.dart';
 
 // Project imports:
 import '../../layout/responsive_layout_builder.dart';
-import '../road/config/road_config.dart';
+import '../road/universal/config/road_config.dart';
 
 /// Sizes and positions of the dashboard and road for a screen.
 class DashboardLayout {

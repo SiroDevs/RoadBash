@@ -1,5 +1,5 @@
 // Project imports:
-import '../../props/wall_style.dart';
+import '../../wall/wall_style.dart';
 import '../route_stretch.dart';
 import 'presets.dart';
 import 'signage.dart';

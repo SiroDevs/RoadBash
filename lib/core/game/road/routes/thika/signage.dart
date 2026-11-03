@@ -1,5 +1,5 @@
 // Project imports:
-import '../../props/sign_panel.dart';
+import '../../universal/sign_panel.dart';
 
 const List<SignPanel> exit17Panels = [
   SignPanel(

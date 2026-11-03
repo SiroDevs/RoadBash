@@ -8,9 +8,9 @@ import 'package:flame/components.dart';
 // Project imports:
 import '../../hud/dashboard_layout.dart';
 import '../../rider/rider_rig.dart';
-import '../config/road_config.dart';
-import '../props/road_props.dart';
-import '../road_projection.dart';
+import '../universal/config/road_config.dart';
+import '../universal/road_projection.dart';
+import '../universal/road_props.dart';
 import 'road_actor.dart';
 
 /// Places the other bikes on the road and paints them in depth order.

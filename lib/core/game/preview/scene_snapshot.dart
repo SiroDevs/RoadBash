@@ -14,10 +14,10 @@ import '../rider/look/rider_look.dart';
 import '../rider/look/rider_looks.dart';
 import '../rider/rider_rig.dart';
 import '../rider/rider_sprite.dart';
-import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 import '../road/scene_theme.dart';
 import '../road/traffic/road_traffic.dart';
+import '../road/universal/config/vehicle_config.dart';
 import 'preview_bike.dart';
 
 /// Stills of each scene, drawn by the game's own road code with the main rider

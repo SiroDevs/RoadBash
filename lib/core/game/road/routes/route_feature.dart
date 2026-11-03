@@ -1,6 +1,6 @@
 // Project imports:
-import '../props/prop.dart';
-import '../props/sign_panel.dart';
+import '../universal/prop.dart';
+import '../universal/sign_panel.dart';
 
 /// A roadside feature placed at a point along a route stretch.
 class RouteFeature {

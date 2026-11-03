@@ -410,6 +410,36 @@ abstract class AppLocalizations {
   /// **'RPM x1000'**
   String get hudRpmUnit;
 
+  /// Warning shown while a cop chases the player
+  ///
+  /// In en, this message translates to:
+  /// **'POLICE!'**
+  String get hudPolice;
+
+  /// Shown while the cop is arresting the player
+  ///
+  /// In en, this message translates to:
+  /// **'PULL OVER!'**
+  String get hudPullOver;
+
+  /// Banner and title when the player is arrested
+  ///
+  /// In en, this message translates to:
+  /// **'BUSTED!'**
+  String get hudBusted;
+
+  /// Results text after an arrest
+  ///
+  /// In en, this message translates to:
+  /// **'A cop caught up with you. Race over.'**
+  String get bustedNote;
+
+  /// Fine after an arrest
+  ///
+  /// In en, this message translates to:
+  /// **'Fine: KSh {amount}'**
+  String bustedFine(String amount);
+
   /// Close button label
   ///
   /// In en, this message translates to:

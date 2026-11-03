@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 // Project imports:
-import '../road/config/road_config.dart';
+import '../road/universal/config/road_config.dart';
 
 /// Creates a fill paint for a color.
 Paint fillPaint(Color color, {bool antiAlias = true}) => Paint()

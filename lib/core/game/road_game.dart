@@ -17,15 +17,19 @@ import 'audio/ride_audio.dart';
 import 'hud/dashboard_hud.dart';
 import 'hud/hud_strings.dart';
 import 'input/road_input.dart';
+import 'police/police_chase.dart';
 import 'race/race_controller.dart';
 import 'race/race_result.dart';
 import 'race/rider_contacts.dart';
 import 'race/rival_racer.dart';
+import 'race/scene_traffic.dart';
+import 'race/traffic_contacts.dart';
 import 'rider/rider_component.dart';
 import 'road/road_renderer.dart';
 import 'road/scene_theme.dart';
 import 'road/traffic/rival_overlay.dart';
 import 'road/traffic/road_traffic.dart';
+import 'road/traffic/traffic_flow.dart';
 
 /// Flame game that runs a race on the road.
 class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
@@ -51,6 +55,13 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
   late final RoadRenderer road;
   late final RaceController race;
   late final List<RivalRacer> racers;
+
+  /// Civilian vehicles sharing the road with the race.
+  late final TrafficFlow flow;
+
+  /// The police patrol that chases a speeding or reckless player.
+  late final PoliceChase police;
+  late final TrafficContacts _trafficContacts;
   RideAudio? _ride;
   late final RiderContacts _contacts = RiderContacts(
     onImpact: (strength, knockedOff) => _ride?.impact(strength, knockedOff),
@@ -76,15 +87,23 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
       for (var i = 0; i < race.rivals.length; i++)
         RivalRacer(race.rivals[i], i, theme.lanes),
     ];
+    final traffic = SceneTraffic.of(scene, theme, road, race);
+    flow = traffic.flow;
+    police = traffic.police;
+    _trafficContacts = TrafficContacts(
+      onImpact: (strength, knockedOff) => _ride?.impact(strength, knockedOff),
+      onCrime: police.crime,
+    );
     for (final racer in racers) {
       racer.peers = racers;
+      racer.flow = flow;
     }
-    road.traffic = RoadTraffic(racers, theme.lanes);
+    road.traffic = RoadTraffic([...racers, ...flow.cars, police.cop], theme.lanes);
     await addAll([
       road,
       RiderComponent(road),
       RivalOverlay(road),
-      DashboardHud(road, race, strings),
+      DashboardHud(road, race, strings, police),
     ]);
     if (_shutDown) return;
     final ride = RideAudio(
@@ -93,6 +112,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
       road: road,
       race: race,
       racers: racers,
+      police: police,
     );
     _ride = ride;
     unawaited(ride.start());
@@ -106,16 +126,24 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     road.locked = race.countdown > 0;
     applyInput();
     race.update(dt, road.fullDistance, road.speed);
+    flow.update(race.countdown > 0 ? 0 : dt, road.fullDistance, road.playerZ);
     for (final r in racers) {
       r.update(dt, race, road);
     }
     _contacts.update(dt, race, road, racers);
+    _trafficContacts.update(dt, race, road, flow, racers, police);
+    police.update(dt, race, road, flow);
+    if (police.busted && !race.finished) race.bust(police.fine);
 
     if (race.finished && !finishing) {
       finishing = true;
+      if (race.busted) _finishDelay = 3.4;
       applyInput();
     }
-    if (finishing && !_notified && (_finishDelay -= dt) <= 0 && _fieldHome) {
+    if (finishing &&
+        !_notified &&
+        (_finishDelay -= dt) <= 0 &&
+        (race.busted || _fieldHome)) {
       _notified = true;
       onFinished(race.buildResult());
     }

@@ -3,11 +3,11 @@ import 'dart:math' as math;
 
 // Project imports:
 import '../rider/crash_state.dart';
-import 'config/guardrail_config.dart';
-import 'terrain/terrain_ride.dart';
-import 'config/vehicle_config.dart';
+import 'guardrail/guardrail_config.dart';
 import 'scene_theme.dart';
 import 'track/road_track.dart';
+import 'universal/config/vehicle_config.dart';
+import 'universal/ground/terrain_ride.dart';
 
 // Rider speed, steering and engine state with its update rules.
 mixin RoadDynamics {

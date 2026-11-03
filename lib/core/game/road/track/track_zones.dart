@@ -1,6 +1,6 @@
 // Project imports:
-import '../terrain/jungle_zones.dart';
-import '../terrain/terrain_zones.dart';
+import '../scenes/jungle_zones.dart';
+import '../universal/ground/terrain_zones.dart';
 import 'road_track.dart';
 
 /// Lays zones of ground and roadside settings over a built track.

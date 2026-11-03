@@ -1,5 +1,10 @@
+// Dart imports:
+import 'dart:math' as math;
+
 // Project imports:
-import '../road/config/vehicle_config.dart';
+import '../road/road_renderer.dart';
+import '../road/universal/config/vehicle_config.dart';
+import 'race_controller.dart';
 
 /// Returns the sideways position where a rival parks beside the player.
 double parkingLateral(int index, double playerX, double minLateral, double maxLateral) {
@@ -11,16 +16,18 @@ double parkingLateral(int index, double playerX, double minLateral, double maxLa
 }
 
 /// Returns the distance where a rival should stop after crossing the line.
-double rivalStopDistance({
-  required bool raceFinished,
-  required double raceLength,
-  required double playerDistance,
-  required double playerSpeed,
-  required int index,
-}) {
-  if (raceFinished) {
-    final braking = playerSpeed * playerSpeed / (2 * -VehicleConfig.braking);
-    return playerDistance + braking - 180 * (1 + index ~/ 2);
+double rivalStopDistance(RaceController race, RoadRenderer road, int index) {
+  if (race.finished) {
+    final braking = road.speed * road.speed / (2 * -VehicleConfig.braking);
+    return road.fullDistance + braking - 180 * (1 + index ~/ 2);
   }
-  return raceLength + (0.26 + 0.03 * index) * VehicleConfig.maxSpeed;
+  return race.raceLength + (0.26 + 0.03 * index) * VehicleConfig.maxSpeed;
+}
+
+/// Returns the speed of a rival braking to stop within [remaining] units.
+double rivalFinishSpeed(double dt, double speed, double remaining) {
+  final decel = (speed * speed / (2 * math.max(remaining, 60)))
+      .clamp(VehicleConfig.maxSpeed * 0.6, VehicleConfig.maxSpeed * 3.5)
+      .toDouble();
+  return math.max(0.0, speed - decel * dt);
 }

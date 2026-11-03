@@ -178,13 +178,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hudHoldGas => 'Hold the gas to ride';
 
   @override
-  String hudLap(int lap, int laps) {
-    return 'LAP $lap/$laps';
+  String hudRemaining(String km) {
+    return '-$km KM';
   }
 
   @override
-  String hudRemaining(String km) {
-    return '-$km KM';
+  String hudLap(int lap, int laps) {
+    return 'LAP $lap/$laps';
   }
 
   @override
@@ -192,6 +192,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hudRpmUnit => 'RPM x1000';
+
+  @override
+  String get hudPolice => 'POLICE!';
+
+  @override
+  String get hudPullOver => 'PULL OVER!';
+
+  @override
+  String get hudBusted => 'BUSTED!';
+
+  @override
+  String get bustedNote => 'A cop caught up with you. Race over.';
+
+  @override
+  String bustedFine(String amount) {
+    return 'Fine: KSh $amount';
+  }
 
   @override
   String get quitRace => 'Quit race';

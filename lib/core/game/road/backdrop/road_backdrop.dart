@@ -6,10 +6,10 @@ import 'package:flame/components.dart';
 
 // Project imports:
 import '../../utils/paint_utils.dart';
-import '../config/road_config.dart';
+import '../building/skyline/skyline.dart';
+import '../mountain/hills.dart';
 import '../scene_theme.dart';
-import 'hills.dart';
-import 'skyline/skyline.dart';
+import '../universal/config/road_config.dart';
 
 /// Sky, hills, clouds and skyline behind the road.
 class RoadBackdrop {

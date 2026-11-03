@@ -28,7 +28,8 @@ class RaceCubit extends Cubit<RaceOutcome?> {
   /// Records the result and emits the outcome.
   Future<void> finish(RaceResult result) async {
     if (state != null) return;
-    final newBest = await _progress.record(result);
+    // An arrest has no finish time, so it never counts as a record.
+    final newBest = result.busted ? false : await _progress.record(result);
     if (!isClosed) emit(RaceOutcome(result: result, newBest: newBest));
   }
 }

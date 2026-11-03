@@ -5,11 +5,12 @@ import 'dart:ui';
 // Project imports:
 import '../rider/crash_state.dart';
 import '../rider/rider_sprite.dart';
-import '../road/config/guardrail_config.dart';
-import '../road/config/vehicle_config.dart';
+import '../road/guardrail/guardrail_config.dart';
 import '../road/road_renderer.dart';
 import '../road/track/road_section.dart';
 import '../road/traffic/road_actor.dart';
+import '../road/traffic/traffic_flow.dart';
+import '../road/universal/config/vehicle_config.dart';
 import 'race_controller.dart';
 import 'rival_brain.dart';
 import 'rival_ground.dart';
@@ -55,6 +56,9 @@ class RivalRacer implements RoadActor {
   final RivalGround _ground = RivalGround();
 
   List<RivalRacer> peers = const [];
+
+  /// Civilian traffic the rival steers around and slows for.
+  TrafficFlow? flow;
 
   double _dist = 0, _speed = 0, _visLead = 0;
   bool _crossed = false;
@@ -143,19 +147,7 @@ class RivalRacer implements RoadActor {
       _speed = 0;
       return;
     }
-    final remaining = rivalStopDistance(
-          raceFinished: race.finished,
-          raceLength: race.raceLength,
-          playerDistance: road.fullDistance,
-          playerSpeed: road.speed,
-          index: index,
-        ) -
-        _dist;
-    final decel = (_speed * _speed / (2 * math.max(remaining, 60))).clamp(
-      VehicleConfig.maxSpeed * 0.6,
-      VehicleConfig.maxSpeed * 3.5,
-    ).toDouble();
-    _speed = math.max(0.0, _speed - decel * dt);
+    _speed = rivalFinishSpeed(dt, _speed, rivalStopDistance(race, road, index) - _dist);
     _dist += _speed * dt;
   }
 
@@ -163,7 +155,9 @@ class RivalRacer implements RoadActor {
   void _ride(double dt, RaceController race, RoadRenderer road) {
     if (race.raceClock <= 0) return;
     _brain.think(dt, _lookout.look(this, race, road));
-    final target = _brain.speedFraction * VehicleConfig.maxSpeed;
+    var target = _brain.speedFraction * VehicleConfig.maxSpeed;
+    final cap = flow?.speedCap(distance, lateral);
+    if (cap != null) target = math.min(target, cap);
     if (target > _speed) {
       final push = VehicleConfig.accel * _brain.launchPower * dt;
       _speed = math.min(target, _speed + push);
@@ -192,6 +186,12 @@ class RivalRacer implements RoadActor {
         : null;
     final maxLateral = math.min(_edge, (limit ?? 9.0) - 0.12);
     final parked = _crossed && race.finished;
+    double? line = parked
+        ? parkingLateral(index, road.playerX, -_edge, maxLateral)
+        : _brain.preferredLine ?? _ground.goodLine(road, distance);
+    if (!parked && !_crash.down) {
+      line = flow?.freeLine(distance, lateral, line, limit: maxLateral) ?? line;
+    }
     _steering.update(
       dt: dt,
       clock: clock,
@@ -199,9 +199,7 @@ class RivalRacer implements RoadActor {
       along: distance - road.fullDistance,
       closing: road.speed - _speed,
       playerLateral: road.playerX,
-      line: parked
-          ? parkingLateral(index, road.playerX, -_edge, maxLateral)
-          : _brain.preferredLine ?? _ground.goodLine(road, distance),
+      line: line,
       parked: parked,
       attacking: _brain.mood == RivalMood.attack,
       frozen: _crash.down,

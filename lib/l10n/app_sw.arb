@@ -90,7 +90,7 @@
   "@blurbDirtRoad": {
     "description": "Dirt road description"
   },
-  "blurbReception": "Weka jina la mchezaji, rekebisha sauti, angalia vidhibiti, chagua lugha, tazama takwimu na washindi, au weka pendekezo kwenye sanduku la mapendekezo.",
+  "blurbReception": "Weka jina la mchezaji, rekebisha sauti, angalia vidhibiti, chagua lugha, au tazama takwimu na washindi.",
   "@blurbReception": {
     "description": "Reception description"
   },
@@ -530,7 +530,7 @@
   "@accountAnonymous": {
     "description": "Anonymous account line"
   },
-  "accountAdmin": "Msimamizi: unaweza kusoma sanduku la mapendekezo.",
+  "accountAdmin": "Msimamizi: unaendesha boardroom.",
   "@accountAdmin": {
     "description": "Admin badge"
   },
@@ -544,10 +544,6 @@
   },
   "receptionLeaderboard": "Washindi",
   "@receptionLeaderboard": {
-    "description": "Reception item"
-  },
-  "receptionSuggestions": "Sanduku la Mapendekezo",
-  "@receptionSuggestions": {
     "description": "Reception item"
   },
   "statsTitle": "Takwimu",
@@ -639,42 +635,32 @@
   "@leaderboardEmpty": {
     "description": "Empty board"
   },
-  "suggestionHint": "Niambie nini cha kurekebisha, kuongeza au kuondoa. Kila pendekezo hufika kwenye kikasha changu.",
-  "@suggestionHint": {
-    "description": "Suggestion hint"
-  },
-  "suggestionLabel": "Pendekezo lako",
-  "@suggestionLabel": {
-    "description": "Suggestion field"
-  },
-  "suggestionSend": "Tuma",
-  "@suggestionSend": {
-    "description": "Send button"
-  },
-  "suggestionThanks": "Asante, liko kwenye sanduku!",
-  "@suggestionThanks": {
-    "description": "Thanks"
-  },
-  "suggestionSignIn": "Ingia ili kuacha pendekezo.",
-  "@suggestionSignIn": {
-    "description": "Needs sign-in"
-  },
-  "suggestionTooShort": "Andika maneno machache zaidi.",
-  "@suggestionTooShort": {
-    "description": "Too short"
-  },
-  "suggestionRateLimited": "Inatosha kwa sasa. Jaribu tena baadaye.",
-  "@suggestionRateLimited": {
-    "description": "Rate limited"
-  },
-  "suggestionInbox": "Mapendekezo yaliyopokelewa",
-  "@suggestionInbox": {
-    "description": "Admin inbox heading"
-  },
-  "suggestionInboxEmpty": "Sanduku ni tupu.",
-  "@suggestionInboxEmpty": {
-    "description": "Empty inbox"
-  },
+  "menuScenes": "Mandhari",
+  "boardroomTitle": "Boardroom",
+  "blurbBoardroom": "Soma matangazo, nitumie pendekezo, na ujiunge na mazungumzo chini ya machapisho ya wazi.",
+  "boardroomHint": "Niambie nini cha kurekebisha, kuongeza au kuondoa. Mapendekezo hubaki ya faragha hadi msimamizi ayaweke wazi.",
+  "boardroomAdminHint": "Weka tangazo, jibu mapendekezo, yaweke wazi au futa yasiyofaa.",
+  "boardroomSuggestionLabel": "Pendekezo lako",
+  "boardroomAnnouncementLabel": "Tangazo lako",
+  "boardroomSend": "Tuma",
+  "boardroomAnnounce": "Tangaza",
+  "boardroomPosts": "Machapisho",
+  "boardroomEmpty": "Hakuna kitu hapa bado.",
+  "boardroomReply": "Jibu",
+  "boardroomReplyLabel": "Jibu lako",
+  "boardroomMakePublic": "Weka wazi",
+  "boardroomMakePrivate": "Rudisha faragha",
+  "boardroomDelete": "Futa",
+  "boardroomDeleteTitle": "Futa hii?",
+  "boardroomDeleteBody": "Itaondolewa kwa kila mtu, pamoja na majibu yote chini yake.",
+  "boardroomAdminTag": "Msimamizi",
+  "boardroomAnnouncementTag": "Tangazo",
+  "boardroomPublicTag": "Wazi",
+  "boardroomPrivateTag": "Faragha",
+  "boardroomSignIn": "Ingia ili kutumia boardroom.",
+  "boardroomTooShort": "Andika maneno machache zaidi.",
+  "boardroomRateLimited": "Inatosha kwa sasa. Jaribu tena baadaye.",
+  "boardroomForbidden": "Wasimamizi pekee wanaweza kufanya hivyo.",
   "commonCancel": "Ghairi",
   "@commonCancel": {
     "description": "Cancel button"

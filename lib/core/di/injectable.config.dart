@@ -23,7 +23,7 @@ import 'package:roadbash/data/repos/leaderboard_repo_impl.dart' as _i102;
 import 'package:roadbash/data/repos/profile_repo_impl.dart' as _i103;
 import 'package:roadbash/data/repos/race_repo_impl.dart' as _i104;
 import 'package:roadbash/data/repos/stats_repo_impl.dart' as _i105;
-import 'package:roadbash/data/repos/suggestion_repo_impl.dart' as _i106;
+import 'package:roadbash/data/repos/post_repo_impl.dart' as _i106;
 import 'package:roadbash/data/sources/local/prefs_source.dart' as _i805;
 import 'package:roadbash/data/sources/remote/api_client.dart' as _i738;
 import 'package:roadbash/domain/repos/auth_repo.dart' as _i505;
@@ -31,7 +31,7 @@ import 'package:roadbash/domain/repos/leaderboard_repo.dart' as _i808;
 import 'package:roadbash/domain/repos/profile_repo.dart' as _i624;
 import 'package:roadbash/domain/repos/race_repo.dart' as _i541;
 import 'package:roadbash/domain/repos/stats_repo.dart' as _i1072;
-import 'package:roadbash/domain/repos/suggestion_repo.dart' as _i269;
+import 'package:roadbash/domain/repos/post_repo.dart' as _i269;
 import 'package:roadbash/features/audio/cubit/audio_cubit.dart' as _i683;
 import 'package:roadbash/features/auth/cubit/auth_cubit.dart' as _i961;
 import 'package:roadbash/features/auth/cubit/sign_in_cubit.dart' as _i659;
@@ -48,7 +48,7 @@ import 'package:roadbash/features/leaderboard/cubit/leaderboard_cubit.dart'
     as _i695;
 import 'package:roadbash/features/reception/cubit/reception_cubit.dart'
     as _i899;
-import 'package:roadbash/features/suggestions/cubit/suggestion_cubit.dart'
+import 'package:roadbash/features/boardroom/cubit/boardroom_cubit.dart'
     as _i96;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -83,14 +83,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i541.RaceRepo>(
       () => _i104.RaceRepoImpl(gh<_i738.ApiClient>()),
     );
-    gh.lazySingleton<_i269.SuggestionRepo>(
-      () => _i106.SuggestionRepoImpl(gh<_i738.ApiClient>()),
+    gh.lazySingleton<_i269.PostRepo>(
+      () => _i106.PostRepoImpl(gh<_i738.ApiClient>()),
     );
     gh.lazySingleton<_i1072.StatsRepo>(
       () => _i105.StatsRepoImpl(gh<_i738.ApiClient>(), gh<_i805.PrefsSource>()),
     );
-    gh.factory<_i96.SuggestionCubit>(
-      () => _i96.SuggestionCubit(gh<_i269.SuggestionRepo>(), gh<_i505.AuthRepo>()),
+    gh.factory<_i96.BoardroomCubit>(
+      () => _i96.BoardroomCubit(gh<_i269.PostRepo>(), gh<_i505.AuthRepo>()),
     );
     gh.lazySingleton<_i550.SettingsCubit>(
       () => _i550.SettingsCubit(gh<_i624.ProfileRepo>()),

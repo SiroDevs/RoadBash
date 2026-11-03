@@ -82,7 +82,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get blurbReception =>
-      'Weka jina la mchezaji, rekebisha sauti, angalia vidhibiti, chagua lugha, tazama takwimu na washindi, au weka pendekezo kwenye sanduku la mapendekezo.';
+      'Weka jina la mchezaji, rekebisha sauti, angalia vidhibiti, chagua lugha, au tazama takwimu na washindi.';
 
   @override
   String lengthLabel(String km, int laps) {
@@ -387,8 +387,7 @@ class AppLocalizationsSw extends AppLocalizations {
       'Unacheza bila kujulikana. Ingia ili uhesabiwe kwenye orodha ya washindi.';
 
   @override
-  String get accountAdmin =>
-      'Msimamizi: unaweza kusoma sanduku la mapendekezo.';
+  String get accountAdmin => 'Msimamizi: unaendesha boardroom.';
 
   @override
   String get switchPlayer => 'Badili mchezaji';
@@ -398,9 +397,6 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get receptionLeaderboard => 'Washindi';
-
-  @override
-  String get receptionSuggestions => 'Sanduku la Mapendekezo';
 
   @override
   String get statsTitle => 'Takwimu';
@@ -466,32 +462,86 @@ class AppLocalizationsSw extends AppLocalizations {
       'Hakuna aliyemaliza mbio bado. Kuwa wa kwanza!';
 
   @override
-  String get suggestionHint =>
-      'Niambie nini cha kurekebisha, kuongeza au kuondoa. Kila pendekezo hufika kwenye kikasha changu.';
+  String get menuScenes => 'Mandhari';
 
   @override
-  String get suggestionLabel => 'Pendekezo lako';
+  String get boardroomTitle => 'Boardroom';
 
   @override
-  String get suggestionSend => 'Tuma';
+  String get blurbBoardroom =>
+      'Soma matangazo, nitumie pendekezo, na ujiunge na mazungumzo chini ya machapisho ya wazi.';
 
   @override
-  String get suggestionThanks => 'Asante, liko kwenye sanduku!';
+  String get boardroomHint =>
+      'Niambie nini cha kurekebisha, kuongeza au kuondoa. Mapendekezo hubaki ya faragha hadi msimamizi ayaweke wazi.';
 
   @override
-  String get suggestionSignIn => 'Ingia ili kuacha pendekezo.';
+  String get boardroomAdminHint =>
+      'Weka tangazo, jibu mapendekezo, yaweke wazi au futa yasiyofaa.';
 
   @override
-  String get suggestionTooShort => 'Andika maneno machache zaidi.';
+  String get boardroomSuggestionLabel => 'Pendekezo lako';
 
   @override
-  String get suggestionRateLimited => 'Inatosha kwa sasa. Jaribu tena baadaye.';
+  String get boardroomAnnouncementLabel => 'Tangazo lako';
 
   @override
-  String get suggestionInbox => 'Mapendekezo yaliyopokelewa';
+  String get boardroomSend => 'Tuma';
 
   @override
-  String get suggestionInboxEmpty => 'Sanduku ni tupu.';
+  String get boardroomAnnounce => 'Tangaza';
+
+  @override
+  String get boardroomPosts => 'Machapisho';
+
+  @override
+  String get boardroomEmpty => 'Hakuna kitu hapa bado.';
+
+  @override
+  String get boardroomReply => 'Jibu';
+
+  @override
+  String get boardroomReplyLabel => 'Jibu lako';
+
+  @override
+  String get boardroomMakePublic => 'Weka wazi';
+
+  @override
+  String get boardroomMakePrivate => 'Rudisha faragha';
+
+  @override
+  String get boardroomDelete => 'Futa';
+
+  @override
+  String get boardroomDeleteTitle => 'Futa hii?';
+
+  @override
+  String get boardroomDeleteBody =>
+      'Itaondolewa kwa kila mtu, pamoja na majibu yote chini yake.';
+
+  @override
+  String get boardroomAdminTag => 'Msimamizi';
+
+  @override
+  String get boardroomAnnouncementTag => 'Tangazo';
+
+  @override
+  String get boardroomPublicTag => 'Wazi';
+
+  @override
+  String get boardroomPrivateTag => 'Faragha';
+
+  @override
+  String get boardroomSignIn => 'Ingia ili kutumia boardroom.';
+
+  @override
+  String get boardroomTooShort => 'Andika maneno machache zaidi.';
+
+  @override
+  String get boardroomRateLimited => 'Inatosha kwa sasa. Jaribu tena baadaye.';
+
+  @override
+  String get boardroomForbidden => 'Wasimamizi pekee wanaweza kufanya hivyo.';
 
   @override
   String get commonCancel => 'Ghairi';

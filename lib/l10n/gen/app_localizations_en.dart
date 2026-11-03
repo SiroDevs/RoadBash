@@ -82,7 +82,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get blurbReception =>
-      'Set your player name, mix the sound, check the controls, pick a language, see your stats and the leaderboard, or drop a note in the suggestion box.';
+      'Set your player name, mix the sound, check the controls, pick a language, or see your stats and the leaderboard.';
 
   @override
   String lengthLabel(String km, int laps) {
@@ -388,7 +388,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Playing anonymously. Sign in to be counted on the leaderboard.';
 
   @override
-  String get accountAdmin => 'Admin: you can read the suggestion box.';
+  String get accountAdmin => 'Admin: you run the boardroom.';
 
   @override
   String get switchPlayer => 'Switch player';
@@ -398,9 +398,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get receptionLeaderboard => 'Leaderboard';
-
-  @override
-  String get receptionSuggestions => 'Suggestion Box';
 
   @override
   String get statsTitle => 'Stats';
@@ -465,33 +462,87 @@ class AppLocalizationsEn extends AppLocalizations {
   String get leaderboardEmpty => 'No races finished yet. Be the first!';
 
   @override
-  String get suggestionHint =>
-      'Tell me what to fix, add or remove. Every suggestion lands in my inbox.';
+  String get menuScenes => 'Scenes';
 
   @override
-  String get suggestionLabel => 'Your suggestion';
+  String get boardroomTitle => 'Boardroom';
 
   @override
-  String get suggestionSend => 'Send';
+  String get blurbBoardroom =>
+      'Read announcements, send me a suggestion, and join the conversation under the public posts.';
 
   @override
-  String get suggestionThanks => 'Thanks, it is in the box!';
+  String get boardroomHint =>
+      'Tell me what to fix, add or remove. Suggestions stay private until an admin makes them public.';
 
   @override
-  String get suggestionSignIn => 'Sign in to leave a suggestion.';
+  String get boardroomAdminHint =>
+      'Post an announcement, reply to suggestions, make them public or delete what is not appropriate.';
 
   @override
-  String get suggestionTooShort => 'Write a few more words.';
+  String get boardroomSuggestionLabel => 'Your suggestion';
 
   @override
-  String get suggestionRateLimited =>
+  String get boardroomAnnouncementLabel => 'Your announcement';
+
+  @override
+  String get boardroomSend => 'Send';
+
+  @override
+  String get boardroomAnnounce => 'Announce';
+
+  @override
+  String get boardroomPosts => 'Posts';
+
+  @override
+  String get boardroomEmpty => 'Nothing here yet.';
+
+  @override
+  String get boardroomReply => 'Reply';
+
+  @override
+  String get boardroomReplyLabel => 'Your reply';
+
+  @override
+  String get boardroomMakePublic => 'Make public';
+
+  @override
+  String get boardroomMakePrivate => 'Make private';
+
+  @override
+  String get boardroomDelete => 'Delete';
+
+  @override
+  String get boardroomDeleteTitle => 'Delete this?';
+
+  @override
+  String get boardroomDeleteBody =>
+      'It will be removed for everyone, together with any replies under it.';
+
+  @override
+  String get boardroomAdminTag => 'Admin';
+
+  @override
+  String get boardroomAnnouncementTag => 'Announcement';
+
+  @override
+  String get boardroomPublicTag => 'Public';
+
+  @override
+  String get boardroomPrivateTag => 'Private';
+
+  @override
+  String get boardroomSignIn => 'Sign in to use the boardroom.';
+
+  @override
+  String get boardroomTooShort => 'Write a few more words.';
+
+  @override
+  String get boardroomRateLimited =>
       'That is enough for now. Try again in a while.';
 
   @override
-  String get suggestionInbox => 'Suggestions received';
-
-  @override
-  String get suggestionInboxEmpty => 'The box is empty.';
+  String get boardroomForbidden => 'Only admins can do that.';
 
   @override
   String get commonCancel => 'Cancel';

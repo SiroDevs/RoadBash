@@ -14,6 +14,8 @@ import '../../domain/models/scene_id.dart';
 import '../../features/auth/cubit/auth_cubit.dart';
 import '../../features/auth/cubit/sign_in_cubit.dart';
 import '../../features/auth/ui/sign_in_screen.dart';
+import '../../features/boardroom/cubit/boardroom_cubit.dart';
+import '../../features/boardroom/ui/boardroom_screen.dart';
 import '../../features/leaderboard/cubit/leaderboard_cubit.dart';
 import '../../features/leaderboard/ui/leaderboard_screen.dart';
 import '../../features/menu/cubit/menu_cubit.dart';
@@ -117,6 +119,14 @@ class AppRouter {
           name: RouteNames.reception,
           builder: (context, state) =>
               _provide<ReceptionCubit>(const ReceptionScreen()),
+        ),
+        GoRoute(
+          path: RoutePaths.boardroom,
+          name: RouteNames.boardroom,
+          builder: (context, state) => BlocProvider<BoardroomCubit>(
+            create: (_) => getIt<BoardroomCubit>()..load(),
+            child: const BoardroomScreen(),
+          ),
         ),
         GoRoute(
           path: RoutePaths.signIn,

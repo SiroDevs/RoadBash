@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
+import '../../../common/constants/app_assets.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
@@ -33,6 +34,9 @@ class LeaderboardScreen extends StatelessWidget {
       (c) => c.state.session?.name.toLowerCase() ?? '',
     );
     return RetroPage(
+      asset: AppAssets.appMain,
+      grayscale: true,
+      dim: 0.55,
       child: ResponsiveScrollBody(
         child: BlocBuilder<LeaderboardCubit, LeaderboardState>(
           builder: (context, st) => RetroSubPage(

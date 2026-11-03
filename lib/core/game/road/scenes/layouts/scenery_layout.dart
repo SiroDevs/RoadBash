@@ -2,11 +2,11 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../../../common/building/building_layout.dart';
-import '../../../common/slip_road/slip_road_layout.dart';
-import '../../../common/tree/tree_layout.dart';
-import '../../../common/universal/prop.dart';
-import '../../../common/wall/wall_layout.dart';
+import '../../../../../common/objects/building/building_layout.dart';
+import '../../../../../common/objects/slip_road/slip_road_layout.dart';
+import '../../../../../common/objects/tree/tree_layout.dart';
+import '../../../../../common/objects/universal/prop.dart';
+import '../../../../../common/objects/wall/wall_layout.dart';
 import '../../../utils/pseudo_random.dart';
 import '../../routes/route_stretch.dart';
 

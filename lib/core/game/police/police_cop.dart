@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
-import '../race/rival_pose_driver.dart';
+import '../race/rival/rival_pose_driver.dart';
 import '../rider/look/rider_looks.dart';
 import '../rider/rider_painter.dart';
 import '../rider/rider_sprite.dart';

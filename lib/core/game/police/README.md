@@ -45,6 +45,6 @@ numbers above by feel.
 - `police/police_cop.dart` the cop rider and its flashing lights; `police/police_chase.dart` the heat, chase and arrest logic.
 - `hud/police_warning_hud.dart` the flashing screen edges, POLICE! text and arrest meter.
 - `race/scene_traffic.dart` builds the traffic flow and police patrol for a scene.
-- `road/traffic/civilian_car.dart` the traffic vehicle; `common/vehicle/` holds how each vehicle is drawn
+- `road/traffic/civilian_car.dart` the traffic vehicle; `lib/common/objects/vehicle/` holds how each vehicle is drawn
   (`sedan_painter`, `matatu_painter`, `truck_painter`, `vehicle_canvas`, `civilian_kind`).
 - New sounds go in `assets/audio/loops/siren.wav` and `assets/audio/sfx/busted.wav`.

@@ -5,8 +5,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/widgets.dart';
 
 // Project imports:
-import '../../../../core/game/common/preview/scene_snapshot.dart';
 import '../../../../domain/models/scene_id.dart';
+import '../../../preview/scene_snapshot.dart';
 import '../feedback/retro_skeleton.dart';
 
 /// A still of a scene drawn by the game itself, with a shimmering skeleton

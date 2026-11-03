@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
-import '../../common/guardrail/guardrail_config.dart';
+import '../../../../common/objects/guardrail/guardrail_config.dart';
 import '../config/vehicle_config.dart';
 import '../track/road_track.dart';
 import 'civilian_car.dart';

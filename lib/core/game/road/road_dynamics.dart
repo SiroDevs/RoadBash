@@ -2,7 +2,7 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../common/guardrail/guardrail_config.dart';
+import '../../../common/objects/guardrail/guardrail_config.dart';
 import '../rider/crash_state.dart';
 import 'config/vehicle_config.dart';
 import 'ground/terrain_ride.dart';

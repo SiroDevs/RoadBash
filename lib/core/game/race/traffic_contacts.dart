@@ -3,12 +3,13 @@ import 'dart:math' as math;
 
 // Project imports:
 import '../police/police_chase.dart';
+import '../police/police_cop.dart';
 import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 import '../road/traffic/civilian_car.dart';
 import '../road/traffic/traffic_flow.dart';
 import 'race_controller.dart';
-import 'rival_racer.dart';
+import 'rival/rival_racer.dart';
 
 /// Finds riders touching civilian vehicles and applies bumps and falls.
 ///

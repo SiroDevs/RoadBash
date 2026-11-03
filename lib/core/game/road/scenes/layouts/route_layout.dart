@@ -2,10 +2,10 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../../../common/guardrail/guardrail_layout.dart';
-import '../../../common/lamp/lamp_layout.dart';
-import '../../../common/universal/prop.dart';
-import '../../../common/universal/sign_panel.dart';
+import '../../../../../common/objects/guardrail/guardrail_layout.dart';
+import '../../../../../common/objects/lamp/lamp_layout.dart';
+import '../../../../../common/objects/universal/prop.dart';
+import '../../../../../common/objects/universal/sign_panel.dart';
 import '../../config/road_config.dart';
 import '../../routes/route_stretch.dart';
 import '../../track/road_track.dart';

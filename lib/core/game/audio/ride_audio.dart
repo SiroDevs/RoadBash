@@ -9,7 +9,7 @@ import '../../audio/loop_player.dart';
 import '../../audio/synth/engine_synth.dart';
 import '../police/police_chase.dart';
 import '../race/race_controller.dart';
-import '../race/rival_racer.dart';
+import '../race/rival/rival_racer.dart';
 import '../road/road_renderer.dart';
 import 'police_audio.dart';
 import 'rival_audio.dart';

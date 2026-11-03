@@ -1,6 +1,6 @@
 // Project imports:
-import '../../../common/tree/jungle_tree_layout.dart';
-import '../../../common/universal/prop.dart';
+import '../../../../../common/objects/tree/jungle_tree_layout.dart';
+import '../../../../../common/objects/universal/prop.dart';
 import '../../../utils/pseudo_random.dart';
 import 'jungle_sites_layout.dart';
 

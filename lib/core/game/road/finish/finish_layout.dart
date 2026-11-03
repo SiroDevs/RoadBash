@@ -2,9 +2,9 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../../common/building/city_blocks_layout.dart';
-import '../../common/kiosk/kiosk_layout.dart';
-import '../../common/universal/prop.dart';
+import '../../../../common/objects/building/city_blocks_layout.dart';
+import '../../../../common/objects/kiosk/kiosk_layout.dart';
+import '../../../../common/objects/universal/prop.dart';
 import '../config/road_config.dart';
 import '../scene_theme.dart';
 import '../track/road_track.dart';

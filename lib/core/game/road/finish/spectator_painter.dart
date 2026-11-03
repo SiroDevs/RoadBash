@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
-import '../../common/universal/prop.dart';
+import '../../../../common/objects/universal/prop.dart';
 import '../../utils/paint_utils.dart';
 import '../road_projection.dart';
 import '../scene_theme.dart';

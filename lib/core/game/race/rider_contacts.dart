@@ -5,7 +5,7 @@ import 'dart:math' as math;
 import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 import 'race_controller.dart';
-import 'rival_racer.dart';
+import 'rival/rival_racer.dart';
 
 /// Finds bikes touching the player and applies bumps, shoves and falls.
 class RiderContacts {

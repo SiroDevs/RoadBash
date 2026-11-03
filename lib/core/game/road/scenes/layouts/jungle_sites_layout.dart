@@ -2,9 +2,9 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../../../common/mountain/mountain_layout.dart';
-import '../../../common/tree/canopy_layout.dart';
-import '../../../common/universal/prop.dart';
+import '../../../../../common/objects/mountain/mountain_layout.dart';
+import '../../../../../common/objects/tree/canopy_layout.dart';
+import '../../../../../common/objects/universal/prop.dart';
 import '../jungle_zones.dart';
 
 /// Dresses each jungle setting: mountain sides, the pass and the canopy.

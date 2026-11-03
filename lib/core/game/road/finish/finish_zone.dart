@@ -1,5 +1,5 @@
 // Project imports:
-import '../../common/universal/prop.dart';
+import '../../../../common/objects/universal/prop.dart';
 import '../config/road_config.dart';
 import 'finish_config.dart';
 

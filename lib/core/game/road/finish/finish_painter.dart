@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 // Project imports:
-import '../../common/universal/prop.dart';
+import '../../../../common/objects/universal/prop.dart';
 import '../road_projection.dart';
 import '../scene_theme.dart';
 import 'post_painter.dart';

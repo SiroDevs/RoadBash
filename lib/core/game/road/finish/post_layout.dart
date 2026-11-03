@@ -1,5 +1,5 @@
 // Project imports:
-import '../../common/universal/prop.dart';
+import '../../../../common/objects/universal/prop.dart';
 import 'finish_config.dart';
 
 /// Places the finish gantry posts along the pad.

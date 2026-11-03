@@ -21,7 +21,7 @@ import 'police/police_chase.dart';
 import 'race/race_controller.dart';
 import 'race/race_result.dart';
 import 'race/rider_contacts.dart';
-import 'race/rival_racer.dart';
+import 'race/rival/rival_racer.dart';
 import 'race/scene_traffic.dart';
 import 'race/traffic_contacts.dart';
 import 'rider/rider_component.dart';

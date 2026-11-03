@@ -1,5 +1,5 @@
 // Project imports:
-import '../common/universal/prop.dart';
+import '../../../common/objects/universal/prop.dart';
 import 'config/road_config.dart';
 import 'finish/finish_layout.dart';
 import 'routes/thika/thika_route.dart';
@@ -11,7 +11,7 @@ import 'scenes/layouts/savanna_layout.dart';
 import 'scenes/layouts/suburbs_layout.dart';
 import 'track/road_track.dart';
 
-export '../common/universal/prop.dart';
+export '../../../common/objects/universal/prop.dart';
 
 /// Places the roadside props along the track.
 class RoadProps {

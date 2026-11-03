@@ -2,7 +2,7 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../common/guardrail/guardrail_config.dart';
+import '../../../common/objects/guardrail/guardrail_config.dart';
 import '../race/race_controller.dart';
 import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';

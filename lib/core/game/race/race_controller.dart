@@ -7,7 +7,7 @@ import '../rider/look/rider_look.dart';
 import '../rider/look/rider_looks.dart';
 import '../road/config/road_config.dart';
 import 'race_result.dart';
-import 'rival_tracker.dart';
+import 'rival/rival_tracker.dart';
 
 /// A rival rider's name, pace, phase, look and temperament.
 class RiderRival {

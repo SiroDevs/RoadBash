@@ -7,6 +7,7 @@ import 'package:flame/components.dart';
 
 // Project imports:
 import '../../constants/app_constants.dart';
+import '../police/police_chase.dart';
 import '../race/race_controller.dart';
 import '../race/race_result.dart';
 import '../road/config/vehicle_config.dart';
@@ -16,14 +17,18 @@ import '../utils/paint_utils.dart';
 import 'dashboard_face.dart';
 import 'dashboard_layout.dart';
 import 'hud_strings.dart';
+import 'police_warning_hud.dart';
 
 /// Dashboard overlay showing speed, rpm and race banners.
 class DashboardHud extends PositionComponent {
-  DashboardHud(this.road, this.race, this.strings) : super(priority: 10);
+  DashboardHud(this.road, this.race, this.strings, this.police)
+    : super(priority: 10);
 
   final RoadRenderer road;
   final RaceController race;
   final HudStrings strings;
+  final PoliceChase police;
+  final PoliceWarningHud _policeWarning = PoliceWarningHud();
 
   DashboardLayout? _layout;
   Picture? _face;
@@ -67,6 +72,7 @@ class DashboardHud extends PositionComponent {
     _progress(canvas, layout);
     _readouts(canvas, layout);
     _banner(canvas);
+    _policeWarning.paint(canvas, size, police, race, strings);
   }
 
   /// Draws a gauge needle at a fraction of the dial.
@@ -175,7 +181,7 @@ class DashboardHud extends PositionComponent {
     final text = race.countdown > 0
         ? '${race.countdown.ceil()}'
         : race.finished
-        ? strings.finish
+        ? (race.busted ? strings.busted : strings.finish)
         : (race.elapsed < 0.9 ? strings.go : null);
     if (text != null) {
       paintText(
@@ -183,7 +189,7 @@ class DashboardHud extends PositionComponent {
         text,
         centre,
         big,
-        _gold,
+        race.busted ? _red : _gold,
         fontFamily: AppConstants.displayFont,
         weight: FontWeight.w400,
         shadow: true,

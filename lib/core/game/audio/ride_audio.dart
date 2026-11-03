@@ -7,9 +7,11 @@ import '../../audio/audio_catalog.dart';
 import '../../audio/audio_service.dart';
 import '../../audio/loop_player.dart';
 import '../../audio/synth/engine_synth.dart';
+import '../police/police_chase.dart';
 import '../race/race_controller.dart';
-import '../race/rival_racer.dart';
+import '../race/rival/rival_racer.dart';
 import '../road/road_renderer.dart';
+import 'police_audio.dart';
 import 'rival_audio.dart';
 
 /// Plays engine, skid, gravel, wind and countdown sounds during a race.
@@ -20,6 +22,7 @@ class RideAudio {
     required this.road,
     required this.race,
     this.racers = const [],
+    this.police,
     this.useAssetLoops = false,
   });
 
@@ -29,10 +32,12 @@ class RideAudio {
   final RaceController race;
 
   final List<RivalRacer> racers;
+  final PoliceChase? police;
   final bool useAssetLoops;
 
   late final _engine = EngineSynth(mix.flavour);
   late final _rivals = RivalAudio(racers, road, race, mix.flavour);
+  final _siren = PoliceAudio();
   final _skid = LoopPlayer(LoopSound.skid.asset);
   final _gravel = LoopPlayer(LoopSound.gravel.asset);
   final _wind = LoopPlayer(LoopSound.wind.asset);
@@ -74,6 +79,13 @@ class RideAudio {
     );
 
     _rivals.update(dt, volume: mix.engineGain);
+    final chase = police;
+    if (chase != null) {
+      _siren.update(
+        active: chase.chasing || chase.busted,
+        level: _clamp(_fx * (0.25 + 0.6 * chase.closeness)),
+      );
+    }
 
     final blend = math.min(1.0, dt * 12);
     _skidLevel += ((road.skidding ? 1.0 : 0.0) - _skidLevel) * blend;
@@ -111,7 +123,9 @@ class RideAudio {
     }
     _gear = road.gear;
 
-    if (race.finished && !_wasFinished) service.playSfx(Sfx.finish, _fx);
+    if (race.finished && !_wasFinished) {
+      service.playSfx(race.busted ? Sfx.busted : Sfx.finish, _fx);
+    }
     _wasFinished = race.finished;
 
     final onFoot = road.restingOnFoot;
@@ -126,6 +140,7 @@ class RideAudio {
   void pause() {
     _engine.pause();
     _rivals.pause();
+    _siren.pause();
     for (final p in _loops) {
       p.pause();
     }
@@ -135,6 +150,7 @@ class RideAudio {
   void resume() {
     _engine.resume();
     _rivals.resume();
+    _siren.resume();
     for (final p in _loops) {
       p.resume();
     }
@@ -144,6 +160,7 @@ class RideAudio {
   Future<void> dispose() => Future.wait([
         _engine.dispose(),
         _rivals.dispose(),
+        _siren.dispose(),
         ..._loops.map((p) => p.dispose()),
       ]);
 }

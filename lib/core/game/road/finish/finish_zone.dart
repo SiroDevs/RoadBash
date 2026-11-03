@@ -1,6 +1,6 @@
 // Project imports:
+import '../../../../common/objects/universal/prop.dart';
 import '../config/road_config.dart';
-import '../props/prop.dart';
 import 'finish_config.dart';
 
 /// Knows whether the finish is in play for the current frame.

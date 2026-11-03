@@ -1,6 +1,6 @@
 // Project imports:
-import '../props/prop.dart';
-import '../props/wall_style.dart';
+import '../../../../common/objects/universal/prop.dart';
+import '../../../../common/objects/wall/wall_style.dart';
 
 /// Relative share of each tree kind in a scenery run.
 class TreeMix {

@@ -7,7 +7,7 @@ import '../rider/look/rider_look.dart';
 import '../rider/look/rider_looks.dart';
 import '../road/config/road_config.dart';
 import 'race_result.dart';
-import 'rival_tracker.dart';
+import 'rival/rival_tracker.dart';
 
 /// A rival rider's name, pace, phase, look and temperament.
 class RiderRival {
@@ -65,6 +65,12 @@ class RaceController {
   bool finished = false, playerAhead = true;
   double gapSeconds = 0;
 
+  /// True when the police arrested the player; the race ends without a finish.
+  bool busted = false;
+
+  /// Fine for the arrest, in shillings.
+  int fine = 0;
+
   /// Total race distance.
   double get raceLength => lapLength * laps - runOut;
   /// True when the scene is run in laps rather than as one long road.
@@ -76,6 +82,15 @@ class RaceController {
 
   /// True while the race is underway.
   bool get running => countdown <= 0 && !finished;
+
+  /// Ends the race with an arrest.
+  void bust(int fine) {
+    if (finished) return;
+    busted = true;
+    this.fine = fine;
+    finished = true;
+    finishTime = elapsed;
+  }
 
   /// Advances the countdown, clock and finish state.
   void update(double dt, double playerDistance, double playerSpeed) {
@@ -130,6 +145,8 @@ class RaceController {
             isPlayer: times[i].$3,
           ),
       ],
+      busted: busted,
+      fine: fine,
     );
   }
 }

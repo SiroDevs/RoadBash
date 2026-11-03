@@ -6,18 +6,18 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
+import '../../../common/objects/universal/prop_painter.dart';
 import '../hud/dashboard_layout.dart';
 import 'backdrop/road_backdrop.dart';
 import 'config/road_config.dart';
 import 'finish/finish_config.dart';
 import 'finish/finish_pad_painter.dart';
 import 'finish/finish_zone.dart';
-import 'props/painters/prop_painter.dart';
-import 'props/road_props.dart';
 import 'road_dynamics.dart';
 import 'road_projection.dart';
+import 'road_props.dart';
 import 'scene_theme.dart';
-import 'surface/road_segment_painter.dart';
+import 'tarmac/road_segment_painter.dart';
 import 'track/road_track.dart';
 import 'traffic/road_traffic.dart';
 

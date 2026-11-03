@@ -11,6 +11,9 @@ class LoopPlayer {
   double _volume = -1;
   double _rate = 1;
 
+  /// True once the loop has started playing.
+  bool get ready => _ready;
+
   /// Starts playing the loop.
   Future<void> start({double volume = 0}) async {
     try {

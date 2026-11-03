@@ -27,10 +27,21 @@ class ResultRow {
 
 /// Final standings of a race.
 class RaceResult {
-  const RaceResult({required this.scene, required this.rows});
+  const RaceResult({
+    required this.scene,
+    required this.rows,
+    this.busted = false,
+    this.fine = 0,
+  });
 
   final SceneId scene;
   final List<ResultRow> rows;
+
+  /// True when the police arrested the player before the finish.
+  final bool busted;
+
+  /// Fine for the arrest, in shillings; 0 when not busted.
+  final int fine;
 
   /// The player's row in the standings.
   ResultRow get player => rows.firstWhere((r) => r.isPlayer);

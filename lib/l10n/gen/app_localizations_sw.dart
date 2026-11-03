@@ -1,6 +1,9 @@
 // ignore: unused_import
+
+// Package imports:
 import 'package:intl/intl.dart' as intl;
 
+// Project imports:
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -178,13 +181,13 @@ class AppLocalizationsSw extends AppLocalizations {
   String get hudHoldGas => 'Shikilia mafuta kuendesha';
 
   @override
-  String hudLap(int lap, int laps) {
-    return 'MZUNGUKO $lap/$laps';
+  String hudRemaining(String km) {
+    return '-$km KM';
   }
 
   @override
-  String hudRemaining(String km) {
-    return '-$km KM';
+  String hudLap(int lap, int laps) {
+    return 'MZUNGUKO $lap/$laps';
   }
 
   @override
@@ -192,6 +195,23 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get hudRpmUnit => 'RPM x1000';
+
+  @override
+  String get hudPolice => 'POLISI!';
+
+  @override
+  String get hudPullOver => 'SIMAMA!';
+
+  @override
+  String get hudBusted => 'UMEKAMATWA!';
+
+  @override
+  String get bustedNote => 'Polisi wamekufikia. Shindano limeisha.';
+
+  @override
+  String bustedFine(String amount) {
+    return 'Faini: KSh $amount';
+  }
 
   @override
   String get quitRace => 'Acha shindano';

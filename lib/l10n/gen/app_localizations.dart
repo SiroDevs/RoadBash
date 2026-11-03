@@ -1,10 +1,15 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+
+// Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+// Project imports:
 import 'app_localizations_en.dart';
 import 'app_localizations_sw.dart';
 
@@ -409,6 +414,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'RPM x1000'**
   String get hudRpmUnit;
+
+  /// Warning shown while a cop chases the player
+  ///
+  /// In en, this message translates to:
+  /// **'POLICE!'**
+  String get hudPolice;
+
+  /// Shown while the cop is arresting the player
+  ///
+  /// In en, this message translates to:
+  /// **'PULL OVER!'**
+  String get hudPullOver;
+
+  /// Banner and title when the player is arrested
+  ///
+  /// In en, this message translates to:
+  /// **'BUSTED!'**
+  String get hudBusted;
+
+  /// Results text after an arrest
+  ///
+  /// In en, this message translates to:
+  /// **'A cop caught up with you. Race over.'**
+  String get bustedNote;
+
+  /// Fine after an arrest
+  ///
+  /// In en, this message translates to:
+  /// **'Fine: KSh {amount}'**
+  String bustedFine(String amount);
 
   /// Close button label
   ///

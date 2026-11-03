@@ -262,6 +262,31 @@
   "@hudRpmUnit": {
     "description": "Rev counter unit"
   },
+  "hudPolice": "POLISI!",
+  "@hudPolice": {
+    "description": "Warning shown while a cop chases the player"
+  },
+  "hudPullOver": "SIMAMA!",
+  "@hudPullOver": {
+    "description": "Shown while the cop is arresting the player"
+  },
+  "hudBusted": "UMEKAMATWA!",
+  "@hudBusted": {
+    "description": "Banner and title when the player is arrested"
+  },
+  "bustedNote": "Polisi wamekufikia. Shindano limeisha.",
+  "@bustedNote": {
+    "description": "Results text after an arrest"
+  },
+  "bustedFine": "Faini: KSh {amount}",
+  "@bustedFine": {
+    "description": "Fine after an arrest",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "quitRace": "Acha shindano",
   "@quitRace": {
     "description": "Close button label"

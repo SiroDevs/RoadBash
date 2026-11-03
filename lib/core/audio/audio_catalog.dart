@@ -34,7 +34,8 @@ enum Sfx {
   finish,
   foot,
   bump,
-  crash;
+  crash,
+  busted;
 
   /// Returns the asset path of the sound effect.
   String get asset => 'audio/sfx/$name.wav';
@@ -44,7 +45,8 @@ enum Sfx {
 enum LoopSound {
   skid,
   gravel,
-  wind;
+  wind,
+  siren;
 
   /// Returns the asset path of the loop sound.
   String get asset => 'audio/loops/$name.wav';

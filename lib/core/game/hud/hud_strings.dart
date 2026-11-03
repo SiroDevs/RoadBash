@@ -8,9 +8,13 @@ class HudStrings {
     required this.rpmUnit,
     required this.lap,
     required this.remaining,
+    required this.police,
+    required this.pullOver,
+    required this.busted,
   });
 
   final String go, finish, holdGas, speedUnit, rpmUnit;
+  final String police, pullOver, busted;
   final String Function(int lap, int laps) lap;
   final String Function(String km) remaining;
 }

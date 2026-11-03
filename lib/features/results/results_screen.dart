@@ -37,10 +37,21 @@ class ResultsScreen extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RetroTitle(l10n.resultsTitle),
+                RetroTitle(result.busted ? l10n.hudBusted : l10n.resultsTitle),
                 SizedBox(height: sizes.gap * 1.2),
-                for (final r in rows) _row(context, r),
-                if (outcome.newBest) ...[
+                if (result.busted) ...[
+                  Text(
+                    l10n.bustedNote,
+                    style: retroBody(size: sizes.body, color: Colors.white),
+                  ),
+                  SizedBox(height: sizes.gap * 0.75),
+                  Text(
+                    l10n.bustedFine(_money(result.fine)),
+                    style: retroBody(size: sizes.body, color: Retro.yellow),
+                  ),
+                ] else
+                  for (final r in rows) _row(context, r),
+                if (outcome.newBest && !result.busted) ...[
                   SizedBox(height: sizes.gap * 0.75),
                   Text(
                     l10n.newBestTime,
@@ -78,6 +89,12 @@ class ResultsScreen extends StatelessWidget {
       ),
     );
   }
+
+  /// Formats a shilling amount with thousands separators.
+  String _money(int amount) => amount.toString().replaceAllMapped(
+    RegExp(r'\B(?=(\d{3})+(?!\d))'),
+    (match) => ',',
+  );
 
   /// Builds one result row for a racer.
   Widget _row(BuildContext context, ResultRow row) {

@@ -96,5 +96,25 @@ abstract final class RiderLooks {
     ),
   );
 
+  /// Traffic police rider: navy suit, white helmet, blue and white bike.
+  /// Not part of [field], so it never joins the race grid.
+  static const RiderLook cop = RiderLook(
+    suit: Color(0xFF1B2A49),
+    stripe: Color(0xFFFFFFFF),
+    stripeEdge: Color(0xFF2979FF),
+    backPatch: Color(0xFF0B1224),
+    helmet: Color(0xFFF5F5F5),
+    gloves: Color(0xFF111111),
+    boots: Color(0xFF0A0A0A),
+    bike: BikeLook(
+      frame: Color(0xFF0B1224),
+      panel: Color(0xFFF2F4F8),
+      panelDark: Color(0xFF8E99AD),
+      accent: Color(0xFF2979FF),
+      accentEdge: Color(0xFFFFFFFF),
+      trim: Color(0xFFFFFFFF),
+    ),
+  );
+
   static const List<RiderLook> field = [mike, bose, sam, kamau, brayo];
 }

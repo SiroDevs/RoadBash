@@ -472,12 +472,26 @@ class AppLocalizationsSw extends AppLocalizations {
       'Soma matangazo, nitumie pendekezo, na ujiunge na mazungumzo chini ya machapisho ya wazi.';
 
   @override
+  String get boardroomAnnouncements => 'Matangazo';
+
+  @override
+  String get boardroomSuggestions => 'Mapendekezo';
+
+  @override
+  String get boardroomAnnouncementsHint =>
+      'Habari kutoka kwa wasimamizi. Jibu ili kujiunga na mazungumzo.';
+
+  @override
+  String get boardroomAdminAnnounceHint =>
+      'Weka tangazo kwa wote. Wachezaji wanaweza kujibu chini yake, na unaweza kufuta yasiyofaa.';
+
+  @override
   String get boardroomHint =>
       'Niambie nini cha kurekebisha, kuongeza au kuondoa. Mapendekezo hubaki ya faragha hadi msimamizi ayaweke wazi.';
 
   @override
   String get boardroomAdminHint =>
-      'Weka tangazo, jibu mapendekezo, yaweke wazi au futa yasiyofaa.';
+      'Jibu mapendekezo, yaweke wazi au futa yasiyofaa.';
 
   @override
   String get boardroomSuggestionLabel => 'Pendekezo lako';
@@ -490,9 +504,6 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get boardroomAnnounce => 'Tangaza';
-
-  @override
-  String get boardroomPosts => 'Machapisho';
 
   @override
   String get boardroomEmpty => 'Hakuna kitu hapa bado.';

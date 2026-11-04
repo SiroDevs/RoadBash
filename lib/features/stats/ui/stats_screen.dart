@@ -41,7 +41,7 @@ class StatsScreen extends StatelessWidget {
         child: BlocBuilder<StatsCubit, StatsState>(
           builder: (context, st) => RetroSubPage(
             title: context.l10n.statsTitle,
-            maxWidth: 900,
+            maxWidth: 1100,
             onBack: () => context.goNamed(RouteNames.reception),
             children: _body(context, st),
           ),

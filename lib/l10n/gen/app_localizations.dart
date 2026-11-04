@@ -908,6 +908,30 @@ abstract class AppLocalizations {
   /// **'Read announcements, send me a suggestion, and join the conversation under the public posts.'**
   String get blurbBoardroom;
 
+  /// Announcements filter strip
+  ///
+  /// In en, this message translates to:
+  /// **'Announcements'**
+  String get boardroomAnnouncements;
+
+  /// Suggestions filter strip
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestions'**
+  String get boardroomSuggestions;
+
+  /// Announcements hint for players
+  ///
+  /// In en, this message translates to:
+  /// **'News from the admins. Reply to join the conversation.'**
+  String get boardroomAnnouncementsHint;
+
+  /// Announcements hint for admins
+  ///
+  /// In en, this message translates to:
+  /// **'Post an announcement for everyone. Players can reply under it, and you can delete anything inappropriate.'**
+  String get boardroomAdminAnnounceHint;
+
   /// Boardroom hint
   ///
   /// In en, this message translates to:
@@ -917,7 +941,7 @@ abstract class AppLocalizations {
   /// Boardroom admin hint
   ///
   /// In en, this message translates to:
-  /// **'Post an announcement, reply to suggestions, make them public or delete what is not appropriate.'**
+  /// **'Reply to suggestions, make them public or delete what is not appropriate.'**
   String get boardroomAdminHint;
 
   /// Suggestion field
@@ -943,12 +967,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Announce'**
   String get boardroomAnnounce;
-
-  /// Posts heading
-  ///
-  /// In en, this message translates to:
-  /// **'Posts'**
-  String get boardroomPosts;
 
   /// Empty boardroom
   ///

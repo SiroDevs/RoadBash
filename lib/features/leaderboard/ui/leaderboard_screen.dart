@@ -41,7 +41,7 @@ class LeaderboardScreen extends StatelessWidget {
         child: BlocBuilder<LeaderboardCubit, LeaderboardState>(
           builder: (context, st) => RetroSubPage(
             title: l10n.leaderboardTitle,
-            maxWidth: 700,
+            maxWidth: 1100,
             onBack: () => context.goNamed(RouteNames.reception),
             children: _body(context, st, me),
           ),

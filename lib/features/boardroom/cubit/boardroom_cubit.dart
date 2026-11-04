@@ -13,10 +13,14 @@ import '../../../domain/repos/post_repo.dart';
 /// Errors the boardroom can show.
 enum BoardroomError { tooShort, rateLimited, signIn, forbidden, network }
 
+/// The two filter strips of the boardroom.
+enum BoardroomTab { announcements, suggestions }
+
 /// State of the boardroom: who is looking, the posts and the last error.
 class BoardroomState extends Equatable {
   const BoardroomState({
     this.admin = false,
+    this.tab = BoardroomTab.announcements,
     this.status = LoadStatus.loading,
     this.busy = false,
     this.error,
@@ -24,6 +28,9 @@ class BoardroomState extends Equatable {
   });
 
   final bool admin;
+
+  /// The selected filter strip; announcements by default.
+  final BoardroomTab tab;
   final LoadStatus status;
 
   /// True while a post, a delete or a visibility change is in flight.
@@ -32,6 +39,7 @@ class BoardroomState extends Equatable {
   final List<Post> posts;
 
   BoardroomState copyWith({
+    BoardroomTab? tab,
     LoadStatus? status,
     bool? busy,
     BoardroomError? error,
@@ -39,6 +47,7 @@ class BoardroomState extends Equatable {
     List<Post>? posts,
   }) => BoardroomState(
     admin: admin,
+    tab: tab ?? this.tab,
     status: status ?? this.status,
     busy: busy ?? this.busy,
     error: clearError ? null : (error ?? this.error),
@@ -46,7 +55,7 @@ class BoardroomState extends Equatable {
   );
 
   @override
-  List<Object?> get props => [admin, status, busy, error, posts];
+  List<Object?> get props => [admin, tab, status, busy, error, posts];
 }
 
 /// Loads the boardroom and handles posting, replying, publishing and deleting.
@@ -57,6 +66,10 @@ class BoardroomCubit extends Cubit<BoardroomState> {
 
   final PostRepo _repo;
   final AuthRepo _auth;
+
+  /// Switches between the announcements and the suggestions.
+  void setTab(BoardroomTab tab) =>
+      emit(state.copyWith(tab: tab, clearError: true));
 
   /// Loads the posts the player may see.
   Future<void> load() async {

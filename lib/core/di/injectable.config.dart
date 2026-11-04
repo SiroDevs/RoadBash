@@ -20,35 +20,35 @@ import 'package:roadbash/core/audio/audio_service.dart' as _i257;
 import 'package:roadbash/core/di/injectable.dart' as _i970;
 import 'package:roadbash/data/repos/auth_repo_impl.dart' as _i101;
 import 'package:roadbash/data/repos/leaderboard_repo_impl.dart' as _i102;
+import 'package:roadbash/data/repos/post_repo_impl.dart' as _i106;
 import 'package:roadbash/data/repos/profile_repo_impl.dart' as _i103;
 import 'package:roadbash/data/repos/race_repo_impl.dart' as _i104;
 import 'package:roadbash/data/repos/stats_repo_impl.dart' as _i105;
-import 'package:roadbash/data/repos/post_repo_impl.dart' as _i106;
 import 'package:roadbash/data/sources/local/prefs_source.dart' as _i805;
 import 'package:roadbash/data/sources/remote/api_client.dart' as _i738;
 import 'package:roadbash/domain/repos/auth_repo.dart' as _i505;
 import 'package:roadbash/domain/repos/leaderboard_repo.dart' as _i808;
+import 'package:roadbash/domain/repos/post_repo.dart' as _i269;
 import 'package:roadbash/domain/repos/profile_repo.dart' as _i624;
 import 'package:roadbash/domain/repos/race_repo.dart' as _i541;
 import 'package:roadbash/domain/repos/stats_repo.dart' as _i1072;
-import 'package:roadbash/domain/repos/post_repo.dart' as _i269;
-import 'package:roadbash/features/audio/cubit/audio_cubit.dart' as _i683;
-import 'package:roadbash/features/auth/cubit/auth_cubit.dart' as _i961;
-import 'package:roadbash/features/auth/cubit/sign_in_cubit.dart' as _i659;
-import 'package:roadbash/features/menu/cubit/menu_cubit.dart' as _i158;
-import 'package:roadbash/features/menu/cubit/menu_memory.dart' as _i900;
-import 'package:roadbash/features/menu/cubit/online_cubit.dart' as _i198;
-import 'package:roadbash/features/progress/cubit/progress_cubit.dart' as _i641;
-import 'package:roadbash/features/race/cubit/race_cubit.dart' as _i614;
-import 'package:roadbash/features/settings/cubit/settings_cubit.dart' as _i550;
-import 'package:roadbash/features/splash/cubit/splash_cubit.dart' as _i178;
-import 'package:roadbash/features/stats/cubit/stats_cubit.dart' as _i249;
+import 'package:roadbash/feature/audio/cubit/audio_cubit.dart' as _i683;
+import 'package:roadbash/feature/auth/cubit/auth_cubit.dart' as _i961;
+import 'package:roadbash/feature/auth/cubit/sign_in_cubit.dart' as _i659;
+import 'package:roadbash/feature/menu/cubit/menu_cubit.dart' as _i158;
+import 'package:roadbash/feature/menu/cubit/menu_memory.dart' as _i900;
+import 'package:roadbash/feature/menu/cubit/online_cubit.dart' as _i198;
+import 'package:roadbash/feature/progress/cubit/progress_cubit.dart' as _i641;
+import 'package:roadbash/feature/race/cubit/race_cubit.dart' as _i614;
+import 'package:roadbash/feature/settings/cubit/settings_cubit.dart' as _i550;
+import 'package:roadbash/feature/splash/cubit/splash_cubit.dart' as _i178;
+import 'package:roadbash/feature/stats/cubit/stats_cubit.dart' as _i249;
 
-import 'package:roadbash/features/leaderboard/cubit/leaderboard_cubit.dart'
+import 'package:roadbash/feature/leaderboard/cubit/leaderboard_cubit.dart'
     as _i695;
-import 'package:roadbash/features/reception/cubit/reception_cubit.dart'
+import 'package:roadbash/feature/reception/cubit/reception_cubit.dart'
     as _i899;
-import 'package:roadbash/features/boardroom/cubit/boardroom_cubit.dart'
+import 'package:roadbash/feature/boardroom/cubit/boardroom_cubit.dart'
     as _i96;
 
 extension GetItInjectableX on _i174.GetIt {

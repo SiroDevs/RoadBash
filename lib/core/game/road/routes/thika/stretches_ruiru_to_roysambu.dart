@@ -42,7 +42,7 @@ const List<RouteStretch> ruiruToRoysambu = [
         treeSetBack: farRightTrees,
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.gantry(0.1, panels: exit11Panels, boards: pelicanBoards),
       RouteFeature.exitSignNamed(0.3, exitRuiru),
       RouteFeature.exitSignNumbered(0.42, SignPanel.numbered('11')),
@@ -71,7 +71,7 @@ const List<RouteStretch> ruiruToRoysambu = [
         treeSetBack: farRightTrees,
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.building(
         0.3,
         side: -1,
@@ -111,7 +111,7 @@ const List<RouteStretch> ruiruToRoysambu = [
       SideScenery(from: 0.88, treeStep: (5, 8)),
     ],
     right: [SideScenery(treeStep: (6, 10), treeSetBack: farRightTrees)],
-    features: [
+    feature: [
       RouteFeature.footbridge(0.3, style: 3),
       RouteFeature.footbridge(2, style: 1),
       RouteFeature.gantry(3.5, panels: exit10Panels, boards: pelicanBoards),
@@ -141,7 +141,7 @@ const List<RouteStretch> ruiruToRoysambu = [
         drop: 500,
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.footbridge(0.55, style: 3),
       RouteFeature.exitSignNamed(0.9, exitGithurai),
       RouteFeature.exitSign(1.2),
@@ -171,7 +171,7 @@ const List<RouteStretch> ruiruToRoysambu = [
     right: [
       SideScenery(lots: 0.6, storeys: (3, 6), setBack: farRight, drop: 400),
     ],
-    features: [
+    feature: [
       RouteFeature.gantry(1, panels: exit10Panels, boards: pelicanBoards),
     ],
   ),
@@ -204,7 +204,7 @@ const List<RouteStretch> ruiruToRoysambu = [
     right: [
       SideScenery(lots: 0.6, storeys: (3, 8), setBack: farRight, drop: 500),
     ],
-    features: [
+    feature: [
       RouteFeature.footbridge(0.13),
       RouteFeature.gantry(3.5, panels: exit8Panels, boards: pelicanBoards),
       RouteFeature.footbridge(3.8, style: 1),

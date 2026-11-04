@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "bash",
+            "name": "bashm",
             "request": "launch",
             "type": "dart",
             "deviceId": "macos",
@@ -15,7 +15,7 @@
             }
         },
         {
-            "name": "bashw",
+            "name": "bash",
             "request": "launch",
             "type": "dart"
         },

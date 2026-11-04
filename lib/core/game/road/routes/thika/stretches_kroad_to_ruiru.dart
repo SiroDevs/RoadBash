@@ -36,7 +36,7 @@ const List<RouteStretch> kRoadToRuiru = [
         treeSetBack: farRightTrees,
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.exitSignNamed(0.2, exitKroad),
       RouteFeature.exitSignNumbered(0.5, SignPanel.numbered('14')),
       RouteFeature.exit(0.7),
@@ -69,7 +69,7 @@ const List<RouteStretch> kRoadToRuiru = [
     right: [
       SideScenery(treeStep: (6, 12), mix: bushy, treeSetBack: farRightTrees),
     ],
-    features: [
+    feature: [
       RouteFeature.gantry(1.8, panels: exit16Panels, boards: pelicanBoards),
       RouteFeature.building(3.5, storeys: 4, depth: 12, width: 3400, tint: 2),
       RouteFeature.building(4.2, storeys: 2, depth: 10, width: 3000, tint: 0),
@@ -92,7 +92,7 @@ const List<RouteStretch> kRoadToRuiru = [
     right: [
       SideScenery(lots: 0.5, storeys: (2, 5), setBack: (4.2, 5.0), drop: 700),
     ],
-    features: [
+    feature: [
       RouteFeature.building(
         1,
         side: -1,
@@ -147,7 +147,7 @@ const List<RouteStretch> kRoadToRuiru = [
         treeSetBack: farRightTrees,
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.building(
         1,
         storeys: 4,

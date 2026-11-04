@@ -11,7 +11,7 @@ import '../../routes/route_stretch.dart';
 import '../../track/road_track.dart';
 import 'scenery_layout.dart';
 
-/// Places scenery and features along a route from its stretches.
+/// Places scenery and feature along a route from its stretches.
 void layOutRoute(
   List<List<Prop>> slots,
   List<RoadSegment> segments,
@@ -36,7 +36,7 @@ void layOutRoute(
     for (final span in stretch.right) {
       layOutScenery(slots, limit, base, len, span, 1, stretchIndex);
     }
-    for (final feature in stretch.features) {
+    for (final feature in stretch.feature) {
       _feature(slots, limit, base, len, feature);
     }
   }

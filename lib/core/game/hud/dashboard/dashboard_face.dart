@@ -1,0 +1,128 @@
+// Dart imports:
+import 'dart:math' as math;
+import 'dart:ui';
+
+// Project imports:
+import '../../utils/canvas_text.dart';
+import '../../utils/paint_utils.dart';
+import '../hud_strings.dart';
+import 'dashboard_layout.dart';
+
+/// Draws the static dashboard face as a picture.
+class DashboardFace {
+  DashboardFace._();
+
+  static const _ink = Color(0xFF3A3224);
+
+  /// Records the dashboard housing, dials and center panel.
+  static Picture build(DashboardLayout layout, HudStrings strings) {
+    final rec = PictureRecorder();
+    final canva = Canvas(rec);
+    _housing(canva, layout);
+    _dial(
+      canva,
+      layout.speedOffset,
+      layout.speedRadius,
+      max: 240,
+      major: 40,
+      minors: 4,
+      unit: strings.speedUnit,
+    );
+    _dial(
+      canva,
+      layout.rpmOffset,
+      layout.rpmRadius,
+      max: 12,
+      major: 3,
+      minors: 3,
+      unit: strings.rpmUnit,
+      redFrom: 10,
+    );
+    _centre(canva, layout);
+    return rec.endRecording();
+  }
+
+  /// Returns a stroke paint for dial outlines.
+  static Paint _outline(Color color, double width) => Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = width
+    ..color = color;
+
+  /// Draws the dashboard housing.
+  static void _housing(Canvas canva, DashboardLayout layout) {
+    final rect = Rect.fromLTWH(layout.left, layout.top, layout.pw, layout.ph);
+    final dome = Radius.elliptical(layout.pw * 0.5, layout.ph * 0.8);
+    final rr = RRect.fromRectAndCorners(rect, topLeft: dome, topRight: dome);
+    canva.drawRRect(
+      rr,
+      Paint()
+        ..shader = Gradient.linear(rect.topCenter, rect.bottomCenter, const [
+          Color(0xFF30303A),
+          Color(0xFF0B0B10),
+        ]),
+    );
+    canva.drawRRect(rr, _outline(const Color(0x44FFFFFF), 2));
+  }
+
+  /// Draws a gauge dial with ticks and numbers up to [max].
+  static void _dial(
+    Canvas canva,
+    Offset ctr,
+    double radius, {
+    required int max,
+    required int major,
+    required int minors,
+    required String unit,
+    int? redFrom,
+  }) {
+    canva.drawCircle(ctr, radius * 1.07, fillPaint(const Color(0xFF050507)));
+    canva.drawCircle(ctr, radius, fillPaint(const Color(0xFFEDE3C8)));
+
+    if (redFrom != null) {
+      canva.drawArc(
+        Rect.fromCircle(center: ctr, radius: radius * 0.9),
+        DashboardLayout.dialStart + DashboardLayout.dialSweep * redFrom / max,
+        DashboardLayout.dialSweep * (max - redFrom) / max,
+        false,
+        _outline(const Color(0xFFC0301F), radius * 0.07),
+      );
+    }
+
+    final tick = _outline(_ink, math.max(1.0, radius * 0.02))
+      ..strokeCap = StrokeCap.round;
+    final steps = (max ~/ major) * minors;
+    for (var i = 0; i <= steps; i++) {
+      final isMajor = i % minors == 0;
+      final angle =
+          DashboardLayout.dialStart + DashboardLayout.dialSweep * i / steps;
+      canva.drawLine(
+        DashboardLayout.polar(ctr, angle, radius * 0.86),
+        DashboardLayout.polar(ctr, angle, radius * (isMajor ? 0.70 : 0.78)),
+        tick,
+      );
+      if (isMajor) {
+        paintText(
+          canva,
+          '${(i ~/ minors) * major}',
+          DashboardLayout.polar(ctr, angle, radius * 0.54),
+          math.max(radius * 0.18, 8.0),
+          _ink,
+        );
+      }
+    }
+    paintText(
+      canva,
+      unit,
+      Offset(ctr.dx, ctr.dy + radius * 0.50),
+      math.max(radius * 0.14, 7.0),
+      _ink,
+    );
+  }
+
+  /// Draws the center display panel.
+  static void _centre(Canvas canvas, DashboardLayout layout) {
+    final rr = RRect.fromRectAndRadius(layout.centre, Radius.circular(layout.ph * 0.04));
+    canvas.drawRRect(rr, fillPaint(const Color(0xFF0B0B10)));
+    canvas.drawRRect(rr, _outline(const Color(0x66FFFFFF), 2));
+  }
+}

@@ -36,7 +36,7 @@ const List<RouteStretch> bluePostToKroadEnd = [
         treeSetBack: farRightTrees,
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.exitSignNumbered(0.15, SignPanel.numbered('16')),
       RouteFeature.exit(0.22),
       RouteFeature.footbridge(0.48, style: 2),
@@ -50,7 +50,7 @@ const List<RouteStretch> bluePostToKroadEnd = [
     section: planted,
     left: [SideScenery(treeStep: (5, 10), treeSetBack: (1.8, 3.4), mix: bushy)],
     right: [SideScenery(treeStep: (7, 14), treeSetBack: farRightTrees)],
-    features: [
+    feature: [
       RouteFeature.exitSignNamed(0.5, exitJuja, side: 1),
       RouteFeature.exit(0.85),
       RouteFeature.exitSignNumbered(0.9, SignPanel.numbered('15')),
@@ -94,7 +94,7 @@ const List<RouteStretch> bluePostToKroadEnd = [
       ),
       SideScenery(from: 0.85, lots: 0.8, storeys: (5, 9), setBack: (4.0, 5.0)),
     ],
-    features: [
+    feature: [
       RouteFeature.billboard(0.3),
       RouteFeature.footbridge(0.62),
       RouteFeature.overpass(1.5, style: 1),
@@ -122,6 +122,6 @@ const List<RouteStretch> bluePostToKroadEnd = [
       ),
     ],
     right: [SideScenery(lots: 0.35, storeys: (1, 3), setBack: farRight)],
-    features: [RouteFeature.entry(0.5), RouteFeature.footbridge(1.8)],
+    feature: [RouteFeature.entry(0.5), RouteFeature.footbridge(1.8)],
   ),
 ];

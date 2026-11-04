@@ -1,4 +1,4 @@
-
+// Dart imports:
 import 'dart:math' as math;
 import 'dart:ui';
 
@@ -12,6 +12,8 @@ class HandlebarArt {
 
   static const Color color000000 = Color(0xFF000000);
   static const Color color7F7F7F = Color(0xFF7F7F7F);
+  static const Color colorC3C3C3 = Color(0xFFC3C3C3);
+  static const Color colorFFFFFF = Color(0xFFFFFFFF);
   static const double width = 200.0;
   static const double height = 200.0;
   static const Offset pivot = Offset(111.0, 117.0);
@@ -52,27 +54,43 @@ class HandlebarArt {
   void _drawHandleBarPipe(Canvas canvas, double extension) {
     _path
       ..reset()
-      ..moveTo(10.0, 51.0)
-      ..lineTo(66.0, 51.0)
-      ..lineTo(74.0, 52.0)
-      ..lineTo(84.0, 56.0)
-      ..lineTo(130.0, 93.0)
-      ..lineTo(130.0, 100.0)
-      ..lineTo(84.0, 62.0)
-      ..lineTo(74.0, 58.0)
-      ..lineTo(66.0, 57.0)
-      ..lineTo(10.0, 57.0)
+      ..moveTo(10.0, 71.0)
+      ..lineTo(81.0, 67.0)
+      ..lineTo(93.0, 68.0)
+      ..lineTo(102.0, 72.0)
+      ..lineTo(113.0, 81.0)
+      ..lineTo(119.0, 87.0)
+      ..lineTo(126.0, 91.0)
+      ..lineTo(177.0, 91.0)
+      ..lineTo(186.0, 88.0)
+      ..lineTo(194.0, 79.0)
+      ..lineTo(203.0, 72.0)
+      ..lineTo(212.0, 69.0)
+      ..lineTo(222.0, 68.0)
+      ..lineTo(291.0, 71.0)
+      ..lineTo(291.0, 80.0)
+      ..lineTo(221.0, 75.0)
+      ..lineTo(212.0, 76.0)
+      ..lineTo(205.0, 80.0)
+      ..lineTo(198.0, 87.0)
+      ..lineTo(190.0, 95.0)
+      ..lineTo(179.0, 100.0)
+      ..lineTo(124.0, 100.0)
+      ..lineTo(117.0, 96.0)
+      ..lineTo(110.0, 90.0)
+      ..lineTo(103.0, 84.0)
+      ..lineTo(93.0, 77.0)
+      ..lineTo(80.0, 75.0)
+      ..lineTo(10.0, 80.0)
       ..close();
-
     _paint
       ..style = PaintingStyle.fill
-      ..color = color000000;
+      ..color = colorC3C3C3;
     canvas.drawPath(_path, _paint);
-
     _paint
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0
-      ..color = color000000;
+      ..strokeWidth = 0.5
+      ..color = colorFFFFFF;
     canvas.drawPath(_path, _paint);
   }
 

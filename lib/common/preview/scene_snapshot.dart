@@ -7,7 +7,7 @@ import 'dart:ui';
 import 'package:flame/components.dart' show Vector2;
 
 // Project imports:
-import '../../core/game/hud/dashboard_layout.dart';
+import '../../core/game/hud/dashboard/dashboard_layout.dart';
 import '../../core/game/rider/dust_trail.dart';
 import '../../core/game/rider/look/rider_look.dart';
 import '../../core/game/rider/look/rider_looks.dart';

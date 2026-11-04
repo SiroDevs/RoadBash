@@ -5,8 +5,8 @@ import 'dart:ui';
 // Project imports:
 import '../../utils/canvas_text.dart';
 import '../../utils/paint_utils.dart';
-import 'dashboard_layout.dart';
 import '../hud_strings.dart';
+import 'dashboard_layout.dart';
 
 /// Draws the static dashboard face as a picture.
 class DashboardFace {

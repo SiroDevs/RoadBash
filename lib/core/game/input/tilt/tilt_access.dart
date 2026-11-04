@@ -5,8 +5,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 // Project imports:
-import '../../../../domain/models/player_profile.dart';
 import '../../../../common/utils/app_util.dart';
+import '../../../../domain/models/player_profile.dart';
 import 'tilt_source.dart';
 
 /// Whether the tilt sensor can be read.

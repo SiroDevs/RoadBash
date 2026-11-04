@@ -39,7 +39,7 @@ const List<RouteStretch> panganiToMuseum = [
         walls: [WallRun(WallStyle.concrete, 0.38, 1, offset: 1.12)],
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.footbridge(0.2, style: 1),
       RouteFeature.billboard(0.3, face: 1),
       RouteFeature.gantry(0.8, panels: panganiPanels),
@@ -82,7 +82,7 @@ const List<RouteStretch> panganiToMuseum = [
       ),
       SideScenery(from: 0.55, treeStep: (3, 6), treeSetBack: farRightTrees),
     ],
-    features: [
+    feature: [
       RouteFeature.gantry(1.5, panels: exit2Panels),
     ],
   ),
@@ -118,7 +118,7 @@ const List<RouteStretch> panganiToMuseum = [
         treeSetBack: farRightTrees,
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.entry(0.25),
       RouteFeature.exit(0.55),
       RouteFeature.billboard(0.3, side: -1, face: 2),
@@ -133,7 +133,7 @@ const List<RouteStretch> panganiToMuseum = [
       SideScenery(to: 0.5, lots: 0.9, storeys: (4, 6), setBack: serviceSide),
     ],
     right: [SideScenery(treeStep: (5, 8), treeSetBack: farRightTrees)],
-    features: [
+    feature: [
       RouteFeature.exit(0.3),
       RouteFeature.gantry(1, panels: exit7Panels),
       RouteFeature.building(

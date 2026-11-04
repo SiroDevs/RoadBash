@@ -27,7 +27,7 @@ class RouteStretch {
     this.section = Section.plain,
     this.left = const [],
     this.right = const [],
-    this.features = const [],
+    this.feature = const [],
   });
 
   final String name;
@@ -35,7 +35,7 @@ class RouteStretch {
   final List<RoutePiece> pieces;
   final Section section;
   final List<SideScenery> left, right;
-  final List<RouteFeature> features;
+  final List<RouteFeature> feature;
 
   /// Length of the stretch in segments.
   int get length => shots * segmentsPerShot;

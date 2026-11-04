@@ -6,7 +6,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
-import '../hud/dashboard_layout.dart';
+import '../hud/dashboard/dashboard_layout.dart';
 import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 import 'dust_trail.dart';

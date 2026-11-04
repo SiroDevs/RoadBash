@@ -7,7 +7,7 @@ import 'package:flame/components.dart';
 
 // Project imports:
 import '../../../common/objects/universal/prop_painter.dart';
-import '../hud/dashboard_layout.dart';
+import '../hud/dashboard/dashboard_layout.dart';
 import 'backdrop/road_backdrop.dart';
 import 'config/road_config.dart';
 import 'finish/finish_config.dart';

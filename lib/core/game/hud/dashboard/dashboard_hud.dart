@@ -14,10 +14,10 @@ import '../../road/config/vehicle_config.dart';
 import '../../road/road_renderer.dart';
 import '../../utils/canvas_text.dart';
 import '../../utils/paint_utils.dart';
-import 'dashboard_face.dart';
-import 'dashboard_layout.dart';
 import '../hud_strings.dart';
 import '../police_warning_hud.dart';
+import 'dashboard_face.dart';
+import 'dashboard_layout.dart';
 
 /// Dashboard overlay showing speed, rpm and race banners.
 class DashboardHud extends PositionComponent {

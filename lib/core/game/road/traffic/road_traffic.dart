@@ -6,7 +6,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 
 // Project imports:
-import '../../hud/dashboard_layout.dart';
+import '../../hud/dashboard/dashboard_layout.dart';
 import '../../rider/rider_rig.dart';
 import '../config/road_config.dart';
 import '../road_projection.dart';

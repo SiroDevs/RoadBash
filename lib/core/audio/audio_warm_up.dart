@@ -2,7 +2,7 @@
 import 'package:flutter/widgets.dart';
 
 // Project imports:
-import '../../features/settings/cubit/settings_cubit.dart';
+import '../../feature/settings/cubit/settings_cubit.dart';
 import '../di/injectable.dart';
 import 'synth/engine_synth.dart';
 

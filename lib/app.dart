@@ -13,10 +13,10 @@ import 'core/audio/audio_warm_up.dart';
 import 'core/audio/sound_player.dart';
 import 'core/di/injectable.dart';
 import 'core/router/app_router.dart';
-import 'features/audio/cubit/audio_cubit.dart';
-import 'features/auth/cubit/auth_cubit.dart';
-import 'features/progress/cubit/progress_cubit.dart';
-import 'features/settings/cubit/settings_cubit.dart';
+import 'feature/audio/cubit/audio_cubit.dart';
+import 'feature/auth/cubit/auth_cubit.dart';
+import 'feature/progress/cubit/progress_cubit.dart';
+import 'feature/settings/cubit/settings_cubit.dart';
 import 'l10n/gen/app_localizations.dart';
 
 /// Root widget that builds the app view.

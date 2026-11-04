@@ -35,7 +35,7 @@ const List<RouteStretch> gardenCityToPangani = [
         walls: [WallRun(WallStyle.rock, 0.8, 1, offset: 3.8)],
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.footbridge(0.25, style: 2),
       RouteFeature.gantry(0.45, panels: exit7Panels, boards: pelicanBoards),
       RouteFeature.exitSignNumbered(0.52, SignPanel.numbered('7')),
@@ -51,7 +51,7 @@ const List<RouteStretch> gardenCityToPangani = [
     right: [
       SideScenery(walls: [WallRun(WallStyle.rock, 0, 0.9, offset: 3.8)]),
     ],
-    features: [
+    feature: [
       RouteFeature.exitSignNumbered(0.5, SignPanel.numbered('6')),
       RouteFeature.exit(0.7),
       RouteFeature.gantry(0.8, panels: exit6Panels, boards: pelicanBoards1),
@@ -78,7 +78,7 @@ const List<RouteStretch> gardenCityToPangani = [
       SideScenery(to: 0.4, treeStep: (3, 6), treeSetBack: farRightTrees),
       SideScenery(from: 0.4, treeStep: (6, 10), treeSetBack: farRightTrees),
     ],
-    features: [
+    feature: [
       RouteFeature.footbridge(0.5, style: 2),
       RouteFeature.gantry(1.5, panels: exit5Panels, boards: pelicanBoards2),
       RouteFeature.building(
@@ -101,7 +101,7 @@ const List<RouteStretch> gardenCityToPangani = [
       SideScenery(treeStep: (4, 8), mix: TreeMix.belt, treeSetBack: (1.8, 3.2)),
     ],
     right: [SideScenery(treeStep: (4, 8), treeSetBack: farRightTrees)],
-    features: [
+    feature: [
       RouteFeature.footbridge(0.45, style: 1),
       RouteFeature.billboard(0.75, face: 4),
     ],
@@ -133,7 +133,7 @@ const List<RouteStretch> gardenCityToPangani = [
         walls: [WallRun(WallStyle.concrete, 0.9, 1, offset: 3.8)],
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.billboard(0.3, face: 1),
       RouteFeature.gantry(1, panels: exit4Panels),
       RouteFeature.billboard(1.5, face: 2),

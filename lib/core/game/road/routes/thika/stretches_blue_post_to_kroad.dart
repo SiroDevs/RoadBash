@@ -30,7 +30,7 @@ const List<RouteStretch> bluePostToKroad = [
       ),
     ],
     right: [SideScenery(treeStep: (5, 10), treeSetBack: farRightTrees)],
-    features: [
+    feature: [
       RouteFeature.gantry(0.72, panels: exit17Panels, boards: pelicanBoards),
       RouteFeature.exitSignNamed(0.9, exitThika),
     ],
@@ -49,7 +49,7 @@ const List<RouteStretch> bluePostToKroad = [
       SideScenery(from: 0.5, treeStep: (8, 14), mix: bushy),
     ],
     right: [SideScenery(treeStep: (6, 12), treeSetBack: farRightTrees)],
-    features: [
+    feature: [
       RouteFeature.exit(0.22),
       RouteFeature.exitSignNumbered(0.35, SignPanel.numbered('17')),
       RouteFeature.billboard(0.45),
@@ -70,7 +70,7 @@ const List<RouteStretch> bluePostToKroad = [
       ),
       SideScenery(from: 0.55, lots: 0.4, storeys: (1, 2), setBack: farRight),
     ],
-    features: [
+    feature: [
       RouteFeature.exit(0.1, length: 26),
       RouteFeature.billboard(0.4, side: -1, face: 1),
       RouteFeature.footbridge(0.7),
@@ -95,7 +95,7 @@ const List<RouteStretch> bluePostToKroad = [
         treeSetBack: farRightTrees,
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.billboard(0.15, face: 2),
       RouteFeature.building(0.4, storeys: 1, width: 3600, depth: 10, tint: 3),
       RouteFeature.billboard(0.75, face: 3),
@@ -129,7 +129,7 @@ const List<RouteStretch> bluePostToKroad = [
         treeSetBack: farRightTrees,
       ),
     ],
-    features: [
+    feature: [
       RouteFeature.billboard(0.35, face: 1),
       RouteFeature.footbridge(0.6),
       RouteFeature.billboard(0.9, side: -1, face: 0),

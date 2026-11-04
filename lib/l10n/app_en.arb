@@ -217,7 +217,7 @@
   "@volumeEffects": {
     "description": "Volume slider"
   },
-  "controlsHelp": "Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold the gas pedal (bottom right) to ride and the brake pedal (bottom left) to stop. Tilt the device like a steering wheel to turn, or switch on Use Screentouch in the race controls menu (top right) to steer with on-screen arrows.",
+  "controlsHelp": "Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold the right handlebar to ride and let go to brake. Hold both handlebars and move one up and the other down to turn: right bar down steers right, left bar down steers left. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.",
   "@controlsHelp": {
     "description": "Controls help text"
   },
@@ -291,21 +291,13 @@
   "@quitRace": {
     "description": "Close button label"
   },
-  "touchLeft": "Steer left",
-  "@touchLeft": {
-    "description": "Touch control label"
+  "handlebarLeft": "Left handlebar",
+  "@handlebarLeft": {
+    "description": "Left handlebar label"
   },
-  "touchRight": "Steer right",
-  "@touchRight": {
-    "description": "Touch control label"
-  },
-  "touchGas": "Gas",
-  "@touchGas": {
-    "description": "Touch control label"
-  },
-  "touchBrake": "Brake",
-  "@touchBrake": {
-    "description": "Touch control label"
+  "handlebarRight": "Right handlebar: hold to ride, release to brake",
+  "@handlebarRight": {
+    "description": "Right handlebar label"
   },
   "controlsTitle": "Controls",
   "@controlsTitle": {
@@ -323,7 +315,7 @@
   "@useScreenTouch": {
     "description": "Switch label for on-screen steering"
   },
-  "useScreenTouchHint": "Steer with on-screen arrows instead of tilting (phones and tablets)",
+  "useScreenTouchHint": "Steer with the on-screen handlebars only, without tilting (phones and tablets)",
   "@useScreenTouchHint": {
     "description": "Hint under the screentouch switch"
   },

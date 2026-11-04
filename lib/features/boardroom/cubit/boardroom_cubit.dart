@@ -16,7 +16,7 @@ enum BoardroomError { tooShort, rateLimited, signIn, forbidden, network }
 /// The two filter strips of the boardroom.
 enum BoardroomTab { announcements, suggestions }
 
-/// State of the boardroom: who is looking, the posts and the last error.
+/// State of the boardroom: who is looking, the strip, the posts and errors.
 class BoardroomState extends Equatable {
   const BoardroomState({
     this.admin = false,
@@ -28,15 +28,25 @@ class BoardroomState extends Equatable {
   });
 
   final bool admin;
-
-  /// The selected filter strip; announcements by default.
   final BoardroomTab tab;
   final LoadStatus status;
-
-  /// True while a post, a delete or a visibility change is in flight.
   final bool busy;
   final BoardroomError? error;
   final List<Post> posts;
+
+  /// The kind of post the selected strip shows.
+  PostKind get tabKind => tab == BoardroomTab.announcements
+      ? PostKind.announcement
+      : PostKind.suggestion;
+
+  /// Admins write announcements and players write suggestions.
+  bool get canCompose => tab == BoardroomTab.announcements ? admin : !admin;
+
+  /// The posts of the selected strip.
+  List<Post> get shownPosts => [
+    for (final post in posts)
+      if (post.kind == tabKind) post,
+  ];
 
   BoardroomState copyWith({
     BoardroomTab? tab,
@@ -58,7 +68,7 @@ class BoardroomState extends Equatable {
   List<Object?> get props => [admin, tab, status, busy, error, posts];
 }
 
-/// Loads the boardroom and handles posting, replying, publishing and deleting.
+/// Loads the boardroom and handles posting, replying, publishing, deleting.
 @injectable
 class BoardroomCubit extends Cubit<BoardroomState> {
   BoardroomCubit(this._repo, this._auth)
@@ -75,10 +85,7 @@ class BoardroomCubit extends Cubit<BoardroomState> {
   Future<void> load() async {
     if (_auth.session == null) {
       return emit(
-        state.copyWith(
-          status: LoadStatus.failed,
-          error: BoardroomError.signIn,
-        ),
+        state.copyWith(status: LoadStatus.failed, error: BoardroomError.signIn),
       );
     }
     emit(state.copyWith(status: LoadStatus.loading, clearError: true));
@@ -87,17 +94,22 @@ class BoardroomCubit extends Cubit<BoardroomState> {
       if (!isClosed) {
         emit(state.copyWith(status: LoadStatus.ready, posts: posts));
       }
-    } on ApiException catch (e) {
+    } on ApiException catch (exception) {
       if (!isClosed) {
-        emit(state.copyWith(status: LoadStatus.failed, error: _map(e)));
+        emit(
+          state.copyWith(
+            status: LoadStatus.failed,
+            error: _errorFor(exception),
+          ),
+        );
       }
     }
   }
 
-  /// Sends a suggestion, an announcement (admins) or a comment under
-  /// [parentId]. Returns true when it was sent, so the field can be cleared.
+  /// Sends a post; true when it was accepted, so the field can be cleared.
   Future<bool> post(PostKind kind, String text, {int? parentId}) async {
     final message = text.trim();
+    if (state.busy) return false;
     if (_auth.session == null) {
       emit(state.copyWith(error: BoardroomError.signIn));
       return false;
@@ -116,30 +128,35 @@ class BoardroomCubit extends Cubit<BoardroomState> {
   /// Admin only: deletes a post or a comment.
   Future<void> delete(int id) => _run(() => _repo.delete(id));
 
-  /// Runs a write, then reloads the posts. Returns true on success.
+  /// Runs a write, then reloads the posts; true on success.
   Future<bool> _run(Future<void> Function() action) async {
     emit(state.copyWith(busy: true, clearError: true));
     try {
       await action();
+      emit(state.copyWith(status: LoadStatus.loading));
       final posts = await _repo.list();
+      if (!isClosed) {
+        emit(
+          state.copyWith(busy: false, status: LoadStatus.ready, posts: posts),
+        );
+      }
+      return true;
+    } on ApiException catch (exception) {
       if (!isClosed) {
         emit(
           state.copyWith(
             busy: false,
             status: LoadStatus.ready,
-            posts: posts,
+            error: _errorFor(exception),
           ),
         );
       }
-      return true;
-    } on ApiException catch (e) {
-      if (!isClosed) emit(state.copyWith(busy: false, error: _map(e)));
       return false;
     }
   }
 
   /// Maps a server error code to a [BoardroomError].
-  BoardroomError _map(ApiException error) => switch (error.code) {
+  BoardroomError _errorFor(ApiException exception) => switch (exception.code) {
     'invalid_message' => BoardroomError.tooShort,
     'rate_limited' => BoardroomError.rateLimited,
     'invalid_session' => BoardroomError.signIn,

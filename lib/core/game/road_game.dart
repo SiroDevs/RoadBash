@@ -15,6 +15,7 @@ import '../../domain/models/scene_id.dart';
 import '../audio/audio_service.dart';
 import 'audio/ride_audio.dart';
 import 'hud/dashboard_hud.dart';
+import 'hud/handlebar_hud.dart';
 import 'hud/hud_strings.dart';
 import 'input/road_input.dart';
 import 'police/police_chase.dart';
@@ -103,6 +104,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
       road,
       RiderComponent(road),
       RivalOverlay(road),
+      HandlebarHud(road, () => handlebars),
       DashboardHud(road, race, strings, police),
     ]);
     if (_shutDown) return;

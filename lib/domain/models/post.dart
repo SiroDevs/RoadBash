@@ -6,7 +6,10 @@ enum PostKind { announcement, suggestion, comment }
 
 /// A boardroom post: an announcement, a suggestion or a comment (reply).
 ///
-/// Announcements and suggestions carry their [comments]; a comment has none.
+/// Announcements and suggestions carry their comments; a comment has none.
+/// An announcement is always public and a comment follows its parent post.
+/// The `mine` flag marks the current player's posts and `isAdmin` marks
+/// posts written by an admin.
 class Post extends Equatable {
   const Post({
     required this.id,
@@ -24,16 +27,9 @@ class Post extends Equatable {
   final PostKind kind;
   final String playerName;
   final String message;
-
-  /// Whether everyone can see it. Announcements are always public and a
-  /// comment is visible whenever the post it belongs to is.
   final bool isPublic;
   final DateTime createdAt;
-
-  /// True when the current player wrote it.
   final bool mine;
-
-  /// True when an admin wrote it.
   final bool isAdmin;
   final List<Post> comments;
 

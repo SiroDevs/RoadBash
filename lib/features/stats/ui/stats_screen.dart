@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
-import '../../../common/constants/app_assets.dart';
 import '../../../l10n/l10n_extension.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
+import '../../../common/utils/date_util.dart';
 import '../../../common/widgets/retro/controls/retro_chips.dart';
 import '../../../common/widgets/retro/feedback/retro_status.dart';
 import '../../../common/widgets/retro/page/retro_page.dart';
@@ -33,10 +32,7 @@ class StatsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RetroPage(
-      asset: AppAssets.appMain,
-      grayscale: true,
-      dim: 0.55,
+    return RetroPage.gray(
       child: ResponsiveScrollBody(
         child: BlocBuilder<StatsCubit, StatsState>(
           builder: (context, st) => RetroSubPage(
@@ -132,7 +128,7 @@ class StatsScreen extends StatelessWidget {
           metric: st.metric,
           dayLabels: [
             for (var i = 0; i < 7; i++)
-              _short(_format('E', locale, DateTime(2024, 1, 1 + i))),
+              _short(formatDate('E', locale, DateTime(2024, 1, 1 + i))),
           ],
         ),
         SizedBox(height: sizes.gapSmall),
@@ -153,15 +149,6 @@ class StatsScreen extends StatelessWidget {
   /// Formats a bucket time for the selected range.
   String _stamp(StatsRange range, DateTime time, String locale) =>
       range == StatsRange.today
-      ? _format('HH:mm', locale, time)
-      : _format('d MMM', locale, time);
-
-  /// Formats a date with a pattern, falling back if the locale is missing.
-  String _format(String pattern, String locale, DateTime time) {
-    try {
-      return DateFormat(pattern, locale).format(time);
-    } catch (_) {
-      return DateFormat(pattern).format(time);
-    }
-  }
+      ? formatDate('HH:mm', locale, time)
+      : formatDate('d MMM', locale, time);
 }

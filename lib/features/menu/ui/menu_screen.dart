@@ -61,8 +61,7 @@ class _MenuScreenState extends State<MenuScreen> {
     unawaited(TiltAccess.instance.prepareFor(profile));
   }
 
-  /// Selects a menu target and opens the scene's race, the reception or the
-  /// boardroom.
+  /// Selects a menu target and opens its screen.
   void _open(MenuCubit menu, MenuTarget target) {
     menu.open(target);
     switch (target.place) {
@@ -78,9 +77,7 @@ class _MenuScreenState extends State<MenuScreen> {
     }
   }
 
-  /// The reception and the boardroom open at once. For a scene, the first tap
-  /// highlights it (its details show) and a tap on the highlighted scene opens
-  /// it.
+  /// Opens the reception and boardroom at once; a scene opens on its second tap.
   void _tap(MenuCubit menu, MenuTarget selected, MenuTarget target) {
     _prepareTilt();
     if (!target.isScene || target == selected) {

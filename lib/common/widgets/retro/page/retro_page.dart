@@ -20,6 +20,17 @@ class RetroPage extends StatelessWidget {
     this.onTap,
   });
 
+  /// Muted black-and-white page used by every screen except the menu.
+  const RetroPage.gray({
+    super.key,
+    required this.child,
+    this.track = MusicTrack.menu,
+    this.padding,
+    this.onTap,
+  }) : asset = AppAssets.appMain,
+       grayscale = true,
+       dim = 0.55;
+
   final Widget child;
   final String asset;
   final bool grayscale;

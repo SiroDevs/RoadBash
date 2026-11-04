@@ -217,7 +217,7 @@
   "@volumeEffects": {
     "description": "Volume slider"
   },
-  "controlsHelp": "Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: shikilia pedali ya mafuta (chini kulia) kuendesha na pedali ya breki (chini kushoto) kusimama. Inamisha kifaa kama usukani kugeuka, au washa Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa mishale ya skrini.",
+  "controlsHelp": "Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: shikilia upande wa kulia wa usukani kuendesha na uuachilie kufunga breki. Shikilia pande zote mbili za usukani na usogeze moja juu na nyingine chini ili kugeuka: upande wa kulia ukishuka unaelekea kulia, wa kushoto ukishuka unaelekea kushoto. Unaweza pia kuinamisha kifaa kama usukani, au kuwasha Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa usukani wa skrini pekee.",
   "@controlsHelp": {
     "description": "Controls help text"
   },
@@ -291,21 +291,13 @@
   "@quitRace": {
     "description": "Close button label"
   },
-  "touchLeft": "Elekea kushoto",
-  "@touchLeft": {
-    "description": "Touch control label"
+  "handlebarLeft": "Upande wa kushoto wa usukani",
+  "@handlebarLeft": {
+    "description": "Left handlebar label"
   },
-  "touchRight": "Elekea kulia",
-  "@touchRight": {
-    "description": "Touch control label"
-  },
-  "touchGas": "Mafuta",
-  "@touchGas": {
-    "description": "Touch control label"
-  },
-  "touchBrake": "Breki",
-  "@touchBrake": {
-    "description": "Touch control label"
+  "handlebarRight": "Upande wa kulia wa usukani: shikilia kuendesha, achilia kufunga breki",
+  "@handlebarRight": {
+    "description": "Right handlebar label"
   },
   "controlsTitle": "Vidhibiti",
   "@controlsTitle": {
@@ -323,7 +315,7 @@
   "@useScreenTouch": {
     "description": "Switch label for on-screen steering"
   },
-  "useScreenTouchHint": "Elekeza kwa mishale ya skrini badala ya kuinamisha (simu na tableti)",
+  "useScreenTouchHint": "Elekeza kwa usukani wa skrini pekee, bila kuinamisha (simu na tableti)",
   "@useScreenTouchHint": {
     "description": "Hint under the screentouch switch"
   },

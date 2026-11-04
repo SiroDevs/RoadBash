@@ -166,7 +166,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get controlsHelp =>
-      'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold the right handlebar to ride and let go to brake. Hold both handlebars and move one up and the other down to turn: right bar down steers right, left bar down steers left. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.';
+      'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: the two handlebars move together. Hold the right handlebar (GAS) to ride and let go to brake. Drag either handlebar to turn: right bar down (left bar up) steers right, left bar down (right bar up) steers left. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.';
 
   @override
   String get hudGo => 'GO!';
@@ -176,6 +176,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hudHoldGas => 'Hold the gas to ride';
+
+  @override
+  String get hudGasLabel => 'Gas';
 
   @override
   String hudLap(int lap, int laps) {
@@ -214,11 +217,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quitRace => 'Quit race';
 
   @override
-  String get handlebarLeft => 'Left handlebar';
+  String get handlebarLeft =>
+      'Left handlebar: drag down to steer left, up to steer right';
 
   @override
   String get handlebarRight =>
-      'Right handlebar: hold to ride, release to brake';
+      'Right handlebar, the gas: hold to ride, release to brake, drag down to steer right';
 
   @override
   String get controlsTitle => 'Controls';

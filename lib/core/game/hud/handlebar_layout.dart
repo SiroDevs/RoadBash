@@ -18,37 +18,37 @@ class HandlebarLayout {
     popupDrop = height * 0.9;
     centreX = screen.x / 2;
     barLength = _endX(HandlebarSide.right) - _pivotX(HandlebarSide.right);
-    final artScale = barLength / HandlebarArt.length;
-    pivotY = dashboard.top - HandlebarArt.belowPivot * artScale - height * -0.05;
-    restEndY = pivotY - barLength * 0.075;
+    artScale = math.min(height * _gripSize, barLength / HandlebarArt.length);
+    pipeExtension = math.max(0.0, barLength / artScale - HandlebarArt.length);
+    pivotY = dashboard.top + height * _pipeDepth;
+    restEndY = pivotY - barLength * 0.005;
   }
 
   final Vector2 screen;
   final DashboardLayout dashboard;
 
-  late final double travel, popupDrop, barLength;
+  late final double travel, popupDrop, barLength, artScale, pipeExtension;
   late final double centreX, pivotY, restEndY;
 
-  static const double _endInset = 1;
-  static const double _pivotSpread = 0.035;
+  static const double _edgeInset = 0.02;
+  static const double _gripSize = 0.0215;
+  static const double _pipeDepth = 1.2;
+  static const double _pivotSpread = -0.2;
 
   /// Returns -1 for the left bar and 1 for the right bar.
   static double sign(HandlebarSide side) =>
       side == HandlebarSide.left ? -1 : 1;
 
   /// Returns the horizontal position of a bar's grip end.
-  double _endX(HandlebarSide side) {
-    final inset = dashboard.pw * _endInset;
-    return side == HandlebarSide.left
-        ? dashboard.left + inset
-        : dashboard.left + dashboard.pw - inset;
-  }
+  double _endX(HandlebarSide side) => side == HandlebarSide.left
+      ? screen.x * _edgeInset
+      : screen.x * (1 - _edgeInset);
 
-  /// Returns the horizontal position of a bar's inner end.
+  /// Returns the horizontal position of a bar's inner end, behind the dashboard.
   double _pivotX(HandlebarSide side) =>
       centreX + sign(side) * dashboard.pw * _pivotSpread;
 
-  /// Returns where a bar pivots, just above the dashboard's top edge.
+  /// Returns where a bar pivots, behind the dashboard above the meters.
   Offset pivot(HandlebarSide side) => Offset(_pivotX(side), pivotY);
 
   /// Returns a bar's grip end for a vertical offset from -1 (up) to 1 (down).

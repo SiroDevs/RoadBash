@@ -88,7 +88,7 @@ mixin RoadInput on FlameGame {
   /// The current handlebar pose.
   HandlebarPose get handlebars => _handlebars;
 
-  /// Applies the handlebar pose: right bar is gas, both bars steer.
+  /// Applies the handlebar pose: the right bar is gas, either bar steers.
   void setHandlebars(HandlebarPose pose) {
     _handlebars = pose;
     if (pose.rightHeld) _handlebarsLatched = true;

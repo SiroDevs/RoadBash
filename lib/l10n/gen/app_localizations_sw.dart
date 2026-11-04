@@ -166,7 +166,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get controlsHelp =>
-      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: shikilia upande wa kulia wa usukani kuendesha na uuachilie kufunga breki. Shikilia pande zote mbili za usukani na usogeze moja juu na nyingine chini ili kugeuka: upande wa kulia ukishuka unaelekea kulia, wa kushoto ukishuka unaelekea kushoto. Unaweza pia kuinamisha kifaa kama usukani, au kuwasha Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa usukani wa skrini pekee.';
+      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: pande mbili za usukani husogea pamoja. Shikilia upande wa kulia (MAFUTA) kuendesha na uachilie kufunga breki. Buruta upande wowote kugeuka: kulia ukishuka (kushoto ukipanda) unaelekea kulia, kushoto ukishuka (kulia ukipanda) unaelekea kushoto. Unaweza pia kuinamisha kifaa kama usukani, au kuwasha Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa usukani wa skrini pekee.';
 
   @override
   String get hudGo => 'ANZA!';
@@ -176,6 +176,9 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get hudHoldGas => 'Shikilia mafuta kuendesha';
+
+  @override
+  String get hudGasLabel => 'Mafuta';
 
   @override
   String hudLap(int lap, int laps) {
@@ -214,11 +217,12 @@ class AppLocalizationsSw extends AppLocalizations {
   String get quitRace => 'Acha shindano';
 
   @override
-  String get handlebarLeft => 'Upande wa kushoto wa usukani';
+  String get handlebarLeft =>
+      'Upande wa kushoto wa usukani: buruta chini kuelekea kushoto, juu kuelekea kulia';
 
   @override
   String get handlebarRight =>
-      'Upande wa kulia wa usukani: shikilia kuendesha, achilia kufunga breki';
+      'Upande wa kulia wa usukani, mafuta: shikilia kuendesha, achilia kufunga breki, buruta chini kuelekea kulia';
 
   @override
   String get controlsTitle => 'Vidhibiti';

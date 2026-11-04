@@ -66,6 +66,7 @@ class _RaceScreenState extends State<RaceScreen> {
         go: l10n.hudGo,
         finish: l10n.hudFinish,
         holdGas: l10n.hudHoldGas,
+        gas: l10n.hudGasLabel,
         speedUnit: l10n.hudSpeedUnit,
         rpmUnit: l10n.hudRpmUnit,
         lap: l10n.hudLap,

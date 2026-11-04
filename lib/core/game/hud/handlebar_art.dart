@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:math' as math;
 import 'dart:ui';
 
 /// One-sided handlebar artwork on a 200 x 200 canvas, drawn as the left bar.
@@ -15,31 +16,42 @@ class HandlebarArt {
   static const double height = 200.0;
   static const Offset pivot = Offset(111.0, 117.0);
   static const double length = 102.0;
-  static const double belowPivot = 4.0;
+  static const Offset gripCentre = Offset(36.5, 53.5);
+  static const double gripThickness = 11.0;
   static const Offset gripTopLeft = Offset(13.0, 110.0);
   static const Offset gripBottomLeft = Offset(15.0, 121.0);
   static const Offset gripTopRight = Offset(58.0, 104.0);
   static const Offset gripBottomRight = Offset(60.0, 115.0);
-  static const int ridgeCount = 4;
-  static const double ridgeStart = 0.08;
-  static const double ridgeEnd = 0.92;
 
-  void paint(Canvas canvas) {
-    _drawHandleBarPipe(canvas);
-    _drawHandleBarGrip(canvas);
-    _drawGripRidges(canvas);
+  static final double gripTilt = math.atan2(
+    gripTopLeft.dy - gripTopRight.dy,
+    gripTopRight.dx - gripTopLeft.dx,
+  );
+
+  /// The pivot when the pipe is made [extension] art units longer.
+  static Offset pivotFor(double extension) =>
+      Offset(pivot.dx + extension, pivot.dy);
+
+  /// Draws the bar with the pipe [extension] units longer and the grip in [gripColor].
+  void paint(Canvas canvas, {double extension = 0, Color? gripColor}) {
+    _drawHandleBarPipe(canvas, extension);
+    _drawHandleBarGrip(canvas, gripColor ?? color7F7F7F);
   }
 
   /// Shape "HandleBarPipe".
-  void _drawHandleBarPipe(Canvas canvas) {
+  void _drawHandleBarPipe(Canvas canvas, double extension) {
     _path
       ..reset()
-      ..moveTo(10.0, 120.0)
-      ..lineTo(80.0, 110.0)
-      ..lineTo(110.0, 120.0)
-      ..lineTo(112.0, 114.0)
-      ..lineTo(80.0, 103.0)
-      ..lineTo(9.0, 113.0)
+      ..moveTo(10.0, 51.0)
+      ..lineTo(66.0, 51.0)
+      ..lineTo(74.0, 52.0)
+      ..lineTo(84.0, 56.0)
+      ..lineTo(130.0, 93.0)
+      ..lineTo(130.0, 100.0)
+      ..lineTo(84.0, 62.0)
+      ..lineTo(74.0, 58.0)
+      ..lineTo(66.0, 57.0)
+      ..lineTo(10.0, 57.0)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -53,40 +65,15 @@ class HandlebarArt {
   }
 
   /// Shape "HandleBarGrip".
-  void _drawHandleBarGrip(Canvas canvas) {
-    _path
-      ..reset()
-      ..moveTo(gripTopLeft.dx, gripTopLeft.dy)
-      ..lineTo(gripBottomLeft.dx, gripBottomLeft.dy)
-      ..lineTo(gripBottomRight.dx, gripBottomRight.dy)
-      ..lineTo(gripTopRight.dx, gripTopRight.dy)
-      ..close();
+  void _drawHandleBarGrip(Canvas canvas, Color fill) {
     _paint
       ..style = PaintingStyle.fill
-      ..color = color7F7F7F;
-    canvas.drawPath(_path, _paint);
-    _paint
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.5
-      ..color = color000000;
-    canvas.drawPath(_path, _paint);
-  }
-
-  /// Draws evenly spaced ridges parallel to the grip's long edges.
-  void _drawGripRidges(Canvas canvas) {
+      ..color = fill;
+    canvas.drawRect(const Rect.fromLTRB(12.0, 49.0, 51.0, 59.0), _paint);
     _paint
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
       ..color = color000000;
-    final across = gripBottomLeft - gripTopLeft;
-    final along = gripTopRight - gripTopLeft;
-    for (var ridge = 1; ridge <= ridgeCount; ridge++) {
-      final base = gripTopLeft + across * (ridge / (ridgeCount + 1));
-      canvas.drawLine(
-        base + along * ridgeStart,
-        base + along * ridgeEnd,
-        _paint,
-      );
-    }
+    canvas.drawRect(const Rect.fromLTRB(12.0, 49.0, 51.0, 59.0), _paint);
   }
 }

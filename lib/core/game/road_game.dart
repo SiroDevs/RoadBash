@@ -104,7 +104,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
       road,
       RiderComponent(road),
       RivalOverlay(road),
-      HandlebarHud(road, () => handlebars),
+      HandlebarHud(road, () => handlebars, strings.gas),
       DashboardHud(road, race, strings, police),
     ]);
     if (_shutDown) return;

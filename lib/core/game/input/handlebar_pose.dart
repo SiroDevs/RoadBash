@@ -19,19 +19,26 @@ class HandlebarPose {
   /// True while the right bar is held.
   bool get throttle => rightHeld;
 
-  /// Steering from -1 to 1, only while both bars are held.
+  /// True while either bar is held.
+  bool get anyHeld => leftHeld || rightHeld;
+
+  /// Lean from -1 (left) to 1 (right); right bar down or left bar up leans right.
+  double get lean {
+    if (leftHeld && rightHeld) {
+      return ((rightOffset - leftOffset) / 2).clamp(-1.0, 1.0).toDouble();
+    }
+    if (rightHeld) return rightOffset;
+    if (leftHeld) return -leftOffset;
+    return 0;
+  }
+
+  /// Steering from -1 to 1; either bar steers because the bars move together.
   double get steer {
-    if (!leftHeld || !rightHeld) return 0;
-    final raw = (rightOffset - leftOffset) / 2;
-    if (raw.abs() < steerDeadzone) return 0;
-    return raw.clamp(-1.0, 1.0).toDouble();
+    final value = lean;
+    return value.abs() < steerDeadzone ? 0 : value;
   }
 
   /// Returns whether a side is held.
   bool isHeld(HandlebarSide side) =>
       side == HandlebarSide.left ? leftHeld : rightHeld;
-
-  /// Returns a side's vertical position, from -1 (up) to 1 (down).
-  double offsetOf(HandlebarSide side) =>
-      side == HandlebarSide.left ? leftOffset : rightOffset;
 }

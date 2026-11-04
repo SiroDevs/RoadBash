@@ -13,7 +13,7 @@ import '../../cubit/scene_order.dart';
 import 'menu_entry.dart';
 import 'menu_target_info.dart';
 
-/// The scenes under a label, a line, then the reception and the boardroom.
+/// The scenes in a container, a line, then the reception and the boardroom each in their own.
 class MenuGrid extends StatelessWidget {
   const MenuGrid({
     super.key,
@@ -37,14 +37,22 @@ class MenuGrid extends StatelessWidget {
       builder: (context, box) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _ScenesLabel(),
-          _sceneGrid(context, (box.maxWidth / columns).floorToDouble()),
+          _scenesPanel(context, (box.maxWidth / columns).floorToDouble()),
           const _Separator(),
           _otherRow(context),
         ],
-      ).decorated(color: Retro.panel),
+      ),
     );
   }
+
+  /// The scenes container: the label above the grid.
+  Widget _scenesPanel(BuildContext context, double cellWidth) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const _ScenesLabel(),
+      _sceneGrid(context, cellWidth),
+    ],
+  ).decorated(color: Retro.panel);
 
   /// The scene entries, wrapped into rows of equal-width cells.
   Widget _sceneGrid(BuildContext context, double cellWidth) {
@@ -62,20 +70,23 @@ class MenuGrid extends StatelessWidget {
     );
   }
 
-  /// The reception and the boardroom side by side.
+  /// The reception and the boardroom side by side, each in its own container.
   Widget _otherRow(BuildContext context) {
-    final l10n = context.l10n;
     return Row(
       children: [
-        for (final item in order.otherItems)
-          MenuEntry(
-            label: menuLabel(l10n, item),
-            selected: item == selected,
-            onTap: () => onTap(item),
-          ).expanded(),
+        _otherEntry(context, order.otherItems.first).expanded(),
+        SizedBox(width: context.sizes.gapSmall),
+        _otherEntry(context, order.otherItems.last).expanded(),
       ],
     );
   }
+
+  /// One entry of the second part, in its own container.
+  Widget _otherEntry(BuildContext context, MenuTarget item) => MenuEntry(
+    label: menuLabel(context.l10n, item),
+    selected: item == selected,
+    onTap: () => onTap(item),
+  ).decorated(color: Retro.panel);
 }
 
 /// The "Scenes" label above the scene grid.
@@ -97,8 +108,11 @@ class _Separator extends StatelessWidget {
   const _Separator();
 
   @override
-  Widget build(BuildContext context) => const SizedBox(
-    height: 2,
-    child: ColoredBox(color: Retro.dim),
-  ).padding(horizontal: context.sizes.gap);
+  Widget build(BuildContext context) {
+    final sizes = context.sizes;
+    return const SizedBox(
+      height: 2,
+      child: ColoredBox(color: Retro.dim),
+    ).padding(horizontal: sizes.gap, vertical: sizes.gapSmall);
+  }
 }

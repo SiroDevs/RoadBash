@@ -32,28 +32,53 @@ class MenuCubit extends Cubit<MenuTarget?> {
     select(items[(current + delta) % items.length]);
   }
 
-  /// Moves the highlight one row up ([dir] < 0) or down ([dir] > 0).
-  ///
-  /// The scenes sit in a grid of [cols] columns, followed by one row holding
-  /// the reception and the boardroom. Leaving the grid lands on the entry
-  /// nearest in column, and the movement wraps around.
-  void moveVertical(int dir, List<MenuTarget> items, int cols) {
-    final scenes = [for (final t in items) if (t.isScene) t];
-    final others = [for (final t in items) if (!t.isScene) t];
+  /// Moves the highlight one row up (-1) or down (1), wrapping around.
+  void moveVertical(int direction, List<MenuTarget> items, int columns) {
+    final scenes = [
+      for (final target in items)
+        if (target.isScene) target,
+    ];
+    final others = [
+      for (final target in items)
+        if (!target.isScene) target,
+    ];
     if (scenes.isEmpty || others.isEmpty) return;
     final current = state ?? items.first;
-
-    if (!current.isScene) {
-      final col = others.indexOf(current) == 0 ? 0 : cols - 1;
-      final lastRowStart = ((scenes.length - 1) ~/ cols) * cols;
-      final index = dir < 0 ? lastRowStart + col : col;
-      return select(scenes[math.min(index, scenes.length - 1)]);
+    if (current.isScene) {
+      _moveFromScene(direction, scenes, others, current, columns);
+    } else {
+      _moveFromOther(direction, scenes, others, current, columns);
     }
+  }
 
-    final i = scenes.indexOf(current);
-    final next = i + dir * cols;
-    if (next >= 0 && next < scenes.length) return select(scenes[next]);
-    final slot = (i % cols) * 2 < cols ? 0 : others.length - 1;
-    select(others[slot]);
+  /// Moves within the scene grid, or leaves it for the reception/boardroom.
+  void _moveFromScene(
+    int direction,
+    List<MenuTarget> scenes,
+    List<MenuTarget> others,
+    MenuTarget current,
+    int columns,
+  ) {
+    final sceneIndex = scenes.indexOf(current);
+    final nextIndex = sceneIndex + direction * columns;
+    if (nextIndex >= 0 && nextIndex < scenes.length) {
+      return select(scenes[nextIndex]);
+    }
+    final leftSide = (sceneIndex % columns) * 2 < columns;
+    select(leftSide ? others.first : others.last);
+  }
+
+  /// Moves from the reception/boardroom row back into the scene grid.
+  void _moveFromOther(
+    int direction,
+    List<MenuTarget> scenes,
+    List<MenuTarget> others,
+    MenuTarget current,
+    int columns,
+  ) {
+    final column = others.indexOf(current) == 0 ? 0 : columns - 1;
+    final lastRowStart = ((scenes.length - 1) ~/ columns) * columns;
+    final index = direction < 0 ? lastRowStart + column : column;
+    select(scenes[math.min(index, scenes.length - 1)]);
   }
 }

@@ -1,8 +1,7 @@
 // Project imports:
 import '../../domain/models/post.dart';
 
-/// Builds a [Post] from JSON. A comment has no `kind` or `is_public` in the
-/// payload, so it falls back to [PostKind.comment] and public.
+/// Builds a [Post]; a comment has no kind or visibility in the payload.
 Post postFromJson(Map<String, dynamic> json) => Post(
   id: (json['id'] as num).toInt(),
   kind: PostKind.values.asNameMap()[json['kind']] ?? PostKind.comment,
@@ -13,7 +12,7 @@ Post postFromJson(Map<String, dynamic> json) => Post(
   mine: json['mine'] as bool? ?? false,
   isAdmin: json['is_admin'] as bool? ?? false,
   comments: [
-    for (final c in (json['comments'] as List?) ?? const [])
-      postFromJson(Map<String, dynamic>.from(c as Map)),
+    for (final comment in (json['comments'] as List?) ?? const [])
+      postFromJson(Map<String, dynamic>.from(comment as Map)),
   ],
 );

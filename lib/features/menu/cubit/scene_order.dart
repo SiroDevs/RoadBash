@@ -3,9 +3,7 @@ import '../../../domain/models/scene_id.dart';
 import '../../progress/cubit/progress_cubit.dart';
 import 'menu_target.dart';
 
-/// The menu entries in display order: the scenes most raced first (ties, and
-/// a fresh install, in the usual [SceneId] order), then the reception and the
-/// boardroom, which always stay last.
+/// Menu entries in display order: scenes by races played, then the rest.
 class SceneOrder {
   const SceneOrder(this.scenes, this.mostPlayed);
 

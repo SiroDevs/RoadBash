@@ -11,9 +11,12 @@ import '../../../../l10n/l10n_extension.dart';
 
 /// Name, date and tags of a post or a comment.
 class PostMeta extends StatelessWidget {
-  const PostMeta({super.key, required this.post});
+  const PostMeta({super.key, required this.post, required this.admin});
 
   final Post post;
+
+  /// Whether the viewer is an admin; only admins see the public tag.
+  final bool admin;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,8 @@ class PostMeta extends StatelessWidget {
         if (post.isAdmin) RetroTag(l10n.boardroomAdminTag),
         if (post.kind == PostKind.announcement)
           RetroTag(l10n.boardroomAnnouncementTag),
-        if (post.kind == PostKind.suggestion) _visibilityTag(context),
+        if (post.kind == PostKind.suggestion && _showsVisibility)
+          _visibilityTag(context),
       ],
     );
   }
@@ -41,6 +45,10 @@ class PostMeta extends StatelessWidget {
     Localizations.localeOf(context).toString(),
     post.createdAt,
   );
+
+  /// Players only ever see public posts and their own, so a public tag tells
+  /// them nothing; it is shown to admins and private tags to everyone.
+  bool get _showsVisibility => admin || !post.isPublic;
 
   /// Public or private tag of a suggestion.
   Widget _visibilityTag(BuildContext context) {

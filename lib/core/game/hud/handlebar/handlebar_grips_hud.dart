@@ -7,6 +7,7 @@ import 'package:flame/components.dart';
 // Project imports:
 import '../../utils/canvas_text.dart';
 import 'handlebar_art.dart';
+import 'handlebar_config.dart';
 import 'handlebar_rig.dart';
 
 /// Both handlebar grips and their labels, drawn above everything else so they
@@ -20,7 +21,7 @@ class HandlebarGripsHud extends Component {
   static const _labelColor = Color(0xFFFFFFFF);
   static const _heldFill = Color(0xFF666666);
   static const _gasFill = Color(0xFF3DBB5A);
-  static const double _labelSize = 0.7;
+  static const double _labelSize = 0.6;
 
   @override
   void render(Canvas canvas) {
@@ -40,7 +41,7 @@ class HandlebarGripsHud extends Component {
     _paintGasLabel(canvas);
   }
 
-  /// Prints the gas label on the right grip, turned the way the grip is.
+  /// Prints the gas label on the right grip, turned with the handlebar.
   void _paintGasLabel(Canvas canvas) {
     final layout = rig.layout;
     if (layout == null) return;
@@ -52,12 +53,14 @@ class HandlebarGripsHud extends Component {
     );
     canvas.save();
     canvas.translate(centre.dx, centre.dy);
-    canvas.rotate(rig.angle + HandlebarArt.rightGripTilt);
+    canvas.rotate(rig.angle);
     paintText(
       canvas,
       gasLabel.toUpperCase(),
       Offset.zero,
-      HandlebarArt.gripThickness * layout.artScale * _labelSize,
+      (HandlebarArt.gripThickness + HandlebarConfig.gripThicken) *
+          layout.artScale *
+          _labelSize,
       _labelColor,
       weight: FontWeight.w800,
     );

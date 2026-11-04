@@ -26,7 +26,7 @@ class CommentTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PostMeta(post: comment),
+        PostMeta(post: comment, admin: admin),
         _message(sizes),
         if (admin) _delete(context),
       ],

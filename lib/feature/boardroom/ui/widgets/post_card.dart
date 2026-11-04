@@ -43,7 +43,7 @@ class _PostCardState extends State<PostCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PostMeta(post: widget.post),
+          PostMeta(post: widget.post, admin: widget.admin),
           _message(context),
           ..._comments(),
           _actions(context),

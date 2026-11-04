@@ -9,6 +9,7 @@ import 'package:flame/components.dart' show Vector2;
 import '../../input/handlebar_pose.dart';
 import '../dashboard/dashboard_layout.dart';
 import 'handlebar_art.dart';
+import 'handlebar_config.dart';
 
 /// Sizes and positions of the handlebar, shared by drawing and touch.
 ///
@@ -21,11 +22,15 @@ class HandlebarLayout {
     popupDrop = height * 0.9;
     centreX = screen.x / 2;
 
+    // Width the grips cover, stroke included, so scaling never pushes them off
+    // the screen.
+    final outer = HandlebarArt.span + HandlebarConfig.gripThicken + 1.0;
     final reach = screen.x * (1 - 2 * _edgeInset);
-    artScale = math.min(height * _gripSize, reach / HandlebarArt.span);
-    pipeExtension = math.max(0.0, reach / artScale - HandlebarArt.span);
+    final fitted = math.min(height * _gripSize, reach / outer);
+    artScale = math.min(fitted * HandlebarConfig.scale, screen.x / outer);
+    pipeExtension = math.max(0.0, reach / artScale - outer);
 
-    pivotY = dashboard.top + height * _pivotDepth;
+    pivotY = dashboard.top + height * (_pivotDepth - HandlebarConfig.raise);
     restGripY =
         pivotY + (HandlebarArt.rightGripCentre.dy - HandlebarArt.pivot.dy) * artScale;
     halfSpan = (HandlebarArt.rightGripCentre.dx -

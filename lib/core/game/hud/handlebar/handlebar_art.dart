@@ -1,8 +1,12 @@
 // Dart imports:
-import 'dart:math' as math;
 import 'dart:ui';
 
+// Project imports:
+import 'handlebar_config.dart';
+
 /// Handlebar artwork on a 300 x 200 canvas, drawn as three separate pieces.
+/// The pipe and grips are level and straight, and drawn thicker by the
+/// amounts in [HandlebarConfig].
 ///
 /// The pipe is one shape that runs behind the dashboard. The right and left
 /// grips are painted on their own so they can be layered above everything.
@@ -31,14 +35,11 @@ class HandlebarArt {
   static const double rightEdge = 296.0;
   static const double span = rightEdge - leftEdge;
 
-  /// Centre of each grip's body, and the body's thickness in art units.
-  static const Offset rightGripCentre = Offset(270.0, 74.5);
-  static const Offset leftGripCentre = Offset(31.0, 74.5);
+  /// Centre of each grip's body, and the body's thickness in art units before
+  /// [HandlebarConfig.gripThicken] is added.
+  static const Offset rightGripCentre = Offset(272.0, 72.0);
+  static const Offset leftGripCentre = Offset(29.0, 72.0);
   static const double gripThickness = 13.0;
-
-  /// How far each grip is turned in the artwork (it is drawn in perspective).
-  static final double rightGripTilt = math.atan2(2.0, 38.0);
-  static final double leftGripTilt = -rightGripTilt;
 
   // The pipe's outer rods are stretched; everything between them stays put.
   static const double _leftRodEnd = 81.0;
@@ -90,8 +91,8 @@ class HandlebarArt {
             : v;
     _path
       ..reset()
-      ..moveTo(x(10.0), 71.0)
-      ..lineTo(x(81.0), 67.0)
+      ..moveTo(x(10.0), 68.0)
+      ..lineTo(x(81.0), 68.0)
       ..lineTo(x(93.0), 68.0)
       ..lineTo(x(102.0), 72.0)
       ..lineTo(x(113.0), 81.0)
@@ -103,9 +104,9 @@ class HandlebarArt {
       ..lineTo(x(203.0), 72.0)
       ..lineTo(x(212.0), 69.0)
       ..lineTo(x(222.0), 68.0)
-      ..lineTo(x(291.0), 71.0)
-      ..lineTo(x(291.0), 80.0)
-      ..lineTo(x(221.0), 75.0)
+      ..lineTo(x(291.0), 68.0)
+      ..lineTo(x(291.0), 76.0)
+      ..lineTo(x(221.0), 76.0)
       ..lineTo(x(212.0), 76.0)
       ..lineTo(x(205.0), 80.0)
       ..lineTo(x(198.0), 87.0)
@@ -116,69 +117,62 @@ class HandlebarArt {
       ..lineTo(x(110.0), 90.0)
       ..lineTo(x(103.0), 84.0)
       ..lineTo(x(93.0), 77.0)
-      ..lineTo(x(80.0), 75.0)
-      ..lineTo(x(10.0), 80.0)
+      ..lineTo(x(80.0), 76.0)
+      ..lineTo(x(10.0), 76.0)
       ..close();
-    _paint
-      ..style = PaintingStyle.fill
-      ..color = colorC3C3C3;
-    canvas.drawPath(_path, _paint);
-    _paint
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.5
-      ..color = colorFFFFFF;
-    canvas.drawPath(_path, _paint);
+    _fillWithRim(canvas, colorC3C3C3, colorFFFFFF, HandlebarConfig.pipeThicken);
   }
 
-  /// Shape "RightHandleGrip".
+  /// Shape "RightHandleGrip": level and straight, with an upright flange.
   void _drawRightHandleGrip(Canvas canvas, Color fill) {
     _path
       ..reset()
-      ..moveTo(248.0, 84.0)
-      ..lineTo(248.0, 64.0)
-      ..lineTo(251.0, 67.0)
-      ..lineTo(289.0, 69.0)
-      ..lineTo(292.0, 67.0)
-      ..lineTo(296.0, 71.0)
-      ..lineTo(296.0, 80.0)
-      ..lineTo(291.0, 85.0)
-      ..lineTo(289.0, 82.0)
-      ..lineTo(251.0, 80.0)
+      ..moveTo(248.0, 82.0)
+      ..lineTo(248.0, 62.0)
+      ..lineTo(252.0, 62.0)
+      ..lineTo(252.0, 65.5)
+      ..lineTo(292.0, 65.5)
+      ..lineTo(296.0, 69.0)
+      ..lineTo(296.0, 75.0)
+      ..lineTo(292.0, 78.5)
+      ..lineTo(252.0, 78.5)
+      ..lineTo(252.0, 82.0)
       ..close();
-    _paint
-      ..style = PaintingStyle.fill
-      ..color = fill;
-    canvas.drawPath(_path, _paint);
-    _paint
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.5
-      ..color = color7F7F7F;
-    canvas.drawPath(_path, _paint);
+    _fillWithRim(canvas, fill, color7F7F7F, HandlebarConfig.gripThicken);
   }
 
-  /// Shape "LeftHandleGrip".
+  /// Shape "LeftHandleGrip": the right grip mirrored.
   void _drawLeftHandleGrip(Canvas canvas, Color fill) {
     _path
       ..reset()
-      ..moveTo(54.0, 84.0)
-      ..lineTo(54.0, 64.0)
-      ..lineTo(50.0, 67.0)
-      ..lineTo(12.0, 69.0)
-      ..lineTo(10.0, 67.0)
-      ..lineTo(5.0, 70.0)
-      ..lineTo(5.0, 80.0)
-      ..lineTo(11.0, 84.0)
-      ..lineTo(13.0, 82.0)
-      ..lineTo(51.0, 80.0)
+      ..moveTo(53.0, 82.0)
+      ..lineTo(53.0, 62.0)
+      ..lineTo(49.0, 62.0)
+      ..lineTo(49.0, 65.5)
+      ..lineTo(9.0, 65.5)
+      ..lineTo(5.0, 69.0)
+      ..lineTo(5.0, 75.0)
+      ..lineTo(9.0, 78.5)
+      ..lineTo(49.0, 78.5)
+      ..lineTo(49.0, 82.0)
       ..close();
+    _fillWithRim(canvas, fill, colorC3C3C3, HandlebarConfig.gripThicken);
+  }
+
+  /// Fills the current path, thickened by [thicken] units, with a thin rim.
+  void _fillWithRim(Canvas canvas, Color fill, Color rim, double thicken) {
     _paint
-      ..style = PaintingStyle.fill
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = thicken + 1.0
+      ..color = rim;
+    canvas.drawPath(_path, _paint);
+    _paint
+      ..strokeWidth = thicken
       ..color = fill;
     canvas.drawPath(_path, _paint);
     _paint
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.5
-      ..color = colorC3C3C3;
+      ..style = PaintingStyle.fill
+      ..color = fill;
     canvas.drawPath(_path, _paint);
   }
 }

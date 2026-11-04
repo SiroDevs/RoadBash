@@ -23,6 +23,6 @@ String menuAsset(MenuTarget target) =>
 String menuLabel(AppLocalizations l10n, MenuTarget target) =>
     switch (target.place) {
       MenuPlace.scene => l10n.sceneTitle(target.scene!),
-      MenuPlace.reception => l10n.receptionTitle,
-      MenuPlace.boardroom => l10n.boardroomTitle,
+      MenuPlace.reception => l10n.receptionTitle.toUpperCase(),
+      MenuPlace.boardroom => l10n.boardroomTitle.toUpperCase(),
     };

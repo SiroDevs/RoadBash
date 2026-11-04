@@ -472,12 +472,26 @@ class AppLocalizationsEn extends AppLocalizations {
       'Read announcements, send me a suggestion, and join the conversation under the public posts.';
 
   @override
+  String get boardroomAnnouncements => 'Announcements';
+
+  @override
+  String get boardroomSuggestions => 'Suggestions';
+
+  @override
+  String get boardroomAnnouncementsHint =>
+      'News from the admins. Reply to join the conversation.';
+
+  @override
+  String get boardroomAdminAnnounceHint =>
+      'Post an announcement for everyone. Players can reply under it, and you can delete anything inappropriate.';
+
+  @override
   String get boardroomHint =>
       'Tell me what to fix, add or remove. Suggestions stay private until an admin makes them public.';
 
   @override
   String get boardroomAdminHint =>
-      'Post an announcement, reply to suggestions, make them public or delete what is not appropriate.';
+      'Reply to suggestions, make them public or delete what is not appropriate.';
 
   @override
   String get boardroomSuggestionLabel => 'Your suggestion';
@@ -490,9 +504,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get boardroomAnnounce => 'Announce';
-
-  @override
-  String get boardroomPosts => 'Posts';
 
   @override
   String get boardroomEmpty => 'Nothing here yet.';

@@ -12,6 +12,7 @@ import '../../../common/constants/app_assets.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
 import '../../../common/widgets/retro/controls/click_sound.dart';
+import '../../../common/widgets/retro/controls/retro_chips.dart';
 import '../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../common/widgets/retro/controls/retro_field.dart';
 import '../../../common/widgets/retro/feedback/retro_status.dart';
@@ -40,7 +41,7 @@ class BoardroomScreen extends StatelessWidget {
         child: BlocBuilder<BoardroomCubit, BoardroomState>(
           builder: (context, st) => RetroSubPage(
             title: context.l10n.boardroomTitle,
-            maxWidth: 700,
+            maxWidth: 1100,
             onBack: () => context.goNamed(RouteNames.menu),
             children: _body(context, st),
           ),
@@ -55,35 +56,52 @@ class BoardroomScreen extends StatelessWidget {
     final sizes = context.sizes;
     final error = _errorText(l10n, st.error);
     final cubit = context.read<BoardroomCubit>();
+    final announcements = st.tab == BoardroomTab.announcements;
+    // Admins write announcements, players write suggestions; nobody writes
+    // the other kind, so that strip has no composer.
+    final canCompose = announcements ? st.admin : !st.admin;
+    final hint = switch ((announcements, st.admin)) {
+      (true, true) => l10n.boardroomAdminAnnounceHint,
+      (true, false) => l10n.boardroomAnnouncementsHint,
+      (false, true) => l10n.boardroomAdminHint,
+      (false, false) => l10n.boardroomHint,
+    };
     return [
-      Text(
-        st.admin ? l10n.boardroomAdminHint : l10n.boardroomHint,
-        style: retroBody(size: sizes.small),
-      ),
-      SizedBox(height: sizes.gap),
-      _Composer(
-        kind: st.admin ? PostKind.announcement : PostKind.suggestion,
-        label: st.admin ? l10n.boardroomAnnouncementLabel : l10n.boardroomSuggestionLabel,
-        send: st.admin ? l10n.boardroomAnnounce : l10n.boardroomSend,
-        lines: 4,
-      ),
-      if (error != null)
-        Text(error, style: retroBody(size: sizes.small, color: Retro.red))
-            .padding(top: sizes.gapSmall),
-      if (st.busy)
-        const LinearProgressIndicator(color: Retro.orange)
-            .padding(top: sizes.gapSmall),
-      SizedBox(height: sizes.gap),
       Row(
         children: [
-          Text(
-            l10n.boardroomPosts,
-            style: retroBody(size: sizes.body, color: Retro.yellow),
+          RetroChips<BoardroomTab>(
+            items: {
+              BoardroomTab.announcements: l10n.boardroomAnnouncements,
+              BoardroomTab.suggestions: l10n.boardroomSuggestions,
+            },
+            selected: st.tab,
+            onSelected: cubit.setTab,
           ).expanded(),
           RetroButton(l10n.commonRefresh, onTap: cubit.load),
         ],
       ),
       SizedBox(height: sizes.gap),
+      Text(hint, style: retroBody(size: sizes.small)),
+      SizedBox(height: sizes.gap),
+      if (canCompose) ...[
+        _Composer(
+          // A new key per strip, so a half-written text is not carried over.
+          key: ValueKey(st.tab),
+          kind: announcements ? PostKind.announcement : PostKind.suggestion,
+          label: announcements
+              ? l10n.boardroomAnnouncementLabel
+              : l10n.boardroomSuggestionLabel,
+          send: announcements ? l10n.boardroomAnnounce : l10n.boardroomSend,
+          lines: 4,
+        ),
+        SizedBox(height: sizes.gap),
+      ],
+      if (error != null)
+        Text(error, style: retroBody(size: sizes.small, color: Retro.red))
+            .padding(bottom: sizes.gapSmall),
+      if (st.busy)
+        const LinearProgressIndicator(color: Retro.orange)
+            .padding(bottom: sizes.gapSmall),
       ..._posts(context, st),
     ];
   }
@@ -98,11 +116,18 @@ class BoardroomScreen extends StatelessWidget {
     if (st.status == LoadStatus.failed && st.error != BoardroomError.signIn) {
       return [RetroFailure(onRetry: context.read<BoardroomCubit>().load)];
     }
-    if (st.posts.isEmpty) {
+    final kind = st.tab == BoardroomTab.announcements
+        ? PostKind.announcement
+        : PostKind.suggestion;
+    final shown = [
+      for (final post in st.posts)
+        if (post.kind == kind) post,
+    ];
+    if (shown.isEmpty) {
       return [Text(l10n.boardroomEmpty, style: retroBody(size: sizes.small))];
     }
     return [
-      for (final post in st.posts)
+      for (final post in shown)
         _PostCard(key: ValueKey(post.id), post: post, admin: st.admin),
     ];
   }
@@ -122,6 +147,7 @@ String? _errorText(AppLocalizations l10n, BoardroomError? error) =>
 /// A text field with a send button. Clears itself once the post went through.
 class _Composer extends StatefulWidget {
   const _Composer({
+    super.key,
     required this.kind,
     required this.label,
     required this.send,

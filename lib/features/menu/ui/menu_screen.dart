@@ -78,12 +78,18 @@ class _MenuScreenState extends State<MenuScreen> {
     }
   }
 
-  /// First tap highlights an entry, a tap on the highlighted entry opens it.
+  /// The reception and the boardroom open at once. For a scene, the first tap
+  /// highlights it (its details show) and a tap on the highlighted scene opens
+  /// it.
   void _tap(MenuCubit menu, MenuTarget selected, MenuTarget target) {
     _prepareTilt();
-    target == selected ? _open(menu, target) : menu.select(target);
+    if (!target.isScene || target == selected) {
+      _open(menu, target);
+    } else {
+      menu.select(target);
+    }
   }
-
+  
   @override
   Widget build(BuildContext context) {
     final menu = context.read<MenuCubit>();

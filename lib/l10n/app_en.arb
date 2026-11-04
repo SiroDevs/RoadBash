@@ -647,11 +647,27 @@
   "@blurbBoardroom": {
     "description": "Boardroom blurb"
   },
+  "boardroomAnnouncements": "Announcements",
+  "@boardroomAnnouncements": {
+    "description": "Announcements filter strip"
+  },
+  "boardroomSuggestions": "Suggestions",
+  "@boardroomSuggestions": {
+    "description": "Suggestions filter strip"
+  },
+  "boardroomAnnouncementsHint": "News from the admins. Reply to join the conversation.",
+  "@boardroomAnnouncementsHint": {
+    "description": "Announcements hint for players"
+  },
+  "boardroomAdminAnnounceHint": "Post an announcement for everyone. Players can reply under it, and you can delete anything inappropriate.",
+  "@boardroomAdminAnnounceHint": {
+    "description": "Announcements hint for admins"
+  },
   "boardroomHint": "Tell me what to fix, add or remove. Suggestions stay private until an admin makes them public.",
   "@boardroomHint": {
     "description": "Boardroom hint"
   },
-  "boardroomAdminHint": "Post an announcement, reply to suggestions, make them public or delete what is not appropriate.",
+  "boardroomAdminHint": "Reply to suggestions, make them public or delete what is not appropriate.",
   "@boardroomAdminHint": {
     "description": "Boardroom admin hint"
   },
@@ -670,10 +686,6 @@
   "boardroomAnnounce": "Announce",
   "@boardroomAnnounce": {
     "description": "Post announcement button"
-  },
-  "boardroomPosts": "Posts",
-  "@boardroomPosts": {
-    "description": "Posts heading"
   },
   "boardroomEmpty": "Nothing here yet.",
   "@boardroomEmpty": {

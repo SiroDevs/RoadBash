@@ -1,50 +1,50 @@
 name: roadbash
 description: "Recreating our childhood Road Rash with Flutter's Flame Engine."
 publish_to: 'none'
-version: 1.0.20
+version: 1.0.21
 
 environment:
   sdk: ^3.13.5
 
 dependencies:
-  animated_text_kit: ^4.3.0
-  audioplayers: ^6.2.0
-  bloc: ^9.1.0
-  equatable: ^2.0.7
-  flame: ^1.33.0
+  animated_text_kit: ^4.3.0          # Animated text effects and transitions
+  audioplayers: ^6.2.0               # Play audio files, music, and sound effects
+  bloc: ^9.1.0                       # Business Logic Component state management core
+  equatable: ^2.0.7                  # Simplify object equality comparisons
+  flame: ^1.33.0                     # Lightweight game engine for Flutter
   flutter:
-    sdk: flutter
-  flutter_bloc: ^9.1.1
-  flutter_dotenv: ^6.0.1
+    sdk: flutter                     # Flutter framework and core SDK
+  flutter_bloc: ^9.1.1               # Integrate BLoC and Cubit state management with Flutter
+  flutter_dotenv: ^6.0.1             # Load environment variables from .env files
   flutter_localizations:
-    sdk: flutter
-  flutter_soloud: ^5.2.1
-  freezed_annotation: ^3.1.0
-  get_it: ^8.2.0
-  go_router: ^18.0.2
-  http: ^1.5.0
-  injectable: ^2.5.2
-  intl: ^0.20.2
-  loading_indicator: ^3.1.1
-  sensors_plus: ^7.1.1
-  shared_preferences: ^2.5.3
-  sqflite: ^2.4.0
-  styled_widget: ^0.4.1
-  supabase_flutter: ^2.18.3
-  textstyle_extensions: ^2.0.0-nullsafety
-  window_manager: ^0.5.1
+    sdk: flutter                     # Localization and internationalization support
+  flutter_soloud: ^5.2.1             # Low-latency audio playback and audio processing
+  freezed_annotation: ^3.1.0         # Annotations for generating immutable models and unions
+  get_it: ^8.2.0                     # Service locator for dependency injection
+  go_router: ^18.0.2                 # Declarative routing and navigation
+  http: ^1.5.0                       # Make HTTP requests to REST APIs and web services
+  injectable: ^2.5.2                 # Generate dependency injection registrations for get_it
+  intl: ^0.20.2                      # Date formatting, number formatting, and internationalization
+  loading_indicator: ^3.1.1           # Custom animated loading indicators
+  sensors_plus: ^7.1.1               # Access device sensors such as accelerometer and gyroscope
+  shared_preferences: ^2.5.3         # Store simple key-value preferences locally
+  sqflite: ^2.4.0                    # SQLite database storage on mobile platforms
+  styled_widget: ^0.4.1              # Build Flutter widget layouts using chained styling methods
+  supabase_flutter: ^2.18.3           # Integrate Supabase authentication, database, and backend services
+  textstyle_extensions: ^2.0.0-nullsafety # Additional extensions for Flutter TextStyle
+  window_manager: ^0.5.1              # Manage desktop application windows, including size and position
 
 dev_dependencies:
-  build_runner: ^2.10.1
-  flutter_lints: ^5.0.0
+  build_runner: ^2.10.1               # Run code generators
+  flutter_lints: ^5.0.0              # Recommended Flutter and Dart lint rules
   flutter_test:
-    sdk: flutter
-  freezed: ^3.2.3
+    sdk: flutter                     # Flutter testing framework
+  freezed: ^3.2.3                    # Generate immutable data classes and union types
   import_sorter:
     git:
-      url: https://github.com/SiroDevs/import_sorter
-  injectable_generator: ^2.9.0
-  json_serializable: ^6.11.1
+      url: https://github.com/SiroDevs/import_sorter # Automatically sort and organize Dart imports
+  injectable_generator: ^2.9.0       # Generate dependency injection configuration for injectable
+  json_serializable: ^6.11.1         # Generate JSON serialization and deserialization code
 
 flutter:
   generate: true

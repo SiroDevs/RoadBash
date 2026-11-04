@@ -166,7 +166,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get controlsHelp =>
-      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: shikilia pedali ya mafuta (chini kulia) kuendesha na pedali ya breki (chini kushoto) kusimama. Inamisha kifaa kama usukani kugeuka, au washa Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa mishale ya skrini.';
+      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: shikilia upande wa kulia wa usukani kuendesha na uuachilie kufunga breki. Shikilia pande zote mbili za usukani na usogeze moja juu na nyingine chini ili kugeuka: upande wa kulia ukishuka unaelekea kulia, wa kushoto ukishuka unaelekea kushoto. Unaweza pia kuinamisha kifaa kama usukani, au kuwasha Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa usukani wa skrini pekee.';
 
   @override
   String get hudGo => 'ANZA!';
@@ -214,16 +214,11 @@ class AppLocalizationsSw extends AppLocalizations {
   String get quitRace => 'Acha shindano';
 
   @override
-  String get touchLeft => 'Elekea kushoto';
+  String get handlebarLeft => 'Upande wa kushoto wa usukani';
 
   @override
-  String get touchRight => 'Elekea kulia';
-
-  @override
-  String get touchGas => 'Mafuta';
-
-  @override
-  String get touchBrake => 'Breki';
+  String get handlebarRight =>
+      'Upande wa kulia wa usukani: shikilia kuendesha, achilia kufunga breki';
 
   @override
   String get controlsTitle => 'Vidhibiti';
@@ -239,7 +234,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get useScreenTouchHint =>
-      'Elekeza kwa mishale ya skrini badala ya kuinamisha (simu na tableti)';
+      'Elekeza kwa usukani wa skrini pekee, bila kuinamisha (simu na tableti)';
 
   @override
   String get muteSound => 'Nyamazisha Sauti';

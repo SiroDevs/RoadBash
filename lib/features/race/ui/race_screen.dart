@@ -21,10 +21,10 @@ import '../../../domain/models/player_profile.dart';
 import '../../../domain/models/scene_id.dart';
 import '../../settings/cubit/settings_cubit.dart';
 import '../cubit/race_cubit.dart';
+import 'widgets/handlebar_pad.dart';
 import 'widgets/race_controls_menu.dart';
 import 'widgets/race_pause_overlay.dart';
 import 'widgets/race_top_bar.dart';
-import 'widgets/touch_controls.dart';
 
 /// Screen that hosts a race for the given scene.
 class RaceScreen extends StatefulWidget {
@@ -167,20 +167,12 @@ class _RaceScreenState extends State<RaceScreen> {
             child: Stack(
               children: [
                 GameWidget(game: _game),
-                if (showTouchUi)
-                  Positioned.fill(
-                    child: BlocBuilder<SettingsCubit, SettingsState>(
-                      buildWhen: (a, b) =>
-                          a.profile.useScreenTouch != b.profile.useScreenTouch,
-                      builder: (context, state) => TouchControls(
-                        key: ValueKey(_inputEpoch),
-                        showSteering: state.profile.useScreenTouch,
-                        onSteer: _game.setTouchSteer,
-                        onThrottle: _game.setTouchThrottle,
-                        onBrake: _game.setTouchBrake,
-                      ),
-                    ),
+                Positioned.fill(
+                  child: HandlebarPad(
+                    key: ValueKey(_inputEpoch),
+                    onChanged: _game.setHandlebars,
                   ),
+                ),
                 if (_paused)
                   Positioned.fill(
                     child: RacePauseOverlay(onTap: _togglePause),

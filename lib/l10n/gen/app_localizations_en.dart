@@ -166,7 +166,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get controlsHelp =>
-      'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold the gas pedal (bottom right) to ride and the brake pedal (bottom left) to stop. Tilt the device like a steering wheel to turn, or switch on Use Screentouch in the race controls menu (top right) to steer with on-screen arrows.';
+      'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold the right handlebar to ride and let go to brake. Hold both handlebars and move one up and the other down to turn: right bar down steers right, left bar down steers left. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.';
 
   @override
   String get hudGo => 'GO!';
@@ -214,16 +214,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quitRace => 'Quit race';
 
   @override
-  String get touchLeft => 'Steer left';
+  String get handlebarLeft => 'Left handlebar';
 
   @override
-  String get touchRight => 'Steer right';
-
-  @override
-  String get touchGas => 'Gas';
-
-  @override
-  String get touchBrake => 'Brake';
+  String get handlebarRight =>
+      'Right handlebar: hold to ride, release to brake';
 
   @override
   String get controlsTitle => 'Controls';
@@ -239,7 +234,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get useScreenTouchHint =>
-      'Steer with on-screen arrows instead of tilting (phones and tablets)';
+      'Steer with the on-screen handlebars only, without tilting (phones and tablets)';
 
   @override
   String get muteSound => 'Mute Sound';

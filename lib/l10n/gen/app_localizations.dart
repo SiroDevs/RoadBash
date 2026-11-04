@@ -365,7 +365,7 @@ abstract class AppLocalizations {
   /// Controls help text
   ///
   /// In en, this message translates to:
-  /// **'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold the gas pedal (bottom right) to ride and the brake pedal (bottom left) to stop. Tilt the device like a steering wheel to turn, or switch on Use Screentouch in the race controls menu (top right) to steer with on-screen arrows.'**
+  /// **'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold the right handlebar to ride and let go to brake. Hold both handlebars and move one up and the other down to turn: right bar down steers right, left bar down steers left. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.'**
   String get controlsHelp;
 
   /// Race start banner
@@ -446,29 +446,17 @@ abstract class AppLocalizations {
   /// **'Quit race'**
   String get quitRace;
 
-  /// Touch control label
+  /// Left handlebar label
   ///
   /// In en, this message translates to:
-  /// **'Steer left'**
-  String get touchLeft;
+  /// **'Left handlebar'**
+  String get handlebarLeft;
 
-  /// Touch control label
+  /// Right handlebar label
   ///
   /// In en, this message translates to:
-  /// **'Steer right'**
-  String get touchRight;
-
-  /// Touch control label
-  ///
-  /// In en, this message translates to:
-  /// **'Gas'**
-  String get touchGas;
-
-  /// Touch control label
-  ///
-  /// In en, this message translates to:
-  /// **'Brake'**
-  String get touchBrake;
+  /// **'Right handlebar: hold to ride, release to brake'**
+  String get handlebarRight;
 
   /// Controls menu title
   ///
@@ -497,7 +485,7 @@ abstract class AppLocalizations {
   /// Hint under the screentouch switch
   ///
   /// In en, this message translates to:
-  /// **'Steer with on-screen arrows instead of tilting (phones and tablets)'**
+  /// **'Steer with the on-screen handlebars only, without tilting (phones and tablets)'**
   String get useScreenTouchHint;
 
   /// Mute switch label

@@ -6,20 +6,20 @@ import 'package:flame/game.dart';
 
 // Project imports:
 import '../road/road_renderer.dart';
+import 'handlebar_pose.dart';
 
-// Merges keyboard, touch and tilt input into the rider controls.
+// Merges keyboard, handlebar and tilt input into the rider controls.
 mixin RoadInput on FlameGame {
   RoadRenderer get road;
 
   bool finishing = false;
 
   double _keySteer = 0;
-  double _touchSteer = 0;
   double _tiltSteer = 0;
   bool _keyThrottle = false;
-  bool _touchThrottle = false;
   bool _keyBrake = false;
-  bool _touchBrake = false;
+  HandlebarPose _handlebars = HandlebarPose.rest;
+  bool _handlebarsLatched = false;
 
   static final _leftKeys = [
     LogicalKeyboardKey.arrowLeft,
@@ -35,7 +35,7 @@ mixin RoadInput on FlameGame {
     LogicalKeyboardKey.keyS,
   ];
 
-  /// Combines key, touch and tilt input into the rider controls.
+  /// Combines key, handlebar and tilt input into the rider controls.
   void applyInput() {
     if (!isLoaded) return;
     if (finishing) {
@@ -45,12 +45,15 @@ mixin RoadInput on FlameGame {
         ..throttle = false;
       return;
     }
-    final combined = _keySteer + _touchSteer + _tiltSteer;
+    final barSteer = _handlebars.steer;
+    final combined = _keySteer + barSteer + _tiltSteer;
     road.steer = combined.clamp(-1.0, 1.0).toDouble();
-    // Tilt is already smooth, so the bike follows it directly.
-    road.analogSteer = _keySteer == 0 && _touchSteer == 0 && _tiltSteer != 0;
-    road.brake = _keyBrake || _touchBrake;
-    road.throttle = (_keyThrottle || _touchThrottle) && !road.brake;
+    // Bars and tilt are already smooth, so the bike follows them directly.
+    road.analogSteer = _keySteer == 0 && (barSteer != 0 || _tiltSteer != 0);
+    // Letting go of the right bar brakes.
+    final barBrake = _handlebarsLatched && !_handlebars.throttle;
+    road.brake = _keyBrake || barBrake;
+    road.throttle = (_keyThrottle || _handlebars.throttle) && !road.brake;
   }
 
   /// Updates the key steering, throttle and brake from pressed keys.
@@ -61,16 +64,18 @@ mixin RoadInput on FlameGame {
         (anyDown(_leftKeys) ? 1.0 : 0.0);
     _keyThrottle = anyDown(_upKeys);
     _keyBrake = anyDown(_downKeys);
+    if (_keyThrottle || _keyBrake || _keySteer != 0) _handlebarsLatched = false;
     applyInput();
   }
 
-  /// Clears all key, touch and tilt input.
+  /// Clears all key, handlebar and tilt input.
   void clearInput() {
     _keySteer = 0;
-    _touchSteer = 0;
     _tiltSteer = 0;
-    _keyThrottle = _touchThrottle = false;
-    _keyBrake = _touchBrake = false;
+    _keyThrottle = false;
+    _keyBrake = false;
+    _handlebars = HandlebarPose.rest;
+    _handlebarsLatched = false;
     applyInput();
   }
 
@@ -80,21 +85,13 @@ mixin RoadInput on FlameGame {
     applyInput();
   }
 
-  /// Sets the touch steering value, from -1 to 1.
-  void setTouchSteer(double value) {
-    _touchSteer = value;
-    applyInput();
-  }
+  /// The current handlebar pose.
+  HandlebarPose get handlebars => _handlebars;
 
-  /// Sets whether the touch throttle is pressed.
-  void setTouchThrottle(bool pressed) {
-    _touchThrottle = pressed;
-    applyInput();
-  }
-
-  /// Sets whether the touch brake is pressed.
-  void setTouchBrake(bool pressed) {
-    _touchBrake = pressed;
+  /// Applies the handlebar pose: right bar is gas, both bars steer.
+  void setHandlebars(HandlebarPose pose) {
+    _handlebars = pose;
+    if (pose.rightHeld) _handlebarsLatched = true;
     applyInput();
   }
 }

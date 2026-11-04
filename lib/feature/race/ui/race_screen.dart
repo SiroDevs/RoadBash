@@ -7,7 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import '../../../common/utils/app_util.dart';
+import '../../../l10n/l10n_extension.dart';
+import '../../../common/constants/app_constants.dart';
 import '../../../common/widgets/retro/page/music_scope.dart';
 import '../../../core/audio/audio_catalog.dart';
 import '../../../core/audio/audio_service.dart';
@@ -16,9 +17,9 @@ import '../../../core/game/hud/hud_strings.dart';
 import '../../../core/game/input/tilt/tilt_controller.dart';
 import '../../../core/game/road_game.dart';
 import '../../../core/router/route_names.dart';
+import '../../../common/utils/app_util.dart';
 import '../../../domain/models/player_profile.dart';
 import '../../../domain/models/scene_id.dart';
-import '../../../l10n/l10n_extension.dart';
 import '../../settings/cubit/settings_cubit.dart';
 import '../cubit/race_cubit.dart';
 import 'widgets/handlebar_pad.dart';
@@ -89,7 +90,9 @@ class _RaceScreenState extends State<RaceScreen> {
   /// Starts or stops tilt steering to match the profile settings.
   void _syncTilt(PlayerProfile profile) {
     _tilt.invert = profile.invertTilt;
-    if (isTouchDevice && !profile.useScreenTouch) {
+    if (AppConstants.tiltSteeringEnabled &&
+        isTouchDevice &&
+        !profile.useScreenTouch) {
       _tilt.start();
     } else {
       _tilt.stop();

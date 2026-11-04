@@ -15,7 +15,9 @@ import '../../domain/models/scene_id.dart';
 import '../audio/audio_service.dart';
 import 'audio/ride_audio.dart';
 import 'hud/dashboard/dashboard_hud.dart';
-import 'hud/handlebar/handlebar_hud.dart';
+import 'hud/handlebar/handlebar_grips_hud.dart';
+import 'hud/handlebar/handlebar_pipe_hud.dart';
+import 'hud/handlebar/handlebar_rig.dart';
 import 'hud/hud_strings.dart';
 import 'input/road_input.dart';
 import 'police/police_chase.dart';
@@ -100,12 +102,15 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
       racer.flow = flow;
     }
     road.traffic = RoadTraffic([...racers, ...flow.cars, police.cop], theme.lanes);
+    final handlebar = HandlebarRig(road, () => handlebars);
     await addAll([
       road,
       RiderComponent(road),
       RivalOverlay(road),
-      HandlebarHud(road, () => handlebars, strings.gas),
+      handlebar,
+      HandlebarPipeHud(handlebar),
       DashboardHud(road, race, strings, police),
+      HandlebarGripsHud(handlebar, strings.gas),
     ]);
     if (_shutDown) return;
     final ride = RideAudio(

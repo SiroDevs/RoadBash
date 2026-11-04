@@ -10,54 +10,59 @@ import '../../input/handlebar_pose.dart';
 import '../dashboard/dashboard_layout.dart';
 import 'handlebar_art.dart';
 
-/// Sizes and positions of the handlebars, shared by drawing and touch.
+/// Sizes and positions of the handlebar, shared by drawing and touch.
+///
+/// The handlebar is one rigid piece that turns about a pivot hidden behind the
+/// dashboard, so both grips always move together.
 class HandlebarLayout {
   HandlebarLayout(this.screen) : dashboard = DashboardLayout(screen) {
     final height = dashboard.ph;
     travel = math.max(height * 0.28, 44.0);
     popupDrop = height * 0.9;
     centreX = screen.x / 2;
-    barLength = _endX(HandlebarSide.right) - _pivotX(HandlebarSide.right);
-    artScale = math.min(height * _gripSize, barLength / HandlebarArt.length);
-    pipeExtension = math.max(0.0, barLength / artScale - HandlebarArt.length);
-    pivotY = dashboard.top + height * _pipeDepth;
-    restEndY = pivotY - barLength * 0.005;
+
+    final reach = screen.x * (1 - 2 * _edgeInset);
+    artScale = math.min(height * _gripSize, reach / HandlebarArt.span);
+    pipeExtension = math.max(0.0, reach / artScale - HandlebarArt.span);
+
+    pivotY = dashboard.top + height * _pivotDepth;
+    restGripY =
+        pivotY + (HandlebarArt.rightGripCentre.dy - HandlebarArt.pivot.dy) * artScale;
+    halfSpan = (HandlebarArt.rightGripCentre.dx -
+            HandlebarArt.pivot.dx +
+            pipeExtension / 2) *
+        artScale;
   }
 
   final Vector2 screen;
   final DashboardLayout dashboard;
 
-  late final double travel, popupDrop, barLength, artScale, pipeExtension;
-  late final double centreX, pivotY, restEndY;
+  /// Pixels per art unit, how far a grip may be dragged, how far the handlebar
+  /// starts below its resting place, and how many art units the pipe is
+  /// stretched to reach the screen edges.
+  late final double artScale, travel, popupDrop, pipeExtension;
+
+  /// Screen position of the pivot, of the grips at rest, and the horizontal
+  /// distance from the pivot to the middle of a grip.
+  late final double centreX, pivotY, restGripY, halfSpan;
 
   static const double _edgeInset = 0.02;
-  static const double _gripSize = 0.0215;
-  static const double _pipeDepth = 1.2;
-  static const double _pivotSpread = -0.2;
+  static const double _gripSize = 0.013;
+  static const double _pivotDepth = 0.2;
 
-  /// Returns -1 for the left bar and 1 for the right bar.
-  static double sign(HandlebarSide side) =>
-      side == HandlebarSide.left ? -1 : 1;
+  /// Where the handlebar turns about, hidden behind the dashboard.
+  Offset get pivot => Offset(centreX, pivotY);
 
-  /// Returns the horizontal position of a bar's grip end.
-  double _endX(HandlebarSide side) => side == HandlebarSide.left
-      ? screen.x * _edgeInset
-      : screen.x * (1 - _edgeInset);
+  /// Returns how far the handlebar is turned for a lean from -1 to 1.
+  ///
+  /// A positive lean turns it clockwise: the right grip goes down and the left
+  /// grip goes up, by [travel] pixels at full lean.
+  double tilt(double lean) => math.atan2(lean * travel, halfSpan);
 
-  /// Returns the horizontal position of a bar's inner end, behind the dashboard.
-  double _pivotX(HandlebarSide side) =>
-      centreX + sign(side) * dashboard.pw * _pivotSpread;
-
-  /// Returns where a bar pivots, behind the dashboard above the meters.
-  Offset pivot(HandlebarSide side) => Offset(_pivotX(side), pivotY);
-
-  /// Returns a bar's grip end for a vertical offset from -1 (up) to 1 (down).
-  Offset end(HandlebarSide side, double offset) =>
-      Offset(_endX(side), restEndY + offset * travel);
-
-  /// Returns the screen area that grabs a bar.
+  /// Returns the screen area that grabs a grip: its half of the screen, from
+  /// above the highest the grip can reach down to the bottom edge.
   Rect zone(HandlebarSide side) {
-    final top = restEndY - travel - dashboard.ph * 0.2;
+    final top = restGripY - travel - dashboard.ph * 0.2;
     return side == HandlebarSide.left
         ? Rect.fromLTRB(0, top, centreX, screen.y)
         : Rect.fromLTRB(centreX, top, screen.x, screen.y);

@@ -5,8 +5,9 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 // Project imports:
-import '../../../../common/utils/app_util.dart';
+import '../../../../common/constants/app_constants.dart';
 import '../../../../domain/models/player_profile.dart';
+import '../../../../common/utils/app_util.dart';
 import 'tilt_source.dart';
 
 /// Whether the tilt sensor can be read.
@@ -49,6 +50,7 @@ class TiltAccess {
 
   /// Asks for access early on phone browsers whose player steers by tilting.
   Future<void> prepareFor(PlayerProfile profile) async {
+    if (!AppConstants.tiltSteeringEnabled) return;
     if (!kIsWeb || !isTouchDevice || profile.useScreenTouch) return;
     await request();
   }

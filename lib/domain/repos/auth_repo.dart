@@ -24,4 +24,7 @@ abstract interface class AuthRepo {
   });
   Future<PlayerSession> login(String name, String answer);
   Future<void> logout();
+
+  /// Sends the local level and returns the level kept on the player's account.
+  Future<int> syncLevel(int level);
 }

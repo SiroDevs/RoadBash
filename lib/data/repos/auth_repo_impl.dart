@@ -110,4 +110,10 @@ class AuthRepoImpl implements AuthRepo {
       await _api.call('rb_logout', {'p_token': current.token});
     } catch (_) {}
   }
+
+  @override
+  Future<int> syncLevel(int level) async {
+    final result = await _api.callAuthed('rb_sync_level', {'p_level': level});
+    return (result['level'] as num).toInt();
+  }
 }

@@ -31,6 +31,16 @@ class ProgressCubit extends Cubit<ProgressState> {
     ),
   );
 
+  /// Takes a higher level from the player's account; a level never goes down.
+  Future<void> applyLevel(int level) async {
+    final career = state.career;
+    final capped = level.clamp(1, LevelRules.top).toInt();
+    if (capped <= career.level) return;
+    final next = career.copyWith(level: capped, streak: 0);
+    await _careerRepo.save(next);
+    emit(state.copyWith(career: next));
+  }
+
   /// Saves a finished race; returns true if it is a new best time.
   Future<bool> record(RaceResult result) async {
     final row = result.player;

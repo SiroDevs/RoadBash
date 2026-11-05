@@ -8,6 +8,7 @@ import 'package:injectable/injectable.dart';
 
 // Project imports:
 import '../../../common/constants/app_constants.dart';
+import '../../../domain/errors/api_exception.dart';
 import '../../../domain/models/player_session.dart';
 import '../../../domain/repos/auth_repo.dart';
 import '../../progress/cubit/progress_cubit.dart';
@@ -26,12 +27,18 @@ class AuthCubit extends Cubit<AuthState> {
         emit(const AuthState());
       }
     });
+    _levelSub = _progress.stream
+        .map((progress) => progress.level)
+        .distinct()
+        .listen((_) => syncLevel());
   }
 
   final AuthRepo _repo;
   final SettingsCubit _settings;
   final ProgressCubit _progress;
   late final StreamSubscription<PlayerSession?> _sub;
+  late final StreamSubscription<int> _levelSub;
+  int _syncedLevel = 0;
 
   /// Restores the saved session or anonymous mode on startup.
   Future<void> restore() async {
@@ -53,7 +60,25 @@ class AuthCubit extends Cubit<AuthState> {
     _repo.setSession(session);
     _settings.setName(session.name);
     emit(AuthState(session: session));
+    _syncedLevel = 0;
     await _progress.load();
+    await syncLevel();
+  }
+
+  /// Raises the account level to the local one and takes a higher account
+  /// level into the career. Does nothing offline or when not signed in.
+  Future<void> syncLevel() async {
+    final level = _progress.state.level;
+    if (state.session == null || level <= _syncedLevel) return;
+    final previous = _syncedLevel;
+    _syncedLevel = level;
+    try {
+      final remote = await _repo.syncLevel(level);
+      if (remote > level) _syncedLevel = remote;
+      await _progress.applyLevel(remote);
+    } on ApiException {
+      _syncedLevel = previous;
+    }
   }
 
   /// Switches to anonymous play without an account.
@@ -68,12 +93,14 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> signOut() async {
     _repo.clearSaved();
     await _repo.logout();
+    _syncedLevel = 0;
     emit(const AuthState());
   }
 
   @override
   Future<void> close() {
     _sub.cancel();
+    _levelSub.cancel();
     return super.close();
   }
 }

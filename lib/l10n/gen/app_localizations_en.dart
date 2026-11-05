@@ -214,6 +214,44 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get hudCrashed => 'CRASHED!';
+
+  @override
+  String crashedNote(int kmh) {
+    return 'You went down at $kmh km/h and did not get up. Race over.';
+  }
+
+  @override
+  String crashHospital(String amount) {
+    return 'Hospital: $amount';
+  }
+
+  @override
+  String crashGarage(String amount) {
+    return 'Garage: $amount';
+  }
+
+  @override
+  String resultsPrize(String amount) {
+    return 'Prize: $amount';
+  }
+
+  @override
+  String resultsWallet(String amount) {
+    return 'Wallet: $amount';
+  }
+
+  @override
+  String walletAmount(String amount) {
+    return 'KSh $amount';
+  }
+
+  @override
+  String walletDebt(String amount) {
+    return '-KSh $amount';
+  }
+
+  @override
   String get quitRace => 'Quit race';
 
   @override

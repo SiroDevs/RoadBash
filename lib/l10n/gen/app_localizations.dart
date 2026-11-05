@@ -446,6 +446,54 @@ abstract class AppLocalizations {
   /// **'Fine: KSh {amount}'**
   String bustedFine(String amount);
 
+  /// Banner and title after a nasty crash
+  ///
+  /// In en, this message translates to:
+  /// **'CRASHED!'**
+  String get hudCrashed;
+
+  /// Results text after a nasty crash
+  ///
+  /// In en, this message translates to:
+  /// **'You went down at {kmh} km/h and did not get up. Race over.'**
+  String crashedNote(int kmh);
+
+  /// Hospital bill after a nasty crash
+  ///
+  /// In en, this message translates to:
+  /// **'Hospital: {amount}'**
+  String crashHospital(String amount);
+
+  /// Garage bill after a nasty crash
+  ///
+  /// In en, this message translates to:
+  /// **'Garage: {amount}'**
+  String crashGarage(String amount);
+
+  /// Prize money line on the results screen
+  ///
+  /// In en, this message translates to:
+  /// **'Prize: {amount}'**
+  String resultsPrize(String amount);
+
+  /// Wallet balance line on the results screen
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet: {amount}'**
+  String resultsWallet(String amount);
+
+  /// A wallet amount in shillings
+  ///
+  /// In en, this message translates to:
+  /// **'KSh {amount}'**
+  String walletAmount(String amount);
+
+  /// A negative wallet amount in shillings
+  ///
+  /// In en, this message translates to:
+  /// **'-KSh {amount}'**
+  String walletDebt(String amount);
+
   /// Close button label
   ///
   /// In en, this message translates to:

@@ -28,6 +28,8 @@ mixin RoadDynamics {
   int gear = 1;
   double shove = 0;
   bool _railLatched = false;
+  double _hitKmh = 0;
+  double nastyCrashKmh = 0;
 
   final CrashState crash = CrashState();
   final TerrainRide ride = TerrainRide();
@@ -44,6 +46,9 @@ mixin RoadDynamics {
 
   /// True while the rider is thrown off the bike.
   bool get crashed => crash.down;
+
+  /// True once a fall at 100 km/h or more left the rider down for good.
+  bool get nastyCrash => nastyCrashKmh > 0;
   /// True when the rider has left the road.
   bool get offRoad => playerX < -1 || playerX > 1;
   /// True when the bike is almost stopped.
@@ -56,6 +61,7 @@ mixin RoadDynamics {
   // Advances speed, lateral position and skid state by one frame.
   void stepDynamics(double dt, RoadSegment segment, double speedRatio) {
     crash.update(dt);
+    _hitKmh = 0;
     final authority = 1 - VehicleConfig.steerHighSpeedDamp * speedRatio;
     playerX +=
         dt * VehicleConfig.steerRate * appliedSteer * speedRatio * authority;
@@ -110,12 +116,19 @@ mixin RoadDynamics {
 
   /// Takes a hit from another bike: loses speed and is shoved sideways.
   void bump({required double speedLoss, required double sideShove}) {
+    _hitKmh = math.max(_hitKmh, speedKmh);
     speed *= 1 - speedLoss;
     shove += sideShove;
   }
 
-  /// Throws the rider off the bike toward [side] for [seconds].
-  void fall(double side, double seconds) => crash.start(side, seconds);
+  /// Throws the rider off the bike toward [side]; a fall at 100 km/h or more is nasty.
+  void fall(double side, double seconds) {
+    final impactKmh = math.max(_hitKmh, speedKmh);
+    crash.start(side, seconds);
+    if (impactKmh < VehicleConfig.nastyCrashKmh) return;
+    nastyCrashKmh = impactKmh;
+    crash.keepDown();
+  }
 
   // Eases the applied steering toward the requested target.
   void steerToward(double dt, double target) {

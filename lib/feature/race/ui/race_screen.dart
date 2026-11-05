@@ -75,6 +75,7 @@ class _RaceScreenState extends State<RaceScreen> {
         police: l10n.hudPolice,
         pullOver: l10n.hudPullOver,
         busted: l10n.hudBusted,
+        crashed: l10n.hudCrashed,
       ),
     );
   }

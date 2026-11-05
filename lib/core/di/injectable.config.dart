@@ -21,6 +21,9 @@ import 'package:roadbash/core/di/injectable.dart' as _i970;
 import 'package:roadbash/data/repos/auth_repo_impl.dart' as _i101;
 import 'package:roadbash/data/repos/leaderboard_repo_impl.dart' as _i102;
 import 'package:roadbash/data/repos/post_repo_impl.dart' as _i106;
+import 'package:roadbash/data/repos/wallet_repo_impl.dart' as _i1101;
+import 'package:roadbash/domain/repos/wallet_repo.dart' as _i1102;
+import 'package:roadbash/feature/wallet/cubit/wallet_cubit.dart' as _i1103;
 import 'package:roadbash/data/repos/profile_repo_impl.dart' as _i103;
 import 'package:roadbash/data/repos/race_repo_impl.dart' as _i104;
 import 'package:roadbash/data/repos/stats_repo_impl.dart' as _i105;
@@ -85,6 +88,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i541.RaceRepo>(
       () => _i104.RaceRepoImpl(gh<_i738.ApiClient>()),
     );
+    gh.lazySingleton<_i1102.WalletRepo>(
+      () => _i1101.WalletRepoImpl(gh<_i738.ApiClient>()),
+    );
     gh.lazySingleton<_i269.PostRepo>(
       () => _i106.PostRepoImpl(gh<_i738.ApiClient>()),
     );
@@ -104,6 +110,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i641.ProgressCubit>(
       () => _i641.ProgressCubit(gh<_i541.RaceRepo>()),
     );
+    gh.lazySingleton<_i1103.WalletCubit>(
+      () => _i1103.WalletCubit(gh<_i1102.WalletRepo>(), gh<_i505.AuthRepo>()),
+    );
     gh.factory<_i695.LeaderboardCubit>(
       () => _i695.LeaderboardCubit(gh<_i808.LeaderboardRepo>()),
     );
@@ -114,7 +123,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i249.StatsCubit(gh<_i1072.StatsRepo>()),
     );
     gh.factory<_i614.RaceCubit>(
-      () => _i614.RaceCubit(gh<_i641.ProgressCubit>()),
+      () => _i614.RaceCubit(gh<_i641.ProgressCubit>(), gh<_i1103.WalletCubit>()),
     );
     gh.lazySingleton<_i961.AuthCubit>(
       () => _i961.AuthCubit(

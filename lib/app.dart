@@ -16,6 +16,7 @@ import 'core/router/app_router.dart';
 import 'feature/audio/cubit/audio_cubit.dart';
 import 'feature/auth/cubit/auth_cubit.dart';
 import 'feature/progress/cubit/progress_cubit.dart';
+import 'feature/wallet/cubit/wallet_cubit.dart';
 import 'feature/settings/cubit/settings_cubit.dart';
 import 'l10n/gen/app_localizations.dart';
 
@@ -52,6 +53,7 @@ class AppViewState extends State<AppView> {
       providers: [
         BlocProvider.value(value: getIt<SettingsCubit>()),
         BlocProvider.value(value: getIt<ProgressCubit>()),
+        BlocProvider.value(value: getIt<WalletCubit>()),
         BlocProvider.value(value: getIt<AudioCubit>()),
         BlocProvider.value(value: getIt<AuthCubit>()),
       ],

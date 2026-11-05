@@ -32,6 +32,8 @@ class RaceResult {
     required this.rows,
     this.busted = false,
     this.fine = 0,
+    this.crashed = false,
+    this.crashKmh = 0,
   });
 
   final SceneId scene;
@@ -42,6 +44,12 @@ class RaceResult {
 
   /// Fine for the arrest, in shillings; 0 when not busted.
   final int fine;
+
+  /// True when a nasty crash ended the race before the finish.
+  final bool crashed;
+
+  /// Speed of the nasty crash in km/h; 0 when there was none.
+  final int crashKmh;
 
   /// The player's row in the standings.
   ResultRow get player => rows.firstWhere((r) => r.isPlayer);

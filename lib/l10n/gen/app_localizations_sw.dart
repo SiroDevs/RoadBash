@@ -214,6 +214,44 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
+  String get hudCrashed => 'UMEANGUKA!';
+
+  @override
+  String crashedNote(int kmh) {
+    return 'Umeanguka kwa $kmh km/h na hukuamka. Mbio zimeisha.';
+  }
+
+  @override
+  String crashHospital(String amount) {
+    return 'Hospitali: $amount';
+  }
+
+  @override
+  String crashGarage(String amount) {
+    return 'Gereji: $amount';
+  }
+
+  @override
+  String resultsPrize(String amount) {
+    return 'Zawadi: $amount';
+  }
+
+  @override
+  String resultsWallet(String amount) {
+    return 'Pochi: $amount';
+  }
+
+  @override
+  String walletAmount(String amount) {
+    return 'KSh $amount';
+  }
+
+  @override
+  String walletDebt(String amount) {
+    return '-KSh $amount';
+  }
+
+  @override
   String get quitRace => 'Acha shindano';
 
   @override

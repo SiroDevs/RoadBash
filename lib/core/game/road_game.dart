@@ -141,16 +141,16 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     _trafficContacts.update(dt, race, road, flow, racers, police);
     police.update(dt, race, road, flow);
     if (police.busted && !race.finished) race.bust(police.fine);
-
+    if (road.nastyCrash) race.crashOut(road.nastyCrashKmh.round());
     if (race.finished && !finishing) {
       finishing = true;
-      if (race.busted) _finishDelay = 3.4;
+      if (race.endedEarly) _finishDelay = 3.4;
       applyInput();
     }
     if (finishing &&
         !_notified &&
         (_finishDelay -= dt) <= 0 &&
-        (race.busted || _fieldHome)) {
+        (race.endedEarly || _fieldHome)) {
       _notified = true;
       onFinished(race.buildResult());
     }

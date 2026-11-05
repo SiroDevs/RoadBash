@@ -291,6 +291,73 @@
       }
     }
   },
+  "hudCrashed": "CRASHED!",
+  "@hudCrashed": {
+    "description": "Banner and title after a nasty crash"
+  },
+  "crashedNote": "You went down at {kmh} km/h and did not get up. Race over.",
+  "@crashedNote": {
+    "description": "Results text after a nasty crash",
+    "placeholders": {
+      "kmh": {
+        "type": "int"
+      }
+    }
+  },
+  "crashHospital": "Hospital: {amount}",
+  "@crashHospital": {
+    "description": "Hospital bill after a nasty crash",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "crashGarage": "Garage: {amount}",
+  "@crashGarage": {
+    "description": "Garage bill after a nasty crash",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsPrize": "Prize: {amount}",
+  "@resultsPrize": {
+    "description": "Prize money line on the results screen",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsWallet": "Wallet: {amount}",
+  "@resultsWallet": {
+    "description": "Wallet balance line on the results screen",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "walletAmount": "KSh {amount}",
+  "@walletAmount": {
+    "description": "A wallet amount in shillings",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "walletDebt": "-KSh {amount}",
+  "@walletDebt": {
+    "description": "A negative wallet amount in shillings",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "quitRace": "Quit race",
   "@quitRace": {
     "description": "Close button label"
@@ -728,10 +795,6 @@
         "type": "String"
       }
     }
-  },
-  "suggestionHint": "Tell me what to fix, add or remove. Every suggestion lands in my inbox.",
-  "@suggestionHint": {
-    "description": "Suggestion hint"
   },
   "boardroomSuggestionLabel": "Your suggestion",
   "@boardroomSuggestionLabel": {

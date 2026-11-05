@@ -71,6 +71,12 @@ class RaceController {
   /// Fine for the arrest, in shillings.
   int fine = 0;
 
+  /// True when a nasty crash ended the race; the rider did not get up.
+  bool crashedOut = false;
+
+  /// Speed of the nasty crash, in km/h.
+  int crashKmh = 0;
+
   /// Total race distance.
   double get raceLength => lapLength * laps - runOut;
   /// True when the scene is run in laps rather than as one long road.
@@ -88,6 +94,18 @@ class RaceController {
     if (finished) return;
     busted = true;
     this.fine = fine;
+    finished = true;
+    finishTime = elapsed;
+  }
+
+  /// True when the race ended without a finish: an arrest or a nasty crash.
+  bool get endedEarly => busted || crashedOut;
+
+  /// Ends the race with a nasty crash at [kmh].
+  void crashOut(int kmh) {
+    if (finished) return;
+    crashedOut = true;
+    crashKmh = kmh;
     finished = true;
     finishTime = elapsed;
   }
@@ -147,6 +165,8 @@ class RaceController {
       ],
       busted: busted,
       fine: fine,
+      crashed: crashedOut,
+      crashKmh: crashKmh,
     );
   }
 }

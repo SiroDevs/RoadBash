@@ -11,6 +11,7 @@ import '../../../../l10n/l10n_extension.dart';
 import '../../../progress/cubit/progress_cubit.dart';
 import '../../../settings/cubit/settings_cubit.dart';
 import 'online_badge.dart';
+import 'wallet_badge.dart';
 
 /// Rider name, level and online status strip at the bottom of the menu.
 class RiderBar extends StatelessWidget {
@@ -25,12 +26,7 @@ class RiderBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          BlocBuilder<SettingsCubit, SettingsState>(
-            builder: (context, s) => Text(
-              s.profile.displayName(l10n),
-              style: retroBody(size: context.sizes.body),
-            ),
-          ),
+          _nameAndWallet(context),
           BlocBuilder<ProgressCubit, ProgressState>(
             builder: (context, p) => Text(
               l10n.levelLabel(p.level),
@@ -40,6 +36,24 @@ class RiderBar extends StatelessWidget {
           const OnlineBadge(),
         ],
       ),
+    );
+  }
+
+  /// The rider name with the wallet balance next to it.
+  Widget _nameAndWallet(BuildContext context) {
+    final l10n = context.l10n;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        BlocBuilder<SettingsCubit, SettingsState>(
+          builder: (context, s) => Text(
+            s.profile.displayName(l10n),
+            style: retroBody(size: context.sizes.body),
+          ),
+        ),
+        SizedBox(width: context.sizes.gap),
+        const WalletBadge(),
+      ],
     );
   }
 }

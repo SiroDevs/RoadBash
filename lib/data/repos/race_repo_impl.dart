@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:async';
-
 // Package imports:
 import 'package:injectable/injectable.dart';
 
@@ -10,7 +7,7 @@ import '../../domain/repos/race_repo.dart';
 import '../mappers/race_mapper.dart';
 import '../sources/remote/api_client.dart';
 
-/// Saves and loads race records through the API.
+/// Loads race records through the API and keeps new ones in memory.
 @LazySingleton(as: RaceRepo)
 class RaceRepoImpl implements RaceRepo {
   RaceRepoImpl(this._api);
@@ -32,18 +29,5 @@ class RaceRepoImpl implements RaceRepo {
   }
 
   @override
-  Future<void> add(RaceRecord record) async {
-    _records.add(record);
-    if (_api.session != null) unawaited(_push(record));
-  }
-
-  Future<void> _push(RaceRecord record) async {
-    try {
-      await _api.callAuthed('rb_record_game', {
-        'p_scene': record.scene.name,
-        'p_place': record.place,
-        'p_time_ms': record.timeMs,
-      });
-    } catch (_) {}
-  }
+  Future<void> add(RaceRecord record) async => _records.add(record);
 }

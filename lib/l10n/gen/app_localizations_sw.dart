@@ -1,6 +1,9 @@
 // ignore: unused_import
+
+// Package imports:
 import 'package:intl/intl.dart' as intl;
 
+// Project imports:
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -211,6 +214,44 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String bustedFine(String amount) {
     return 'Faini: KSh $amount';
+  }
+
+  @override
+  String get hudCrashed => 'UMEANGUKA!';
+
+  @override
+  String crashedNote(int kmh) {
+    return 'Umeanguka kwa $kmh km/h na hukuamka. Mbio zimeisha.';
+  }
+
+  @override
+  String crashHospital(String amount) {
+    return 'Hospitali: $amount';
+  }
+
+  @override
+  String crashGarage(String amount) {
+    return 'Gereji: $amount';
+  }
+
+  @override
+  String resultsPrize(String amount) {
+    return 'Zawadi: $amount';
+  }
+
+  @override
+  String resultsWallet(String amount) {
+    return 'Pochi: $amount';
+  }
+
+  @override
+  String walletAmount(String amount) {
+    return 'KSh $amount';
+  }
+
+  @override
+  String walletDebt(String amount) {
+    return '-KSh $amount';
   }
 
   @override
@@ -445,6 +486,33 @@ class AppLocalizationsSw extends AppLocalizations {
       'Safu ni siku (Jumatatu kwanza), nguzo ni saa za siku kwa saa za eneo lako. Mwangaza zaidi inamaanisha shughuli zaidi.';
 
   @override
+  String get statsPlacesTitle => 'Wageni wanatoka wapi';
+
+  @override
+  String get statsPlacesCountries => 'Nchi';
+
+  @override
+  String get statsPlacesCities => 'Maeneo';
+
+  @override
+  String statsPlacesUnknown(int count) {
+    return 'Mahali haijulikani: $count';
+  }
+
+  @override
+  String get statsPlacesEmpty =>
+      'Hakuna mahali paliporekodiwa kwa kipindi hiki bado.';
+
+  @override
+  String get statsPlacesNote =>
+      'Vitone vinavyong\'aa zaidi vinamaanisha wageni zaidi. Mahali ni makadirio hadi kiwango cha jiji, na hakuna anwani zinazohifadhiwa.';
+
+  @override
+  String statsPlacesMore(int count) {
+    return '+$count zaidi';
+  }
+
+  @override
   String get leaderboardTitle => 'Orodha ya Washindi';
 
   @override
@@ -491,6 +559,20 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get boardroomAdminHint =>
       'Jibu mapendekezo, yaweke wazi au futa yasiyofaa.';
+
+  @override
+  String get leaderboardThisWeek => 'Wiki hii';
+
+  @override
+  String get leaderboardLastWeek => 'Wiki iliyopita';
+
+  @override
+  String get leaderboardAllTime => 'Wakati wote';
+
+  @override
+  String leaderboardRange(String from, String to) {
+    return '$from – $to';
+  }
 
   @override
   String get boardroomSuggestionLabel => 'Pendekezo lako';

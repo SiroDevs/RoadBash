@@ -1,10 +1,15 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+
+// Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+// Project imports:
 import 'app_localizations_en.dart';
 import 'app_localizations_sw.dart';
 
@@ -446,6 +451,54 @@ abstract class AppLocalizations {
   /// **'Fine: KSh {amount}'**
   String bustedFine(String amount);
 
+  /// Banner and title after a nasty crash
+  ///
+  /// In en, this message translates to:
+  /// **'CRASHED!'**
+  String get hudCrashed;
+
+  /// Results text after a nasty crash
+  ///
+  /// In en, this message translates to:
+  /// **'You went down at {kmh} km/h and did not get up. Race over.'**
+  String crashedNote(int kmh);
+
+  /// Hospital bill after a nasty crash
+  ///
+  /// In en, this message translates to:
+  /// **'Hospital: {amount}'**
+  String crashHospital(String amount);
+
+  /// Garage bill after a nasty crash
+  ///
+  /// In en, this message translates to:
+  /// **'Garage: {amount}'**
+  String crashGarage(String amount);
+
+  /// Prize money line on the results screen
+  ///
+  /// In en, this message translates to:
+  /// **'Prize: {amount}'**
+  String resultsPrize(String amount);
+
+  /// Wallet balance line on the results screen
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet: {amount}'**
+  String resultsWallet(String amount);
+
+  /// A wallet amount in shillings
+  ///
+  /// In en, this message translates to:
+  /// **'KSh {amount}'**
+  String walletAmount(String amount);
+
+  /// A negative wallet amount in shillings
+  ///
+  /// In en, this message translates to:
+  /// **'-KSh {amount}'**
+  String walletDebt(String amount);
+
   /// Close button label
   ///
   /// In en, this message translates to:
@@ -854,6 +907,48 @@ abstract class AppLocalizations {
   /// **'Rows are days (Monday first), columns are hours of the day in your local time. Brighter means busier.'**
   String get statsHeatmapNote;
 
+  /// Heading of the visitor places section
+  ///
+  /// In en, this message translates to:
+  /// **'Where visitors come from'**
+  String get statsPlacesTitle;
+
+  /// Tab showing visitors by country
+  ///
+  /// In en, this message translates to:
+  /// **'Countries'**
+  String get statsPlacesCountries;
+
+  /// Tab showing visitors by city
+  ///
+  /// In en, this message translates to:
+  /// **'Places'**
+  String get statsPlacesCities;
+
+  /// Visitors whose place is not known
+  ///
+  /// In en, this message translates to:
+  /// **'Location unknown: {count}'**
+  String statsPlacesUnknown(int count);
+
+  /// No visitor places
+  ///
+  /// In en, this message translates to:
+  /// **'No locations recorded for this period yet.'**
+  String get statsPlacesEmpty;
+
+  /// Visitor map note
+  ///
+  /// In en, this message translates to:
+  /// **'Brighter dots mean more visitors. Places are approximate, to about city level, and no addresses are kept.'**
+  String get statsPlacesNote;
+
+  /// More countries or places not shown
+  ///
+  /// In en, this message translates to:
+  /// **'+{count} more'**
+  String statsPlacesMore(int count);
+
   /// Leaderboard heading
   ///
   /// In en, this message translates to:
@@ -937,6 +1032,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reply to suggestions, make them public or delete what is not appropriate.'**
   String get boardroomAdminHint;
+
+  /// Leaderboard tab
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get leaderboardThisWeek;
+
+  /// Leaderboard tab
+  ///
+  /// In en, this message translates to:
+  /// **'Last week'**
+  String get leaderboardLastWeek;
+
+  /// Leaderboard tab
+  ///
+  /// In en, this message translates to:
+  /// **'All time'**
+  String get leaderboardAllTime;
+
+  /// Dates a weekly leaderboard covers
+  ///
+  /// In en, this message translates to:
+  /// **'{from} – {to}'**
+  String leaderboardRange(String from, String to);
 
   /// Suggestion field
   ///

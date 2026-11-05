@@ -1,6 +1,9 @@
 // ignore: unused_import
+
+// Package imports:
 import 'package:intl/intl.dart' as intl;
 
+// Project imports:
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -211,6 +214,44 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String bustedFine(String amount) {
     return 'Fine: KSh $amount';
+  }
+
+  @override
+  String get hudCrashed => 'CRASHED!';
+
+  @override
+  String crashedNote(int kmh) {
+    return 'You went down at $kmh km/h and did not get up. Race over.';
+  }
+
+  @override
+  String crashHospital(String amount) {
+    return 'Hospital: $amount';
+  }
+
+  @override
+  String crashGarage(String amount) {
+    return 'Garage: $amount';
+  }
+
+  @override
+  String resultsPrize(String amount) {
+    return 'Prize: $amount';
+  }
+
+  @override
+  String resultsWallet(String amount) {
+    return 'Wallet: $amount';
+  }
+
+  @override
+  String walletAmount(String amount) {
+    return 'KSh $amount';
+  }
+
+  @override
+  String walletDebt(String amount) {
+    return '-KSh $amount';
   }
 
   @override
@@ -446,6 +487,32 @@ class AppLocalizationsEn extends AppLocalizations {
       'Rows are days (Monday first), columns are hours of the day in your local time. Brighter means busier.';
 
   @override
+  String get statsPlacesTitle => 'Where visitors come from';
+
+  @override
+  String get statsPlacesCountries => 'Countries';
+
+  @override
+  String get statsPlacesCities => 'Places';
+
+  @override
+  String statsPlacesUnknown(int count) {
+    return 'Location unknown: $count';
+  }
+
+  @override
+  String get statsPlacesEmpty => 'No locations recorded for this period yet.';
+
+  @override
+  String get statsPlacesNote =>
+      'Brighter dots mean more visitors. Places are approximate, to about city level, and no addresses are kept.';
+
+  @override
+  String statsPlacesMore(int count) {
+    return '+$count more';
+  }
+
+  @override
   String get leaderboardTitle => 'Leaderboard';
 
   @override
@@ -491,6 +558,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get boardroomAdminHint =>
       'Reply to suggestions, make them public or delete what is not appropriate.';
+
+  @override
+  String get leaderboardThisWeek => 'This week';
+
+  @override
+  String get leaderboardLastWeek => 'Last week';
+
+  @override
+  String get leaderboardAllTime => 'All time';
+
+  @override
+  String leaderboardRange(String from, String to) {
+    return '$from – $to';
+  }
 
   @override
   String get boardroomSuggestionLabel => 'Your suggestion';

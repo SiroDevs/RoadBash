@@ -174,6 +174,11 @@ class DashboardHud extends PositionComponent {
     );
   }
 
+  /// The banner at the end of the race: busted, crashed or finished.
+  String _endBanner() => race.busted
+      ? strings.busted
+      : (race.crashedOut ? strings.crashed : strings.finish);
+
   /// Draws the countdown, go and finish banner.
   void _banner(Canvas canva) {
     final big = math.min(size.y * 0.16, size.x * 0.2);
@@ -181,7 +186,7 @@ class DashboardHud extends PositionComponent {
     final text = race.countdown > 0
         ? '${race.countdown.ceil()}'
         : race.finished
-        ? (race.busted ? strings.busted : strings.finish)
+        ? _endBanner()
         : (race.elapsed < 0.9 ? strings.go : null);
     if (text != null) {
       paintText(
@@ -189,7 +194,7 @@ class DashboardHud extends PositionComponent {
         text,
         centre,
         big,
-        race.busted ? _red : _gold,
+        race.busted || race.crashedOut ? _red : _gold,
         fontFamily: AppConstants.displayFont,
         weight: FontWeight.w400,
         shadow: true,

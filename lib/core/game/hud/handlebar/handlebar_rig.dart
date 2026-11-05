@@ -2,9 +2,11 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
+// Flutter imports:
+import 'package:flutter/foundation.dart' show ValueGetter;
+
 // Package imports:
 import 'package:flame/components.dart';
-import 'package:flutter/foundation.dart' show ValueGetter;
 
 // Project imports:
 import '../../input/handlebar_pose.dart';

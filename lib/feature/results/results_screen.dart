@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../common/constants/app_constants.dart';
 import '../../common/layout/responsive_scroll_body.dart';
 import '../../common/layout/retro_sizes.dart';
+import '../../common/utils/money_util.dart';
 import '../../common/widgets/retro/controls/retro_controls.dart';
 import '../../common/widgets/retro/page/retro_page.dart';
 import '../../common/widgets/retro/retro_style.dart';
@@ -15,6 +16,7 @@ import '../../core/game/race/race_result.dart';
 import '../../core/router/route_names.dart';
 import '../../l10n/l10n_extension.dart';
 import '../race/cubit/race_cubit.dart';
+import 'widgets/results_money.dart';
 
 /// Results screen shown after a race.
 class ResultsScreen extends StatelessWidget {
@@ -37,7 +39,7 @@ class ResultsScreen extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RetroTitle(result.busted ? l10n.hudBusted : l10n.resultsTitle),
+                RetroTitle(_title(context)),
                 SizedBox(height: sizes.gap * 1.2),
                 if (result.busted) ...[
                   Text(
@@ -46,12 +48,18 @@ class ResultsScreen extends StatelessWidget {
                   ),
                   SizedBox(height: sizes.gap * 0.75),
                   Text(
-                    l10n.bustedFine(_money(result.fine)),
+                    l10n.bustedFine(groupThousands(result.fine)),
                     style: retroBody(size: sizes.body, color: Retro.yellow),
                   ),
-                ] else
+                ] else if (result.crashed)
+                  Text(
+                    l10n.crashedNote(result.crashKmh),
+                    style: retroBody(size: sizes.body, color: Colors.white),
+                  )
+                else
                   for (final r in rows) _row(context, r),
-                if (outcome.newBest && !result.busted) ...[
+                const ResultsMoney(),
+                if (outcome.newBest && !result.busted && !result.crashed) ...[
                   SizedBox(height: sizes.gap * 0.75),
                   Text(
                     l10n.newBestTime,
@@ -90,11 +98,13 @@ class ResultsScreen extends StatelessWidget {
     );
   }
 
-  /// Formats a shilling amount with thousands separators.
-  String _money(int amount) => amount.toString().replaceAllMapped(
-    RegExp(r'\B(?=(\d{3})+(?!\d))'),
-    (match) => ',',
-  );
+  /// The title: busted, crashed or the plain results title.
+  String _title(BuildContext context) {
+    final l10n = context.l10n;
+    if (outcome.result.busted) return l10n.hudBusted;
+    if (outcome.result.crashed) return l10n.hudCrashed;
+    return l10n.resultsTitle;
+  }
 
   /// Builds one result row for a racer.
   Widget _row(BuildContext context, ResultRow row) {

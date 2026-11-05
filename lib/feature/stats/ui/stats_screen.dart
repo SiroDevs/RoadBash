@@ -23,6 +23,7 @@ import '../cubit/stats_cubit.dart';
 import 'widgets/bar_chart.dart';
 import 'widgets/chart_skeleton.dart';
 import 'widgets/heatmap.dart';
+import 'widgets/places_panel.dart';
 import 'widgets/range_labels.dart';
 import 'widgets/stats_table.dart';
 
@@ -97,6 +98,13 @@ class StatsScreen extends StatelessWidget {
           values: [for (final p in st.series) p.games],
           labels: labels,
           color: Colors.lightBlueAccent,
+        ),
+        gap,
+        PlacesPanel(
+          places: st.places,
+          view: st.placesView,
+          onView: context.read<StatsCubit>().setPlacesView,
+          l10n: l10n,
         ),
         gap,
         _heatmap(context, st, locale),

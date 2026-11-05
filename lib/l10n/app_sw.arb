@@ -288,6 +288,73 @@
       }
     }
   },
+  "hudCrashed": "UMEANGUKA!",
+  "@hudCrashed": {
+    "description": "Banner and title after a nasty crash"
+  },
+  "crashedNote": "Umeanguka kwa {kmh} km/h na hukuamka. Mbio zimeisha.",
+  "@crashedNote": {
+    "description": "Results text after a nasty crash",
+    "placeholders": {
+      "kmh": {
+        "type": "int"
+      }
+    }
+  },
+  "crashHospital": "Hospitali: {amount}",
+  "@crashHospital": {
+    "description": "Hospital bill after a nasty crash",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "crashGarage": "Gereji: {amount}",
+  "@crashGarage": {
+    "description": "Garage bill after a nasty crash",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsPrize": "Zawadi: {amount}",
+  "@resultsPrize": {
+    "description": "Prize money line on the results screen",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsWallet": "Pochi: {amount}",
+  "@resultsWallet": {
+    "description": "Wallet balance line on the results screen",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "walletAmount": "KSh {amount}",
+  "@walletAmount": {
+    "description": "A wallet amount in shillings",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "walletDebt": "-KSh {amount}",
+  "@walletDebt": {
+    "description": "A negative wallet amount in shillings",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "quitRace": "Acha shindano",
   "@quitRace": {
     "description": "Close button label"
@@ -608,6 +675,44 @@
   "@statsHeatmapNote": {
     "description": "Heatmap note"
   },
+  "statsPlacesTitle": "Wageni wanatoka wapi",
+  "@statsPlacesTitle": {
+    "description": "Heading of the visitor places section"
+  },
+  "statsPlacesCountries": "Nchi",
+  "@statsPlacesCountries": {
+    "description": "Tab showing visitors by country"
+  },
+  "statsPlacesCities": "Maeneo",
+  "@statsPlacesCities": {
+    "description": "Tab showing visitors by city"
+  },
+  "statsPlacesUnknown": "Mahali haijulikani: {count}",
+  "@statsPlacesUnknown": {
+    "description": "Visitors whose place is not known",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsPlacesEmpty": "Hakuna mahali paliporekodiwa kwa kipindi hiki bado.",
+  "@statsPlacesEmpty": {
+    "description": "No visitor places"
+  },
+  "statsPlacesNote": "Vitone vinavyong'aa zaidi vinamaanisha wageni zaidi. Mahali ni makadirio hadi kiwango cha jiji, na hakuna anwani zinazohifadhiwa.",
+  "@statsPlacesNote": {
+    "description": "Visitor map note"
+  },
+  "statsPlacesMore": "+{count} zaidi",
+  "@statsPlacesMore": {
+    "description": "More countries or places not shown",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "leaderboardTitle": "Orodha ya Washindi",
   "@leaderboardTitle": {
     "description": "Leaderboard heading"
@@ -657,6 +762,30 @@
   "boardroomTooShort": "Andika maneno machache zaidi.",
   "boardroomRateLimited": "Inatosha kwa sasa. Jaribu tena baadaye.",
   "boardroomForbidden": "Wasimamizi pekee wanaweza kufanya hivyo.",
+  "leaderboardThisWeek": "Wiki hii",
+  "@leaderboardThisWeek": {
+    "description": "Leaderboard tab"
+  },
+  "leaderboardLastWeek": "Wiki iliyopita",
+  "@leaderboardLastWeek": {
+    "description": "Leaderboard tab"
+  },
+  "leaderboardAllTime": "Wakati wote",
+  "@leaderboardAllTime": {
+    "description": "Leaderboard tab"
+  },
+  "leaderboardRange": "{from} – {to}",
+  "@leaderboardRange": {
+    "description": "Dates a weekly leaderboard covers",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "commonCancel": "Ghairi",
   "@commonCancel": {
     "description": "Cancel button"

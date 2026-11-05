@@ -1,7 +1,7 @@
 // Dart imports:
 import 'dart:math' as math;
 
-/// A rider's fall: tipping over, lying still, then standing back up.
+/// A rider's fall: tipping over, lying still, then standing back up (unless kept down).
 class CrashState {
   static const double fallTime = 0.35;
   static const double riseTime = 0.5;
@@ -10,6 +10,7 @@ class CrashState {
   double _remaining = 0;
   double _total = 0;
   double _side = 1;
+  bool _stayDown = false;
 
   /// True while the rider is down.
   bool get down => _remaining > 0;
@@ -35,8 +36,13 @@ class CrashState {
     _remaining = _total;
   }
 
+  /// Keeps the rider on the ground once the fall is over.
+  void keepDown() => _stayDown = true;
+
   /// Counts the fall down by one frame.
   void update(double dt) {
-    if (_remaining > 0) _remaining = math.max(0.0, _remaining - dt);
+    if (_remaining <= 0) return;
+    final floor = _stayDown ? riseTime + 0.001 : 0.0;
+    _remaining = math.max(floor, _remaining - dt);
   }
 }

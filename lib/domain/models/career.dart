@@ -12,6 +12,11 @@ import 'scene_id.dart';
 class Career extends Equatable {
   const Career({this.level = 1, this.streak = 0, this.bests = const {}});
 
+  /// Version of the saved career. A career saved under another version is
+  /// dropped and the player starts again from level 1, so raising this number
+  /// in a release resets everyone's level, streak and best times.
+  static const int epoch = 1;
+
   /// The level the player races at now.
   final int level;
 
@@ -40,13 +45,20 @@ class Career extends Equatable {
   );
 
   /// Encodes the career for local storage.
-  String encode() => jsonEncode({'level': level, 'streak': streak, 'bests': bests});
+  String encode() => jsonEncode({
+    'epoch': epoch,
+    'level': level,
+    'streak': streak,
+    'bests': bests,
+  });
 
-  /// Decodes a stored career, giving a fresh one when the text is unusable.
+  /// Decodes a stored career, giving a fresh one when the text is unusable or
+  /// was saved under another [epoch].
   static Career decode(String text) {
     if (text.isEmpty) return const Career();
     try {
       final data = jsonDecode(text) as Map<String, dynamic>;
+      if (data['epoch'] != epoch) return const Career();
       final bests = (data['bests'] as Map<String, dynamic>? ?? {}).map(
         (key, value) => MapEntry(key, (value as num).toInt()),
       );

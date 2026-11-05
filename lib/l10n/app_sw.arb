@@ -810,5 +810,97 @@
         "type": "int"
       }
     }
+  },
+  "levelUpNote": "Umepanda ngazi! Sasa uko Ngazi {level}.",
+  "@levelUpNote": {
+    "description": "Shown when a win unlocks the next level",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "sceneLocked": "Fikia Ngazi {level} kufungua eneo hili",
+  "@sceneLocked": {
+    "description": "Shown for a scene the level has not opened",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "hintNextLevel": "Shinda {wins} mfululizo kwa Ngazi {level} ({done}/{wins})",
+  "@hintNextLevel": {
+    "description": "Pre-race hint: what it takes to reach the next level",
+    "placeholders": {
+      "wins": {
+        "type": "int"
+      },
+      "level": {
+        "type": "int"
+      },
+      "done": {
+        "type": "int"
+      }
+    }
+  },
+  "hintTopLevel": "Ngazi ya juu. Endelea kushinda!",
+  "@hintTopLevel": {
+    "description": "Pre-race hint at the top level"
+  },
+  "hintUnlocks": "Hufungua: {places}",
+  "@hintUnlocks": {
+    "description": "Pre-race hint: scenes the next level opens",
+    "placeholders": {
+      "places": {
+        "type": "String"
+      }
+    }
+  },
+  "hintPrize": "Shinda KSh {amount} · muda bora +{best}% · mbio safi +{clean}%",
+  "@hintPrize": {
+    "description": "Pre-race hint: prize and bonuses",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "best": {
+        "type": "int"
+      },
+      "clean": {
+        "type": "int"
+      }
+    }
+  },
+  "hintNoPrize": "Ngazi ya mazoezi: hakuna zawadi",
+  "@hintNoPrize": {
+    "description": "Pre-race hint on the first level"
+  },
+  "resultsBestBonus": "Bonasi ya muda bora: {amount}",
+  "@resultsBestBonus": {
+    "description": "Money line: bonus for a new best time",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsCleanBonus": "Bonasi ya mbio safi: {amount}",
+  "@resultsCleanBonus": {
+    "description": "Money line: bonus for not bashing rivals",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsTraffic": "Faini za trafiki: {amount}",
+  "@resultsTraffic": {
+    "description": "Money line: fines for hitting traffic",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

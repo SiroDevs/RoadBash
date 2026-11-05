@@ -24,32 +24,35 @@ class WalletRepoImpl implements WalletRepo {
   Future<RaceSettlement> settle(
     RaceEnd end, {
     required SceneId scene,
+    required int level,
     int place = 1,
     int timeMs = 0,
-    int fine = 0,
+    bool newBest = false,
+    bool clean = false,
+    int trafficHits = 0,
     int crashKmh = 0,
   }) async {
-    final result = await switch (end) {
-      RaceEnd.finished => _api.callAuthed('rb_record_game', {
-        'p_scene': scene.name,
-        'p_place': place,
-        'p_time_ms': timeMs,
-      }),
-      RaceEnd.busted => _api.callAuthed('rb_charge_race', {
-        'p_outcome': 'busted',
-        'p_fine': fine,
-      }),
-      RaceEnd.crashed => _api.callAuthed('rb_charge_race', {
-        'p_outcome': 'crashed',
-        'p_crash_kmh': crashKmh,
-      }),
-    };
+    final result = await _api.callAuthed('rb_settle_race', {
+      'p_scene': scene.name,
+      'p_level': level,
+      'p_outcome': end.name,
+      'p_place': place,
+      'p_time_ms': timeMs,
+      'p_new_best': newBest,
+      'p_clean': clean,
+      'p_traffic_hits': trafficHits,
+      'p_crash_kmh': crashKmh,
+    });
+    int amount(String key) => (result[key] as num?)?.toInt() ?? 0;
     return RaceSettlement(
-      balance: (result['balance'] as num).toInt(),
-      prize: (result['prize'] as num?)?.toInt() ?? 0,
-      fine: (result['fine'] as num?)?.toInt() ?? 0,
-      hospital: (result['hospital'] as num?)?.toInt() ?? 0,
-      garage: (result['garage'] as num?)?.toInt() ?? 0,
+      balance: amount('balance'),
+      prize: amount('prize'),
+      bestBonus: amount('best_bonus'),
+      cleanBonus: amount('clean_bonus'),
+      traffic: amount('traffic'),
+      fine: amount('fine'),
+      hospital: amount('hospital'),
+      garage: amount('garage'),
     );
   }
 }

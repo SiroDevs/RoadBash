@@ -31,6 +31,13 @@ mixin RoadDynamics {
   double _hitKmh = 0;
   double nastyCrashKmh = 0;
 
+  /// The fastest the bike may go in km/h; a level can set it below the top.
+  double speedLimitKmh = VehicleConfig.topSpeedKmh;
+
+  /// True on the levels where a fall at speed ends the race; below them a fall
+  /// is only a tumble the rider gets up from.
+  bool nastyCrashesEnabled = true;
+
   final CrashState crash = CrashState();
   final TerrainRide ride = TerrainRide();
 
@@ -99,7 +106,13 @@ mixin RoadDynamics {
     }
     const edge = VehicleConfig.maxOffRoad;
     playerX = math.max(-edge, math.min(edge, playerX));
-    speed = math.max(0.0, math.min(VehicleConfig.maxSpeed, speed));
+    speed = math.max(
+      0.0,
+      math.min(
+        VehicleConfig.maxSpeed * speedLimitKmh / VehicleConfig.topSpeedKmh,
+        speed,
+      ),
+    );
     hitGuardrail(segment, dt);
 
     final sharpTurn =
@@ -125,7 +138,7 @@ mixin RoadDynamics {
   void fall(double side, double seconds) {
     final impactKmh = math.max(_hitKmh, speedKmh);
     crash.start(side, seconds);
-    if (impactKmh < VehicleConfig.nastyCrashKmh) return;
+    if (!nastyCrashesEnabled || impactKmh < VehicleConfig.nastyCrashKmh) return;
     nastyCrashKmh = impactKmh;
     crash.keepDown();
   }

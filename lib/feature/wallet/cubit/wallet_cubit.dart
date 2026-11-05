@@ -61,8 +61,10 @@ class WalletCubit extends Cubit<WalletState> {
     }
   }
 
-  /// Settles a race: records it and pays the prize, or charges fine or crash bills.
-  Future<void> settle(RaceResult result) async {
+  /// Settles a race: records it, pays the prize and bonuses of a win, and
+  /// charges fines and bills. [newBest] says the race set a best time for its
+  /// level and scene.
+  Future<void> settle(RaceResult result, {bool newBest = false}) async {
     if (_auth.session == null) return;
     emit(state.copyWith(loading: true, clearSettlement: true));
     final player = result.player;
@@ -70,9 +72,12 @@ class WalletCubit extends Cubit<WalletState> {
       final settlement = await _repo.settle(
         _endOf(result),
         scene: result.scene,
+        level: result.level,
         place: player.place,
         timeMs: (player.seconds * 1000).round(),
-        fine: result.fine,
+        newBest: newBest,
+        clean: result.bashes == 0,
+        trafficHits: result.trafficHits,
         crashKmh: result.crashKmh,
       );
       if (!isClosed) {

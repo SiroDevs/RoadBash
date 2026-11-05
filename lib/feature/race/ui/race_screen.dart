@@ -20,8 +20,10 @@ import '../../../core/router/route_names.dart';
 import '../../../domain/models/player_profile.dart';
 import '../../../domain/models/scene_id.dart';
 import '../../../l10n/l10n_extension.dart';
+import '../../progress/cubit/progress_cubit.dart';
 import '../../settings/cubit/settings_cubit.dart';
 import '../cubit/race_cubit.dart';
+import 'level_briefing.dart';
 import 'widgets/handlebar_pad.dart';
 import 'widgets/race_controls_menu.dart';
 import 'widgets/race_pause_overlay.dart';
@@ -56,8 +58,11 @@ class _RaceScreenState extends State<RaceScreen> {
     final l10n = context.l10n;
     final profile = context.read<SettingsCubit>().state.profile;
     final race = context.read<RaceCubit>();
+    final career = context.read<ProgressCubit>().state.career;
     return RoadGame(
       scene: widget.scene,
+      rules: career.rules,
+      briefing: levelBriefing(l10n, career),
       mix: profile,
       audio: getIt<AudioService>(),
       playerName: profile.displayName(l10n),

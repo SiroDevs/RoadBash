@@ -9,12 +9,26 @@ class SceneStats {
   final int? bestMs;
 }
 
-/// All race records and a helper to summarize them.
+/// All race records, the player's career and a helper to summarize them.
 class ProgressState extends Equatable {
-  const ProgressState({this.records = const [], this.loaded = false});
+  const ProgressState({
+    this.records = const [],
+    this.career = const Career(),
+    this.loaded = false,
+  });
 
   final List<RaceRecord> records;
+
+  /// Level, win streak and best times per level.
+  final Career career;
   final bool loaded;
+
+  ProgressState copyWith({List<RaceRecord>? records, Career? career}) =>
+      ProgressState(
+        records: records ?? this.records,
+        career: career ?? this.career,
+        loaded: loaded,
+      );
 
   /// Returns race stats for a scene, or all scenes when null.
   SceneStats statsFor(SceneId? scene) {
@@ -28,9 +42,9 @@ class ProgressState extends Equatable {
     );
   }
 
-  /// Player level, which rises with every two wins.
-  int get level => 1 + statsFor(null).wins ~/ 2;
+  /// The player's level, which rises with wins in a row.
+  int get level => career.level;
 
   @override
-  List<Object?> get props => [records, loaded];
+  List<Object?> get props => [records, career, loaded];
 }

@@ -23,7 +23,7 @@ import 'traffic/road_traffic.dart';
 
 /// Draws the road, scenery and traffic of a scene and runs the rider physics.
 class RoadRenderer extends PositionComponent with RoadDynamics {
-  RoadRenderer(this.theme)
+  RoadRenderer(this.theme, {int? laps})
     : track = RoadTrack(theme.id),
       _backdrop = RoadBackdrop(theme),
       _roads = RoadSegmentPainter(theme),
@@ -32,7 +32,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     props = RoadProps(theme, track);
     finish = FinishZone(
       line: track.finishIndex,
-      laps: theme.laps,
+      laps: laps ?? theme.laps,
       lapLength: track.length,
       look: FinishConfig.lookFor(theme.id),
     );

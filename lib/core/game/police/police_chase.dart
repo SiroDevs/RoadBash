@@ -20,12 +20,19 @@ enum ChasePhase { idle, chasing }
 /// stays there fills the arrest meter, and a full meter is a bust. A rider who
 /// keeps the throttle pinned can pull clear and lose the cop.
 class PoliceChase {
-  PoliceChase({required this.enabled, math.Random? random})
+  PoliceChase({
+    required this.enabled,
+    this.fineAmount = 0,
+    math.Random? random,
+  })
     : _random = random ?? math.Random(2026),
       cop = PoliceCop();
 
   /// False on roads without patrols.
   final bool enabled;
+
+  /// The fine for an arrest, in shillings.
+  final int fineAmount;
 
   /// The patrol rider; always part of the road's actor list.
   final PoliceCop cop;
@@ -79,7 +86,7 @@ class PoliceChase {
       : 0;
 
   /// The fine for the arrest, in shillings.
-  int get fine => math.min(9500, 1000 + 500 * offences);
+  int get fine => fineAmount;
 
   /// Records that the player did something a cop would care about.
   void crime(double amount) {

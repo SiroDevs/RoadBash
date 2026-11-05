@@ -34,6 +34,9 @@ class RaceResult {
     this.fine = 0,
     this.crashed = false,
     this.crashKmh = 0,
+    this.level = 1,
+    this.trafficHits = 0,
+    this.bashes = 0,
   });
 
   final SceneId scene;
@@ -51,6 +54,21 @@ class RaceResult {
   /// Speed of the nasty crash in km/h; 0 when there was none.
   final int crashKmh;
 
+  /// The level the race was run at.
+  final int level;
+
+  /// How many times the player hit civilian traffic.
+  final int trafficHits;
+
+  /// How many times the player bashed a rival.
+  final int bashes;
+
   /// The player's row in the standings.
   ResultRow get player => rows.firstWhere((r) => r.isPlayer);
+
+  /// True when the player reached the finish line: no arrest, no crash.
+  bool get finished => !busted && !crashed;
+
+  /// True when the player crossed the line first.
+  bool get won => finished && player.place == 1;
 }

@@ -1206,6 +1206,77 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} online'**
   String menuOnline(int count);
+
+
+
+  /// Shown when a win unlocks the next level
+  ///
+  /// In en, this message translates to:
+  /// **'Level up! You are now Level {level}.'**
+  String levelUpNote(int level);
+
+
+
+
+
+
+
+
+
+  /// Shown for a scene the level has not opened
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Level {level} to unlock this scene'**
+  String sceneLocked(int level);
+
+  /// Pre-race hint: what it takes to reach the next level
+  ///
+  /// In en, this message translates to:
+  /// **'Win {wins} in a row for Level {level} ({done}/{wins})'**
+  String hintNextLevel(int wins, int level, int done);
+
+  /// Pre-race hint at the top level
+  ///
+  /// In en, this message translates to:
+  /// **'Top level. Keep winning!'**
+  String get hintTopLevel;
+
+  /// Pre-race hint: scenes the next level opens
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocks: {places}'**
+  String hintUnlocks(String places);
+
+  /// Pre-race hint: prize and bonuses
+  ///
+  /// In en, this message translates to:
+  /// **'Win KSh {amount} · best +{best}% · clean +{clean}%'**
+  String hintPrize(String amount, int best, int clean);
+
+  /// Pre-race hint on the first level
+  ///
+  /// In en, this message translates to:
+  /// **'Practice level: no prize money'**
+  String get hintNoPrize;
+
+  /// Money line: bonus for a new best time
+  ///
+  /// In en, this message translates to:
+  /// **'New best bonus: {amount}'**
+  String resultsBestBonus(String amount);
+
+  /// Money line: bonus for not bashing rivals
+  ///
+  /// In en, this message translates to:
+  /// **'Clean race bonus: {amount}'**
+  String resultsCleanBonus(String amount);
+
+  /// Money line: fines for hitting traffic
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic fines: {amount}'**
+  String resultsTraffic(String amount);
+
 }
 
 class _AppLocalizationsDelegate

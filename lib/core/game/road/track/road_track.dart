@@ -84,9 +84,9 @@ class RoadTrack {
   RoadSegment at(double position) => segments[indexAt(position)];
 
   /// Returns the race distance of a scene in kilometres.
-  static double raceKm(SceneId scene) {
+  static double raceKm(SceneId scene, {int? laps}) {
     final track = RoadTrack(scene);
-    final laps = SceneTheme.of(scene).laps;
+    laps ??= SceneTheme.of(scene).laps;
     return (track.length * laps - track.runOutLength) * RoadConfig.unitKm;
   }
 

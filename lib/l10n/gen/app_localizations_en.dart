@@ -652,4 +652,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String menuOnline(int count) {
     return '$count online';
   }
+
+  @override
+  String levelUpNote(int level) {
+    return 'Level up! You are now Level ${level}.';
+  }
+
+  @override
+  String sceneLocked(int level) {
+    return 'Reach Level ${level} to unlock this scene';
+  }
+
+  @override
+  String hintNextLevel(int wins, int level, int done) {
+    return 'Win ${wins} in a row for Level ${level} (${done}/${wins})';
+  }
+
+  @override
+  String get hintTopLevel => 'Top level. Keep winning!';
+
+  @override
+  String hintUnlocks(String places) {
+    return 'Unlocks: ${places}';
+  }
+
+  @override
+  String hintPrize(String amount, int best, int clean) {
+    return 'Win KSh ${amount} · best +${best}% · clean +${clean}%';
+  }
+
+  @override
+  String get hintNoPrize => 'Practice level: no prize money';
+
+  @override
+  String resultsBestBonus(String amount) {
+    return 'New best bonus: ${amount}';
+  }
+
+  @override
+  String resultsCleanBonus(String amount) {
+    return 'Clean race bonus: ${amount}';
+  }
+
+  @override
+  String resultsTraffic(String amount) {
+    return 'Traffic fines: ${amount}';
+  }
 }

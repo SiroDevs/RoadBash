@@ -2,10 +2,12 @@
 import 'dart:math' as math;
 
 // Project imports:
+import '../../../domain/models/level_rules.dart';
 import '../../../domain/models/scene_id.dart';
 import '../rider/look/rider_look.dart';
 import '../rider/look/rider_looks.dart';
 import '../road/config/road_config.dart';
+import '../road/config/vehicle_config.dart';
 import 'race_result.dart';
 import 'rival/rival_tracker.dart';
 
@@ -38,8 +40,10 @@ class RaceController {
     required this.lapLength,
     this.runOut = 0,
     required this.playerName,
+    required this.rules,
     this.rivals = defaultRivals,
-  });
+    double briefingSeconds = 0,
+  }) : briefing = briefingSeconds;
 
   static const List<RiderRival> defaultRivals = [
     RiderRival('Mike', 0.86, 0.0, RiderLooks.mike, 0.8, 0.8, 0.7),
@@ -49,9 +53,30 @@ class RaceController {
     RiderRival('Brayo', 0.66, 5.6, RiderLooks.brayo, 0.9, 0.3, 0.6),
   ];
 
+  /// Rivals for a level: the slowest line up first, so each level adds a
+  /// faster rider, and every rider's pace follows the level's speed limit.
+  static List<RiderRival> lineup(LevelRules rules) {
+    final share = rules.speedShare(VehicleConfig.topSpeedKmh);
+    return [
+      for (final r in defaultRivals.reversed.take(rules.rivals))
+        RiderRival(
+          r.name,
+          r.pace * share,
+          r.phase,
+          r.look,
+          r.aggression,
+          r.focus,
+          r.grit,
+        ),
+    ];
+  }
+
   final SceneId scene;
   final int laps;
   final double lapLength;
+
+  /// The rules of the level being raced.
+  final LevelRules rules;
 
   final double runOut;
   final String playerName;
@@ -76,6 +101,12 @@ class RaceController {
 
   /// Speed of the nasty crash, in km/h.
   int crashKmh = 0;
+
+  /// Seconds left of the pre-race briefing that shows the level's hints.
+  double briefing;
+
+  /// How many times the player hit traffic and bashed a rival.
+  int trafficHits = 0, bashes = 0;
 
   /// Total race distance.
   double get raceLength => lapLength * laps - runOut;
@@ -110,8 +141,12 @@ class RaceController {
     finishTime = elapsed;
   }
 
-  /// Advances the countdown, clock and finish state.
+  /// Advances the briefing, countdown, clock and finish state.
   void update(double dt, double playerDistance, double playerSpeed) {
+    if (briefing > 0) {
+      briefing -= dt;
+      return;
+    }
     if (countdown > 0) {
       countdown -= dt;
       return;
@@ -167,6 +202,9 @@ class RaceController {
       fine: fine,
       crashed: crashedOut,
       crashKmh: crashKmh,
+      level: rules.level,
+      trafficHits: trafficHits,
+      bashes: bashes,
     );
   }
 }

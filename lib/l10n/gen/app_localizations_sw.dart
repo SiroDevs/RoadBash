@@ -1,6 +1,9 @@
 // ignore: unused_import
+
+// Package imports:
 import 'package:intl/intl.dart' as intl;
 
+// Project imports:
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -497,10 +500,12 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get statsPlacesEmpty => 'Hakuna mahali paliporekodiwa kwa kipindi hiki bado.';
+  String get statsPlacesEmpty =>
+      'Hakuna mahali paliporekodiwa kwa kipindi hiki bado.';
 
   @override
-  String get statsPlacesNote => 'Vitone vinavyong\'aa zaidi vinamaanisha wageni zaidi. Mahali ni makadirio hadi kiwango cha jiji, na hakuna anwani zinazohifadhiwa.';
+  String get statsPlacesNote =>
+      'Vitone vinavyong\'aa zaidi vinamaanisha wageni zaidi. Mahali ni makadirio hadi kiwango cha jiji, na hakuna anwani zinazohifadhiwa.';
 
   @override
   String statsPlacesMore(int count) {
@@ -556,6 +561,20 @@ class AppLocalizationsSw extends AppLocalizations {
       'Jibu mapendekezo, yaweke wazi au futa yasiyofaa.';
 
   @override
+  String get leaderboardThisWeek => 'Wiki hii';
+
+  @override
+  String get leaderboardLastWeek => 'Wiki iliyopita';
+
+  @override
+  String get leaderboardAllTime => 'Wakati wote';
+
+  @override
+  String leaderboardRange(String from, String to) {
+    return '$from – $to';
+  }
+
+  @override
   String get boardroomSuggestionLabel => 'Pendekezo lako';
 
   @override
@@ -591,22 +610,6 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get boardroomDeleteBody =>
       'Itaondolewa kwa kila mtu, pamoja na majibu yote chini yake.';
-  String get leaderboardThisWeek => 'Wiki hii';
-
-  @override
-  String get leaderboardLastWeek => 'Wiki iliyopita';
-
-  @override
-  String get leaderboardAllTime => 'Wakati wote';
-
-  @override
-  String leaderboardRange(String from, String to) {
-    return '$from – $to';
-  }
-
-  @override
-  String get suggestionHint =>
-      'Niambie nini cha kurekebisha, kuongeza au kuondoa. Kila pendekezo hufika kwenye kikasha changu.';
 
   @override
   String get boardroomAdminTag => 'Msimamizi';

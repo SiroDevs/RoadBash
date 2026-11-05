@@ -16,8 +16,8 @@ import 'core/router/app_router.dart';
 import 'feature/audio/cubit/audio_cubit.dart';
 import 'feature/auth/cubit/auth_cubit.dart';
 import 'feature/progress/cubit/progress_cubit.dart';
-import 'feature/wallet/cubit/wallet_cubit.dart';
 import 'feature/settings/cubit/settings_cubit.dart';
+import 'feature/wallet/cubit/wallet_cubit.dart';
 import 'l10n/gen/app_localizations.dart';
 
 /// Root widget that builds the app view.

@@ -1,10 +1,15 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+
+// Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+// Project imports:
 import 'app_localizations_en.dart';
 import 'app_localizations_sw.dart';
 
@@ -1005,6 +1010,29 @@ abstract class AppLocalizations {
   String get boardroomSuggestions;
 
   /// Announcements hint for players
+  ///
+  /// In en, this message translates to:
+  /// **'News from the admins. Reply to join the conversation.'**
+  String get boardroomAnnouncementsHint;
+
+  /// Announcements hint for admins
+  ///
+  /// In en, this message translates to:
+  /// **'Post an announcement for everyone. Players can reply under it, and you can delete anything inappropriate.'**
+  String get boardroomAdminAnnounceHint;
+
+  /// Boardroom hint
+  ///
+  /// In en, this message translates to:
+  /// **'Tell me what to fix, add or remove. Suggestions stay private until an admin makes them public.'**
+  String get boardroomHint;
+
+  /// Boardroom admin hint
+  ///
+  /// In en, this message translates to:
+  /// **'Reply to suggestions, make them public or delete what is not appropriate.'**
+  String get boardroomAdminHint;
+
   /// Leaderboard tab
   ///
   /// In en, this message translates to:
@@ -1028,30 +1056,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{from} – {to}'**
   String leaderboardRange(String from, String to);
-
-  /// Suggestion hint
-  ///
-  /// In en, this message translates to:
-  /// **'News from the admins. Reply to join the conversation.'**
-  String get boardroomAnnouncementsHint;
-
-  /// Announcements hint for admins
-  ///
-  /// In en, this message translates to:
-  /// **'Post an announcement for everyone. Players can reply under it, and you can delete anything inappropriate.'**
-  String get boardroomAdminAnnounceHint;
-
-  /// Boardroom hint
-  ///
-  /// In en, this message translates to:
-  /// **'Tell me what to fix, add or remove. Suggestions stay private until an admin makes them public.'**
-  String get boardroomHint;
-
-  /// Boardroom admin hint
-  ///
-  /// In en, this message translates to:
-  /// **'Reply to suggestions, make them public or delete what is not appropriate.'**
-  String get boardroomAdminHint;
 
   /// Suggestion field
   ///

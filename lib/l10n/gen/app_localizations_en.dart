@@ -1,6 +1,9 @@
 // ignore: unused_import
+
+// Package imports:
 import 'package:intl/intl.dart' as intl;
 
+// Project imports:
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -501,7 +504,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statsPlacesEmpty => 'No locations recorded for this period yet.';
 
   @override
-  String get statsPlacesNote => 'Brighter dots mean more visitors. Places are approximate, to about city level, and no addresses are kept.';
+  String get statsPlacesNote =>
+      'Brighter dots mean more visitors. Places are approximate, to about city level, and no addresses are kept.';
 
   @override
   String statsPlacesMore(int count) {
@@ -525,22 +529,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get menuScenes => 'Scenes';
-  String get leaderboardThisWeek => 'This week';
-
-  @override
-  String get leaderboardLastWeek => 'Last week';
-
-  @override
-  String get leaderboardAllTime => 'All time';
-
-  @override
-  String leaderboardRange(String from, String to) {
-    return '$from – $to';
-  }
-
-  @override
-  String get suggestionHint =>
-      'Tell me what to fix, add or remove. Every suggestion lands in my inbox.';
 
   @override
   String get boardroomTitle => 'Boardroom';
@@ -570,6 +558,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get boardroomAdminHint =>
       'Reply to suggestions, make them public or delete what is not appropriate.';
+
+  @override
+  String get leaderboardThisWeek => 'This week';
+
+  @override
+  String get leaderboardLastWeek => 'Last week';
+
+  @override
+  String get leaderboardAllTime => 'All time';
+
+  @override
+  String leaderboardRange(String from, String to) {
+    return '$from – $to';
+  }
 
   @override
   String get boardroomSuggestionLabel => 'Your suggestion';

@@ -1,9 +1,6 @@
 // ignore: unused_import
-
-// Package imports:
 import 'package:intl/intl.dart' as intl;
 
-// Project imports:
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -655,17 +652,17 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String levelUpNote(int level) {
-    return 'Umepanda ngazi! Sasa uko Ngazi ${level}.';
+    return 'Umepanda ngazi! Sasa uko Ngazi $level.';
   }
 
   @override
   String sceneLocked(int level) {
-    return 'Fikia Ngazi ${level} kufungua eneo hili';
+    return 'Fikia Ngazi $level kufungua eneo hili';
   }
 
   @override
   String hintNextLevel(int wins, int level, int done) {
-    return 'Shinda ${wins} mfululizo kwa Ngazi ${level} (${done}/${wins})';
+    return 'Shinda $wins mfululizo kwa Ngazi $level ($done/$wins)';
   }
 
   @override
@@ -673,12 +670,12 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String hintUnlocks(String places) {
-    return 'Hufungua: ${places}';
+    return 'Hufungua: $places';
   }
 
   @override
   String hintPrize(String amount, int best, int clean) {
-    return 'Shinda KSh ${amount} · muda bora +${best}% · mbio safi +${clean}%';
+    return 'Shinda KSh $amount · muda bora +$best% · mbio safi +$clean%';
   }
 
   @override
@@ -686,16 +683,16 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String resultsBestBonus(String amount) {
-    return 'Bonasi ya muda bora: ${amount}';
+    return 'Bonasi ya muda bora: $amount';
   }
 
   @override
   String resultsCleanBonus(String amount) {
-    return 'Bonasi ya mbio safi: ${amount}';
+    return 'Bonasi ya mbio safi: $amount';
   }
 
   @override
   String resultsTraffic(String amount) {
-    return 'Faini za trafiki: ${amount}';
+    return 'Faini za trafiki: $amount';
   }
 }

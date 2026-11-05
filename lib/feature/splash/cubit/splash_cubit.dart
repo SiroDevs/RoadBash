@@ -30,7 +30,7 @@ class SplashCubit extends Cubit<bool> {
     await _settings.load();
     await _auth.restore();
     await Future.wait([
-      _progress.load(),
+      _progress.load().then((_) => _auth.syncLevel()),
       Future.any([
         Future<void>.delayed(const Duration(milliseconds: 2800)),
         _skip.future,

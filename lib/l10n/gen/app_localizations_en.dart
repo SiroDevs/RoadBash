@@ -1,9 +1,6 @@
 // ignore: unused_import
-
-// Package imports:
 import 'package:intl/intl.dart' as intl;
 
-// Project imports:
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -655,17 +652,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String levelUpNote(int level) {
-    return 'Level up! You are now Level ${level}.';
+    return 'Level up! You are now Level $level.';
   }
 
   @override
   String sceneLocked(int level) {
-    return 'Reach Level ${level} to unlock this scene';
+    return 'Reach Level $level to unlock this scene';
   }
 
   @override
   String hintNextLevel(int wins, int level, int done) {
-    return 'Win ${wins} in a row for Level ${level} (${done}/${wins})';
+    return 'Win $wins in a row for Level $level ($done/$wins)';
   }
 
   @override
@@ -673,12 +670,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String hintUnlocks(String places) {
-    return 'Unlocks: ${places}';
+    return 'Unlocks: $places';
   }
 
   @override
   String hintPrize(String amount, int best, int clean) {
-    return 'Win KSh ${amount} · best +${best}% · clean +${clean}%';
+    return 'Win KSh $amount · best +$best% · clean +$clean%';
   }
 
   @override
@@ -686,16 +683,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String resultsBestBonus(String amount) {
-    return 'New best bonus: ${amount}';
+    return 'New best bonus: $amount';
   }
 
   @override
   String resultsCleanBonus(String amount) {
-    return 'Clean race bonus: ${amount}';
+    return 'Clean race bonus: $amount';
   }
 
   @override
   String resultsTraffic(String amount) {
-    return 'Traffic fines: ${amount}';
+    return 'Traffic fines: $amount';
   }
 }

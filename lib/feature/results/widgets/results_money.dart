@@ -29,7 +29,7 @@ class ResultsMoney extends StatelessWidget {
     );
   }
 
-  /// The prize or crash bills, then the wallet balance.
+  /// The prize and bonuses, the fines and crash bills, then the wallet balance.
   Widget _lines(BuildContext context, RaceSettlement settlement) {
     final l10n = context.l10n;
     return Column(
@@ -37,6 +37,12 @@ class ResultsMoney extends StatelessWidget {
       children: [
         if (settlement.prize > 0)
           _line(context, l10n.resultsPrize(formatMoney(l10n, settlement.prize)), Retro.yellow),
+        if (settlement.bestBonus > 0)
+          _line(context, l10n.resultsBestBonus(formatMoney(l10n, settlement.bestBonus)), Retro.yellow),
+        if (settlement.cleanBonus > 0)
+          _line(context, l10n.resultsCleanBonus(formatMoney(l10n, settlement.cleanBonus)), Retro.yellow),
+        if (settlement.traffic > 0)
+          _line(context, l10n.resultsTraffic(formatMoney(l10n, settlement.traffic)), Colors.white),
         if (settlement.hospital > 0)
           _line(context, l10n.crashHospital(formatMoney(l10n, settlement.hospital)), Colors.white),
         if (settlement.garage > 0)

@@ -2,6 +2,7 @@
 import 'dart:math' as math;
 
 // Project imports:
+import '../../../domain/models/level_rules.dart';
 import '../../../domain/models/scene_id.dart';
 import '../police/police_chase.dart';
 import '../road/road_renderer.dart';
@@ -14,9 +15,16 @@ import 'race_controller.dart';
 class SceneTraffic {
   SceneTraffic._(this.flow, this.police);
 
-  /// Builds the traffic and patrol for [scene] on its road and race.
-  factory SceneTraffic.of(SceneId scene, SceneTheme theme, RoadRenderer road, RaceController race) {
-    final profile = TrafficProfile.of(scene);
+  /// Builds the traffic and patrol for [scene] on its road and race, as the
+  /// level's [rules] set them.
+  factory SceneTraffic.of(
+    SceneId scene,
+    SceneTheme theme,
+    RoadRenderer road,
+    RaceController race,
+    LevelRules rules,
+  ) {
+    final profile = TrafficProfile.of(scene).withDensity(rules.traffic);
     return SceneTraffic._(
       TrafficFlow(
         profile: profile,
@@ -24,10 +32,12 @@ class SceneTraffic {
         track: road.track,
         raceLength: race.raceLength,
         guarded: theme.dualCarriageway,
+        trafficLanes: TrafficProfile.trafficLanes(scene, theme.lanes),
         seed: 7919 + scene.index * 31,
       ),
       PoliceChase(
-        enabled: profile.police,
+        enabled: profile.police && rules.police,
+        fineAmount: rules.policeFine,
         random: math.Random(4001 + scene.index),
       ),
     );

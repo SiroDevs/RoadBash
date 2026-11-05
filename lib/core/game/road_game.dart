@@ -10,6 +10,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 
 // Project imports:
+import '../../domain/models/level_rules.dart';
 import '../../domain/models/player_profile.dart';
 import '../../domain/models/scene_id.dart';
 import '../audio/audio_service.dart';
@@ -28,6 +29,7 @@ import 'race/rival/rival_racer.dart';
 import 'race/scene_traffic.dart';
 import 'race/traffic_contacts.dart';
 import 'rider/rider_component.dart';
+import 'road/config/vehicle_config.dart';
 import 'road/road_renderer.dart';
 import 'road/scene_theme.dart';
 import 'road/traffic/rival_overlay.dart';
@@ -43,10 +45,21 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     required this.strings,
     required this.playerName,
     required this.onFinished,
+    required this.rules,
+    this.briefing = const [],
     this.onPauseKey,
   });
 
+  /// How long the pre-race hints stay up before the countdown starts.
+  static const double briefingSeconds = 4.0;
+
   final SceneId scene;
+
+  /// The rules of the level being raced.
+  final LevelRules rules;
+
+  /// Hint lines shown before the countdown; the first is the level's title.
+  final List<String> briefing;
   PlayerProfile mix;
   final AudioService audio;
   final HudStrings strings;
@@ -68,6 +81,8 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
   RideAudio? _ride;
   late final RiderContacts _contacts = RiderContacts(
     onImpact: (strength, knockedOff) => _ride?.impact(strength, knockedOff),
+    onBash: () => race.bashes++,
+    shoving: rules.shoving,
   );
 
   bool _menuPaused = false;
@@ -78,24 +93,32 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
   @override
   Future<void> onLoad() async {
     final theme = SceneTheme.of(scene);
-    road = RoadRenderer(theme);
+    final laps = rules.lapsFor(scene, theme.laps);
+    road = RoadRenderer(theme, laps: laps)
+      ..speedLimitKmh = rules.maxSpeedKmh
+      ..nastyCrashesEnabled = rules.hospital;
     race = RaceController(
       scene: scene,
-      laps: theme.laps,
+      laps: laps,
       lapLength: road.track.length,
       runOut: road.track.runOutLength,
       playerName: playerName,
+      rules: rules,
+      rivals: RaceController.lineup(rules),
+      briefingSeconds: briefing.isEmpty ? 0 : briefingSeconds,
     );
+    final speedLimit = rules.speedShare(VehicleConfig.topSpeedKmh);
     racers = [
       for (var i = 0; i < race.rivals.length; i++)
-        RivalRacer(race.rivals[i], i, theme.lanes),
+        RivalRacer(race.rivals[i], i, theme.lanes, speedLimit: speedLimit),
     ];
-    final traffic = SceneTraffic.of(scene, theme, road, race);
+    final traffic = SceneTraffic.of(scene, theme, road, race, rules);
     flow = traffic.flow;
     police = traffic.police;
     _trafficContacts = TrafficContacts(
       onImpact: (strength, knockedOff) => _ride?.impact(strength, knockedOff),
       onCrime: police.crime,
+      onHit: () => race.trafficHits++,
     );
     for (final racer in racers) {
       racer.peers = racers;
@@ -109,7 +132,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
       RivalOverlay(road),
       handlebar,
       HandlebarPipeHud(handlebar),
-      DashboardHud(road, race, strings, police),
+      DashboardHud(road, race, strings, police, briefing),
       HandlebarGripsHud(handlebar, strings.gas),
     ]);
     if (_shutDown) return;

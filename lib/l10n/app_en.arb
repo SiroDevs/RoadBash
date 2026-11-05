@@ -900,5 +900,97 @@
         "type": "int"
       }
     }
+  },
+  "levelUpNote": "Level up! You are now Level {level}.",
+  "@levelUpNote": {
+    "description": "Shown when a win unlocks the next level",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "sceneLocked": "Reach Level {level} to unlock this scene",
+  "@sceneLocked": {
+    "description": "Shown for a scene the level has not opened",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "hintNextLevel": "Win {wins} in a row for Level {level} ({done}/{wins})",
+  "@hintNextLevel": {
+    "description": "Pre-race hint: what it takes to reach the next level",
+    "placeholders": {
+      "wins": {
+        "type": "int"
+      },
+      "level": {
+        "type": "int"
+      },
+      "done": {
+        "type": "int"
+      }
+    }
+  },
+  "hintTopLevel": "Top level. Keep winning!",
+  "@hintTopLevel": {
+    "description": "Pre-race hint at the top level"
+  },
+  "hintUnlocks": "Unlocks: {places}",
+  "@hintUnlocks": {
+    "description": "Pre-race hint: scenes the next level opens",
+    "placeholders": {
+      "places": {
+        "type": "String"
+      }
+    }
+  },
+  "hintPrize": "Win KSh {amount} · best +{best}% · clean +{clean}%",
+  "@hintPrize": {
+    "description": "Pre-race hint: prize and bonuses",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "best": {
+        "type": "int"
+      },
+      "clean": {
+        "type": "int"
+      }
+    }
+  },
+  "hintNoPrize": "Practice level: no prize money",
+  "@hintNoPrize": {
+    "description": "Pre-race hint on the first level"
+  },
+  "resultsBestBonus": "New best bonus: {amount}",
+  "@resultsBestBonus": {
+    "description": "Money line: bonus for a new best time",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsCleanBonus": "Clean race bonus: {amount}",
+  "@resultsCleanBonus": {
+    "description": "Money line: bonus for not bashing rivals",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsTraffic": "Traffic fines: {amount}",
+  "@resultsTraffic": {
+    "description": "Money line: fines for hitting traffic",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

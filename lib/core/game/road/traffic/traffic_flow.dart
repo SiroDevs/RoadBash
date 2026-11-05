@@ -21,6 +21,7 @@ class TrafficFlow {
     required this.track,
     required this.raceLength,
     required this.guarded,
+    required this.trafficLanes,
     int seed = 1,
   }) : _random = math.Random(seed),
        cars = List.generate(profile.poolSize, CivilianCar.new),
@@ -63,6 +64,9 @@ class TrafficFlow {
   /// True on roads with a median guardrail that vehicles must keep clear of.
   final bool guarded;
 
+  /// How many lanes from the left edge the traffic drives in; it keeps left.
+  final int trafficLanes;
+
   final math.Random _random;
 
   /// Every vehicle of the pool, whether on the road or parked out of sight.
@@ -72,10 +76,10 @@ class TrafficFlow {
   final List<double> laneCenters;
 
   late final List<double> laneSpeeds = [
-    for (var k = 0; k < lanes; k++)
+    for (var k = 0; k < trafficLanes; k++)
       (profile.minSpeed +
               (profile.maxSpeed - profile.minSpeed) *
-                  (lanes > 1 ? k / (lanes - 1) : 0.5) +
+                  (trafficLanes > 1 ? k / (trafficLanes - 1) : 0.5) +
               (_random.nextDouble() - 0.5) * 0.03) *
           VehicleConfig.maxSpeed,
   ];
@@ -108,7 +112,7 @@ class TrafficFlow {
 
   /// Puts a vehicle in a random lane at [distance].
   void _spawn(CivilianCar car, double distance) {
-    final lane = _random.nextInt(lanes);
+    final lane = _random.nextInt(trafficLanes);
     car.place(
       kind: _pickKind(lane),
       color: _bodies[_random.nextInt(_bodies.length)],
@@ -121,7 +125,8 @@ class TrafficFlow {
     );
   }
 
-  /// Picks a vehicle kind: trucks favour the slow left lane, never the fast one.
+  /// Picks a vehicle kind: trucks favour the slow left lane, never the fast one
+  /// of the lanes traffic uses.
   CivilianKind _pickKind(int lane) {
     var total = 0;
     final weights = <int>[];
@@ -130,7 +135,7 @@ class TrafficFlow {
       if (kind == CivilianKind.truck) {
         if (lane == 0) {
           w *= 2;
-        } else if (lane == lanes - 1 && lanes > 2) {
+        } else if (lane == trafficLanes - 1 && trafficLanes > 2) {
           w = 0;
         }
       }

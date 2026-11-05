@@ -19,6 +19,7 @@ import '../../../common/widgets/retro/page/retro_scaffold.dart';
 import '../../../common/widgets/retro/retro_style.dart';
 import '../../../core/audio/audio_catalog.dart';
 import '../../../core/game/input/tilt/tilt_access.dart';
+import '../../../core/game/road/scene_theme.dart';
 import '../../../core/game/road/track/road_track.dart';
 import '../../../core/layout/responsive_layout_builder.dart';
 import '../../../core/router/route_names.dart';
@@ -45,9 +46,13 @@ class MenuScreen extends StatefulWidget {
 
 /// State for [MenuScreen]; caches the race length of each scene.
 class _MenuScreenState extends State<MenuScreen> {
-  final Map<SceneId, double> _km = {
-    for (final id in SceneId.values) id: RoadTrack.raceKm(id),
-  };
+  final Map<String, double> _kmCache = {};
+
+  /// Returns the race length of [id] over [laps] laps, remembering it.
+  double _km(SceneId id, int laps) => _kmCache.putIfAbsent(
+    '${id.name}:$laps',
+    () => RoadTrack.raceKm(id, laps: laps),
+  );
 
   @override
   void initState() {
@@ -63,6 +68,15 @@ class _MenuScreenState extends State<MenuScreen> {
 
   /// Selects a menu target and opens its screen.
   void _open(MenuCubit menu, MenuTarget target) {
+    // A scene the player's level does not open yet stays closed; its info
+    // panel says which level opens it.
+    if (target.isScene &&
+        !context.read<ProgressCubit>().state.career.rules.isOpen(
+          target.scene!,
+        )) {
+      menu.select(target);
+      return;
+    }
     menu.open(target);
     switch (target.place) {
       case MenuPlace.scene:
@@ -146,7 +160,14 @@ class _MenuScreenState extends State<MenuScreen> {
     final l10n = context.l10n;
     final sizes = context.sizes;
     final id = selected.scene;
-    final info = SceneInfo(target: selected, km: id == null ? 0 : _km[id]!);
+    final laps = id == null
+        ? 1
+        : order.rules.lapsFor(id, SceneTheme.of(id).laps);
+    final info = SceneInfo(
+      target: selected,
+      km: id == null ? 0 : _km(id, laps),
+      laps: laps,
+    );
     final card = ScenePreview(sceneImg: menuAsset(selected), scene: selected.scene);
     final title = RetroTitle(menuLabel(l10n, selected));
     final entries = MenuGrid(

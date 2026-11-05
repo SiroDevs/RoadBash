@@ -21,6 +21,7 @@ import '../../feature/leaderboard/ui/leaderboard_screen.dart';
 import '../../feature/menu/cubit/menu_cubit.dart';
 import '../../feature/menu/ui/menu_screen.dart';
 import '../../feature/notice/notice_screen.dart';
+import '../../feature/progress/cubit/progress_cubit.dart';
 import '../../feature/race/cubit/race_cubit.dart';
 import '../../feature/race/ui/race_screen.dart';
 import '../../feature/reception/cubit/reception_cubit.dart';
@@ -97,6 +98,14 @@ class AppRouter {
         GoRoute(
           path: RoutePaths.race,
           name: RouteNames.race,
+          // A scene the player's level has not opened yet goes back to the menu.
+          redirect: (context, state) {
+            final id = SceneId.values.asNameMap()[state.pathParameters['scene']];
+            final open =
+                id == null ||
+                getIt<ProgressCubit>().state.career.rules.isOpen(id);
+            return open ? null : RoutePaths.menu;
+          },
           builder: (context, state) {
             final id = SceneId.values.asNameMap()[state.pathParameters['scene']];
             return _provide<RaceCubit>(

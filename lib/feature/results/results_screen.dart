@@ -66,6 +66,13 @@ class ResultsScreen extends StatelessWidget {
                     style: retroBody(size: sizes.body, color: Retro.yellow),
                   ),
                 ],
+                if (outcome.levelUp != null) ...[
+                  SizedBox(height: sizes.gap * 0.75),
+                  Text(
+                    l10n.levelUpNote(outcome.levelUp!),
+                    style: retroBody(size: sizes.body, color: Retro.yellow),
+                  ),
+                ],
               ],
             ),
             Padding(

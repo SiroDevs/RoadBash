@@ -1,6 +1,9 @@
 // Dart imports:
 import 'dart:math' as math;
 
+// Flutter imports:
+import 'package:flutter/foundation.dart' show VoidCallback;
+
 // Project imports:
 import '../police/police_chase.dart';
 import '../police/police_cop.dart';
@@ -17,13 +20,20 @@ import 'rival/rival_racer.dart';
 /// touch only holds the rider back. Hitting traffic is also a crime, so each
 /// hit reports to the police.
 class TrafficContacts {
-  TrafficContacts({required this.onImpact, required this.onCrime});
+  TrafficContacts({
+    required this.onImpact,
+    required this.onCrime,
+    required this.onHit,
+  });
 
   /// Called with the strength of a hit on the player and whether it was a fall.
   final void Function(double strength, bool knockedOff) onImpact;
 
   /// Called with how much heat a hit on traffic adds.
   final void Function(double heat) onCrime;
+
+  /// Called once for every hit the player makes on a vehicle, front or side.
+  final VoidCallback onHit;
 
   static const double _startGrace = 3;
   static const double _frontReach = 230;
@@ -88,6 +98,7 @@ class TrafficContacts {
       road.speed = math.min(road.speed, car.speed * 0.9);
       if (knockedOff) road.fall(direction, 1.8 + 1.4 * strength);
       _wait[car.index] = _rearCooldown;
+      onHit();
       onImpact(strength, knockedOff);
       onCrime(knockedOff ? 0.45 : 0.25);
       return;
@@ -96,6 +107,7 @@ class TrafficContacts {
     if (_wait[car.index] > 0) return;
     road.bump(speedLoss: 0.06, sideShove: direction * 1.1);
     _wait[car.index] = _sideCooldown;
+    onHit();
     onImpact(0.35, false);
   }
 

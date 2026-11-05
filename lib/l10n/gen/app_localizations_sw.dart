@@ -652,4 +652,50 @@ class AppLocalizationsSw extends AppLocalizations {
   String menuOnline(int count) {
     return '$count mtandaoni';
   }
+
+  @override
+  String levelUpNote(int level) {
+    return 'Umepanda ngazi! Sasa uko Ngazi ${level}.';
+  }
+
+  @override
+  String sceneLocked(int level) {
+    return 'Fikia Ngazi ${level} kufungua eneo hili';
+  }
+
+  @override
+  String hintNextLevel(int wins, int level, int done) {
+    return 'Shinda ${wins} mfululizo kwa Ngazi ${level} (${done}/${wins})';
+  }
+
+  @override
+  String get hintTopLevel => 'Ngazi ya juu. Endelea kushinda!';
+
+  @override
+  String hintUnlocks(String places) {
+    return 'Hufungua: ${places}';
+  }
+
+  @override
+  String hintPrize(String amount, int best, int clean) {
+    return 'Shinda KSh ${amount} · muda bora +${best}% · mbio safi +${clean}%';
+  }
+
+  @override
+  String get hintNoPrize => 'Ngazi ya mazoezi: hakuna zawadi';
+
+  @override
+  String resultsBestBonus(String amount) {
+    return 'Bonasi ya muda bora: ${amount}';
+  }
+
+  @override
+  String resultsCleanBonus(String amount) {
+    return 'Bonasi ya mbio safi: ${amount}';
+  }
+
+  @override
+  String resultsTraffic(String amount) {
+    return 'Faini za trafiki: ${amount}';
+  }
 }

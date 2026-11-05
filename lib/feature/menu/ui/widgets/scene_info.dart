@@ -8,17 +8,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../core/game/race/race_result.dart';
-import '../../../../core/game/road/scene_theme.dart';
+import '../../../../domain/models/level_rules.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../../../progress/cubit/progress_cubit.dart';
 import '../../cubit/menu_target.dart';
 
 /// Shows the name, length and best stats of the selected scene.
 class SceneInfo extends StatelessWidget {
-  const SceneInfo({super.key, required this.target, required this.km});
+  const SceneInfo({
+    super.key,
+    required this.target,
+    required this.km,
+    required this.laps,
+  });
 
   final MenuTarget target;
   final double km;
+
+  /// Laps of the selected scene at the player's level.
+  final int laps;
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +54,9 @@ class SceneInfo extends StatelessWidget {
           if (id != null) ...[
             SizedBox(height: sizes.gap * 0.9),
             Text(
-              SceneTheme.of(id).laps == 1
+              laps == 1
                   ? l10n.lengthOneWayLabel(km.toStringAsFixed(1))
-                  : l10n.lengthLabel(km.toStringAsFixed(1), SceneTheme.of(id).laps),
+                  : l10n.lengthLabel(km.toStringAsFixed(1), laps),
               style: retroBody(size: sizes.small, color: Retro.yellow),
             ),
             BlocBuilder<ProgressCubit, ProgressState>(
@@ -58,9 +66,21 @@ class SceneInfo extends StatelessWidget {
                 final time = best == null
                     ? l10n.noTimeYet
                     : l10n.bestTimeLabel(formatTime(best / 1000));
-                return Text(
-                  '$time  |  ${l10n.racesWinsLabel(stats.races, stats.wins)}',
-                  style: retroBody(size: sizes.caption, color: Retro.dim),
+                final locked = !progress.career.rules.isOpen(id);
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '$time  |  ${l10n.racesWinsLabel(stats.races, stats.wins)}',
+                      style: retroBody(size: sizes.caption, color: Retro.dim),
+                    ),
+                    if (locked)
+                      Text(
+                        l10n.sceneLocked(LevelRules.unlockLevelOf(id)),
+                        style: retroBody(size: sizes.small, color: Retro.yellow),
+                      ),
+                  ],
                 );
               },
             ),

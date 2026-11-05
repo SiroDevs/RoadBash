@@ -22,7 +22,7 @@ import 'rival_steering.dart';
 
 /// Computer-controlled rival drawn as a bike on the road.
 class RivalRacer implements RoadActor {
-  RivalRacer(this.rival, this.index, this.lanes)
+  RivalRacer(this.rival, this.index, this.lanes, {this.speedLimit = 1.0})
       : sprite = RiderSprite(look: rival.look),
         _brain = RivalBrain(rival, index * 7919 + rival.name.hashCode),
         _lead = _grid[index % _grid.length].$2,
@@ -46,6 +46,9 @@ class RivalRacer implements RoadActor {
   final RiderRival rival;
   final int index;
   final int lanes;
+
+  /// The fastest the rival may go, as a share of the bike's top speed.
+  final double speedLimit;
   final RiderSprite sprite;
   final RivalBrain _brain;
   final RivalSteering _steering;
@@ -155,7 +158,10 @@ class RivalRacer implements RoadActor {
   void _ride(double dt, RaceController race, RoadRenderer road) {
     if (race.raceClock <= 0) return;
     _brain.think(dt, _lookout.look(this, race, road));
-    var target = _brain.speedFraction * VehicleConfig.maxSpeed;
+    var target = math.min(
+      _brain.speedFraction * VehicleConfig.maxSpeed,
+      VehicleConfig.maxSpeed * speedLimit,
+    );
     final cap = flow?.speedCap(distance, lateral);
     if (cap != null) target = math.min(target, cap);
     if (target > _speed) {

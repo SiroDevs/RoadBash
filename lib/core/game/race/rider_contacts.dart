@@ -1,6 +1,9 @@
 // Dart imports:
 import 'dart:math' as math;
 
+// Flutter imports:
+import 'package:flutter/foundation.dart' show VoidCallback;
+
 // Project imports:
 import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
@@ -9,9 +12,20 @@ import 'rival/rival_racer.dart';
 
 /// Finds bikes touching the player and applies bumps, shoves and falls.
 class RiderContacts {
-  RiderContacts({required this.onImpact});
+  RiderContacts({
+    required this.onImpact,
+    required this.onBash,
+    this.shoving = true,
+  });
 
   final void Function(double strength, bool knockedOff) onImpact;
+
+  /// Called each time the player bashes a rival: shoves one from the side or
+  /// runs into the back of one.
+  final VoidCallback onBash;
+
+  /// False on the levels where bikes cannot shove each other from the side.
+  final bool shoving;
 
   static const double _alongReach = 380;
   static const double _bodyLength = 150;
@@ -67,7 +81,7 @@ class RiderContacts {
       _rearEnd(racer, road, along, direction, ready);
       return;
     }
-    if (!ready) return;
+    if (!shoving || !ready) return;
     final playerApproach = moved * direction;
     final rivalApproach = -racer.lateralMotion * direction;
     final closing = playerApproach + rivalApproach;
@@ -90,6 +104,7 @@ class RiderContacts {
     final loss = _victimSlowdown * strength;
     final recoil = _attackerSlowdown * strength;
     if (playerAttacks) {
+      onBash();
       racer.bump(speedLoss: loss, sideShove: victimSide * strength * _victimShove);
       road.bump(speedLoss: recoil, sideShove: -victimSide * strength * _attackerShove);
       if (knockedOff) racer.fall(victimSide, downTime);
@@ -128,6 +143,7 @@ class RiderContacts {
     }
     if (!ready || strength < _minStrength) return;
     _cooldowns[racer] = _cooldown;
+    if (playerFollows) onBash();
     onImpact(strength * 0.6, false);
   }
 }

@@ -19,4 +19,5 @@ class PrefKeys {
   static const engineOn = 'opt_engine_on';
   static const invertTilt = 'opt_invert_tilt';
   static const language = 'opt_language';
+  static const career = 'career_v1';
 }

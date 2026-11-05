@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
+import '../../../../domain/models/level_rules.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../l10n/l10n_extension.dart';
@@ -63,7 +64,11 @@ class MenuGrid extends StatelessWidget {
           MenuEntry(
             label: menuLabel(l10n, item),
             selected: item == selected,
-            hint: item.scene == order.mostPlayed ? l10n.mostPlayed : null,
+            hint: order.isLocked(item.scene!)
+                ? l10n.levelLabel(LevelRules.unlockLevelOf(item.scene!)).toUpperCase()
+                : item.scene == order.mostPlayed
+                ? l10n.mostPlayed
+                : null,
             onTap: () => onTap(item),
           ).constrained(width: cellWidth),
       ],

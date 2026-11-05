@@ -10,19 +10,23 @@ import 'package:injectable/injectable.dart';
 // Project imports:
 import '../../common/utils/uuid.dart';
 import '../../domain/models/stats_models.dart';
+import '../../domain/models/visitor_places.dart';
 import '../../domain/repos/stats_repo.dart';
+import '../mappers/places_mapper.dart';
 import '../mappers/stats_mapper.dart';
 import '../sources/local/pref_keys.dart';
 import '../sources/local/prefs_source.dart';
 import '../sources/remote/api_client.dart';
+import '../sources/remote/geo_source.dart';
 
 /// Reads and records stats through the API and local storage.
 @LazySingleton(as: StatsRepo)
 class StatsRepoImpl implements StatsRepo {
-  StatsRepoImpl(this._api, this._prefs);
+  StatsRepoImpl(this._api, this._prefs, this._geo);
 
   final ApiClient _api;
   final PrefsSource _prefs;
+  final GeoSource _geo;
   Timer? _beat;
   bool _visitLogged = false;
 
@@ -42,9 +46,18 @@ class StatsRepoImpl implements StatsRepo {
     if (_visitLogged || !_api.isConfigured) return;
     _visitLogged = true;
     try {
+      final place = await _geo.lookup();
       await _api.call('rb_track_visit', {
         'p_visitor': _visitorId,
         'p_platform': kIsWeb ? 'web' : defaultTargetPlatform.name,
+        if (place != null) ...{
+          'p_country_code': place.countryCode,
+          'p_country': place.country,
+          'p_region': place.region,
+          'p_city': place.city,
+          'p_lat': place.latitude,
+          'p_lng': place.longitude,
+        },
       });
     } catch (_) {}
     _beat ??= Timer.periodic(const Duration(seconds: 30), (_) => _heartbeat());
@@ -81,4 +94,12 @@ class StatsRepoImpl implements StatsRepo {
         'p_days': range.heatmapDays,
         'p_tz_offset': _offset,
       })).rows(heatCellFromJson);
+
+  @override
+  Future<VisitorPlaces> places(StatsRange range) async => visitorPlacesFromJson(
+    await _api.call('rb_stats_places', {
+      'p_days': range.days,
+      'p_tz_offset': _offset,
+    }),
+  );
 }

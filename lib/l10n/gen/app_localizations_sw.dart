@@ -445,6 +445,31 @@ class AppLocalizationsSw extends AppLocalizations {
       'Safu ni siku (Jumatatu kwanza), nguzo ni saa za siku kwa saa za eneo lako. Mwangaza zaidi inamaanisha shughuli zaidi.';
 
   @override
+  String get statsPlacesTitle => 'Wageni wanatoka wapi';
+
+  @override
+  String get statsPlacesCountries => 'Nchi';
+
+  @override
+  String get statsPlacesCities => 'Maeneo';
+
+  @override
+  String statsPlacesUnknown(int count) {
+    return 'Mahali haijulikani: $count';
+  }
+
+  @override
+  String get statsPlacesEmpty => 'Hakuna mahali paliporekodiwa kwa kipindi hiki bado.';
+
+  @override
+  String get statsPlacesNote => 'Vitone vinavyong\'aa zaidi vinamaanisha wageni zaidi. Mahali ni makadirio hadi kiwango cha jiji, na hakuna anwani zinazohifadhiwa.';
+
+  @override
+  String statsPlacesMore(int count) {
+    return '+$count zaidi';
+  }
+
+  @override
   String get leaderboardTitle => 'Orodha ya Washindi';
 
   @override
@@ -528,6 +553,22 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get boardroomDeleteBody =>
       'Itaondolewa kwa kila mtu, pamoja na majibu yote chini yake.';
+  String get leaderboardThisWeek => 'Wiki hii';
+
+  @override
+  String get leaderboardLastWeek => 'Wiki iliyopita';
+
+  @override
+  String get leaderboardAllTime => 'Wakati wote';
+
+  @override
+  String leaderboardRange(String from, String to) {
+    return '$from – $to';
+  }
+
+  @override
+  String get suggestionHint =>
+      'Niambie nini cha kurekebisha, kuongeza au kuondoa. Kila pendekezo hufika kwenye kikasha changu.';
 
   @override
   String get boardroomAdminTag => 'Msimamizi';

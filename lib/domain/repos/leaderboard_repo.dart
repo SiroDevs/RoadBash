@@ -3,5 +3,5 @@ import '../models/leaderboard_entry.dart';
 
 /// Contract for reading the leaderboard.
 abstract interface class LeaderboardRepo {
-  Future<List<LeaderboardEntry>> top({int limit = 50});
+  Future<Leaderboard> top(LeaderboardPeriod period, {int limit = 50});
 }

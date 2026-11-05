@@ -26,6 +26,7 @@ import 'package:roadbash/data/repos/race_repo_impl.dart' as _i104;
 import 'package:roadbash/data/repos/stats_repo_impl.dart' as _i105;
 import 'package:roadbash/data/sources/local/prefs_source.dart' as _i805;
 import 'package:roadbash/data/sources/remote/api_client.dart' as _i738;
+import 'package:roadbash/data/sources/remote/geo_source.dart' as _i9001;
 import 'package:roadbash/domain/repos/auth_repo.dart' as _i505;
 import 'package:roadbash/domain/repos/leaderboard_repo.dart' as _i808;
 import 'package:roadbash/domain/repos/post_repo.dart' as _i269;
@@ -68,6 +69,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i257.AudioService>(() => _i257.AudioService());
     gh.lazySingleton<_i738.ApiClient>(() => _i738.ApiClient());
+    gh.lazySingleton<_i9001.GeoSource>(() => _i9001.GeoSource());
     gh.singleton<_i805.PrefsSource>(
       () => _i805.PrefsSource(gh<_i460.SharedPreferences>()),
     );
@@ -87,7 +89,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i106.PostRepoImpl(gh<_i738.ApiClient>()),
     );
     gh.lazySingleton<_i1072.StatsRepo>(
-      () => _i105.StatsRepoImpl(gh<_i738.ApiClient>(), gh<_i805.PrefsSource>()),
+      () => _i105.StatsRepoImpl(
+        gh<_i738.ApiClient>(),
+        gh<_i805.PrefsSource>(),
+        gh<_i9001.GeoSource>(),
+      ),
     );
     gh.factory<_i96.BoardroomCubit>(
       () => _i96.BoardroomCubit(gh<_i269.PostRepo>(), gh<_i505.AuthRepo>()),

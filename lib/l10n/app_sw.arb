@@ -608,6 +608,44 @@
   "@statsHeatmapNote": {
     "description": "Heatmap note"
   },
+  "statsPlacesTitle": "Wageni wanatoka wapi",
+  "@statsPlacesTitle": {
+    "description": "Heading of the visitor places section"
+  },
+  "statsPlacesCountries": "Nchi",
+  "@statsPlacesCountries": {
+    "description": "Tab showing visitors by country"
+  },
+  "statsPlacesCities": "Maeneo",
+  "@statsPlacesCities": {
+    "description": "Tab showing visitors by city"
+  },
+  "statsPlacesUnknown": "Mahali haijulikani: {count}",
+  "@statsPlacesUnknown": {
+    "description": "Visitors whose place is not known",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsPlacesEmpty": "Hakuna mahali paliporekodiwa kwa kipindi hiki bado.",
+  "@statsPlacesEmpty": {
+    "description": "No visitor places"
+  },
+  "statsPlacesNote": "Vitone vinavyong'aa zaidi vinamaanisha wageni zaidi. Mahali ni makadirio hadi kiwango cha jiji, na hakuna anwani zinazohifadhiwa.",
+  "@statsPlacesNote": {
+    "description": "Visitor map note"
+  },
+  "statsPlacesMore": "+{count} zaidi",
+  "@statsPlacesMore": {
+    "description": "More countries or places not shown",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "leaderboardTitle": "Orodha ya Washindi",
   "@leaderboardTitle": {
     "description": "Leaderboard heading"
@@ -657,6 +695,66 @@
   "boardroomTooShort": "Andika maneno machache zaidi.",
   "boardroomRateLimited": "Inatosha kwa sasa. Jaribu tena baadaye.",
   "boardroomForbidden": "Wasimamizi pekee wanaweza kufanya hivyo.",
+  "leaderboardThisWeek": "Wiki hii",
+  "@leaderboardThisWeek": {
+    "description": "Leaderboard tab"
+  },
+  "leaderboardLastWeek": "Wiki iliyopita",
+  "@leaderboardLastWeek": {
+    "description": "Leaderboard tab"
+  },
+  "leaderboardAllTime": "Wakati wote",
+  "@leaderboardAllTime": {
+    "description": "Leaderboard tab"
+  },
+  "leaderboardRange": "{from} – {to}",
+  "@leaderboardRange": {
+    "description": "Dates a weekly leaderboard covers",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "suggestionHint": "Niambie nini cha kurekebisha, kuongeza au kuondoa. Kila pendekezo hufika kwenye kikasha changu.",
+  "@suggestionHint": {
+    "description": "Suggestion hint"
+  },
+  "suggestionLabel": "Pendekezo lako",
+  "@suggestionLabel": {
+    "description": "Suggestion field"
+  },
+  "suggestionSend": "Tuma",
+  "@suggestionSend": {
+    "description": "Send button"
+  },
+  "suggestionThanks": "Asante, liko kwenye sanduku!",
+  "@suggestionThanks": {
+    "description": "Thanks"
+  },
+  "suggestionSignIn": "Ingia ili kuacha pendekezo.",
+  "@suggestionSignIn": {
+    "description": "Needs sign-in"
+  },
+  "suggestionTooShort": "Andika maneno machache zaidi.",
+  "@suggestionTooShort": {
+    "description": "Too short"
+  },
+  "suggestionRateLimited": "Inatosha kwa sasa. Jaribu tena baadaye.",
+  "@suggestionRateLimited": {
+    "description": "Rate limited"
+  },
+  "suggestionInbox": "Mapendekezo yaliyopokelewa",
+  "@suggestionInbox": {
+    "description": "Admin inbox heading"
+  },
+  "suggestionInboxEmpty": "Sanduku ni tupu.",
+  "@suggestionInboxEmpty": {
+    "description": "Empty inbox"
+  },
   "commonCancel": "Ghairi",
   "@commonCancel": {
     "description": "Cancel button"

@@ -15,8 +15,12 @@ class LeaderboardRepoImpl implements LeaderboardRepo {
   final ApiClient _api;
 
   @override
-  Future<List<LeaderboardEntry>> top({int limit = 50}) async =>
-      (await _api.call('rb_leaderboard', {'p_limit': limit})).rows(
-        leaderboardEntryFromJson,
+  Future<Leaderboard> top(LeaderboardPeriod period, {int limit = 50}) async =>
+      leaderboardFromJson(
+        period,
+        await _api.call('rb_leaderboard', {
+          'p_period': period.code,
+          'p_limit': limit,
+        }),
       );
 }

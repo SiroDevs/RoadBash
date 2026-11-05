@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
 import '../../../common/constants/app_constants.dart';
 import '../../../common/layout/responsive_scroll_body.dart';
 import '../../../common/layout/retro_sizes.dart';
+import '../../../common/widgets/retro/controls/retro_chips.dart';
 import '../../../common/widgets/retro/feedback/retro_status.dart';
 import '../../../common/widgets/retro/page/retro_page.dart';
 import '../../../common/widgets/retro/page/retro_sub_page.dart';
@@ -46,8 +48,46 @@ class LeaderboardScreen extends StatelessWidget {
     );
   }
 
-  /// Builds the leaderboard content for the current load status.
+  /// Builds the period tabs, the dates they cover and the table.
   List<Widget> _body(BuildContext context, LeaderboardState st, String me) {
+    final sizes = context.sizes;
+    final range = _range(context, st);
+    return [
+      RetroChips<LeaderboardPeriod>(
+        items: {
+          LeaderboardPeriod.thisWeek: context.l10n.leaderboardThisWeek,
+          LeaderboardPeriod.lastWeek: context.l10n.leaderboardLastWeek,
+          LeaderboardPeriod.allTime: context.l10n.leaderboardAllTime,
+        },
+        selected: st.period,
+        onSelected: context.read<LeaderboardCubit>().setPeriod,
+      ),
+      if (range != null)
+        Text(range, style: retroBody(size: sizes.caption, color: Retro.dim)),
+      ..._table(context, st, me),
+    ];
+  }
+
+  /// Returns the dates a week's leaderboard covers, or null for all time.
+  String? _range(BuildContext context, LeaderboardState st) {
+    final from = st.from;
+    final to = st.to;
+    if (from == null || to == null) return null;
+    final locale = Localizations.localeOf(context).toString();
+    String day(DateTime time) {
+      try {
+        return DateFormat('d MMM', locale).format(time);
+      } catch (_) {
+        return DateFormat('d MMM').format(time);
+      }
+    }
+
+    final last = to.toUtc().subtract(const Duration(days: 1));
+    return context.l10n.leaderboardRange(day(from.toUtc()), day(last));
+  }
+
+  /// Builds the leaderboard table for the current load status.
+  List<Widget> _table(BuildContext context, LeaderboardState st, String me) {
     final l10n = context.l10n;
     final sizes = context.sizes;
     switch (st.status) {

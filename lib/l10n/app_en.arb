@@ -611,6 +611,44 @@
   "@statsHeatmapNote": {
     "description": "Heatmap note"
   },
+  "statsPlacesTitle": "Where visitors come from",
+  "@statsPlacesTitle": {
+    "description": "Heading of the visitor places section"
+  },
+  "statsPlacesCountries": "Countries",
+  "@statsPlacesCountries": {
+    "description": "Tab showing visitors by country"
+  },
+  "statsPlacesCities": "Places",
+  "@statsPlacesCities": {
+    "description": "Tab showing visitors by city"
+  },
+  "statsPlacesUnknown": "Location unknown: {count}",
+  "@statsPlacesUnknown": {
+    "description": "Visitors whose place is not known",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsPlacesEmpty": "No locations recorded for this period yet.",
+  "@statsPlacesEmpty": {
+    "description": "No visitor places"
+  },
+  "statsPlacesNote": "Brighter dots mean more visitors. Places are approximate, to about city level, and no addresses are kept.",
+  "@statsPlacesNote": {
+    "description": "Visitor map note"
+  },
+  "statsPlacesMore": "+{count} more",
+  "@statsPlacesMore": {
+    "description": "More countries or places not shown",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "leaderboardTitle": "Leaderboard",
   "@leaderboardTitle": {
     "description": "Leaderboard heading"
@@ -666,6 +704,34 @@
   "boardroomAdminHint": "Reply to suggestions, make them public or delete what is not appropriate.",
   "@boardroomAdminHint": {
     "description": "Boardroom admin hint"
+  },
+  "leaderboardThisWeek": "This week",
+  "@leaderboardThisWeek": {
+    "description": "Leaderboard tab"
+  },
+  "leaderboardLastWeek": "Last week",
+  "@leaderboardLastWeek": {
+    "description": "Leaderboard tab"
+  },
+  "leaderboardAllTime": "All time",
+  "@leaderboardAllTime": {
+    "description": "Leaderboard tab"
+  },
+  "leaderboardRange": "{from} – {to}",
+  "@leaderboardRange": {
+    "description": "Dates a weekly leaderboard covers",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "suggestionHint": "Tell me what to fix, add or remove. Every suggestion lands in my inbox.",
+  "@suggestionHint": {
+    "description": "Suggestion hint"
   },
   "boardroomSuggestionLabel": "Your suggestion",
   "@boardroomSuggestionLabel": {

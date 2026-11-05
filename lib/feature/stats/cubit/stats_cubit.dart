@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 // Project imports:
 import '../../../domain/models/load_status.dart';
 import '../../../domain/models/stats_models.dart';
+import '../../../domain/models/visitor_places.dart';
 import '../../../domain/repos/stats_repo.dart';
 
 part 'stats_state.dart';
@@ -30,6 +31,7 @@ class StatsCubit extends Cubit<StatsState> {
         _repo.summary(),
         _repo.series(range),
         _repo.heatmap(range),
+        _places(range),
       ]);
       if (isClosed) return;
       emit(
@@ -38,6 +40,7 @@ class StatsCubit extends Cubit<StatsState> {
           summary: results[0] as StatsSummary,
           series: results[1] as List<StatsPoint>,
           heat: results[2] as List<HeatCell>,
+          places: results[3] as VisitorPlaces,
         ),
       );
       _poll ??= Timer.periodic(const Duration(seconds: 15), (_) => _refresh());
@@ -55,6 +58,20 @@ class StatsCubit extends Cubit<StatsState> {
 
   /// Changes the metric shown by the heatmap.
   void setMetric(HeatMetric metric) => emit(state.copyWith(metric: metric));
+
+  /// Changes what the visitor places list shows.
+  void setPlacesView(PlacesView view) =>
+      emit(state.copyWith(placesView: view));
+
+  /// Loads where the visitors come from, treating a failure as no data so the
+  /// rest of the stats still show.
+  Future<VisitorPlaces> _places(StatsRange range) async {
+    try {
+      return await _repo.places(range);
+    } catch (_) {
+      return VisitorPlaces.empty;
+    }
+  }
 
   /// Refreshes the summary quietly, without showing the loading state.
   Future<void> _refresh() async {

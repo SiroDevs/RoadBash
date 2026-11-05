@@ -446,6 +446,31 @@ class AppLocalizationsEn extends AppLocalizations {
       'Rows are days (Monday first), columns are hours of the day in your local time. Brighter means busier.';
 
   @override
+  String get statsPlacesTitle => 'Where visitors come from';
+
+  @override
+  String get statsPlacesCountries => 'Countries';
+
+  @override
+  String get statsPlacesCities => 'Places';
+
+  @override
+  String statsPlacesUnknown(int count) {
+    return 'Location unknown: $count';
+  }
+
+  @override
+  String get statsPlacesEmpty => 'No locations recorded for this period yet.';
+
+  @override
+  String get statsPlacesNote => 'Brighter dots mean more visitors. Places are approximate, to about city level, and no addresses are kept.';
+
+  @override
+  String statsPlacesMore(int count) {
+    return '+$count more';
+  }
+
+  @override
   String get leaderboardTitle => 'Leaderboard';
 
   @override
@@ -462,6 +487,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get menuScenes => 'Scenes';
+  String get leaderboardThisWeek => 'This week';
+
+  @override
+  String get leaderboardLastWeek => 'Last week';
+
+  @override
+  String get leaderboardAllTime => 'All time';
+
+  @override
+  String leaderboardRange(String from, String to) {
+    return '$from – $to';
+  }
+
+  @override
+  String get suggestionHint =>
+      'Tell me what to fix, add or remove. Every suggestion lands in my inbox.';
 
   @override
   String get boardroomTitle => 'Boardroom';

@@ -44,19 +44,49 @@ class TrafficProfile {
   /// True when the road has no civilian vehicles at all.
   final bool empty;
 
+  /// Widens every road's gaps so the traffic stays thin enough to ride through.
+  static const double gapStretch = 1.3;
+
   /// Number of vehicles needed to keep [ahead] of the player populated.
   int get poolSize => empty ? 0 : (ahead / spacing).ceil() + 3;
 
   /// Returns this road with the traffic of a level: the gaps between vehicles
   /// grow or shrink, or the road empties.
   TrafficProfile withDensity(TrafficDensity density) => TrafficProfile(
-    spacing: spacing * (density.isNone ? 1 : density.spacingFactor),
+    spacing:
+        spacing * gapStretch * (density.isNone ? 1 : density.spacingFactor),
     minSpeed: minSpeed,
     maxSpeed: maxSpeed,
     kinds: kinds,
     police: police,
     empty: density.isNone,
   );
+
+  /// Picks a vehicle kind for [lane] of [laneCount] lanes by weight. Trucks
+  /// favour the slow left lane, never the fast one of the lanes traffic uses.
+  CivilianKind pickKind(int lane, int laneCount, math.Random random) {
+    var total = 0;
+    final weights = <int>[];
+    for (final (kind, weight) in kinds) {
+      var adjusted = weight;
+      if (kind == CivilianKind.truck) {
+        if (lane == 0) {
+          adjusted *= 2;
+        } else if (lane == laneCount - 1 && laneCount > 2) {
+          adjusted = 0;
+        }
+      }
+      weights.add(adjusted);
+      total += adjusted;
+    }
+    if (total <= 0) return kinds.first.$1;
+    var roll = random.nextInt(total);
+    for (var index = 0; index < weights.length; index++) {
+      if (roll < weights[index]) return kinds[index].$1;
+      roll -= weights[index];
+    }
+    return kinds.first.$1;
+  }
 
   /// Returns how many lanes the traffic of a scene uses, counted from the left
   /// edge. Traffic keeps left: on the two-way roads that is the lanes left of

@@ -1,19 +1,20 @@
 // Dart imports:
 import 'dart:math' as math;
-import 'dart:ui';
 
 // Project imports:
 import '../../../../common/objects/guardrail/guardrail_config.dart';
 import '../config/vehicle_config.dart';
 import '../track/road_track.dart';
 import 'civilian_car.dart';
+import 'civilian_palette.dart';
+import 'lane_wall_check.dart';
 import 'traffic_profile.dart';
 
 /// Keeps a fixed pool of civilian vehicles on the road ahead of the player.
 ///
 /// Every lane has its own steady speed, so vehicles in one lane never catch
-/// each other. A vehicle that falls behind the player is moved to the front of
-/// the pack, so the road stays populated however far the race runs.
+/// each other. A vehicle left behind the player is moved to the front of the
+/// pack, and is placed so traffic never lines up across every lane.
 class TrafficFlow {
   TrafficFlow({
     required this.profile,
@@ -35,26 +36,8 @@ class TrafficFlow {
   static const double _bumper = 230;
   static const double _margin = 0.14;
   static const double _capMargin = 0.16;
-
-  static const List<Color> _bodies = [
-    Color(0xFFE8E8EC),
-    Color(0xFF2F3A4F),
-    Color(0xFFB3261E),
-    Color(0xFF1F6FB5),
-    Color(0xFF3C8D5A),
-    Color(0xFFF2C21C),
-    Color(0xFF8A8F98),
-    Color(0xFF111418),
-    Color(0xFFE67E22),
-  ];
-
-  static const List<Color> _accents = [
-    Color(0xFFFFD60A),
-    Color(0xFFFFFFFF),
-    Color(0xFF39D0FF),
-    Color(0xFFFF4D8D),
-    Color(0xFF7CFF6B),
-  ];
+  static const int _maxPushes = 3;
+  static const double _pushShare = 0.35;
 
   final TrafficProfile profile;
   final int lanes;
@@ -68,6 +51,11 @@ class TrafficFlow {
   final int trafficLanes;
 
   final math.Random _random;
+  final List<CivilianCar> _spent = [];
+  late final LaneWallCheck _wallCheck = LaneWallCheck(
+    lanes: trafficLanes,
+    roadLanes: lanes,
+  );
 
   /// Every vehicle of the pool, whether on the road or parked out of sight.
   final List<CivilianCar> cars;
@@ -91,64 +79,71 @@ class TrafficFlow {
       car.drive(dt);
       if (guarded) _hugLane(car, playerZ);
     }
+    _recycle(playerDistance);
+  }
+
+  /// Moves vehicles left behind, and any not yet on the road, to the front.
+  void _recycle(double playerDistance) {
+    final cutoff = playerDistance - TrafficProfile.behind;
+    _spent.clear();
+    for (final car in cars) {
+      if (!car.active || car.distance < cutoff) _spent.add(car);
+    }
+    if (_spent.isEmpty) return;
+    for (final car in _spent) {
+      car.park();
+    }
 
     var front = playerDistance + TrafficProfile.startClear;
     for (final car in cars) {
       if (car.active && car.distance > front) front = car.distance;
     }
-    final limit = raceLength - TrafficProfile.finishClear;
-    for (final car in cars) {
-      final spent =
-          !car.active || car.distance < playerDistance - TrafficProfile.behind;
-      if (!spent) continue;
-      front += profile.spacing * (0.65 + 0.7 * _random.nextDouble());
-      if (front > limit) {
+    for (final car in _spent) {
+      front += profile.spacing * (0.8 + 0.4 * _random.nextDouble());
+      if (front > _finishLimit) {
         car.park();
       } else {
-        _spawn(car, front);
+        front = _spawn(car, front);
       }
     }
   }
 
-  /// Puts a vehicle in a random lane at [distance].
-  void _spawn(CivilianCar car, double distance) {
-    final lane = _random.nextInt(trafficLanes);
+  double get _finishLimit => raceLength - TrafficProfile.finishClear;
+
+  /// Puts a vehicle on the road and returns where it was placed.
+  ///
+  /// Lanes that would line the vehicle up with traffic in every other lane are
+  /// skipped; with none clear it moves a little further up the road.
+  double _spawn(CivilianCar car, double distance) {
+    final first = _random.nextInt(trafficLanes);
+    final push = profile.spacing * _pushShare;
+    var position = distance;
+    var lane = first;
+    for (var attempt = 0; attempt <= _maxPushes; attempt++) {
+      final free = _wallCheck.freeLane(
+        cars: cars,
+        laneSpeeds: laneSpeeds,
+        first: first,
+        distance: position,
+      );
+      final lastTry = attempt == _maxPushes || position + push > _finishLimit;
+      if (free != null || lastTry) {
+        lane = free ?? first;
+        break;
+      }
+      position += push;
+    }
     car.place(
-      kind: _pickKind(lane),
-      color: _bodies[_random.nextInt(_bodies.length)],
-      accent: _accents[_random.nextInt(_accents.length)],
-      distance: distance,
+      kind: profile.pickKind(lane, trafficLanes, _random),
+      color: CivilianPalette.randomBody(_random),
+      accent: CivilianPalette.randomAccent(_random),
+      distance: position,
       lane: lane,
       lateral: laneCenters[lane],
       speed: laneSpeeds[lane],
       laneWidth: 2 / lanes,
     );
-  }
-
-  /// Picks a vehicle kind: trucks favour the slow left lane, never the fast one
-  /// of the lanes traffic uses.
-  CivilianKind _pickKind(int lane) {
-    var total = 0;
-    final weights = <int>[];
-    for (final (kind, weight) in profile.kinds) {
-      var w = weight;
-      if (kind == CivilianKind.truck) {
-        if (lane == 0) {
-          w *= 2;
-        } else if (lane == trafficLanes - 1 && trafficLanes > 2) {
-          w = 0;
-        }
-      }
-      weights.add(w);
-      total += w;
-    }
-    if (total <= 0) return profile.kinds.first.$1;
-    var roll = _random.nextInt(total);
-    for (var i = 0; i < weights.length; i++) {
-      if (roll < weights[i]) return profile.kinds[i].$1;
-      roll -= weights[i];
-    }
-    return profile.kinds.first.$1;
+    return position;
   }
 
   /// Keeps a vehicle clear of the median guardrail.

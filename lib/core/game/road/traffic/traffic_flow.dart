@@ -7,15 +7,18 @@ import '../config/vehicle_config.dart';
 import '../track/road_track.dart';
 import 'civilian_car.dart';
 import 'civilian_palette.dart';
-import 'lane_wall_check.dart';
+import 'lane_gap_check.dart';
+import 'oncoming_traffic.dart';
+import 'traffic_lookout.dart';
 import 'traffic_profile.dart';
 
 /// Keeps a fixed pool of civilian vehicles on the road ahead of the player.
 ///
 /// Every lane has its own steady speed, so vehicles in one lane never catch
 /// each other. A vehicle left behind the player is moved to the front of the
-/// pack, and is placed so traffic never lines up across every lane.
-class TrafficFlow {
+/// pack, and is placed in the lane that keeps it clear of the other vehicles.
+/// Roads with a yellow line also carry [oncoming] traffic on their right lanes.
+class TrafficFlow with TrafficLookout {
   TrafficFlow({
     required this.profile,
     required this.lanes,
@@ -23,20 +26,26 @@ class TrafficFlow {
     required this.raceLength,
     required this.guarded,
     required this.trafficLanes,
+    this.oncomingLanes = 0,
     int seed = 1,
   }) : _random = math.Random(seed),
        cars = List.generate(profile.poolSize, CivilianCar.new),
        laneCenters = [
          for (var k = 0; k < lanes; k++) -1 + (2 / lanes) * (k + 0.5),
-       ];
+       ] {
+    oncoming = OncomingTraffic(
+      profile: profile,
+      roadLanes: lanes,
+      firstLane: trafficLanes,
+      laneCount: oncomingLanes,
+      firstIndex: cars.length,
+      laneCenters: laneCenters,
+      raceLength: raceLength,
+      random: _random,
+    );
+    cars.addAll(oncoming.cars);
+  }
 
-  static const double _freeReach = 7500;
-  static const double _brakeReach = 9500;
-  static const double _brakeRate = 2600;
-  static const double _bumper = 230;
-  static const double _margin = 0.14;
-  static const double _capMargin = 0.16;
-  static const int _maxPushes = 3;
   static const double _pushShare = 0.35;
 
   final TrafficProfile profile;
@@ -50,17 +59,25 @@ class TrafficFlow {
   /// How many lanes from the left edge the traffic drives in; it keeps left.
   final int trafficLanes;
 
+  /// How many lanes right of the yellow line carry traffic toward the player.
+  final int oncomingLanes;
+
   final math.Random _random;
   final List<CivilianCar> _spent = [];
-  late final LaneWallCheck _wallCheck = LaneWallCheck(
-    lanes: trafficLanes,
-    roadLanes: lanes,
+  late final LaneGapCheck _gapCheck = LaneGapCheck(
+    firstLane: 0,
+    laneCount: trafficLanes,
   );
 
-  /// Every vehicle of the pool, whether on the road or parked out of sight.
+  /// The vehicles driving toward the player.
+  late final OncomingTraffic oncoming;
+
+  @override
   final List<CivilianCar> cars;
 
-  /// Lateral position of the middle of each lane, from left to right.
+  late final List<CivilianCar> _sameWay = cars.sublist(0, profile.poolSize);
+
+  @override
   final List<double> laneCenters;
 
   late final List<double> laneSpeeds = [
@@ -80,13 +97,14 @@ class TrafficFlow {
       if (guarded) _hugLane(car, playerZ);
     }
     _recycle(playerDistance);
+    oncoming.update(playerDistance);
   }
 
   /// Moves vehicles left behind, and any not yet on the road, to the front.
   void _recycle(double playerDistance) {
     final cutoff = playerDistance - TrafficProfile.behind;
     _spent.clear();
-    for (final car in cars) {
+    for (final car in _sameWay) {
       if (!car.active || car.distance < cutoff) _spent.add(car);
     }
     if (_spent.isEmpty) return;
@@ -95,7 +113,7 @@ class TrafficFlow {
     }
 
     var front = playerDistance + TrafficProfile.startClear;
-    for (final car in cars) {
+    for (final car in _sameWay) {
       if (car.active && car.distance > front) front = car.distance;
     }
     for (final car in _spent) {
@@ -103,7 +121,7 @@ class TrafficFlow {
       if (front > _finishLimit) {
         car.park();
       } else {
-        front = _spawn(car, front);
+        front = _spawn(car, front, playerDistance);
       }
     }
   }
@@ -112,38 +130,30 @@ class TrafficFlow {
 
   /// Puts a vehicle on the road and returns where it was placed.
   ///
-  /// Lanes that would line the vehicle up with traffic in every other lane are
-  /// skipped; with none clear it moves a little further up the road.
-  double _spawn(CivilianCar car, double distance) {
-    final first = _random.nextInt(trafficLanes);
-    final push = profile.spacing * _pushShare;
-    var position = distance;
-    var lane = first;
-    for (var attempt = 0; attempt <= _maxPushes; attempt++) {
-      final free = _wallCheck.freeLane(
-        cars: cars,
-        laneSpeeds: laneSpeeds,
-        first: first,
-        distance: position,
-      );
-      final lastTry = attempt == _maxPushes || position + push > _finishLimit;
-      if (free != null || lastTry) {
-        lane = free ?? first;
-        break;
-      }
-      position += push;
-    }
+  /// It takes the lane whose neighbours stay furthest away while the player
+  /// rides past; when every lane is crowded it moves up the road a little.
+  double _spawn(CivilianCar car, double distance, double playerDistance) {
+    final slot = _gapCheck.findSlot(
+      cars: cars,
+      laneSpeeds: laneSpeeds,
+      firstChoice: _random.nextInt(trafficLanes),
+      distance: distance,
+      playerDistance: playerDistance,
+      clearGap: profile.clearGap,
+      push: profile.spacing * _pushShare,
+      limit: _finishLimit,
+    );
     car.place(
-      kind: profile.pickKind(lane, trafficLanes, _random),
+      kind: profile.pickKind(slot.lane, trafficLanes, _random),
       color: CivilianPalette.randomBody(_random),
       accent: CivilianPalette.randomAccent(_random),
-      distance: position,
-      lane: lane,
-      lateral: laneCenters[lane],
-      speed: laneSpeeds[lane],
+      distance: slot.distance,
+      lane: slot.lane,
+      lateral: laneCenters[slot.lane],
+      speed: laneSpeeds[slot.lane],
       laneWidth: 2 / lanes,
     );
-    return position;
+    return slot.distance;
   }
 
   /// Keeps a vehicle clear of the median guardrail.
@@ -154,67 +164,5 @@ class TrafficFlow {
     car.target = limit == null
         ? centre
         : math.min(centre, limit - car.halfWidth - 0.08);
-  }
-
-  /// True when a vehicle blocks [lateral] between just beside [distance] and
-  /// [reach] units ahead of it.
-  bool blocked(
-    double distance,
-    double lateral,
-    double reach, {
-    double margin = _margin,
-  }) {
-    for (final car in cars) {
-      if (!car.active) continue;
-      final gap = car.distance - distance;
-      if (gap < -car.kind.length || gap > reach) continue;
-      if ((car.lateral - lateral).abs() < car.halfWidth + margin) return true;
-    }
-    return false;
-  }
-
-  /// Returns a line that avoids the traffic ahead.
-  ///
-  /// Gives back [wanted] when the way is clear, a free lane when it is not, or
-  /// [wanted] anyway when every lane is blocked, so the caller must slow down.
-  double? freeLine(
-    double distance,
-    double lateral,
-    double? wanted, {
-    double limit = 0.92,
-  }) {
-    final goal = wanted ?? lateral;
-    final goalBlocked = blocked(distance, goal, _freeReach);
-    final nowBlocked = blocked(distance, lateral, _freeReach);
-    if (!goalBlocked && !nowBlocked) return wanted;
-    if (!goalBlocked) return goal;
-    double? best;
-    var bestCost = double.infinity;
-    for (final centre in laneCenters) {
-      final x = centre.clamp(-limit, limit).toDouble();
-      if (blocked(distance, x, _freeReach)) continue;
-      final cost = (x - lateral).abs() + 0.5 * (x - goal).abs();
-      if (cost < bestCost) {
-        bestCost = cost;
-        best = x;
-      }
-    }
-    return best ?? wanted;
-  }
-
-  /// The fastest a rider at [distance] and [lateral] can go and still stop
-  /// behind the vehicle ahead, or null when the way is clear.
-  double? speedCap(double distance, double lateral) {
-    double? cap;
-    for (final car in cars) {
-      if (!car.active || car.distance < distance) continue;
-      final room = car.distance - distance - _bumper;
-      if (room > _brakeReach) continue;
-      if ((car.lateral - lateral).abs() >= car.halfWidth + _capMargin) continue;
-      final allowed =
-          car.speed + math.sqrt(2 * _brakeRate * math.max(0.0, room));
-      cap = cap == null ? allowed : math.min(cap, allowed);
-    }
-    return cap;
   }
 }

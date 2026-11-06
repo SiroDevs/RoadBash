@@ -95,7 +95,7 @@ class TrafficContacts {
         speedLoss: 0.25 + 0.4 * strength,
         sideShove: direction * (0.5 + strength),
       );
-      road.speed = math.min(road.speed, car.speed * 0.9);
+      road.speed = math.min(road.speed, math.max(0.0, car.speed * 0.9));
       if (knockedOff) road.fall(direction, 1.8 + 1.4 * strength);
       _wait[car.index] = _rearCooldown;
       onHit();
@@ -127,7 +127,7 @@ class TrafficContacts {
         racer.bump(speedLoss: 0.6, sideShove: direction);
         racer.fall(direction, 2.2);
       } else {
-        racer.limitSpeed(car.speed * 0.95);
+        racer.limitSpeed(math.max(0.0, car.speed * 0.95));
       }
       return;
     }

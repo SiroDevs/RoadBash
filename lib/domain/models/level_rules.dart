@@ -1,22 +1,6 @@
 // Project imports:
+import 'level_presets.dart';
 import 'scene_id.dart';
-
-/// How crowded the road is with civilian traffic.
-enum TrafficDensity {
-  none(0),
-  veryLight(3.0),
-  light(1.8),
-  moderate(1.25),
-  heavy(0.75);
-
-  const TrafficDensity(this.spacingFactor);
-
-  /// Multiplies the gap between vehicles, so a bigger value is an emptier road.
-  final double spacingFactor;
-
-  /// True when no civilian vehicle is on the road at all.
-  bool get isNone => this == none;
-}
 
 /// The rules of one level: what is open, who you race, what is at stake.
 ///
@@ -30,7 +14,8 @@ class LevelRules {
     required this.rivals,
     required this.maxSpeedKmh,
     required this.winPrize,
-    required this.traffic,
+    required this.trafficPerLap,
+    required this.oncomingPerLap,
     this.trafficFine = 0,
     this.shoving = false,
     this.hospitalBill = 0,
@@ -56,7 +41,11 @@ class LevelRules {
   /// Prize money for a win; 0 means the level pays nothing.
   final int winPrize;
 
-  final TrafficDensity traffic;
+  /// Civilian vehicles per lap on the left lanes, driving the way of the race.
+  final int trafficPerLap;
+
+  /// Civilian vehicles per lap on the right lanes, driving toward the player.
+  final int oncomingPerLap;
 
   /// Fine for each hit on a civilian vehicle.
   final int trafficFine;
@@ -87,85 +76,63 @@ class LevelRules {
   /// Share of the win prize paid for a race with no bashing of rivals.
   static const double cleanRaceBonus = 0.03;
 
-  static const Set<SceneId> _starter = {SceneId.city, SceneId.suburbs};
-  static const Set<SceneId> _withThika = {
-    SceneId.city,
-    SceneId.suburbs,
-    SceneId.thikaRoad,
-  };
-  static const Set<SceneId> _everything = {
-    SceneId.city,
-    SceneId.suburbs,
-    SceneId.thikaRoad,
-    SceneId.jungle,
-    SceneId.dirtRoad,
-  };
-
-  static const Map<SceneId, int> _twoLaps = {
-    SceneId.city: 2,
-    SceneId.suburbs: 2,
-  };
-  static const Map<SceneId, int> _threeLaps = {
-    SceneId.city: 3,
-    SceneId.suburbs: 3,
-  };
-  static const Map<SceneId, int> _fourLaps = {
-    SceneId.city: 4,
-    SceneId.suburbs: 4,
-  };
-
   /// Every level, from 1 to [top].
   static const List<LevelRules> all = [
     LevelRules(
       level: 1,
-      scenes: _starter,
-      laps: _twoLaps,
+      scenes: LevelPresets.starter,
+      laps: LevelPresets.twoLaps,
       rivals: 0,
       maxSpeedKmh: 150,
       winPrize: 0,
-      traffic: TrafficDensity.none,
+      trafficPerLap: 0,
+      oncomingPerLap: 0,
     ),
     LevelRules(
       level: 2,
-      scenes: _starter,
-      laps: _twoLaps,
+      scenes: LevelPresets.starter,
+      laps: LevelPresets.twoLaps,
       rivals: 1,
       maxSpeedKmh: 150,
       winPrize: 250,
-      traffic: TrafficDensity.veryLight,
+      trafficPerLap: 3,
+      oncomingPerLap: 2,
       trafficFine: 100,
     ),
     LevelRules(
       level: 3,
-      scenes: _withThika,
-      laps: _threeLaps,
+      scenes: LevelPresets.withThika,
+      laps: LevelPresets.threeLaps,
       rivals: 2,
       maxSpeedKmh: 200,
       winPrize: 400,
-      traffic: TrafficDensity.light,
+      trafficPerLap: 5,
+      oncomingPerLap: 3,
       trafficFine: 100,
       hospitalBill: 1500,
     ),
     LevelRules(
       level: 4,
-      scenes: _withThika,
-      laps: _threeLaps,
+      scenes: LevelPresets.withThika,
+      laps: LevelPresets.threeLaps,
       rivals: 3,
       maxSpeedKmh: 200,
       winPrize: 750,
-      traffic: TrafficDensity.light,
+      trafficPerLap: 7,
+      oncomingPerLap: 4,
       trafficFine: 100,
       shoving: true,
       hospitalBill: 1500,
     ),
     LevelRules(
       level: 5,
-      scenes: _everything,
-      laps: _fourLaps,
+      scenes: LevelPresets.everything,
+      laps: LevelPresets.fourLaps,
       rivals: 4,
       maxSpeedKmh: 200,
       winPrize: 1200,
-      traffic: TrafficDensity.light,
+      trafficPerLap: 9,
+      oncomingPerLap: 5,
       trafficFine: 100,
       shoving: true,
       hospitalBill: 3000,
@@ -174,12 +141,13 @@ class LevelRules {
     ),
     LevelRules(
       level: 6,
-      scenes: _everything,
-      laps: _fourLaps,
+      scenes: LevelPresets.everything,
+      laps: LevelPresets.fourLaps,
       rivals: 5,
       maxSpeedKmh: 240,
       winPrize: 2000,
-      traffic: TrafficDensity.heavy,
+      trafficPerLap: 11,
+      oncomingPerLap: 6,
       trafficFine: 100,
       shoving: true,
       hospitalBill: 3000,
@@ -189,12 +157,13 @@ class LevelRules {
     ),
     LevelRules(
       level: 7,
-      scenes: _everything,
-      laps: _fourLaps,
+      scenes: LevelPresets.everything,
+      laps: LevelPresets.fourLaps,
       rivals: 5,
       maxSpeedKmh: 240,
       winPrize: 3000,
-      traffic: TrafficDensity.heavy,
+      trafficPerLap: 13,
+      oncomingPerLap: 7,
       trafficFine: 100,
       shoving: true,
       hospitalBill: 3000,

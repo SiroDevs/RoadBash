@@ -24,7 +24,11 @@ class SceneTraffic {
     RaceController race,
     LevelRules rules,
   ) {
-    final profile = TrafficProfile.of(scene).withDensity(rules.traffic);
+    final profile = TrafficProfile.of(scene).withCounts(
+      sameWay: rules.trafficPerLap,
+      oncoming: rules.oncomingPerLap,
+      lapLength: race.lapLength,
+    );
     return SceneTraffic._(
       TrafficFlow(
         profile: profile,
@@ -33,6 +37,7 @@ class SceneTraffic {
         raceLength: race.raceLength,
         guarded: theme.dualCarriageway,
         trafficLanes: TrafficProfile.trafficLanes(scene, theme.lanes),
+        oncomingLanes: TrafficProfile.oncomingLanes(scene, theme.lanes),
         seed: 7919 + scene.index * 31,
       ),
       PoliceChase(

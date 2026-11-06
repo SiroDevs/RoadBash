@@ -2,19 +2,20 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../../../../domain/models/level_rules.dart';
 import '../../../../domain/models/scene_id.dart';
 import 'civilian_car.dart';
+import 'lane_gap_check.dart';
 
 /// How busy a scene's road is, what drives on it, and whether police patrol it.
 class TrafficProfile {
   const TrafficProfile({
-    required this.spacing,
     required this.minSpeed,
     required this.maxSpeed,
     required this.kinds,
     this.police = true,
     this.empty = false,
+    this.spacing = 0,
+    this.oncomingSpacing = 0,
   });
 
   /// No civilian vehicle appears this close to the start line.
@@ -29,7 +30,7 @@ class TrafficProfile {
   /// No civilian vehicle is placed this close to the finish line.
   static const double finishClear = 4500;
 
-  /// Average distance between vehicles, in road units.
+  /// Average distance between vehicles on the left lanes; zero when none.
   final double spacing;
 
   /// Speed of the slowest and fastest lane, as shares of the top speed.
@@ -44,23 +45,54 @@ class TrafficProfile {
   /// True when the road has no civilian vehicles at all.
   final bool empty;
 
-  /// Widens every road's gaps so the traffic stays thin enough to ride through.
-  static const double gapStretch = 1.3;
+  /// Average distance between oncoming vehicles; zero when none drive toward the player.
+  final double oncomingSpacing;
+
+  /// The tightest gap asked between vehicles in different lanes.
+  static const double maxClearGap = 4500;
 
   /// Number of vehicles needed to keep [ahead] of the player populated.
-  int get poolSize => empty ? 0 : (ahead / spacing).ceil() + 3;
+  int get poolSize => spacing <= 0 ? 0 : (ahead / spacing).ceil() + 3;
 
-  /// Returns this road with the traffic of a level: the gaps between vehicles
-  /// grow or shrink, or the road empties.
-  TrafficProfile withDensity(TrafficDensity density) => TrafficProfile(
-    spacing:
-        spacing * gapStretch * (density.isNone ? 1 : density.spacingFactor),
-    minSpeed: minSpeed,
-    maxSpeed: maxSpeed,
-    kinds: kinds,
-    police: police,
-    empty: density.isNone,
-  );
+  /// Number of oncoming vehicles needed to fill the road from end to end.
+  int get oncomingPoolSize => oncomingSpacing <= 0
+      ? 0
+      : ((ahead + behind) / (oncomingSpacing * 0.8)).ceil() + 3;
+
+  /// Closest two vehicles in different lanes may come while the player passes.
+  double get clearGap => math.min(spacing * 0.5, maxClearGap);
+
+  /// Closest two oncoming vehicles in different lanes may come.
+  double get oncomingClearGap => math.min(oncomingSpacing * 0.5, maxClearGap);
+
+  /// Returns this road with the traffic of a level: [sameWay] vehicles per lap
+  /// on the left lanes and [oncoming] on the right lanes, over a lap of
+  /// [lapLength] road units.
+  ///
+  /// A vehicle crawling along is met less often than one standing still, and an
+  /// oncoming one more often, so the gaps are scaled to make the player meet
+  /// about the asked number of vehicles in a lap.
+  TrafficProfile withCounts({
+    required int sameWay,
+    required int oncoming,
+    required double lapLength,
+  }) {
+    final meanSpeedShare = (minSpeed + maxSpeed) / 2;
+    final speedRatio = meanSpeedShare / LaneGapCheck.playerSpeedShare;
+    return TrafficProfile(
+      minSpeed: minSpeed,
+      maxSpeed: maxSpeed,
+      kinds: kinds,
+      police: police,
+      empty: sameWay <= 0 && oncoming <= 0,
+      spacing: sameWay > 0
+          ? lapLength / sameWay * math.max(0.2, 1 - speedRatio)
+          : 0,
+      oncomingSpacing: oncoming > 0
+          ? lapLength / oncoming * (1 + speedRatio)
+          : 0,
+    );
+  }
 
   /// Picks a vehicle kind for [lane] of [laneCount] lanes by weight. Trucks
   /// favour the slow left lane, never the fast one of the lanes traffic uses.
@@ -98,10 +130,16 @@ class TrafficProfile {
     SceneId.jungle || SceneId.dirtRoad => 1,
   };
 
+  /// Returns how many lanes carry oncoming traffic: the lanes right of the
+  /// yellow line on the two-way roads, none elsewhere.
+  static int oncomingLanes(SceneId scene, int lanes) => switch (scene) {
+    SceneId.city || SceneId.suburbs => lanes - trafficLanes(scene, lanes),
+    SceneId.thikaRoad || SceneId.jungle || SceneId.dirtRoad => 0,
+  };
+
   /// Returns the traffic of a scene.
   static TrafficProfile of(SceneId scene) => switch (scene) {
     SceneId.city => const TrafficProfile(
-      spacing: 6500,
       minSpeed: 0.20,
       maxSpeed: 0.42,
       kinds: [
@@ -111,7 +149,6 @@ class TrafficProfile {
       ],
     ),
     SceneId.suburbs => const TrafficProfile(
-      spacing: 9000,
       minSpeed: 0.24,
       maxSpeed: 0.48,
       kinds: [
@@ -121,7 +158,6 @@ class TrafficProfile {
       ],
     ),
     SceneId.thikaRoad => const TrafficProfile(
-      spacing: 6000,
       minSpeed: 0.22,
       maxSpeed: 0.45,
       kinds: [
@@ -131,14 +167,12 @@ class TrafficProfile {
       ],
     ),
     SceneId.jungle => const TrafficProfile(
-      spacing: 16000,
       minSpeed: 0.14,
       maxSpeed: 0.30,
       kinds: [(CivilianKind.truck, 3), (CivilianKind.sedan, 1)],
       police: false,
     ),
     SceneId.dirtRoad => const TrafficProfile(
-      spacing: 14000,
       minSpeed: 0.12,
       maxSpeed: 0.26,
       kinds: [(CivilianKind.truck, 2), (CivilianKind.matatu, 1)],

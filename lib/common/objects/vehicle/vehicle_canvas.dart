@@ -11,6 +11,7 @@ class VehicleCanvas {
   static const Color tyre = Color(0xFF14151A);
   static const Color plate = Color(0xFFF3F0E0);
   static const Color tail = Color(0xFFD32A1F);
+  static const Color headlight = Color(0xFFFFF3C4);
 
   static final Paint _paint = Paint()..isAntiAlias = true;
 

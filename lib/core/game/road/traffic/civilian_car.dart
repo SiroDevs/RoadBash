@@ -5,6 +5,7 @@ import 'dart:ui';
 // Project imports:
 import '../../../../common/objects/vehicle/civilian_kind.dart';
 import '../../../../common/objects/vehicle/matatu_painter.dart';
+import '../../../../common/objects/vehicle/oncoming_painter.dart';
 import '../../../../common/objects/vehicle/sedan_painter.dart';
 import '../../../../common/objects/vehicle/truck_painter.dart';
 import '../../../../common/objects/vehicle/vehicle_canvas.dart';
@@ -12,12 +13,13 @@ import 'road_actor.dart';
 
 export '../../../../common/objects/vehicle/civilian_kind.dart';
 
-/// A civilian car, matatu or truck driving the same way as the race.
+/// A civilian car, matatu or truck driving along the road.
 ///
+/// It drives the same way as the race, or toward the player when oncoming.
 /// It keeps to one lane at a steady speed. The traffic flow decides where it
 /// appears and when it is recycled further up the road.
 class CivilianCar implements RoadActor {
-  CivilianCar(this.index);
+  CivilianCar(this.index, {this.oncoming = false});
 
   /// Distance used to hide a car that is not on the road.
   static const double parked = -1e9;
@@ -28,8 +30,10 @@ class CivilianCar implements RoadActor {
   static final SedanPainter _sedan = SedanPainter();
   static final MatatuPainter _matatu = MatatuPainter();
   static final TruckPainter _truck = TruckPainter();
+  static final OncomingPainter _front = OncomingPainter();
 
   final int index;
+  final bool oncoming;
 
   CivilianKind kind = CivilianKind.sedan;
   Color color = const Color(0xFF8E9EBC);
@@ -98,6 +102,7 @@ class CivilianCar implements RoadActor {
   @override
   void paint(Canvas canvas, Offset ground, double height) {
     final v = VehicleCanvas(canvas, ground, height * kind.width, height * kind.tall)..shadow();
+    if (oncoming) return _front.paint(v, kind, color, accent);
     switch (kind) {
       case CivilianKind.sedan:
         _sedan.paint(v, color, accent);

@@ -28,6 +28,7 @@ import 'race/rider_contacts.dart';
 import 'race/rival/rival_racer.dart';
 import 'race/scene_traffic.dart';
 import 'race/traffic_contacts.dart';
+import 'race/wrong_side_watch.dart';
 import 'rider/rider_component.dart';
 import 'road/config/vehicle_config.dart';
 import 'road/road_renderer.dart';
@@ -78,10 +79,14 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
   /// The police patrol that chases a speeding or reckless player.
   late final PoliceChase police;
   late final TrafficContacts _trafficContacts;
+  final WrongSideWatch _wrongSide = WrongSideWatch();
   RideAudio? _ride;
   late final RiderContacts _contacts = RiderContacts(
     onImpact: (strength, knockedOff) => _ride?.impact(strength, knockedOff),
-    onBash: () => race.bashes++,
+    onBash: () {
+      race.bashes++;
+      police.bash();
+    },
     shoving: rules.shoving,
   );
 
@@ -117,7 +122,6 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     police = traffic.police;
     _trafficContacts = TrafficContacts(
       onImpact: (strength, knockedOff) => _ride?.impact(strength, knockedOff),
-      onCrime: police.crime,
       onHit: () => race.trafficHits++,
     );
     for (final racer in racers) {
@@ -162,6 +166,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     }
     _contacts.update(dt, race, road, racers);
     _trafficContacts.update(dt, race, road, flow, racers, police);
+    _wrongSide.update(dt, race, road, flow);
     police.update(dt, race, road, flow);
     if (police.busted && !race.finished) race.bust(police.fine);
     if (road.nastyCrash) race.crashOut(road.nastyCrashKmh.round());

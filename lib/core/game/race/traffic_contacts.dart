@@ -17,20 +17,15 @@ import 'rival/rival_racer.dart';
 /// Finds riders touching civilian vehicles and applies bumps and falls.
 ///
 /// Running into the back of a vehicle at speed throws the rider off; a slow
-/// touch only holds the rider back. Hitting traffic is also a crime, so each
-/// hit reports to the police.
+/// touch only holds the rider back.
 class TrafficContacts {
   TrafficContacts({
     required this.onImpact,
-    required this.onCrime,
     required this.onHit,
   });
 
   /// Called with the strength of a hit on the player and whether it was a fall.
   final void Function(double strength, bool knockedOff) onImpact;
-
-  /// Called with how much heat a hit on traffic adds.
-  final void Function(double heat) onCrime;
 
   /// Called once for every hit the player makes on a vehicle, front or side.
   final VoidCallback onHit;
@@ -100,7 +95,6 @@ class TrafficContacts {
       _wait[car.index] = _rearCooldown;
       onHit();
       onImpact(strength, knockedOff);
-      onCrime(knockedOff ? 0.45 : 0.25);
       return;
     }
 

@@ -992,5 +992,18 @@
         "type": "String"
       }
     }
+  },
+  "resultsOffencesTitle": "Traffic offences",
+  "@resultsOffencesTitle": {
+    "description": "Heading of the traffic offences list on the results screen"
+  },
+  "offenceWrongSide": "Riding on the wrong side: {count}",
+  "@offenceWrongSide": {
+    "description": "Results line: riding on the wrong side of the road, with how many times",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

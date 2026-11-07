@@ -695,4 +695,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String resultsTraffic(String amount) {
     return 'Traffic fines: $amount';
   }
+
+  @override
+  String get resultsOffencesTitle => 'Traffic offences';
+
+  @override
+  String offenceWrongSide(int count) {
+    return 'Riding on the wrong side: $count';
+  }
 }

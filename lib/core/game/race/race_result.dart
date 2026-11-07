@@ -1,5 +1,6 @@
 // Project imports:
 import '../../../domain/models/scene_id.dart';
+import '../../../domain/models/traffic_offence.dart';
 
 /// Formats seconds as minutes and seconds with tenths.
 String formatTime(double seconds, {bool short = false}) {
@@ -37,6 +38,7 @@ class RaceResult {
     this.level = 1,
     this.trafficHits = 0,
     this.bashes = 0,
+    this.offences = const {},
   });
 
   final SceneId scene;
@@ -62,6 +64,9 @@ class RaceResult {
 
   /// How many times the player bashed a rival.
   final int bashes;
+
+  /// The traffic offences the player committed, with the count of each.
+  final Map<TrafficOffence, int> offences;
 
   /// The player's row in the standings.
   ResultRow get player => rows.firstWhere((r) => r.isPlayer);

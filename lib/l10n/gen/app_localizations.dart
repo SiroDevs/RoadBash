@@ -1261,6 +1261,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Traffic fines: {amount}'**
   String resultsTraffic(String amount);
+
+  /// Heading of the traffic offences list on the results screen
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic offences'**
+  String get resultsOffencesTitle;
+
+  /// Results line: riding on the wrong side of the road, with how many times
+  ///
+  /// In en, this message translates to:
+  /// **'Riding on the wrong side: {count}'**
+  String offenceWrongSide(int count);
 }
 
 class _AppLocalizationsDelegate

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 // Project imports:
 import '../../../domain/models/level_rules.dart';
+import '../../../domain/models/traffic_offence.dart';
 import '../../../domain/models/scene_id.dart';
 import '../rider/look/rider_look.dart';
 import '../rider/look/rider_looks.dart';
@@ -108,6 +109,13 @@ class RaceController {
   /// How many times the player hit traffic and bashed a rival.
   int trafficHits = 0, bashes = 0;
 
+  /// The traffic offences the player committed, with the count of each.
+  final Map<TrafficOffence, int> offences = {};
+
+  /// Records a traffic offence the player committed.
+  void commit(TrafficOffence offence) =>
+      offences.update(offence, (count) => count + 1, ifAbsent: () => 1);
+
   /// Total race distance.
   double get raceLength => lapLength * laps - runOut;
   /// True when the scene is run in laps rather than as one long road.
@@ -205,6 +213,7 @@ class RaceController {
       level: rules.level,
       trafficHits: trafficHits,
       bashes: bashes,
+      offences: Map.unmodifiable(offences),
     );
   }
 }

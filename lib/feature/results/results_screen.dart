@@ -17,6 +17,7 @@ import '../../core/router/route_names.dart';
 import '../../l10n/l10n_extension.dart';
 import '../race/cubit/race_cubit.dart';
 import 'widgets/results_money.dart';
+import 'widgets/results_offences.dart';
 
 /// Results screen shown after a race.
 class ResultsScreen extends StatelessWidget {
@@ -58,6 +59,7 @@ class ResultsScreen extends StatelessWidget {
                   )
                 else
                   for (final r in rows) _row(context, r),
+                ResultsOffences(result.offences),
                 const ResultsMoney(),
                 if (outcome.newBest && !result.busted && !result.crashed) ...[
                   SizedBox(height: sizes.gap * 0.75),

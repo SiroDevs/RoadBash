@@ -902,5 +902,18 @@
         "type": "String"
       }
     }
+  },
+  "resultsOffencesTitle": "Makosa ya trafiki",
+  "@resultsOffencesTitle": {
+    "description": "Heading of the traffic offences list on the results screen"
+  },
+  "offenceWrongSide": "Kuendesha upande usio sahihi: {count}",
+  "@offenceWrongSide": {
+    "description": "Results line: riding on the wrong side of the road, with how many times",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

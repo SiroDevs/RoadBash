@@ -695,4 +695,12 @@ class AppLocalizationsSw extends AppLocalizations {
   String resultsTraffic(String amount) {
     return 'Faini za trafiki: $amount';
   }
+
+  @override
+  String get resultsOffencesTitle => 'Makosa ya trafiki';
+
+  @override
+  String offenceWrongSide(int count) {
+    return 'Kuendesha upande usio sahihi: $count';
+  }
 }

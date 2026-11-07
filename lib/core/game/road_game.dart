@@ -164,12 +164,12 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     for (final r in racers) {
       r.update(dt, race, road);
     }
-    _contacts.update(dt, race, road, racers);
+    if (road.recovering) _checkRunnerHazards();
+    _contacts.update(dt, race, road, racers, attack: attack);
     _trafficContacts.update(dt, race, road, flow, racers, police);
     _wrongSide.update(dt, race, road, flow);
     police.update(dt, race, road, flow);
     if (police.busted && !race.finished) race.bust(police.fine);
-    if (road.nastyCrash) race.crashOut(road.nastyCrashKmh.round());
     if (race.finished && !finishing) {
       finishing = true;
       if (race.endedEarly) _finishDelay = 3.4;
@@ -183,6 +183,19 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
       onFinished(race.buildResult());
     }
     _ride?.update(dt);
+  }
+
+  /// A runner can be struck by traffic while trying to reach the fallen bike.
+  void _checkRunnerHazards() {
+    for (final car in flow.cars) {
+      if (!car.active) continue;
+      final along = (car.distance - road.fullDistance).abs();
+      final across = (car.lateral - road.crash.runX).abs();
+      if (along < 140 && across < car.halfWidth + 0.12) {
+        road.crash.stumble();
+        break;
+      }
+    }
   }
 
   /// True when the finish delay is over or every rival has settled.

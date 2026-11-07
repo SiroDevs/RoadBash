@@ -83,10 +83,18 @@ class RiderComponent extends PositionComponent {
   void render(Canvas canvas) {
     canvas.scale(size.y / RiderPainter.height);
     if (road.recovering) {
-      final x = RiderPartPainter.midX + road.crash.runX * 30;
+      final x = RiderPartPainter.midX + road.crash.runX * 65;
       final stride = math.sin(_t * 12) * 8;
       final ink = Paint()..color = look.suit;
       final helmet = Paint()..color = look.helmet;
+      final metal = Paint()..color = look.bike.panel;
+      final rubber = Paint()..color = const Color(0xFF202027);
+      // The bike stays at the crash point while the rider runs back to it.
+      canvas
+        ..drawCircle(Offset(RiderPartPainter.midX - 35, RiderPartPainter.groundY - 5), 9, rubber)
+        ..drawCircle(Offset(RiderPartPainter.midX + 35, RiderPartPainter.groundY - 5), 9, rubber)
+        ..drawLine(Offset(RiderPartPainter.midX - 28, RiderPartPainter.groundY - 10), Offset(RiderPartPainter.midX + 25, RiderPartPainter.groundY - 15), metal..strokeWidth = 8)
+        ..drawCircle(Offset(RiderPartPainter.midX, RiderPartPainter.groundY - 18), 11, metal);
       canvas.drawCircle(Offset(x, RiderPartPainter.groundY - 58), 9, helmet);
       canvas.drawLine(Offset(x, RiderPartPainter.groundY - 48),
           Offset(x - 2, RiderPartPainter.groundY - 27), ink..strokeWidth = 8);

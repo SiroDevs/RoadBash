@@ -149,6 +149,9 @@ class _RaceScreenState extends State<RaceScreen> {
     final screenTouch = context.select<SettingsCubit, bool>(
       (c) => c.state.profile.useScreenTouch,
     );
+    final combat = context.select<ProgressCubit, bool>(
+      (c) => c.state.career.rules.combat,
+    );
     final showTouchUi = isTouchDevice || screenTouch;
     return MusicScope(
       track: MusicTrack.forScene(widget.scene),
@@ -177,6 +180,30 @@ class _RaceScreenState extends State<RaceScreen> {
             child: Stack(
               children: [
                 GameWidget(game: _game),
+                if (combat && showTouchUi)
+                  Positioned(
+                    right: 24,
+                    bottom: 112,
+                    child: GestureDetector(
+                      onTapDown: (_) => _game.setAttack(true),
+                      onTapUp: (_) => _game.setAttack(false),
+                      onTapCancel: () => _game.setAttack(false),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: const Color(0xCC8E241D),
+                          border: Border.all(color: Colors.white70, width: 2),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: const SizedBox(
+                          width: 72,
+                          height: 72,
+                          child: Center(
+                            child: Text('HIT', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 Positioned.fill(
                   child: HandlebarPad(
                     key: ValueKey(_inputEpoch),

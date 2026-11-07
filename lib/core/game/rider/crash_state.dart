@@ -62,6 +62,12 @@ class CrashState {
     return _runTime >= 3.2;
   }
 
+  /// A traffic strike knocks the runner back and costs time.
+  void stumble() {
+    if (!_recovering) return;
+    _runTime = math.max(0, _runTime - 0.8);
+  }
+
   void remount() {
     _recovering = false;
     _runTime = 0;

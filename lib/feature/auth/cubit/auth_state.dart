@@ -9,6 +9,9 @@ class AuthState extends Equatable {
 
   /// True when a session exists.
   bool get isSignedIn => session != null || anonymous;
+  /// Identifies the account whose progress is kept; empty when anonymous.
+  String get accountKey => session?.playerId ?? '';
+
   /// True when the session belongs to an admin.
   bool get isAdmin => session?.isAdmin ?? false;
 

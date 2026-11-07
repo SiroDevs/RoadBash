@@ -53,9 +53,10 @@ mixin RoadDynamics {
 
   /// True while the rider is thrown off the bike.
   bool get crashed => crash.down;
+  bool get recovering => crash.recovering;
 
   /// True once a fall at 100 km/h or more left the rider down for good.
-  bool get nastyCrash => nastyCrashKmh > 0;
+  bool get nastyCrash => false;
   /// True when the rider has left the road.
   bool get offRoad => playerX < -1 || playerX > 1;
   /// True when the bike is almost stopped.
@@ -67,7 +68,17 @@ mixin RoadDynamics {
 
   // Advances speed, lateral position and skid state by one frame.
   void stepDynamics(double dt, RoadSegment segment, double speedRatio) {
+    if (recovering) {
+      if (crash.run(dt, steer)) {
+        crash.remount();
+        speed = 0;
+        nastyCrashKmh = 0;
+      }
+      return;
+    }
+    final wasDown = crashed;
     crash.update(dt);
+    if (wasDown && !crashed) crash.startRecovery(playerX);
     _hitKmh = 0;
     final authority = 1 - VehicleConfig.steerHighSpeedDamp * speedRatio;
     playerX +=
@@ -138,9 +149,9 @@ mixin RoadDynamics {
   void fall(double side, double seconds) {
     final impactKmh = math.max(_hitKmh, speedKmh);
     crash.start(side, seconds);
-    if (!nastyCrashesEnabled || impactKmh < VehicleConfig.nastyCrashKmh) return;
-    nastyCrashKmh = impactKmh;
-    crash.keepDown();
+    // Severe crashes now leave the rider down briefly, then start a playable
+    // run back to the bike instead of ending the race immediately.
+    if (impactKmh >= VehicleConfig.nastyCrashKmh) nastyCrashKmh = impactKmh;
   }
 
   // Eases the applied steering toward the requested target.

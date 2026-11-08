@@ -27,8 +27,7 @@ class RiderSprite {
   final RiderRig rig;
   final bool useRoadBashArt;
   final RiderPose pose = RiderPose();
-  late final RoadBashRiderPainter _roadBashRider =
-      RoadBashRiderPainter(look);
+  late final RoadBashRiderPainter _roadBashRider = RoadBashRiderPainter(look);
   late final RoadBashBikePainter _roadBashBike = RoadBashBikePainter(look);
   RiderFacing facing = RiderFacing.straight;
   late final RiderPainter painter;

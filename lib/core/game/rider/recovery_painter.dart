@@ -8,9 +8,9 @@ import 'art/road_bash_rider_painter.dart';
 import 'rider_facing.dart';
 import 'view/part_painter.dart';
 
-/// Ground-level rider and motorcycle artwork used between a wipeout and remount.
-/// Coordinates match the rear rider sprite so it scales cleanly in the race.
+/// Paints the fall and recovery poses at road level.
 class RecoveryPainter extends RiderPartPainter {
+  /// Creates recovery artwork using [look]'s rider and bike colors.
   RecoveryPainter(super.look)
     : _bikeArt = RoadBashBikePainter(look),
       _riderArt = RoadBashRiderPainter(look);
@@ -18,6 +18,7 @@ class RecoveryPainter extends RiderPartPainter {
   final RoadBashBikePainter _bikeArt;
   final RoadBashRiderPainter _riderArt;
 
+  /// Paints the fallen bike and either prone rider or runner.
   void paint(
     Canvas canvas, {
     required bool running,
@@ -37,6 +38,7 @@ class RecoveryPainter extends RiderPartPainter {
     }
   }
 
+  /// Rolls the bike onto the side of the fall.
   void _drawBike(Canvas canvas, double side, double fallProgress) {
     oval(
       canvas,
@@ -63,6 +65,7 @@ class RecoveryPainter extends RiderPartPainter {
     canvas.restore();
   }
 
+  /// Moves the running rider back toward the fallen bike.
   void _drawRunner(
     Canvas canvas,
     double side,
@@ -93,6 +96,7 @@ class RecoveryPainter extends RiderPartPainter {
     canvas.restore();
   }
 
+  /// Shows the rider tipping with the bike during the fall.
   void _drawMountedRider(Canvas canvas, double side, double progress) {
     canvas
       ..save()
@@ -107,6 +111,7 @@ class RecoveryPainter extends RiderPartPainter {
     canvas.restore();
   }
 
+  /// Paints the rider lying beside the bike.
   void _drawFallenRider(Canvas canvas, double side) {
     oval(
       canvas,

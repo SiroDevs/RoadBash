@@ -7,7 +7,9 @@ import 'layers/rear_crouch_left/rear_crouch_left_layer.dart';
 import 'layers/rear_crouch_right/rear_crouch_right_layer.dart';
 import 'layers/running/running_layer.dart';
 
+/// Paints the generated rider art with the selected rider's colors.
 class RoadBashRiderPainter {
+  /// Creates color filters for [look]'s suit and helmet.
   RoadBashRiderPainter(this.look)
     : _suitFilter = _mapPalette(
         dark: look.backPatch,
@@ -36,19 +38,17 @@ class RoadBashRiderPainter {
       RoadBashRiderRearCrouchRightLayer();
   final RoadBashRiderRunningLayer _running = RoadBashRiderRunningLayer();
 
+  /// Paints the rear pose facing [facing].
   void paintRear(Canvas canvas, RiderFacing facing) {
-    final layer = switch (facing) {
-      RiderFacing.left => _left,
-      RiderFacing.straight => _rear,
-      RiderFacing.right => _right,
-    };
-    _paintPalette(canvas, _suitFilter, (target) {
-      layer.paintBody(target);
-      layer.paintLegs(target);
-    });
-    _paintPalette(canvas, _helmetFilter, layer.paintHelmet);
+    _paintPalette(canvas, _suitFilter, (target) => _paintSuit(target, facing));
+    _paintPalette(
+      canvas,
+      _helmetFilter,
+      (target) => _paintHelmet(target, facing),
+    );
   }
 
+  /// Paints the runner pose with this rider's colors.
   void paintRunning(Canvas canvas) {
     _paintPalette(canvas, _suitFilter, (target) {
       _running.paintBody(target);
@@ -57,6 +57,40 @@ class RoadBashRiderPainter {
     _paintPalette(canvas, _helmetFilter, _running.paintHelmet);
   }
 
+  /// Paints suit layers in their original overlap order.
+  void _paintSuit(Canvas canvas, RiderFacing facing) {
+    switch (facing) {
+      case RiderFacing.left:
+        _left.paintBody(canvas);
+        _left.paintLegs(canvas);
+        break;
+      case RiderFacing.straight:
+        _rear.paintBody(canvas);
+        _rear.paintLegs(canvas);
+        break;
+      case RiderFacing.right:
+        _right.paintLegs(canvas);
+        _right.paintBody(canvas);
+        break;
+    }
+  }
+
+  /// Paints the helmet for the selected rear pose.
+  void _paintHelmet(Canvas canvas, RiderFacing facing) {
+    switch (facing) {
+      case RiderFacing.left:
+        _left.paintHelmet(canvas);
+        break;
+      case RiderFacing.straight:
+        _rear.paintHelmet(canvas);
+        break;
+      case RiderFacing.right:
+        _right.paintHelmet(canvas);
+        break;
+    }
+  }
+
+  /// Applies a color filter to one generated layer group.
   void _paintPalette(
     Canvas canvas,
     ColorFilter filter,
@@ -70,6 +104,7 @@ class RoadBashRiderPainter {
     canvas.restore();
   }
 
+  /// Maps the generated black, white and red inks into the rider palette.
   static ColorFilter _mapPalette({
     required Color dark,
     required Color base,
@@ -83,10 +118,17 @@ class RoadBashRiderPainter {
     }
 
     return ColorFilter.matrix([
-      ...row(dark.red, base.red, accent.red),
-      ...row(dark.green, base.green, accent.green),
-      ...row(dark.blue, base.blue, accent.blue),
-      0, 0, 0, 1, 0,
+      ...row(_channel(dark.r), _channel(base.r), _channel(accent.r)),
+      ...row(_channel(dark.g), _channel(base.g), _channel(accent.g)),
+      ...row(_channel(dark.b), _channel(base.b), _channel(accent.b)),
+      0,
+      0,
+      0,
+      1,
+      0,
     ]);
   }
+
+  /// Converts one normalized color channel into its byte value.
+  static int _channel(double value) => (value * 255).round().clamp(0, 255);
 }

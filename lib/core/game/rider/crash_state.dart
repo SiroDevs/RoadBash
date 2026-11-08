@@ -20,6 +20,10 @@ class CrashState {
   bool get recovering => _recovering;
   double get runX => _runX;
   double get side => _side;
+  double get runProgress => (_runTime / 3.2).clamp(0.0, 1.0).toDouble();
+  double get fallProgress => down
+      ? ((_total - _remaining) / fallTime).clamp(0.0, 1.0).toDouble()
+      : 1.0;
 
   /// Sideways tilt of the bike in radians, signed by the side it fell to.
   double get tilt {

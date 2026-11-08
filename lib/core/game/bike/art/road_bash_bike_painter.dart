@@ -13,7 +13,8 @@ class RoadBashBikePainter {
 
   final RoadBashBikeRearStraightLayer _rear = RoadBashBikeRearStraightLayer();
   final RoadBashBikeRearLeftAngleLayer _left = RoadBashBikeRearLeftAngleLayer();
-  final RoadBashBikeRearRightAngleLayer _right = RoadBashBikeRearRightAngleLayer();
+  final RoadBashBikeRearRightAngleLayer _right =
+      RoadBashBikeRearRightAngleLayer();
 
   void paintRear(Canvas canvas) => _rear.paint(canvas);
 

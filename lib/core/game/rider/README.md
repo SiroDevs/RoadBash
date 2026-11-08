@@ -1,7 +1,14 @@
 # Rider and bike
 
-The rider (the person) and the bike are drawn by separate painters, one pair
-per view. A view is one of `rear`, `front`, `left`, `right` (`view/rider_view.dart`).
+Race riders use the generated artwork from `../bike/art` and `art`. The player
+uses the rear pose; rivals select rear-left or rear-right based on which side
+of the player they ride. Wipeout recovery uses the running rider pose and lays
+the bike on the side of the fall. Keep the generated painter layers together
+with their root painter files because their imports depend on that structure.
+
+The legacy generic painters still draw one rider and bike pair per view. A
+view is one of `rear`, `front`, `left`, or `right` (`view/rider_view.dart`);
+the police sprite and painter gallery continue to use these views.
 
 ```
 rider/

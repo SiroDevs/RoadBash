@@ -24,15 +24,15 @@ import 'rival_steering.dart';
 /// Computer-controlled rival drawn as a bike on the road.
 class RivalRacer implements RoadActor {
   RivalRacer(this.rival, this.index, this.lanes, {this.speedLimit = 1.0})
-      : sprite = RiderSprite(look: rival.look, useRoadBashArt: true),
-        _brain = RivalBrain(rival, index * 7919 + rival.name.hashCode),
-        _lead = _grid[index % _grid.length].$2,
-        _steering = RivalSteering(
-          gridLateral: _grid[index % _grid.length].$1,
-          lanes: lanes,
-          index: index,
-          phase: rival.phase,
-        );
+    : sprite = RiderSprite(look: rival.look, useRoadBashArt: true),
+      _brain = RivalBrain(rival, index * 7919 + rival.name.hashCode),
+      _lead = _grid[index % _grid.length].$2,
+      _steering = RivalSteering(
+        gridLateral: _grid[index % _grid.length].$1,
+        lanes: lanes,
+        index: index,
+        phase: rival.phase,
+      );
 
   static const List<(double, double)> _grid = [
     (-0.75, 520),
@@ -145,7 +145,8 @@ class RivalRacer implements RoadActor {
   void limitSpeed(double ceiling) => _speed = math.min(_speed, ceiling);
 
   /// Tells the rival's brain it was in a collision.
-  void collided({required bool attacker}) => _brain.collided(attacker: attacker);
+  void collided({required bool attacker}) =>
+      _brain.collided(attacker: attacker);
 
   /// Moves the rival along the track by the distance it should have covered.
   void _advance(double dt, RaceController race, RoadRenderer road) {
@@ -162,7 +163,11 @@ class RivalRacer implements RoadActor {
       _speed = 0;
       return;
     }
-    _speed = rivalFinishSpeed(dt, _speed, rivalStopDistance(race, road, index) - _dist);
+    _speed = rivalFinishSpeed(
+      dt,
+      _speed,
+      rivalStopDistance(race, road, index) - _dist,
+    );
     _dist += _speed * dt;
   }
 

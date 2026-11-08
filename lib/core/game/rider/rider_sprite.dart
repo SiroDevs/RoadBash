@@ -1,15 +1,12 @@
-// Dart imports:
-import 'dart:ui';
-
 // Flutter imports:
 import 'package:flutter/rendering.dart';
 
 // Project imports:
 import 'look/rider_look.dart';
+import 'rider_facing.dart';
 import 'rider_painter.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
-import 'rider_facing.dart';
 import 'view/rider_view.dart';
 import '../bike/art/road_bash_bike_painter.dart';
 import 'art/road_bash_rider_painter.dart';
@@ -53,12 +50,15 @@ class RiderSprite {
       case RiderFacing.left:
         _roadBashBike.paintRearLeft(canvas);
         _roadBashRider.paintRearLeft(canvas);
+        break;
       case RiderFacing.right:
         _roadBashBike.paintRearRight(canvas);
         _roadBashRider.paintRearRight(canvas);
+        break;
       case RiderFacing.straight:
         _roadBashBike.paintRear(canvas);
         _roadBashRider.paintRear(canvas);
+        break;
     }
     canvas.restore();
   }

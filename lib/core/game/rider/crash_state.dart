@@ -19,6 +19,7 @@ class CrashState {
   bool get down => _remaining > 0;
   bool get recovering => _recovering;
   double get runX => _runX;
+  double get side => _side;
 
   /// Sideways tilt of the bike in radians, signed by the side it fell to.
   double get tilt {

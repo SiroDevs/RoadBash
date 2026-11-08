@@ -13,6 +13,7 @@ import 'dust_trail.dart';
 import 'look/rider_look.dart';
 import 'rider_painter.dart';
 import 'rider_pose.dart';
+import 'recovery_painter.dart';
 import 'rider_rig.dart';
 import 'rider_sprite.dart';
 
@@ -29,6 +30,7 @@ class RiderComponent extends PositionComponent {
   final RiderRig rig;
   final RiderLook look;
   late final RiderSprite _sprite = RiderSprite(look: look, rig: rig);
+  late final RecoveryPainter _recoveryPainter = RecoveryPainter(look);
   /// Returns the rider's current pose.
   RiderPose get _pose => _sprite.pose;
   final DustTrail _dust = DustTrail();
@@ -82,33 +84,17 @@ class RiderComponent extends PositionComponent {
   @override
   void render(Canvas canvas) {
     canvas.scale(size.y / RiderPainter.height);
-    if (road.recovering) {
-      final x = RiderPartPainter.midX + road.crash.runX * 65;
-      final stride = math.sin(_t * 12) * 8;
-      final ink = Paint()..color = look.suit;
-      final helmet = Paint()..color = look.helmet;
-      final metal = Paint()..color = look.bike.panel;
-      final rubber = Paint()..color = const Color(0xFF202027);
-      // The bike stays at the crash point while the rider runs back to it.
-      canvas
-        ..drawCircle(Offset(RiderPartPainter.midX - 35, RiderPartPainter.groundY - 5), 9, rubber)
-        ..drawCircle(Offset(RiderPartPainter.midX + 35, RiderPartPainter.groundY - 5), 9, rubber)
-        ..drawLine(Offset(RiderPartPainter.midX - 28, RiderPartPainter.groundY - 10), Offset(RiderPartPainter.midX + 25, RiderPartPainter.groundY - 15), metal..strokeWidth = 8)
-        ..drawCircle(Offset(RiderPartPainter.midX, RiderPartPainter.groundY - 18), 11, metal);
-      canvas.drawCircle(Offset(x, RiderPartPainter.groundY - 58), 9, helmet);
-      canvas.drawLine(Offset(x, RiderPartPainter.groundY - 48),
-          Offset(x - 2, RiderPartPainter.groundY - 27), ink..strokeWidth = 8);
-      canvas.drawLine(Offset(x - 2, RiderPartPainter.groundY - 27),
-          Offset(x - 10 + stride, RiderPartPainter.groundY - 4), ink..strokeWidth = 6);
-      canvas.drawLine(Offset(x - 2, RiderPartPainter.groundY - 27),
-          Offset(x + 10 - stride, RiderPartPainter.groundY - 4), ink..strokeWidth = 6);
-      canvas.drawLine(Offset(x - 1, RiderPartPainter.groundY - 42),
-          Offset(x - 17, RiderPartPainter.groundY - 28), ink..strokeWidth = 5);
-      canvas.drawLine(Offset(x - 1, RiderPartPainter.groundY - 42),
-          Offset(x + 15, RiderPartPainter.groundY - 32), ink..strokeWidth = 5);
+    if (road.crashed || road.recovering) {
+      _recoveryPainter.paint(
+        canvas,
+        running: road.recovering,
+        time: _t,
+        runX: road.crash.runX,
+        fallSide: road.crash.side,
+      );
       return;
     }
-    _sprite.painter.paint(canvas, _pose);
+    _sprite.paint(canvas);
     _dust.paint(
       canvas,
       const Offset(RiderPartPainter.midX, RiderPartPainter.groundY),

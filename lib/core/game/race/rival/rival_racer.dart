@@ -6,6 +6,7 @@ import 'dart:ui';
 import '../../../../common/objects/guardrail/guardrail_config.dart';
 import '../../rider/crash_state.dart';
 import '../../rider/rider_sprite.dart';
+import '../../rider/rider_facing.dart';
 import '../../road/config/vehicle_config.dart';
 import '../../road/road_renderer.dart';
 import '../../road/track/road_section.dart';
@@ -23,7 +24,7 @@ import 'rival_steering.dart';
 /// Computer-controlled rival drawn as a bike on the road.
 class RivalRacer implements RoadActor {
   RivalRacer(this.rival, this.index, this.lanes, {this.speedLimit = 1.0})
-      : sprite = RiderSprite(look: rival.look),
+      : sprite = RiderSprite(look: rival.look, useRoadBashArt: true),
         _brain = RivalBrain(rival, index * 7919 + rival.name.hashCode),
         _lead = _grid[index % _grid.length].$2,
         _steering = RivalSteering(
@@ -108,6 +109,7 @@ class RivalRacer implements RoadActor {
 
     final seg = road.track.at(distance + road.playerZ);
     _steerLateral(dt, race, road, seg.section, clock);
+    _updateFacing(road.playerX);
     _poseDriver.update(
       dt: dt,
       speed: _speed,
@@ -118,6 +120,16 @@ class RivalRacer implements RoadActor {
     );
     sprite.pose.tumble = _crash.tilt;
     _ground.updateDust(dt, _speed, down: _crash.down);
+  }
+
+  /// Turns the rival toward the player when riding beside them.
+  void _updateFacing(double playerLateral) {
+    final relative = lateral - playerLateral;
+    sprite.facing = relative < -0.06
+        ? RiderFacing.right
+        : relative > 0.06
+        ? RiderFacing.left
+        : RiderFacing.straight;
   }
 
   /// Slows the rival and shoves it sideways after a hit.

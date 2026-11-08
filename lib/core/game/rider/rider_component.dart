@@ -102,6 +102,7 @@ class RiderComponent extends PositionComponent {
         time: _t,
         fallSide: road.crash.side,
         runProgress: road.crash.runProgress,
+        steerOffset: road.crash.steerOffset,
         fallProgress: road.crash.fallProgress,
       );
       return;

@@ -19,11 +19,12 @@ class RecoveryPainter extends RiderPartPainter {
     required double time,
     required double fallSide,
     required double runProgress,
+    required double steerOffset,
     required double fallProgress,
   }) {
     _drawBike(canvas, fallSide, fallProgress);
     if (running) {
-      _drawRunner(canvas, fallSide, runProgress, time);
+      _drawRunner(canvas, fallSide, runProgress, steerOffset, time);
     } else if (fallProgress < 0.55) {
       _drawMountedRider(canvas, fallSide, fallProgress);
     } else {
@@ -57,11 +58,17 @@ class RecoveryPainter extends RiderPartPainter {
     canvas.restore();
   }
 
-  void _drawRunner(Canvas canvas, double side, double progress, double time) {
+  void _drawRunner(
+    Canvas canvas,
+    double side,
+    double progress,
+    double steerOffset,
+    double time,
+  ) {
     final eased = progress * progress * (3 - 2 * progress);
     final startX = RiderPartPainter.midX + side * 42;
     final bikeX = RiderPartPainter.midX + side * 17;
-    final x = startX + (bikeX - startX) * eased;
+    final x = startX + (bikeX - startX) * eased + steerOffset * 40;
     final bounce = math.sin(time * 13).abs() * 1.5;
     oval(
       canvas,

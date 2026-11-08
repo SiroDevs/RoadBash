@@ -5,15 +5,18 @@ import 'dart:ui';
 // Project imports:
 import '../bike/art/road_bash_bike_painter.dart';
 import 'art/road_bash_rider_painter.dart';
+import 'rider_facing.dart';
 import 'view/part_painter.dart';
 
 /// Ground-level rider and motorcycle artwork used between a wipeout and remount.
 /// Coordinates match the rear rider sprite so it scales cleanly in the race.
 class RecoveryPainter extends RiderPartPainter {
-  RecoveryPainter(super.look);
+  RecoveryPainter(super.look)
+    : _bikeArt = RoadBashBikePainter(look),
+      _riderArt = RoadBashRiderPainter(look);
 
-  final RoadBashBikePainter _bikeArt = RoadBashBikePainter();
-  final RoadBashRiderPainter _riderArt = RoadBashRiderPainter();
+  final RoadBashBikePainter _bikeArt;
+  final RoadBashRiderPainter _riderArt;
 
   void paint(
     Canvas canvas, {
@@ -56,7 +59,7 @@ class RecoveryPainter extends RiderPartPainter {
       ..rotate(side * 1.3 * fallProgress)
       ..scale(0.46)
       ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY);
-    _bikeArt.paintRear(canvas);
+    _bikeArt.paintRear(canvas, RiderFacing.straight);
     canvas.restore();
   }
 
@@ -100,7 +103,7 @@ class RecoveryPainter extends RiderPartPainter {
       ..rotate(side * 1.3 * progress)
       ..scale(0.62)
       ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY);
-    _riderArt.paintRear(canvas);
+    _riderArt.paintRear(canvas, RiderFacing.straight);
     canvas.restore();
   }
 
@@ -126,7 +129,7 @@ class RecoveryPainter extends RiderPartPainter {
       ..rotate(side * math.pi / 2)
       ..scale(0.45)
       ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY);
-    _riderArt.paintRear(canvas);
+    _riderArt.paintRear(canvas, RiderFacing.straight);
     canvas.restore();
   }
 }

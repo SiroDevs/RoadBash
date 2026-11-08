@@ -27,13 +27,15 @@ class RiderSprite {
   final RiderRig rig;
   final bool useRoadBashArt;
   final RiderPose pose = RiderPose();
-  final RoadBashRiderPainter _roadBashRider = RoadBashRiderPainter();
-  final RoadBashBikePainter _roadBashBike = RoadBashBikePainter();
+  late final RoadBashRiderPainter _roadBashRider =
+      RoadBashRiderPainter(look);
+  late final RoadBashBikePainter _roadBashBike = RoadBashBikePainter(look);
   RiderFacing facing = RiderFacing.straight;
   late final RiderPainter painter;
 
   static const double width = RiderPainter.width;
   static const double height = RiderPainter.height;
+  static const double riderLift = 12;
 
   /// Paints the selected artwork in the current pose.
   void paint(Canvas canvas) {
@@ -46,20 +48,12 @@ class RiderSprite {
       ..translate(RiderPartPainter.midX + pose.shake, RiderPartPainter.groundY)
       ..rotate(pose.lean + pose.tumble)
       ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
-    switch (facing) {
-      case RiderFacing.left:
-        _roadBashBike.paintRearLeft(canvas);
-        _roadBashRider.paintRearLeft(canvas);
-        break;
-      case RiderFacing.right:
-        _roadBashBike.paintRearRight(canvas);
-        _roadBashRider.paintRearRight(canvas);
-        break;
-      case RiderFacing.straight:
-        _roadBashBike.paintRear(canvas);
-        _roadBashRider.paintRear(canvas);
-        break;
-    }
+    _roadBashBike.paintRear(canvas, facing);
+    canvas
+      ..save()
+      ..translate(0, -riderLift);
+    _roadBashRider.paintRear(canvas, facing);
+    canvas.restore();
     canvas.restore();
   }
 

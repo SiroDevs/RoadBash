@@ -126,9 +126,9 @@ class RivalRacer implements RoadActor {
   void _updateFacing(double playerLateral) {
     final relative = lateral - playerLateral;
     sprite.facing = relative < -0.06
-        ? RiderFacing.right
-        : relative > 0.06
         ? RiderFacing.left
+        : relative > 0.06
+        ? RiderFacing.right
         : RiderFacing.straight;
   }
 

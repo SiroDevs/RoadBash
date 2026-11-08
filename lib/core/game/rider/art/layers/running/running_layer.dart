@@ -14,9 +14,15 @@ class RoadBashRiderRunningLayer {
   final RiderLegs3 _riderLegs3 = RiderLegs3();
   final Helmet3 _helmet3 = Helmet3();
 
+  void paintBody(Canvas canvas) => _riderBody3.paint(canvas);
+
+  void paintLegs(Canvas canvas) => _riderLegs3.paint(canvas);
+
+  void paintHelmet(Canvas canvas) => _helmet3.paint(canvas);
+
   void paint(Canvas canvas) {
-    _riderBody3.paint(canvas);
-    _riderLegs3.paint(canvas);
-    _helmet3.paint(canvas);
+    paintBody(canvas);
+    paintLegs(canvas);
+    paintHelmet(canvas);
   }
 }

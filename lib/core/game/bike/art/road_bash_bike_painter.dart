@@ -1,6 +1,9 @@
 // GENERATED layer selection from the RoadBashBike Flutter Painter project.
+
+// Dart imports:
 import 'dart:ui';
 
+// Project imports:
 import 'layers/rear_left_angle/rear_left_angle_layer.dart';
 import 'layers/rear_right_angle/rear_right_angle_layer.dart';
 import 'layers/rear_straight/rear_straight_layer.dart';

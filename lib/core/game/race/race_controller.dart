@@ -3,8 +3,8 @@ import 'dart:math' as math;
 
 // Project imports:
 import '../../../domain/models/level_rules.dart';
-import '../../../domain/models/traffic_offence.dart';
 import '../../../domain/models/scene_id.dart';
+import '../../../domain/models/traffic_offence.dart';
 import '../rider/look/rider_look.dart';
 import '../rider/look/rider_looks.dart';
 import '../road/config/road_config.dart';

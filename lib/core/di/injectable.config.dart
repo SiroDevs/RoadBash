@@ -15,7 +15,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:roadbash/core/audio/audio_service.dart' as _i257;
 import 'package:roadbash/core/di/injectable.dart' as _i970;
 import 'package:roadbash/data/repos/auth_repo_impl.dart' as _i378;
-import 'package:roadbash/data/repos/career_repo_impl.dart' as _i4001;
+import 'package:roadbash/data/repos/career_repo_impl.dart' as _i653;
 import 'package:roadbash/data/repos/leaderboard_repo_impl.dart' as _i777;
 import 'package:roadbash/data/repos/post_repo_impl.dart' as _i1050;
 import 'package:roadbash/data/repos/profile_repo_impl.dart' as _i10;
@@ -26,7 +26,7 @@ import 'package:roadbash/data/sources/local/prefs_source.dart' as _i810;
 import 'package:roadbash/data/sources/remote/api_client.dart' as _i27;
 import 'package:roadbash/data/sources/remote/geo_source.dart' as _i118;
 import 'package:roadbash/domain/repos/auth_repo.dart' as _i505;
-import 'package:roadbash/domain/repos/career_repo.dart' as _i4002;
+import 'package:roadbash/domain/repos/career_repo.dart' as _i16;
 import 'package:roadbash/domain/repos/leaderboard_repo.dart' as _i808;
 import 'package:roadbash/domain/repos/post_repo.dart' as _i1062;
 import 'package:roadbash/domain/repos/profile_repo.dart' as _i624;
@@ -82,6 +82,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i10.ProfileRepoImpl(gh<_i810.PrefsSource>()),
     );
     gh.factory<_i158.MenuCubit>(() => _i158.MenuCubit(gh<_i615.MenuMemory>()));
+    gh.lazySingleton<_i16.CareerRepo>(
+      () => _i653.CareerRepoImpl(gh<_i810.PrefsSource>()),
+    );
     gh.lazySingleton<_i751.SettingsCubit>(
       () => _i751.SettingsCubit(gh<_i624.ProfileRepo>()),
     );
@@ -103,9 +106,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1062.PostRepo>(
       () => _i1050.PostRepoImpl(gh<_i27.ApiClient>()),
     );
-    gh.lazySingleton<_i4002.CareerRepo>(
-      () => _i4001.CareerRepoImpl(gh<_i810.PrefsSource>()),
-    );
     gh.lazySingleton<_i541.RaceRepo>(
       () => _i101.RaceRepoImpl(gh<_i27.ApiClient>()),
     );
@@ -116,11 +116,11 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i985.AudioCubit(gh<_i257.AudioService>(), gh<_i751.SettingsCubit>()),
     );
+    gh.lazySingleton<_i419.ProgressCubit>(
+      () => _i419.ProgressCubit(gh<_i541.RaceRepo>(), gh<_i16.CareerRepo>()),
+    );
     gh.lazySingleton<_i1008.WalletCubit>(
       () => _i1008.WalletCubit(gh<_i498.WalletRepo>(), gh<_i505.AuthRepo>()),
-    );
-    gh.lazySingleton<_i419.ProgressCubit>(
-      () => _i419.ProgressCubit(gh<_i541.RaceRepo>(), gh<_i4002.CareerRepo>()),
     );
     gh.lazySingleton<_i570.AuthCubit>(
       () => _i570.AuthCubit(

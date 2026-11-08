@@ -5,8 +5,8 @@ import 'dart:ui';
 // Project imports:
 import '../../../../common/objects/guardrail/guardrail_config.dart';
 import '../../rider/crash_state.dart';
-import '../../rider/rider_sprite.dart';
 import '../../rider/rider_facing.dart';
+import '../../rider/rider_sprite.dart';
 import '../../road/config/vehicle_config.dart';
 import '../../road/road_renderer.dart';
 import '../../road/track/road_section.dart';

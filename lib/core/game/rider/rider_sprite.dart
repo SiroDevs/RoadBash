@@ -2,14 +2,14 @@
 import 'package:flutter/rendering.dart';
 
 // Project imports:
+import '../bike/art/road_bash_bike_painter.dart';
+import 'art/road_bash_rider_painter.dart';
 import 'look/rider_look.dart';
 import 'rider_facing.dart';
 import 'rider_painter.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
 import 'view/rider_view.dart';
-import '../bike/art/road_bash_bike_painter.dart';
-import 'art/road_bash_rider_painter.dart';
 
 /// Rider and bike that can be drawn anywhere, such as a rival.
 class RiderSprite {

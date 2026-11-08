@@ -1,6 +1,9 @@
 // GENERATED layer selection from the RoadBashRider Flutter Painter project.
+
+// Dart imports:
 import 'dart:ui';
 
+// Project imports:
 import 'layers/rear_crouch/rear_crouch_layer.dart';
 import 'layers/rear_crouch_left/rear_crouch_left_layer.dart';
 import 'layers/rear_crouch_right/rear_crouch_right_layer.dart';

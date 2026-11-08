@@ -11,9 +11,9 @@ import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 import 'dust_trail.dart';
 import 'look/rider_look.dart';
+import 'recovery_painter.dart';
 import 'rider_painter.dart';
 import 'rider_pose.dart';
-import 'recovery_painter.dart';
 import 'rider_rig.dart';
 import 'rider_sprite.dart';
 

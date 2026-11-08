@@ -50,6 +50,7 @@ class RiderContacts {
 
   double _previousPlayerX = double.nan;
   final Map<RivalRacer, double> _cooldowns = {};
+  bool _attackWasDown = false;
 
   /// Checks every rival against the player for one frame.
   void update(
@@ -57,18 +58,44 @@ class RiderContacts {
     RaceController race,
     RoadRenderer road,
     List<RivalRacer> racers,
+    {bool attack = false}
   ) {
     final moved = _previousPlayerX.isNaN || dt <= 0
         ? 0.0
         : (road.playerX - _previousPlayerX) / dt;
     _previousPlayerX = road.playerX;
-    if (race.raceClock < _startGrace || race.finished || road.crashed) return;
+    final attackPressed = attack && !_attackWasDown;
+    _attackWasDown = attack;
+    if (race.raceClock < _startGrace || race.finished || road.crashed || road.recovering) return;
+    if (attackPressed && race.rules.combat) _attack(road, racers);
     for (final racer in racers) {
       final wait = (_cooldowns[racer] ?? 0) - dt;
       _cooldowns[racer] = wait;
       if (racer.fallen || racer.crossed) continue;
       _touch(racer, road, moved, wait <= 0);
     }
+  }
+
+  void _attack(RoadRenderer road, List<RivalRacer> racers) {
+    RivalRacer? target;
+    var best = double.infinity;
+    for (final racer in racers) {
+      if (racer.fallen || racer.crossed) continue;
+      final along = racer.distance - road.fullDistance;
+      final side = (racer.lateral - road.playerX).abs();
+      final score = along.abs() / 400 + side;
+      if (along.abs() <= 520 && side <= 0.9 && score < best) {
+        target = racer;
+        best = score;
+      }
+    }
+    if (target == null) return;
+    onBash();
+    target.bump(speedLoss: 0.24, sideShove: target.lateral >= road.playerX ? 0.8 : -0.8);
+    target.fall(target.lateral >= road.playerX ? 1 : -1, 1.8);
+    target.collided(attacker: false);
+    _cooldowns[target] = _cooldown;
+    onImpact(0.6, false);
   }
 
   /// Handles one rival that may be touching the player.

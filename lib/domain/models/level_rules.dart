@@ -199,6 +199,9 @@ class LevelRules {
   /// True when a nasty crash ends the race in hospital.
   bool get hospital => hospitalBill > 0;
 
+  /// Deliberate rider attacks become available from level four.
+  bool get combat => level >= 4;
+
   /// True when police patrol the road.
   bool get police => policeFine > 0;
 

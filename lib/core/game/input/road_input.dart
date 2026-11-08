@@ -18,6 +18,7 @@ mixin RoadInput on FlameGame {
   double _tiltSteer = 0;
   bool _keyThrottle = false;
   bool _keyBrake = false;
+  bool attack = false;
   HandlebarPose _handlebars = HandlebarPose.rest;
   bool _handlebarsLatched = false;
 
@@ -34,6 +35,7 @@ mixin RoadInput on FlameGame {
     LogicalKeyboardKey.arrowDown,
     LogicalKeyboardKey.keyS,
   ];
+  static const _attackKey = LogicalKeyboardKey.keyC;
 
   /// Combines key, handlebar and tilt input into the rider controls.
   void applyInput() {
@@ -64,6 +66,7 @@ mixin RoadInput on FlameGame {
         (anyDown(_leftKeys) ? 1.0 : 0.0);
     _keyThrottle = anyDown(_upKeys);
     _keyBrake = anyDown(_downKeys);
+    attack = anyDown([_attackKey]);
     if (_keyThrottle || _keyBrake || _keySteer != 0) _handlebarsLatched = false;
     applyInput();
   }
@@ -74,6 +77,7 @@ mixin RoadInput on FlameGame {
     _tiltSteer = 0;
     _keyThrottle = false;
     _keyBrake = false;
+    attack = false;
     _handlebars = HandlebarPose.rest;
     _handlebarsLatched = false;
     applyInput();
@@ -83,6 +87,10 @@ mixin RoadInput on FlameGame {
   void setTiltSteer(double value) {
     _tiltSteer = value;
     applyInput();
+  }
+
+  void setAttack(bool value) {
+    attack = value;
   }
 
   /// The current handlebar pose.

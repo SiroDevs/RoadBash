@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 // Project imports:
-import '../../../../domain/models/level_rules.dart';
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
+import '../../../../domain/models/level_rules.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../../cubit/menu_target.dart';
 import '../../cubit/scene_order.dart';

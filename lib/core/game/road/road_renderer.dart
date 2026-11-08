@@ -78,8 +78,8 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
   @override
   void update(double dt) {
     final seg = track.at(trkPosition + playerZ);
-    steerToward(dt, locked || crashed ? 0 : steer);
-    if (locked) {
+    steerToward(dt, locked || (crashed && !recovering) ? 0 : steer);
+    if (locked && !recovering) {
       speed = 0;
       skidding = false;
       curveFelt += (0 - curveFelt) * math.min(1.0, dt * 4);
@@ -95,6 +95,10 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     curveFelt += (seg.curve - curveFelt) * math.min(1.0, dt * 3.5);
 
     stepDynamics(dt, seg, sp);
+    if (recovering) {
+      speed = 0;
+      return;
+    }
     _backdrop.scroll += curveFelt * sp * dt * 34;
   }
 

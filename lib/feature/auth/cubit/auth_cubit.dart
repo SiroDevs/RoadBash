@@ -61,12 +61,12 @@ class AuthCubit extends Cubit<AuthState> {
     _settings.setName(session.name);
     emit(AuthState(session: session));
     _syncedLevel = 0;
-    await _progress.load();
+    await _progress.load(state.accountKey);
     await syncLevel();
   }
 
-  /// Raises the account level to the local one and takes a higher account
-  /// level into the career. Does nothing offline or when not signed in.
+  /// Sends the level reached in this session and takes the level kept on the
+  /// account into the career. Does nothing offline or when not signed in.
   Future<void> syncLevel() async {
     final level = _progress.state.level;
     if (state.session == null || level <= _syncedLevel) return;
@@ -86,7 +86,8 @@ class AuthCubit extends Cubit<AuthState> {
     _repo.saveAnonymous();
     _settings.setName(AppConstants.anonymousName);
     emit(const AuthState(anonymous: true));
-    await _progress.load();
+    _syncedLevel = 0;
+    await _progress.load(state.accountKey);
   }
 
   /// Clears the saved session and signs out.
@@ -95,6 +96,7 @@ class AuthCubit extends Cubit<AuthState> {
     await _repo.logout();
     _syncedLevel = 0;
     emit(const AuthState());
+    await _progress.load(state.accountKey);
   }
 
   @override

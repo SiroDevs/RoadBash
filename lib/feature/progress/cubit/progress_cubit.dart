@@ -21,23 +21,28 @@ class ProgressCubit extends Cubit<ProgressState> {
 
   final RaceRepo _repo;
   final CareerRepo _careerRepo;
+  String _account = '';
 
-  /// Loads saved race records and the career.
-  Future<void> load() async => emit(
-    ProgressState(
-      records: await _repo.all(),
-      career: await _careerRepo.load(),
-      loaded: true,
-    ),
-  );
+  /// Loads the race records and the streak and best times of [account], with
+  /// the career back at level 1 until the account's own level arrives.
+  Future<void> load(String account) async {
+    _account = account;
+    emit(
+      ProgressState(
+        records: await _repo.all(),
+        career: await _careerRepo.load(account),
+        loaded: true,
+      ),
+    );
+  }
 
-  /// Takes a higher level from the player's account; a level never goes down.
+  /// Takes the level kept on the player's account; a level never goes down.
   Future<void> applyLevel(int level) async {
     final career = state.career;
     final capped = level.clamp(1, LevelRules.top).toInt();
     if (capped <= career.level) return;
     final next = career.copyWith(level: capped, streak: 0);
-    await _careerRepo.save(next);
+    await _careerRepo.save(_account, next);
     emit(state.copyWith(career: next));
   }
 
@@ -83,7 +88,7 @@ class ProgressCubit extends Cubit<ProgressState> {
       streak: streak,
       bests: newBest ? {...career.bests, key: timeMs} : null,
     );
-    await _careerRepo.save(next);
+    await _careerRepo.save(_account, next);
     emit(state.copyWith(career: next));
     return CareerUpdate(newBest: newBest, levelUp: levelUp);
   }

@@ -45,8 +45,10 @@ mixin RoadDynamics {
 
   /// Speed as a share of the top speed.
   double get speedPercent => speed / VehicleConfig.maxSpeed;
+
   /// Speed in kilometres per hour.
   double get speedKmh => speedPercent * VehicleConfig.topSpeedKmh;
+
   /// True while the bike is kicking up dust or spray.
   bool get kickingDust =>
       ride.current.dusty && !crashed && speed > VehicleConfig.maxSpeed * 0.12;
@@ -57,12 +59,16 @@ mixin RoadDynamics {
 
   /// True once a fall at 100 km/h or more left the rider down for good.
   bool get nastyCrash => false;
+
   /// True when the rider has left the road.
   bool get offRoad => playerX < -1 || playerX > 1;
+
   /// True when the bike is almost stopped.
   bool get stopped => speed < VehicleConfig.stoppedSpeed;
+
   /// True when stopped without throttle, so the rider has a foot down.
   bool get restingOnFoot => stopped && !throttle && !crashed;
+
   /// Engine load from the pedals: braking, idling or full throttle.
   double get engineLoad => brake ? 0.3 : (throttle ? 1.0 : 0.5);
 
@@ -71,8 +77,15 @@ mixin RoadDynamics {
     if (recovering) {
       if (crash.run(dt, steer)) {
         crash.remount();
+        playerX = 0;
+        appliedSteer = 0;
+        shove = 0;
         speed = 0;
         nastyCrashKmh = 0;
+      } else if (crash.returning) {
+        playerX = crash.crashX * (1 - crash.returnProgress);
+        appliedSteer = 0;
+        shove = 0;
       }
       return;
     }
@@ -84,7 +97,11 @@ mixin RoadDynamics {
     playerX +=
         dt * VehicleConfig.steerRate * appliedSteer * speedRatio * authority;
     playerX -=
-        dt * VehicleConfig.centrifugal * segment.curve * speedRatio * speedRatio;
+        dt *
+        VehicleConfig.centrifugal *
+        segment.curve *
+        speedRatio *
+        speedRatio;
 
     playerX += shove * dt;
     shove *= math.exp(-VehicleConfig.shoveDecay * dt);
@@ -148,7 +165,7 @@ mixin RoadDynamics {
   /// Throws the rider off the bike toward [side]; a fall at 100 km/h or more is nasty.
   void fall(double side, double seconds) {
     final impactKmh = math.max(_hitKmh, speedKmh);
-    crash.start(side, seconds);
+    crash.start(side, seconds, lateral: playerX);
     // Severe crashes now leave the rider down briefly, then start a playable
     // run back to the bike instead of ending the race immediately.
     if (impactKmh >= VehicleConfig.nastyCrashKmh) nastyCrashKmh = impactKmh;

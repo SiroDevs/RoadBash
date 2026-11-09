@@ -10,6 +10,7 @@ import '../../../common/objects/universal/prop_painter.dart';
 import '../hud/dashboard/dashboard_layout.dart';
 import 'backdrop/road_backdrop.dart';
 import 'config/road_config.dart';
+import 'config/vehicle_config.dart';
 import 'finish/finish_config.dart';
 import 'finish/finish_pad_painter.dart';
 import 'finish/finish_zone.dart';
@@ -84,6 +85,15 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
       skidding = false;
       curveFelt += (0 - curveFelt) * math.min(1.0, dt * 4);
       settleRpm(dt, throttle ? 0.30 : 0.16);
+      return;
+    }
+    if (recovering) {
+      stepDynamics(dt, seg, speedPercent);
+      if (!recovering) return;
+      speed = 0;
+      trkPosition =
+          (trkPosition + dt * VehicleConfig.maxSpeed * 0.12) % track.length;
+      _backdrop.scroll += dt * 18;
       return;
     }
     final sp = speedPercent;
@@ -167,7 +177,8 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
       _roads.draw(canvas, vision, size.x);
       if (finish.on) {
         final row = finish.padRow(seg.index);
-        if (row >= 0) _pad.draw(canvas, vision, row, zebra: finish.isZebra(row));
+        if (row >= 0)
+          _pad.draw(canvas, vision, row, zebra: finish.isZebra(row));
       }
       maxY = _p2.y;
       if (vision.fog >= 1) break;

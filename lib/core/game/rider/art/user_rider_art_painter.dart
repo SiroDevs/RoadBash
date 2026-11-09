@@ -1,26 +1,30 @@
+// Dart imports:
 import 'dart:math' as math;
 import 'dart:ui';
 
+// Project imports:
 import '../look/rider_look.dart';
 import '../rider_pose.dart';
 import 'user_art_color.dart';
+import 'user_assets/rider/layers/back_facing/groups/legs.dart' as rear_legs;
+import 'user_assets/rider/layers/back_facing/groups/torso.dart' as rear_torso;
+import 'user_assets/rider/layers/side_running/groups/torso4.dart' as run_torso;
+import 'user_assets/rider/layers/side_ways/groups/arm.dart' as side_arm;
+import 'user_assets/rider/layers/side_ways/groups/helmet.dart' as side_helmet;
+import 'user_assets/rider/layers/side_ways/groups/leg.dart' as side_leg;
 import 'user_front_rider_art_painter.dart';
 import 'user_side_standing_art_painter.dart';
+
 import 'user_assets/rider/layers/back_facing/groups/helmet2.dart'
     as rear_helmet;
 import 'user_assets/rider/layers/back_facing/groups/left_hand.dart'
     as rear_left_arm;
-import 'user_assets/rider/layers/back_facing/groups/legs.dart' as rear_legs;
 import 'user_assets/rider/layers/back_facing/groups/right_boot.dart'
     as rear_left_boot;
 import 'user_assets/rider/layers/back_facing/groups/right_boot2.dart'
     as rear_right_boot;
 import 'user_assets/rider/layers/back_facing/groups/right_hand.dart'
     as rear_right_arm;
-import 'user_assets/rider/layers/back_facing/groups/torso.dart' as rear_torso;
-import 'user_assets/rider/layers/side_ways/groups/arm.dart' as side_arm;
-import 'user_assets/rider/layers/side_ways/groups/helmet.dart' as side_helmet;
-import 'user_assets/rider/layers/side_ways/groups/leg.dart' as side_leg;
 import 'user_assets/rider/layers/side_running/groups/helmet5.dart'
     as run_helmet;
 import 'user_assets/rider/layers/side_running/groups/left_boot2.dart'
@@ -35,7 +39,6 @@ import 'user_assets/rider/layers/side_running/groups/right_hand4.dart'
     as run_right_arm;
 import 'user_assets/rider/layers/side_running/groups/right_leg3.dart'
     as run_right_leg;
-import 'user_assets/rider/layers/side_running/groups/torso4.dart' as run_torso;
 
 /// Paints the supplied rider shapes as separate, movable body parts.
 class UserRiderArtPainter {

@@ -1,6 +1,8 @@
+// Dart imports:
 import 'dart:math' as math;
 import 'dart:ui';
 
+// Project imports:
 import 'art/user_bike_art_painter.dart';
 import 'art/user_rider_art_painter.dart';
 import 'rider_pose.dart';

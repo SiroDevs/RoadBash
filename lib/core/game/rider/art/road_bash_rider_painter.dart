@@ -1,5 +1,7 @@
+// Dart imports:
 import 'dart:ui';
 
+// Project imports:
 import '../look/rider_look.dart';
 import '../rider_facing.dart';
 import 'layers/rear_crouch/rear_crouch_layer.dart';

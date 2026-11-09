@@ -1,7 +1,10 @@
+// Dart imports:
 import 'dart:ui';
 
+// Project imports:
 import '../look/rider_look.dart';
 import 'user_art_color.dart';
+
 import 'user_assets/rider/layers/front_facing/groups/helmet4.dart'
     as front_helmet;
 import 'user_assets/rider/layers/front_facing/groups/left_boot.dart'

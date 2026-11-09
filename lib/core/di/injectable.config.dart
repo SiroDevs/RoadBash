@@ -10,8 +10,12 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+// Package imports:
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
+
+// Project imports:
 import 'package:roadbash/core/audio/audio_service.dart' as _i257;
 import 'package:roadbash/core/di/injectable.dart' as _i970;
 import 'package:roadbash/data/repos/auth_repo_impl.dart' as _i378;
@@ -37,8 +41,6 @@ import 'package:roadbash/feature/audio/cubit/audio_cubit.dart' as _i985;
 import 'package:roadbash/feature/auth/cubit/auth_cubit.dart' as _i570;
 import 'package:roadbash/feature/auth/cubit/sign_in_cubit.dart' as _i659;
 import 'package:roadbash/feature/boardroom/cubit/boardroom_cubit.dart' as _i802;
-import 'package:roadbash/feature/leaderboard/cubit/leaderboard_cubit.dart'
-    as _i695;
 import 'package:roadbash/feature/menu/cubit/menu_cubit.dart' as _i158;
 import 'package:roadbash/feature/menu/cubit/menu_memory.dart' as _i615;
 import 'package:roadbash/feature/menu/cubit/online_cubit.dart' as _i198;
@@ -49,7 +51,9 @@ import 'package:roadbash/feature/settings/cubit/settings_cubit.dart' as _i751;
 import 'package:roadbash/feature/splash/cubit/splash_cubit.dart' as _i178;
 import 'package:roadbash/feature/stats/cubit/stats_cubit.dart' as _i249;
 import 'package:roadbash/feature/wallet/cubit/wallet_cubit.dart' as _i1008;
-import 'package:shared_preferences/shared_preferences.dart' as _i460;
+
+import 'package:roadbash/feature/leaderboard/cubit/leaderboard_cubit.dart'
+    as _i695;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt

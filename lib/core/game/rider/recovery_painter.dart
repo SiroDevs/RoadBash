@@ -27,10 +27,8 @@ class RecoveryPainter extends RiderPartPainter {
     required bool returning,
     required double time,
     required double fallSide,
-    required double runProgress,
     required double mountProgress,
     required double returnProgress,
-    required double steerOffset,
     required double fallProgress,
     required double runLateral,
     required double bikeLateral,
@@ -56,10 +54,9 @@ class RecoveryPainter extends RiderPartPainter {
     );
 
     if (running) {
-      final lateral = runLateral + steerOffset;
       _drawRunner(
         canvas,
-        _canvasX(lateral, currentLateral, lateralScale),
+        _canvasX(runLateral, currentLateral, lateralScale),
         fallSide,
         time,
       );
@@ -83,12 +80,20 @@ class RecoveryPainter extends RiderPartPainter {
         fallSide,
       );
     } else {
-      final landed = _mix(crashLateral, fallSide * 1.52, fallProgress);
+      final landed = _mix(crashLateral, runLateral, fallProgress);
       final riderX = _canvasX(landed, currentLateral, lateralScale);
       if (fallProgress < 0.55) {
         _drawMounted(canvas, riderX, fallSide);
       } else {
-        _drawFallen(canvas, riderX, fallSide);
+        final throwProgress = ((fallProgress - 0.35) / 0.65)
+            .clamp(0.0, 1.0)
+            .toDouble();
+        _drawFaded(canvas, 1 - throwProgress, () {
+          _drawMounted(canvas, riderX, fallSide);
+        });
+        _drawFaded(canvas, throwProgress, () {
+          _drawFallen(canvas, riderX, fallSide, throwProgress);
+        });
       }
     }
   }
@@ -146,7 +151,8 @@ class RecoveryPainter extends RiderPartPainter {
     canvas.restore();
   }
 
-  void _drawFallen(Canvas canvas, double x, double side) {
+  void _drawFallen(Canvas canvas, double x, double side, double progress) {
+    final lift = math.sin(progress * math.pi) * 10;
     oval(
       canvas,
       Rect.fromCenter(
@@ -158,8 +164,8 @@ class RecoveryPainter extends RiderPartPainter {
     );
     canvas
       ..save()
-      ..translate(x, RiderPartPainter.groundY - 3)
-      ..rotate(side * math.pi / 2)
+      ..translate(x, RiderPartPainter.groundY - 3 - lift)
+      ..rotate(side * math.pi / 2 * progress)
       ..scale(0.45)
       ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY);
     _pose.perspective = 0;
@@ -181,5 +187,5 @@ class RecoveryPainter extends RiderPartPainter {
       RiderPartPainter.midX + (lateral - current) * scale;
 
   double _mix(double start, double end, double amount) =>
-      start + (end - start) * amount.clamp(0.0, 1.0);
+      start + (end - start) * amount.clamp(0.0, 1.0).toDouble();
 }

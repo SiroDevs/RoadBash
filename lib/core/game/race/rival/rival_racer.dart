@@ -114,7 +114,6 @@ class RivalRacer implements RoadActor {
       speed: _speed,
       steerRate: _steering.motion,
       curve: seg.curve,
-      atStart: clock == 0,
       crossed: _crossed,
     );
     sprite.pose.tumble = _crash.tilt;

@@ -17,12 +17,30 @@ class BikeSlightLeftForwardLayer {
   final FrontPart3 _frontPart3 = FrontPart3();
   final BackPart3 _backPart3 = BackPart3();
 
+  /// Paints the central frame and body panels.
+  void paintMainBody(Canvas canvas) => _mainBody3.paint(canvas);
+
+  /// Paints both tires.
+  void paintTyres(Canvas canvas) => _tyre2.paint(canvas);
+
+  /// Paints the exhaust and its openings.
+  void paintExhaust(Canvas canvas) => _exhaust3.paint(canvas);
+
+  /// Paints the handlebar and grips.
+  void paintHandleBars(Canvas canvas) => _handleBars3.paint(canvas);
+
+  /// Paints the front body panels.
+  void paintFrontPart(Canvas canvas) => _frontPart3.paint(canvas);
+
+  /// Paints the rear body panels.
+  void paintBackPart(Canvas canvas) => _backPart3.paint(canvas);
+
   void paint(Canvas canvas) {
-    _mainBody3.paint(canvas);
-    _tyre2.paint(canvas);
-    _exhaust3.paint(canvas);
-    _handleBars3.paint(canvas);
-    _frontPart3.paint(canvas);
-    _backPart3.paint(canvas);
+    paintMainBody(canvas);
+    paintTyres(canvas);
+    paintExhaust(canvas);
+    paintHandleBars(canvas);
+    paintFrontPart(canvas);
+    paintBackPart(canvas);
   }
 }

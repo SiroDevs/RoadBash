@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
+import 'user_art_color.dart';
 import 'look/rider_look.dart';
 import 'rider_pose.dart';
 import 'user_assets/rider/layers/back_facing/groups/helmet2.dart'
@@ -37,10 +38,10 @@ import 'user_assets/rider/layers/side_running/groups/torso4.dart' as run_torso;
 /// Paints the supplied rider shapes as separate, movable body parts.
 class UserRiderArtPainter {
   UserRiderArtPainter(RiderLook look)
-    : _helmetFilter = _colorFilterFor(look.helmet),
-      _suitFilter = _colorFilterFor(look.suit),
-      _gloveFilter = _colorFilterFor(look.gloves),
-      _bootFilter = _colorFilterFor(look.boots);
+    : _helmetFilter = userArtColorFilter(look.helmet),
+      _suitFilter = userArtColorFilter(look.suit),
+      _gloveFilter = userArtColorFilter(look.gloves),
+      _bootFilter = userArtColorFilter(look.boots);
 
   static const Rect _bounds = Rect.fromLTWH(0, 0, 120, 170);
 
@@ -96,7 +97,7 @@ class UserRiderArtPainter {
     });
     _paintPart(canvas, _helmetFilter, _runningHelmet.paint);
     _paintPart(canvas, _bootFilter, (target) {
-      _around(target, const Offset(63, 82), -swing, _runningRightBoot.paint);
+      _around(target, const Offset(78, 82), swing, _runningRightBoot.paint);
     });
     _paintPart(canvas, _suitFilter, (target) {
       _around(target, const Offset(63, 82), -swing, _runningLeftLeg.paint);
@@ -120,7 +121,7 @@ class UserRiderArtPainter {
         const Offset(44, 85),
         0,
         _leftBoot.paint,
-        scaleY: 1 + pose.foot * 0.22,
+        scaleY: 1 + pose.foot * 0.34,
       );
       _rightBoot.paint(target);
     });
@@ -130,7 +131,7 @@ class UserRiderArtPainter {
         const Offset(44, 85),
         0,
         _rearLegs.paintLeft,
-        scaleY: 1 + pose.foot * 0.22,
+        scaleY: 1 + pose.foot * 0.34,
       );
       _rearLegs.paintRight(target);
     });
@@ -187,33 +188,5 @@ class UserRiderArtPainter {
       ..translate(-pivot.dx, -pivot.dy);
     paint(canvas);
     canvas.restore();
-  }
-
-  static ColorFilter _colorFilterFor(Color color) {
-    final red = (color.r * 255).roundToDouble();
-    final green = (color.g * 255).roundToDouble();
-    final blue = (color.b * 255).roundToDouble();
-    return ColorFilter.matrix([
-      0,
-      0,
-      0,
-      0,
-      red,
-      0,
-      0,
-      0,
-      0,
-      green,
-      0,
-      0,
-      0,
-      0,
-      blue,
-      0,
-      0,
-      0,
-      1,
-      0,
-    ]);
   }
 }

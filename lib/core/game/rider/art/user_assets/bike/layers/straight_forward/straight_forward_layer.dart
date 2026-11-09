@@ -20,13 +20,31 @@ class BikeStraightForwardLayer {
   final BackPart2 _backPart2 = BackPart2();
   final FrontPart2 _frontPart2 = FrontPart2();
 
+  /// Paints the central frame and body panels.
+  void paintMainBody(Canvas canvas) => _mainBody2.paint(canvas);
+
+  /// Paints the handlebar and grips.
+  void paintHandleBars(Canvas canvas) => _handleBars2.paint(canvas);
+
+  /// Paints the rear tire.
+  void paintTyre(Canvas canvas) => _drawTrye(canvas);
+
+  /// Paints the exhaust and its openings.
+  void paintExhaust(Canvas canvas) => _exhaust2.paint(canvas);
+
+  /// Paints the rear body panels.
+  void paintBackPart(Canvas canvas) => _backPart2.paint(canvas);
+
+  /// Paints the front body panels.
+  void paintFrontPart(Canvas canvas) => _frontPart2.paint(canvas);
+
   void paint(Canvas canvas) {
-    _mainBody2.paint(canvas);
-    _handleBars2.paint(canvas);
-    _drawTrye(canvas);
-    _exhaust2.paint(canvas);
-    _backPart2.paint(canvas);
-    _frontPart2.paint(canvas);
+    paintMainBody(canvas);
+    paintHandleBars(canvas);
+    paintTyre(canvas);
+    paintExhaust(canvas);
+    paintBackPart(canvas);
+    paintFrontPart(canvas);
   }
 
   /// Shape "Trye".
@@ -35,6 +53,13 @@ class BikeStraightForwardLayer {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
-    canvas.drawRRect(RRect.fromRectXY(const Rect.fromLTRB(46.0, 67.0, 74.0, 154.0), 14.0, 14.0), _paint);
+    canvas.drawRRect(
+      RRect.fromRectXY(
+        const Rect.fromLTRB(46.0, 67.0, 74.0, 154.0),
+        14.0,
+        14.0,
+      ),
+      _paint,
+    );
   }
 }

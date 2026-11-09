@@ -48,7 +48,7 @@ class RiderComponent extends PositionComponent {
     final lane = DashboardLayout.lanePx(size, road.theme.lanes);
     final height = RiderRig.heightFor(lane, size.y);
     _recoveryLateralScale =
-        lane * road.theme.lanes / 2 / (height / RiderPainter.height);
+        lane * road.theme.lanes / 4 / (height / RiderPainter.height);
     this.size = Vector2(
       height * RiderPainter.width / RiderPainter.height,
       height,
@@ -74,7 +74,9 @@ class RiderComponent extends PositionComponent {
     _dust.update(dt, emitting: road.kickingDust, strength: sp);
     pose.tumble = road.crash.tilt;
     pose.foot +=
-        ((road.restingOnFoot ? 1.0 : 0.0) - pose.foot) * math.min(1.0, dt * 5);
+        ((road.stopped && !road.crashed && !road.recovering ? 1.0 : 0.0) -
+            pose.foot) *
+        math.min(1.0, dt * 5);
 
     final bank =
         (road.appliedSteer * 0.30 + road.curveFelt * 0.040) * (0.3 + 0.7 * sp) -
@@ -86,8 +88,8 @@ class RiderComponent extends PositionComponent {
 
     final sharpTurn =
         road.appliedSteer.abs() > 0.4 && sp > 0.8 && road.curveFelt.abs() > 2.5;
-    final turnDirection = (road.appliedSteer + road.curveFelt * 0.12).sign;
-    final perspective = sharpTurn ? turnDirection * (0.45 + sp * 0.3) : 0.0;
+    final turnDirection = road.appliedSteer.sign;
+    final perspective = sharpTurn ? turnDirection * (0.18 + sp * 0.27) : 0.0;
     pose.perspective +=
         (perspective - pose.perspective) * math.min(1.0, dt * 4);
 
@@ -113,10 +115,8 @@ class RiderComponent extends PositionComponent {
         returning: road.crash.returning,
         time: _t,
         fallSide: road.crash.side,
-        runProgress: road.crash.runProgress,
         mountProgress: road.crash.mountProgress,
         returnProgress: road.crash.returnProgress,
-        steerOffset: road.crash.steerOffset,
         fallProgress: road.crash.fallProgress,
         runLateral: road.crash.runX,
         bikeLateral: road.crash.bikeX,

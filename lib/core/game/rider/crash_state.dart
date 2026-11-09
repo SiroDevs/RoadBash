@@ -9,6 +9,8 @@ class CrashState {
   static const double recoveryDuration = 3.2;
   static const double mountDuration = 0.6;
   static const double returnDuration = 0.75;
+  static const double roadsideBikeLateral = 1.25;
+  static const double roadsideRunnerLateral = 1.58;
 
   double _remaining = 0;
   double _total = 0;
@@ -35,7 +37,6 @@ class CrashState {
   double get runX => _runX;
   double get bikeX => _bikeX;
   double get side => _side;
-  double get steerOffset => _steerOffset;
   double get runProgress =>
       (_runTime / recoveryDuration).clamp(0.0, 1.0).toDouble();
   double get mountProgress =>
@@ -67,9 +68,9 @@ class CrashState {
     _total = math.max(seconds, fallTime + riseTime);
     _remaining = _total;
     _crashX = lateral;
-    _bikeX = _side * 1.18;
-    _runStartX = _side * 1.52;
-    _runX = lateral;
+    _bikeX = _side * roadsideBikeLateral;
+    _runStartX = _side * roadsideRunnerLateral;
+    _runX = _runStartX;
     _stayDown = false;
     _recovering = false;
     _mounting = false;
@@ -83,8 +84,8 @@ class CrashState {
   void startRecovery(double lateral) {
     _recovering = true;
     _crashX = lateral;
-    _bikeX = _side * 1.18;
-    _runStartX = _side * 1.52;
+    _bikeX = _side * roadsideBikeLateral;
+    _runStartX = _side * roadsideRunnerLateral;
     _runX = _runStartX;
     _steerOffset = 0;
     _runTime = 0;
@@ -96,8 +97,7 @@ class CrashState {
     _remaining = 0;
   }
 
-  /// Moves the rider toward the bike; caller supplies steering and remounts
-  /// when the recovery timer completes.
+  /// Runs, mounts and returns the rider before allowing the bike to remount.
   bool run(double dt, double steer) {
     if (!_recovering) return false;
     if (_mounting) {

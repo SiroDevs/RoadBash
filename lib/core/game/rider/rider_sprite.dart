@@ -32,7 +32,6 @@ class RiderSprite {
 
   static const double width = RiderPainter.width;
   static const double height = RiderPainter.height;
-  static const double riderLift = 12;
 
   /// Paints the selected artwork in the current pose.
   void paint(Canvas canvas) {
@@ -45,7 +44,7 @@ class RiderSprite {
       ..translate(RiderPartPainter.midX + pose.shake, RiderPartPainter.groundY)
       ..rotate(pose.lean + pose.tumble)
       ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
-    _userBike.paint(canvas, pose.perspective);
+    _userBike.paint(canvas, pose.perspective, steer: pose.steer);
     _userRider.paintRacing(canvas, pose);
     canvas.restore();
   }

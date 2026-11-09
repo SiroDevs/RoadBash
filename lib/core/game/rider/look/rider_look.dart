@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:ui';
-
 // Flutter imports:
 import 'package:flutter/painting.dart';
 
@@ -22,7 +19,14 @@ class RiderLook {
     this.bike = BikeLook.stock,
   });
 
-  static const RiderLook main = RiderLook();
+  static const RiderLook main = RiderLook(
+    bike: BikeLook(
+      panel: Color(0xFF22B14C),
+      panelDark: Color(0xFF12652D),
+      accent: Color(0xFFF2C21C),
+      accentEdge: Color(0xFFFFFFFF),
+    ),
+  );
 
   final Color suit;
   final Color stripe;

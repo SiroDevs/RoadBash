@@ -5,7 +5,6 @@ import 'dart:ui';
 // Project imports:
 import '../../../../common/objects/guardrail/guardrail_config.dart';
 import '../../rider/crash_state.dart';
-import '../../rider/rider_facing.dart';
 import '../../rider/rider_sprite.dart';
 import '../../road/config/vehicle_config.dart';
 import '../../road/road_renderer.dart';
@@ -24,7 +23,7 @@ import 'rival_steering.dart';
 /// Computer-controlled rival drawn as a bike on the road.
 class RivalRacer implements RoadActor {
   RivalRacer(this.rival, this.index, this.lanes, {this.speedLimit = 1.0})
-    : sprite = RiderSprite(look: rival.look, useRoadBashArt: true),
+    : sprite = RiderSprite(look: rival.look, useSuppliedArt: true),
       _brain = RivalBrain(rival, index * 7919 + rival.name.hashCode),
       _lead = _grid[index % _grid.length].$2,
       _steering = RivalSteering(
@@ -109,27 +108,36 @@ class RivalRacer implements RoadActor {
 
     final seg = road.track.at(distance + road.playerZ);
     _steerLateral(dt, race, road, seg.section, clock);
-    _updateFacing(road.playerX);
+    _updateFacing(dt, road.playerX, road.fullDistance, clock);
     _poseDriver.update(
       dt: dt,
       speed: _speed,
       steerRate: _steering.motion,
       curve: seg.curve,
-      atStart: clock == 0,
       crossed: _crossed,
     );
     sprite.pose.tumble = _crash.tilt;
     _ground.updateDust(dt, _speed, down: _crash.down);
   }
 
-  /// Turns the rival toward the player when riding beside them.
-  void _updateFacing(double playerLateral) {
+  /// Turns rivals sideways at the start and as the player closes the gap.
+  void _updateFacing(
+    double dt,
+    double playerLateral,
+    double playerDistance,
+    double raceClock,
+  ) {
     final relative = lateral - playerLateral;
-    sprite.facing = relative < -0.06
-        ? RiderFacing.right
-        : relative > 0.06
-        ? RiderFacing.left
-        : RiderFacing.straight;
+    final sideDirection = relative.abs() > 0.06
+        ? relative.sign
+        : (index.isEven ? -1.0 : 1.0);
+    final gap = distance - playerDistance;
+    final sideAmount = raceClock < 3.5
+        ? 1.0
+        : (1 - ((gap - 24) / 180).clamp(0.0, 1.0)).toDouble();
+    final perspective = sideDirection * sideAmount * 0.82;
+    sprite.pose.perspective +=
+        (perspective - sprite.pose.perspective) * math.min(1.0, dt * 3.5);
   }
 
   /// Slows the rival and shoves it sideways after a hit.

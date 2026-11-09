@@ -7,6 +7,11 @@ class CrashState {
   static const double riseTime = 0.5;
   static const double lyingTilt = 1.35;
   static const double recoveryDuration = 3.2;
+  static const double mountDuration = 0.6;
+  static const double returnDuration = 0.75;
+  static const double standDuration = 0.55;
+  static const double roadsideBikeLateral = 1.25;
+  static const double roadsideRunnerLateral = 1.58;
 
   double _remaining = 0;
   double _total = 0;
@@ -16,17 +21,35 @@ class CrashState {
   double _runX = 0;
   double _runStartX = 0;
   double _bikeX = 0;
+  double _crashX = 0;
   double _steerOffset = 0;
   double _runTime = 0;
+  double _standTime = 0;
+  double _mountTime = 0;
+  double _returnTime = 0;
+  bool _mounting = false;
+  bool _returning = false;
+  bool _standing = false;
 
   /// True while the rider is down.
   bool get down => _remaining > 0;
   bool get recovering => _recovering;
+  bool get standing => _recovering && _standing;
+  bool get running => _recovering && !_standing && !_mounting && !_returning;
+  bool get mounting => _recovering && _mounting;
+  bool get returning => _recovering && _returning;
   double get runX => _runX;
+  double get bikeX => _bikeX;
   double get side => _side;
-  double get steerOffset => _steerOffset;
   double get runProgress =>
       (_runTime / recoveryDuration).clamp(0.0, 1.0).toDouble();
+  double get mountProgress =>
+      (_mountTime / mountDuration).clamp(0.0, 1.0).toDouble();
+  double get standProgress =>
+      (_standTime / standDuration).clamp(0.0, 1.0).toDouble();
+  double get returnProgress =>
+      (_returnTime / returnDuration).clamp(0.0, 1.0).toDouble();
+  double get crashX => _crashX;
   double get fallProgress => down
       ? ((_total - _remaining) / fallTime).clamp(0.0, 1.0).toDouble()
       : 1.0;
@@ -46,10 +69,19 @@ class CrashState {
   }
 
   /// Starts a fall toward [side] (1 right, -1 left) lasting [seconds].
-  void start(double side, double seconds) {
+  void start(double side, double seconds, {double lateral = 0}) {
     _side = side >= 0 ? 1 : -1;
     _total = math.max(seconds, fallTime + riseTime);
     _remaining = _total;
+    _crashX = lateral;
+    _bikeX = _side * roadsideBikeLateral;
+    _runStartX = _side * roadsideRunnerLateral;
+    _runX = _runStartX;
+    _stayDown = false;
+    _recovering = false;
+    _mounting = false;
+    _returning = false;
+    _standing = false;
   }
 
   /// Keeps the rider on the ground once the fall is over.
@@ -58,34 +90,64 @@ class CrashState {
   /// Starts the playable run back to the stopped bike after a wipeout.
   void startRecovery(double lateral) {
     _recovering = true;
-    _bikeX = (lateral + _side * 0.15).clamp(-1.0, 1.0).toDouble();
-    _runStartX = (lateral + _side * 0.35).clamp(-1.0, 1.0).toDouble();
+    _crashX = lateral;
+    _bikeX = _side * roadsideBikeLateral;
+    _runStartX = _side * roadsideRunnerLateral;
     _runX = _runStartX;
     _steerOffset = 0;
     _runTime = 0;
+    _standTime = 0;
+    _mountTime = 0;
+    _returnTime = 0;
+    _mounting = false;
+    _returning = false;
+    _standing = true;
     _stayDown = false;
     _remaining = 0;
   }
 
-  /// Moves the rider toward the bike; caller supplies steering and remounts
-  /// when the recovery timer completes.
+  /// Runs, mounts and returns the rider before allowing the bike to remount.
   bool run(double dt, double steer) {
     if (!_recovering) return false;
+    if (_standing) {
+      _standTime += dt;
+      if (_standTime >= standDuration) {
+        _standTime = standDuration;
+        _standing = false;
+      }
+      return false;
+    }
+    if (_mounting) {
+      _mountTime += dt;
+      if (_mountTime >= mountDuration) {
+        _mounting = false;
+        _returning = true;
+        _returnTime = 0;
+      }
+      return false;
+    }
+    if (_returning) {
+      _returnTime += dt;
+      return _returnTime >= returnDuration;
+    }
     _runTime += dt;
     final progress = runProgress;
     final eased = progress * progress * (3 - 2 * progress);
     _steerOffset = (_steerOffset + steer * dt * 0.2)
         .clamp(-0.15, 0.15)
         .toDouble();
-    _runX = (_runStartX + (_bikeX - _runStartX) * eased + _steerOffset)
-        .clamp(-1.0, 1.0)
-        .toDouble();
-    return _runTime >= recoveryDuration;
+    _runX = _runStartX + (_bikeX - _runStartX) * eased + _steerOffset;
+    if (_runTime >= recoveryDuration) {
+      _runTime = recoveryDuration;
+      _runX = _bikeX;
+      _mounting = true;
+    }
+    return false;
   }
 
   /// A traffic strike knocks the runner back and costs time.
   void stumble() {
-    if (!_recovering) return;
+    if (!running) return;
     _runTime = math.max(0, _runTime - 0.8);
   }
 
@@ -93,6 +155,12 @@ class CrashState {
     _recovering = false;
     _runTime = 0;
     _steerOffset = 0;
+    _mounting = false;
+    _returning = false;
+    _standing = false;
+    _mountTime = 0;
+    _returnTime = 0;
+    _standTime = 0;
   }
 
   /// Counts the fall down by one frame.

@@ -32,7 +32,7 @@ class RiderComponent extends PositionComponent {
   late final RiderSprite _sprite = RiderSprite(
     look: look,
     rig: rig,
-    useRoadBashArt: true,
+    useSuppliedArt: true,
   );
   late final RecoveryPainter _recoveryPainter = RecoveryPainter(look);
 
@@ -40,12 +40,15 @@ class RiderComponent extends PositionComponent {
   RiderPose get _pose => _sprite.pose;
   final DustTrail _dust = DustTrail();
   double _t = 0;
+  double _recoveryLateralScale = 0;
 
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
     final lane = DashboardLayout.lanePx(size, road.theme.lanes);
     final height = RiderRig.heightFor(lane, size.y);
+    _recoveryLateralScale =
+        lane * road.theme.lanes / 4 / (height / RiderPainter.height);
     this.size = Vector2(
       height * RiderPainter.width / RiderPainter.height,
       height,
@@ -71,7 +74,9 @@ class RiderComponent extends PositionComponent {
     _dust.update(dt, emitting: road.kickingDust, strength: sp);
     pose.tumble = road.crash.tilt;
     pose.foot +=
-        ((road.restingOnFoot ? 1.0 : 0.0) - pose.foot) * math.min(1.0, dt * 5);
+        ((road.stopped && !road.crashed && !road.recovering ? 1.0 : 0.0) -
+            pose.foot) *
+        math.min(1.0, dt * 5);
 
     final bank =
         (road.appliedSteer * 0.30 + road.curveFelt * 0.040) * (0.3 + 0.7 * sp) -
@@ -80,6 +85,13 @@ class RiderComponent extends PositionComponent {
         .clamp(-RiderPainter.maxLean, RiderPainter.maxLean)
         .toDouble();
     pose.lean += (target - pose.lean) * math.min(1.0, dt * 6);
+
+    final sharpTurn =
+        road.appliedSteer.abs() > 0.4 && sp > 0.8 && road.curveFelt.abs() > 2.5;
+    final turnDirection = road.appliedSteer.sign;
+    final perspective = sharpTurn ? turnDirection * (0.18 + sp * 0.27) : 0.0;
+    pose.perspective +=
+        (perspective - pose.perspective) * math.min(1.0, dt * 4);
 
     final pitch = road.brake ? -1.0 : (road.throttle ? 0.5 : 0.0);
     pose.pitch += (pitch * sp - pose.pitch) * math.min(1.0, dt * 6);
@@ -98,12 +110,21 @@ class RiderComponent extends PositionComponent {
     if (road.crashed || road.recovering) {
       _recoveryPainter.paint(
         canvas,
-        running: road.recovering,
+        running: road.crash.running,
+        standing: road.crash.standing,
+        mounting: road.crash.mounting,
+        returning: road.crash.returning,
         time: _t,
         fallSide: road.crash.side,
-        runProgress: road.crash.runProgress,
-        steerOffset: road.crash.steerOffset,
+        standProgress: road.crash.standProgress,
+        mountProgress: road.crash.mountProgress,
+        returnProgress: road.crash.returnProgress,
         fallProgress: road.crash.fallProgress,
+        runLateral: road.crash.runX,
+        bikeLateral: road.crash.bikeX,
+        crashLateral: road.crash.crashX,
+        currentLateral: road.playerX,
+        lateralScale: _recoveryLateralScale,
       );
       return;
     }

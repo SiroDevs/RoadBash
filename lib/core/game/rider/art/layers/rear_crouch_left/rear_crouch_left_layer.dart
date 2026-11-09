@@ -14,9 +14,18 @@ class RoadBashRiderRearCrouchLeftLayer {
   final RiderLegs5 _riderLegs5 = RiderLegs5();
   final Helmet5 _helmet5 = Helmet5();
 
+  /// Paints the torso and arms.
+  void paintBody(Canvas canvas) => _riderBody5.paint(canvas);
+
+  /// Paints the legs and boots.
+  void paintLegs(Canvas canvas) => _riderLegs5.paint(canvas);
+
+  /// Paints the helmet.
+  void paintHelmet(Canvas canvas) => _helmet5.paint(canvas);
+
   void paint(Canvas canvas) {
-    _riderBody5.paint(canvas);
-    _riderLegs5.paint(canvas);
-    _helmet5.paint(canvas);
+    paintBody(canvas);
+    paintLegs(canvas);
+    paintHelmet(canvas);
   }
 }

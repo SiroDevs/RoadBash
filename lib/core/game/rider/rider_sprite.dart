@@ -2,10 +2,9 @@
 import 'package:flutter/rendering.dart';
 
 // Project imports:
-import '../bike/art/road_bash_bike_painter.dart';
-import 'art/road_bash_rider_painter.dart';
+import 'art/user_bike_art_painter.dart';
+import 'art/user_rider_art_painter.dart';
 import 'look/rider_look.dart';
-import 'rider_facing.dart';
 import 'rider_painter.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
@@ -17,7 +16,7 @@ class RiderSprite {
     this.look = RiderLook.main,
     RiderRig? rig,
     this.view = RiderView.rear,
-    this.useRoadBashArt = false,
+    this.useSuppliedArt = false,
   }) : rig = rig ?? RiderRig() {
     painter = RiderPainter(this.rig, look: look, view: view);
   }
@@ -25,11 +24,10 @@ class RiderSprite {
   final RiderLook look;
   final RiderView view;
   final RiderRig rig;
-  final bool useRoadBashArt;
+  final bool useSuppliedArt;
   final RiderPose pose = RiderPose();
-  final RoadBashRiderPainter _roadBashRider = RoadBashRiderPainter();
-  final RoadBashBikePainter _roadBashBike = RoadBashBikePainter();
-  RiderFacing facing = RiderFacing.straight;
+  late final UserRiderArtPainter _userRider = UserRiderArtPainter(look);
+  late final UserBikeArtPainter _userBike = UserBikeArtPainter(look);
   late final RiderPainter painter;
 
   static const double width = RiderPainter.width;
@@ -37,7 +35,7 @@ class RiderSprite {
 
   /// Paints the selected artwork in the current pose.
   void paint(Canvas canvas) {
-    if (!useRoadBashArt) {
+    if (!useSuppliedArt) {
       painter.paint(canvas, pose);
       return;
     }
@@ -46,19 +44,11 @@ class RiderSprite {
       ..translate(RiderPartPainter.midX + pose.shake, RiderPartPainter.groundY)
       ..rotate(pose.lean + pose.tumble)
       ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
-    switch (facing) {
-      case RiderFacing.left:
-        _roadBashBike.paintRearLeft(canvas);
-        _roadBashRider.paintRearLeft(canvas);
-        break;
-      case RiderFacing.right:
-        _roadBashBike.paintRearRight(canvas);
-        _roadBashRider.paintRearRight(canvas);
-        break;
-      case RiderFacing.straight:
-        _roadBashBike.paintRear(canvas);
-        _roadBashRider.paintRear(canvas);
-        break;
+    _userBike.paint(canvas, pose.perspective, steer: pose.steer);
+    if (view == RiderView.front) {
+      _userRider.paintFrontFacing(canvas);
+    } else {
+      _userRider.paintRacing(canvas, pose);
     }
     canvas.restore();
   }

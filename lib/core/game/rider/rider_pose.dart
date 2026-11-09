@@ -2,6 +2,8 @@
 class RiderPose {
   double lean = 0;
 
+  double perspective = 0;
+
   double phase = 0;
 
   double shake = 0;

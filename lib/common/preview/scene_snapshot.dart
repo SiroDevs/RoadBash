@@ -79,8 +79,17 @@ abstract final class SceneSnapshot {
     final recorder = PictureRecorder();
     final canvas = Canvas(recorder);
     road.render(canvas);
-    _paintRider(canvas, road, size, ground.terrain.dusty, ground.terrain.dustTone);
-    final image = await recorder.endRecording().toImage(width.round(), height.round());
+    _paintRider(
+      canvas,
+      road,
+      size,
+      ground.terrain.dusty,
+      ground.terrain.dustTone,
+    );
+    final image = await recorder.endRecording().toImage(
+      width.round(),
+      height.round(),
+    );
     _done[scene] = image;
     return image;
   }
@@ -102,21 +111,32 @@ abstract final class SceneSnapshot {
   }
 
   /// Paints the main rider and, on loose ground, the dust behind the bike.
-  static void _paintRider(Canvas canvas, RoadRenderer road, Vector2 size, bool dusty, Color tone) {
+  static void _paintRider(
+    Canvas canvas,
+    RoadRenderer road,
+    Vector2 size,
+    bool dusty,
+    Color tone,
+  ) {
     final lane = DashboardLayout.lanePx(size, road.theme.lanes);
     final riderHeight = RiderRig.heightFor(lane, size.y);
     final ground = Offset(size.x / 2, DashboardLayout.riderTyresGround(size));
-    final sprite = RiderSprite(look: RiderLook.main);
     final curve = road.track.at(road.trkPosition + road.playerZ).curve;
+    final sprite = RiderSprite(look: RiderLook.main, useSuppliedArt: true);
     sprite.pose
       ..speed = _riderSpeed
       ..lean = (curve * 0.04 * _riderSpeed).clamp(-0.3, 0.3).toDouble()
+      ..perspective = (curve * 0.06 * _riderSpeed).clamp(-0.65, 0.65).toDouble()
       ..phase = 0.3;
     sprite.paintAt(canvas, ground, riderHeight / RiderSprite.height);
     if (!dusty) return;
     final dust = DustTrail();
     for (var step = 0; step < 50; step++) {
-      dust.update(0.02, emitting: true, strength: math.min(1.0, _riderSpeed + 0.2));
+      dust.update(
+        0.02,
+        emitting: true,
+        strength: math.min(1.0, _riderSpeed + 0.2),
+      );
     }
     dust.paint(canvas, ground, riderHeight, tone);
   }

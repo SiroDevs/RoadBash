@@ -12,7 +12,8 @@ import '../road/traffic/road_actor.dart';
 
 /// A police rider with flashing lights, drawn like a rival.
 class PoliceCop implements RoadActor {
-  PoliceCop() : sprite = RiderSprite(look: RiderLooks.cop);
+  PoliceCop()
+    : sprite = RiderSprite(look: RiderLooks.cop, useSuppliedArt: true);
 
   /// Distance used to hide the cop while it is off the road.
   static const double parked = -1e9;
@@ -102,7 +103,6 @@ class PoliceCop implements RoadActor {
       speed: speed,
       steerRate: (_lateral - previous) / dt,
       curve: curve,
-      atStart: false,
       crossed: false,
     );
   }

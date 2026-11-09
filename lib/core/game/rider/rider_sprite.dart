@@ -45,7 +45,11 @@ class RiderSprite {
       ..rotate(pose.lean + pose.tumble)
       ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
     _userBike.paint(canvas, pose.perspective, steer: pose.steer);
-    _userRider.paintRacing(canvas, pose);
+    if (view == RiderView.front) {
+      _userRider.paintFrontFacing(canvas);
+    } else {
+      _userRider.paintRacing(canvas, pose);
+    }
     canvas.restore();
   }
 

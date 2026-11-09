@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'look/rider_look.dart';
+import '../look/rider_look.dart';
 import 'user_art_color.dart';
 import 'user_assets/bike/layers/slight_left_forward/slight_left_forward_layer.dart';
 import 'user_assets/bike/layers/slight_right_forward/slight_right_forward_layer.dart';

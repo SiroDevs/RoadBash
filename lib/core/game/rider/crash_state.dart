@@ -9,6 +9,7 @@ class CrashState {
   static const double recoveryDuration = 3.2;
   static const double mountDuration = 0.6;
   static const double returnDuration = 0.75;
+  static const double standDuration = 0.55;
   static const double roadsideBikeLateral = 1.25;
   static const double roadsideRunnerLateral = 1.58;
 
@@ -23,15 +24,18 @@ class CrashState {
   double _crashX = 0;
   double _steerOffset = 0;
   double _runTime = 0;
+  double _standTime = 0;
   double _mountTime = 0;
   double _returnTime = 0;
   bool _mounting = false;
   bool _returning = false;
+  bool _standing = false;
 
   /// True while the rider is down.
   bool get down => _remaining > 0;
   bool get recovering => _recovering;
-  bool get running => _recovering && !_mounting && !_returning;
+  bool get standing => _recovering && _standing;
+  bool get running => _recovering && !_standing && !_mounting && !_returning;
   bool get mounting => _recovering && _mounting;
   bool get returning => _recovering && _returning;
   double get runX => _runX;
@@ -41,6 +45,8 @@ class CrashState {
       (_runTime / recoveryDuration).clamp(0.0, 1.0).toDouble();
   double get mountProgress =>
       (_mountTime / mountDuration).clamp(0.0, 1.0).toDouble();
+  double get standProgress =>
+      (_standTime / standDuration).clamp(0.0, 1.0).toDouble();
   double get returnProgress =>
       (_returnTime / returnDuration).clamp(0.0, 1.0).toDouble();
   double get crashX => _crashX;
@@ -75,6 +81,7 @@ class CrashState {
     _recovering = false;
     _mounting = false;
     _returning = false;
+    _standing = false;
   }
 
   /// Keeps the rider on the ground once the fall is over.
@@ -89,10 +96,12 @@ class CrashState {
     _runX = _runStartX;
     _steerOffset = 0;
     _runTime = 0;
+    _standTime = 0;
     _mountTime = 0;
     _returnTime = 0;
     _mounting = false;
     _returning = false;
+    _standing = true;
     _stayDown = false;
     _remaining = 0;
   }
@@ -100,6 +109,14 @@ class CrashState {
   /// Runs, mounts and returns the rider before allowing the bike to remount.
   bool run(double dt, double steer) {
     if (!_recovering) return false;
+    if (_standing) {
+      _standTime += dt;
+      if (_standTime >= standDuration) {
+        _standTime = standDuration;
+        _standing = false;
+      }
+      return false;
+    }
     if (_mounting) {
       _mountTime += dt;
       if (_mountTime >= mountDuration) {
@@ -140,8 +157,10 @@ class CrashState {
     _steerOffset = 0;
     _mounting = false;
     _returning = false;
+    _standing = false;
     _mountTime = 0;
     _returnTime = 0;
+    _standTime = 0;
   }
 
   /// Counts the fall down by one frame.

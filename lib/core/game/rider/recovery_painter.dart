@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'art/user_bike_art_painter.dart';
 import 'art/user_rider_art_painter.dart';
-import 'look/rider_look.dart';
 import 'rider_pose.dart';
 import 'view/part_painter.dart';
 
@@ -23,10 +22,12 @@ class RecoveryPainter extends RiderPartPainter {
   void paint(
     Canvas canvas, {
     required bool running,
+    required bool standing,
     required bool mounting,
     required bool returning,
     required double time,
     required double fallSide,
+    required double standProgress,
     required double mountProgress,
     required double returnProgress,
     required double fallProgress,
@@ -53,7 +54,15 @@ class RecoveryPainter extends RiderPartPainter {
       bikeTilt,
     );
 
-    if (running) {
+    if (standing) {
+      final riderX = _canvasX(runLateral, currentLateral, lateralScale);
+      _drawFaded(canvas, 1 - standProgress, () {
+        _drawFallen(canvas, riderX, fallSide, 1);
+      });
+      _drawFaded(canvas, standProgress, () {
+        _drawStanding(canvas, riderX, fallSide);
+      });
+    } else if (running) {
       _drawRunner(
         canvas,
         _canvasX(runLateral, currentLateral, lateralScale),
@@ -135,6 +144,16 @@ class RecoveryPainter extends RiderPartPainter {
       ..scale(side > 0 ? -0.58 : 0.58, 0.58)
       ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY);
     _riderArt.paintRunning(canvas, time * 9);
+    canvas.restore();
+  }
+
+  void _drawStanding(Canvas canvas, double x, double side) {
+    canvas
+      ..save()
+      ..translate(x, RiderPartPainter.groundY)
+      ..scale(side > 0 ? -0.58 : 0.58, 0.58)
+      ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY);
+    _riderArt.paintSideStanding(canvas);
     canvas.restore();
   }
 

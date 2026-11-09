@@ -1,9 +1,11 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
+import '../look/rider_look.dart';
+import '../rider_pose.dart';
 import 'user_art_color.dart';
-import 'look/rider_look.dart';
-import 'rider_pose.dart';
+import 'user_front_rider_art_painter.dart';
+import 'user_side_standing_art_painter.dart';
 import 'user_assets/rider/layers/back_facing/groups/helmet2.dart'
     as rear_helmet;
 import 'user_assets/rider/layers/back_facing/groups/left_hand.dart'
@@ -41,7 +43,9 @@ class UserRiderArtPainter {
     : _helmetFilter = userArtColorFilter(look.helmet),
       _suitFilter = userArtColorFilter(look.suit),
       _gloveFilter = userArtColorFilter(look.gloves),
-      _bootFilter = userArtColorFilter(look.boots);
+      _bootFilter = userArtColorFilter(look.boots),
+      _frontFacing = UserFrontRiderArtPainter(look),
+      _sideStanding = UserSideStandingArtPainter(look);
 
   static const Rect _bounds = Rect.fromLTWH(0, 0, 120, 170);
 
@@ -49,6 +53,8 @@ class UserRiderArtPainter {
   final ColorFilter _suitFilter;
   final ColorFilter _gloveFilter;
   final ColorFilter _bootFilter;
+  final UserFrontRiderArtPainter _frontFacing;
+  final UserSideStandingArtPainter _sideStanding;
   final rear_helmet.Helmet2 _rearHelmet = rear_helmet.Helmet2();
   final rear_left_boot.RightBoot _leftBoot = rear_left_boot.RightBoot();
   final rear_right_boot.RightBoot2 _rightBoot = rear_right_boot.RightBoot2();
@@ -77,6 +83,12 @@ class UserRiderArtPainter {
       _paintFaded(canvas, amount, () => _paintSide(canvas, pose.perspective));
     }
   }
+
+  /// Paints the supplied rider artwork facing the camera.
+  void paintFrontFacing(Canvas canvas) => _frontFacing.paint(canvas);
+
+  /// Paints the supplied side facing standing pose.
+  void paintSideStanding(Canvas canvas) => _sideStanding.paint(canvas);
 
   /// Paints the supplied side running pose with alternating legs and arms.
   void paintRunning(Canvas canvas, double phase) {

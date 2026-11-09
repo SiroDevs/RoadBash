@@ -111,10 +111,12 @@ class RiderComponent extends PositionComponent {
       _recoveryPainter.paint(
         canvas,
         running: road.crash.running,
+        standing: road.crash.standing,
         mounting: road.crash.mounting,
         returning: road.crash.returning,
         time: _t,
         fallSide: road.crash.side,
+        standProgress: road.crash.standProgress,
         mountProgress: road.crash.mountProgress,
         returnProgress: road.crash.returnProgress,
         fallProgress: road.crash.fallProgress,

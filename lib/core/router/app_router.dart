@@ -16,6 +16,7 @@ import '../../feature/auth/cubit/sign_in_cubit.dart';
 import '../../feature/auth/ui/sign_in_screen.dart';
 import '../../feature/boardroom/cubit/boardroom_cubit.dart';
 import '../../feature/boardroom/ui/boardroom_screen.dart';
+import '../../feature/debug/ui/pose_lab_screen.dart';
 import '../../feature/leaderboard/cubit/leaderboard_cubit.dart';
 import '../../feature/leaderboard/ui/leaderboard_screen.dart';
 import '../../feature/menu/cubit/menu_cubit.dart';
@@ -100,14 +101,16 @@ class AppRouter {
           name: RouteNames.race,
           // A scene the player's level has not opened yet goes back to the menu.
           redirect: (context, state) {
-            final id = SceneId.values.asNameMap()[state.pathParameters['scene']];
+            final id = SceneId.values
+                .asNameMap()[state.pathParameters['scene']];
             final open =
                 id == null ||
                 getIt<ProgressCubit>().state.career.rules.isOpen(id);
             return open ? null : RoutePaths.menu;
           },
           builder: (context, state) {
-            final id = SceneId.values.asNameMap()[state.pathParameters['scene']];
+            final id = SceneId.values
+                .asNameMap()[state.pathParameters['scene']];
             return _provide<RaceCubit>(
               RaceScreen(key: ValueKey(id), scene: id ?? SceneId.city),
             );
@@ -159,6 +162,12 @@ class AppRouter {
             child: const LeaderboardScreen(),
           ),
         ),
+        if (kDebugMode)
+          GoRoute(
+            path: RoutePaths.poseLab,
+            name: RouteNames.poseLab,
+            builder: (context, state) => const PoseLabScreen(),
+          ),
       ],
       errorBuilder: (context, state) =>
           _provide<SplashCubit>(const SplashScreen()),

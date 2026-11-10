@@ -1,12 +1,15 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 // Project imports:
 import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../../../progress/cubit/progress_cubit.dart';
 import '../../../settings/cubit/settings_cubit.dart';
@@ -34,6 +37,14 @@ class RiderBar extends StatelessWidget {
             ),
           ),
           const OnlineBadge(),
+          if (kDebugMode)
+            GestureDetector(
+              onTap: () => context.goNamed(RouteNames.poseLab),
+              child: Text(
+                l10n.poseLabTitle,
+                style: retroBody(size: context.sizes.body),
+              ),
+            ),
         ],
       ),
     );

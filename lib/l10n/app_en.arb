@@ -1005,5 +1005,41 @@
         "type": "int"
       }
     }
+  },
+  "poseLabTitle": "Pose lab",
+  "@poseLabTitle": {
+    "description": "Title of the debug screen that shows rider poses"
+  },
+  "poseLabYawSection": "Turn and foot",
+  "@poseLabYawSection": {
+    "description": "Debug pose lab heading for the grid of turn angles"
+  },
+  "poseLabFootDown": "foot down",
+  "@poseLabFootDown": {
+    "description": "Debug pose lab label: the rider has a foot on the ground"
+  },
+  "poseLabFootUp": "foot up",
+  "@poseLabFootUp": {
+    "description": "Debug pose lab label: both feet on the bike"
+  },
+  "poseLabOnFootSection": "On foot",
+  "@poseLabOnFootSection": {
+    "description": "Debug pose lab heading for poses off the bike"
+  },
+  "poseLabRunning": "running",
+  "@poseLabRunning": {
+    "description": "Debug pose lab label: rider running"
+  },
+  "poseLabThrown": "thrown",
+  "@poseLabThrown": {
+    "description": "Debug pose lab label: rider thrown from the bike"
+  },
+  "poseLabGettingUp": "getting up",
+  "@poseLabGettingUp": {
+    "description": "Debug pose lab label: rider getting up after a fall"
+  },
+  "poseLabMounting": "mounting",
+  "@poseLabMounting": {
+    "description": "Debug pose lab label: rider climbing back on the bike"
   }
 }

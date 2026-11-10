@@ -703,4 +703,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String offenceWrongSide(int count) {
     return 'Riding on the wrong side: $count';
   }
+
+  @override
+  String get poseLabTitle => 'Pose lab';
+
+  @override
+  String get poseLabYawSection => 'Turn and foot';
+
+  @override
+  String get poseLabFootDown => 'foot down';
+
+  @override
+  String get poseLabFootUp => 'foot up';
+
+  @override
+  String get poseLabOnFootSection => 'On foot';
+
+  @override
+  String get poseLabRunning => 'running';
+
+  @override
+  String get poseLabThrown => 'thrown';
+
+  @override
+  String get poseLabGettingUp => 'getting up';
+
+  @override
+  String get poseLabMounting => 'mounting';
 }

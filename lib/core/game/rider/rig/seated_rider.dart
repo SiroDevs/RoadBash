@@ -15,7 +15,8 @@ class SeatedRiderFigure {
     : _rear = InkedSheet.rider(RiderSheets.rear, look),
       _side = InkedSheet.rider(RiderSheets.sideways, look);
 
-  static const double footReach = 16;
+  static const double raise = 24;
+  static const double stanceReach = 16;
   static const double midX = 60;
 
   final InkedSheet _rear;
@@ -26,11 +27,13 @@ class SeatedRiderFigure {
     final turn = (pose.perspective.abs() / 0.7).clamp(0.0, 1.0).toDouble();
     final sideFade = PartMotion.smooth(0.25, 0.6, turn);
     final mirrored = pose.perspective < 0;
-    canvas.save();
+    canvas
+      ..save()
+      ..translate(0, -raise);
     if (mirrored) PartMotion.mirror(canvas, midX);
     _paintHelmet(canvas, pose, turn, sideFade);
     for (final side in const ['L', 'R']) {
-      final reach = pose.foot * footReach;
+      final reach = pose.foot * (stanceReach + raise);
       final down = (side == 'L') == !mirrored ? reach : 0.0;
       _paintLeg(canvas, side, down, side == 'L' ? sideFade * pose.foot : 0);
     }

@@ -12,6 +12,7 @@ class RouteNames {
   static const signIn = 'signIn';
   static const stats = 'stats';
   static const leaderboard = 'leaderboard';
+  static const poseLab = 'poseLab';
 }
 
 /// Route paths.
@@ -28,4 +29,5 @@ class RoutePaths {
   static const signIn = '/signin';
   static const stats = '/stats';
   static const leaderboard = '/leaderboard';
+  static const poseLab = '/posedebug';
 }

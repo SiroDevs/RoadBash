@@ -3,22 +3,20 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
-import '../../../../common/objects/guardrail/guardrail_config.dart';
 import '../../rider/crash_state.dart';
 import '../../rider/rider_sprite.dart';
 import '../../road/config/vehicle_config.dart';
 import '../../road/road_renderer.dart';
-import '../../road/track/road_section.dart';
 import '../../road/traffic/road_actor.dart';
 import '../../road/traffic/traffic_flow.dart';
 import '../race_controller.dart';
 import 'rival_brain.dart';
 import 'rival_facing.dart';
 import 'rival_ground.dart';
-import 'rival_lookout.dart';
+import 'rival_lane.dart';
 import 'rival_parking.dart';
+import 'rival_lookout.dart';
 import 'rival_pose_driver.dart';
-import 'rival_sight.dart';
 import 'rival_steering.dart';
 import 'start_grid.dart';
 
@@ -37,9 +35,17 @@ class RivalRacer implements RoadActor {
          lanes: lanes,
          index: index,
          phase: rival.phase,
-       );
+       ) {
+    _lane = RivalLane(
+      index: index,
+      rival: rival,
+      steering: _steering,
+      brain: _brain,
+      ground: _ground,
+      crash: _crash,
+    );
+  }
 
-  static const double _edge = 0.92;
   static const double _slideDecel = VehicleConfig.maxSpeed * 1.6;
 
   final RiderRival rival;
@@ -55,6 +61,7 @@ class RivalRacer implements RoadActor {
   late final RivalPoseDriver _poseDriver = RivalPoseDriver(sprite.pose, index);
   final RivalLookout _lookout = RivalLookout();
   final RivalGround _ground = RivalGround();
+  late final RivalLane _lane;
 
   List<RivalRacer> peers = const [];
 
@@ -103,7 +110,15 @@ class RivalRacer implements RoadActor {
     race.rivalTracker.report(rival.name, _dist, _speed);
 
     final seg = road.track.at(distance + road.playerZ);
-    _steerLateral(dt, race, road, seg.section, clock);
+    _lane.steer(
+      dt,
+      race,
+      road,
+      distance: distance,
+      speed: _speed,
+      crossed: _crossed,
+      flow: flow,
+    );
     _updateFacing(dt, road.playerX, road.fullDistance, clock);
     _poseDriver.update(
       dt: dt,
@@ -190,42 +205,6 @@ class RivalRacer implements RoadActor {
     _crossed = true;
     final overshoot = (_dist - race.raceLength) / math.max(_speed, 1);
     race.rivalTracker.markFinished(rival.name, race.raceClock - overshoot);
-  }
-
-  /// Steers the rival sideways, staying within the guardrail limit.
-  void _steerLateral(
-    double dt,
-    RaceController race,
-    RoadRenderer road,
-    Section section,
-    double clock,
-  ) {
-    final limit = road.theme.dualCarriageway
-        ? GuardrailConfig.riderLimit(section)
-        : null;
-    final maxLateral = math.min(_edge, (limit ?? 9.0) - 0.12);
-    final parked = _crossed && race.finished;
-    double? line = parked
-        ? parkingLateral(index, road.playerX, -_edge, maxLateral)
-        : _brain.preferredLine ?? _ground.goodLine(road, distance);
-    if (!parked && !_crash.down) {
-      line = flow?.freeLine(distance, lateral, line, limit: maxLateral) ?? line;
-    }
-    _steering.update(
-      dt: dt,
-      clock: clock,
-      speedRatio: (_speed / VehicleConfig.maxSpeed).clamp(0.0, 1.0).toDouble(),
-      along: distance - road.fullDistance,
-      closing: road.speed - _speed,
-      playerLateral: road.playerX,
-      line: line,
-      parked: parked,
-      attacking: _brain.mood == RivalMood.attack,
-      frozen: _crash.down,
-      aggression: rival.aggression,
-      minLateral: -_edge,
-      maxLateral: maxLateral,
-    );
   }
 
   @override

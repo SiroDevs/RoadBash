@@ -45,7 +45,7 @@ class Torso4 {
       ..lineTo(84.0, 30.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -68,7 +68,7 @@ class Torso4 {
       ..lineTo(80.0, 35.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -96,7 +96,7 @@ class Torso4 {
       ..lineTo(85.5, 42.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -123,7 +123,7 @@ class Torso4 {
       ..lineTo(62.0, 72.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);

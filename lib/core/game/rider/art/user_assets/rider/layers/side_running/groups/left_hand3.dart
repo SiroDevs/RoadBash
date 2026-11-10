@@ -76,7 +76,7 @@ class LeftHand3 {
       ..lineTo(86.5, 68.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -96,7 +96,7 @@ class LeftHand3 {
       ..lineTo(107.0, 57.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);

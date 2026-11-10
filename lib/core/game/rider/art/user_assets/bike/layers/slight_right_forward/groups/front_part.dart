@@ -23,7 +23,7 @@ class FrontPart {
       ..lineTo(44.0, 37.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -44,7 +44,7 @@ class FrontPart {
       ..lineTo(40.0, 39.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -59,7 +59,7 @@ class FrontPart {
       ..lineTo(73.0, 35.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -80,7 +80,7 @@ class FrontPart {
       ..lineTo(77.0, 37.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -105,7 +105,7 @@ class FrontPart {
       ..lineTo(61.0, 32.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);

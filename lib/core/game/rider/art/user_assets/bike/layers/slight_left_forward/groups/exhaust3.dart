@@ -29,7 +29,7 @@ class Exhaust3 {
       ..lineTo(72.0, 119.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -38,7 +38,7 @@ class Exhaust3 {
   /// Shape "OuterHole".
   void _drawOuterHole(Canvas canvas) {
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawOval(const Rect.fromLTRB(78.0, 93.0, 89.0, 105.0), _paint);
@@ -47,7 +47,7 @@ class Exhaust3 {
   /// Shape "InnerHole".
   void _drawInnerHole(Canvas canvas) {
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawOval(const Rect.fromLTRB(81.0, 94.0, 87.0, 104.0), _paint);

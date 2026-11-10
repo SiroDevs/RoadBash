@@ -50,7 +50,7 @@ class Helmet {
       ..lineTo(35.62, 39.1)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -66,7 +66,7 @@ class Helmet {
       ..lineTo(68.89, 36.21)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -86,7 +86,7 @@ class Helmet {
       ..lineTo(65.27, 31.15)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -113,7 +113,7 @@ class Helmet {
       ..lineTo(55.15, 23.19)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -144,7 +144,7 @@ class Helmet {
       ..lineTo(63.1, 48.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -162,7 +162,7 @@ class Helmet {
       ..lineTo(37.06, 31.87)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -180,7 +180,7 @@ class Helmet {
       ..lineTo(42.85, 23.19)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);

@@ -93,7 +93,7 @@ class RightHand3 {
       ..lineTo(53.0, 36.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -118,7 +118,7 @@ class RightHand3 {
       ..lineTo(29.5, 77.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -161,7 +161,7 @@ class RightHand3 {
       ..lineTo(35.5, 57.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -198,7 +198,7 @@ class RightHand3 {
       ..lineTo(34.0, 55.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);

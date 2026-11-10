@@ -60,7 +60,7 @@ class RightLeg2 {
       ..lineTo(44.5, 76.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -69,7 +69,7 @@ class RightLeg2 {
   /// Shape "KneePad2".
   void _drawKneePad2(Canvas canvas) {
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawOval(const Rect.fromLTRB(36.5, 114.0, 44.0, 126.5), _paint);
@@ -78,7 +78,7 @@ class RightLeg2 {
   /// Shape "KneePad1".
   void _drawKneePad1(Canvas canvas) {
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawOval(const Rect.fromLTRB(36.5, 114.5, 42.5, 125.0), _paint);
@@ -106,7 +106,7 @@ class RightLeg2 {
       ..lineTo(54.0, 104.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -136,7 +136,7 @@ class RightLeg2 {
       ..lineTo(49.5, 75.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);

@@ -37,7 +37,7 @@ class BackPart3 {
       ..lineTo(64.0, 49.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -54,7 +54,7 @@ class BackPart3 {
       ..lineTo(35.0, 56.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -70,7 +70,7 @@ class BackPart3 {
       ..lineTo(38.0, 43.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);

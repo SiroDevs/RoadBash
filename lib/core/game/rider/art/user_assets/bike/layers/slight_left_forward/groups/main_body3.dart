@@ -42,7 +42,7 @@ class MainBody3 {
       ..lineTo(34.0, 115.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -61,7 +61,7 @@ class MainBody3 {
       ..lineTo(41.0, 71.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -78,7 +78,7 @@ class MainBody3 {
       ..lineTo(75.0, 83.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -94,7 +94,7 @@ class MainBody3 {
       ..lineTo(90.0, 94.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -112,7 +112,7 @@ class MainBody3 {
       ..lineTo(96.0, 82.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -128,7 +128,7 @@ class MainBody3 {
       ..lineTo(36.0, 105.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -147,7 +147,7 @@ class MainBody3 {
       ..lineTo(75.0, 47.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -165,7 +165,7 @@ class MainBody3 {
       ..lineTo(97.0, 59.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -181,7 +181,7 @@ class MainBody3 {
       ..lineTo(88.0, 104.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawPath(_path, _paint);

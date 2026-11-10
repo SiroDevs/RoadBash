@@ -20,7 +20,7 @@ class Tyre {
     canvas.rotate(-0.04);
     canvas.translate(-68.91, -120.14);
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawOval(const Rect.fromLTRB(50.83, 76.29, 87.0, 164.0), _paint);
@@ -34,7 +34,7 @@ class Tyre {
     canvas.rotate(-0.08);
     canvas.translate(-57.0, -122.5);
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawOval(const Rect.fromLTRB(52.0, 94.0, 62.0, 151.0), _paint);

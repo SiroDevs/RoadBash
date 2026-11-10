@@ -55,7 +55,7 @@ class LeftLeg2 {
       ..lineTo(64.5, 108.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -81,7 +81,7 @@ class LeftLeg2 {
       ..lineTo(49.5, 103.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -94,7 +94,7 @@ class LeftLeg2 {
     canvas.rotate(1.26);
     canvas.translate(-45.9, -124.78);
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawOval(const Rect.fromLTRB(43.3, 118.39, 48.5, 131.17), _paint);
@@ -108,7 +108,7 @@ class LeftLeg2 {
     canvas.rotate(1.21);
     canvas.translate(-46.25, -125.01);
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawOval(const Rect.fromLTRB(43.84, 118.47, 48.65, 131.54), _paint);

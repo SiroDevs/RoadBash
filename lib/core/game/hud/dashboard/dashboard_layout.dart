@@ -17,9 +17,9 @@ class DashboardLayout {
 
   static const double visibleShare = 0.734;
 
-  static const double _tyreShare = 0.86;
+  static const double _tyreShare = 0.94;
 
-  static const double _tyreMaxY = 0.76;
+  static const double _tyreMaxY = 0.73;
 
   late final double ph, pw, left, top, speedRadius, rpmRadius;
   late final Offset speedOffset, rpmOffset;
@@ -71,17 +71,23 @@ class DashboardLayout {
       math.min(screen.x * aspectFor(screen), screen.y * maxShareFor(screen));
 
   /// Returns the part of the dashboard that is visible.
-  static double visibleHeight(Vector2 screen) => heightFor(screen) * visibleShare;
+  static double visibleHeight(Vector2 screen) =>
+      heightFor(screen) * visibleShare;
 
   /// Returns the dashboard's rectangle on screen.
   static Rect footprint(Vector2 screen) {
     final height = heightFor(screen);
     final width = height / aspectFor(screen);
     final visible = height * visibleShare;
-    return Rect.fromLTWH((screen.x - width) / 2, screen.y - visible, width, visible);
+    return Rect.fromLTWH(
+      (screen.x - width) / 2,
+      screen.y - visible,
+      width,
+      visible,
+    );
   }
 
-  static const double _portraitReach = 0.4;
+  static const double _portraitReach = 0.34;
   static const double _roadFill = 0.62;
   static const double _maxSpread = 1.8;
 
@@ -90,7 +96,10 @@ class DashboardLayout {
 
   /// Returns where the rider's tyres touch the ground.
   static double riderTyresGround(Vector2 screen) {
-    final ground = math.min(screen.y - heightFor(screen) * _tyreShare, screen.y * _tyreMaxY);
+    final ground = math.min(
+      screen.y - heightFor(screen) * _tyreShare,
+      screen.y * _tyreMaxY,
+    );
     if (!isPortrait(screen)) return ground;
     return math.min(ground, horizonY(screen) + screen.x * _portraitReach);
   }
@@ -99,7 +108,9 @@ class DashboardLayout {
   static double roadSpread(Vector2 screen) {
     final below = riderTyresGround(screen) - horizonY(screen);
     if (below < 1) return 1;
-    return (screen.x * _roadFill / (2 * below)).clamp(1.0, _maxSpread).toDouble();
+    return (screen.x * _roadFill / (2 * below))
+        .clamp(1.0, _maxSpread)
+        .toDouble();
   }
 
   /// Returns the camera distance for a screen.
@@ -119,8 +130,10 @@ class DashboardLayout {
       lanes;
 
   /// Returns the point at an angle and radius from a center.
-  static Offset polar(Offset centre, double angle, double radius) =>
-      Offset(centre.dx + math.cos(angle) * radius, centre.dy + math.sin(angle) * radius);
+  static Offset polar(Offset centre, double angle, double radius) => Offset(
+    centre.dx + math.cos(angle) * radius,
+    centre.dy + math.sin(angle) * radius,
+  );
 
   /// Returns the dial angle for a fraction of the range.
   static double dialAngle(double fraction) =>

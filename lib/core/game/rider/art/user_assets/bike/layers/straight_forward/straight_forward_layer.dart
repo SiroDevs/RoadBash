@@ -53,7 +53,7 @@ class BikeStraightForwardLayer {
   /// Shape "Trye".
   void _drawTrye(Canvas canvas) {
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = BikePainter.colorED1C24;
     canvas.drawRRect(

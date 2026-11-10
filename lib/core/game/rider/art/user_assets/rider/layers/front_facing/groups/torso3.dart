@@ -32,7 +32,7 @@ class Torso3 {
       ..lineTo(49.5, 75.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -50,7 +50,7 @@ class Torso3 {
       ..lineTo(57.5, 72.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -70,7 +70,7 @@ class Torso3 {
       ..lineTo(57.5, 72.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -112,7 +112,7 @@ class Torso3 {
       ..lineTo(64.5, 72.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -139,7 +139,7 @@ class Torso3 {
       ..lineTo(54.0, 38.0)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -161,7 +161,7 @@ class Torso3 {
       ..lineTo(59.5, 39.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -170,7 +170,7 @@ class Torso3 {
   /// Shape "Zip".
   void _drawZip(Canvas canvas) {
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawRect(const Rect.fromLTRB(59.0, 41.5, 60.0, 72.0), _paint);
@@ -179,7 +179,7 @@ class Torso3 {
   /// Shape "ZipButton".
   void _drawZipButton(Canvas canvas) {
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawRect(const Rect.fromLTRB(58.5, 39.5, 60.5, 41.5), _paint);
@@ -201,7 +201,7 @@ class Torso3 {
       ..lineTo(59.0, 39.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);
@@ -225,7 +225,7 @@ class Torso3 {
       ..lineTo(60.0, 39.5)
       ..close();
     _paint
-      ..style = PaintingStyle.stroke
+      ..style = PaintingStyle.fill
       ..strokeWidth = 0.25
       ..color = RiderPainter.colorED1C24;
     canvas.drawPath(_path, _paint);

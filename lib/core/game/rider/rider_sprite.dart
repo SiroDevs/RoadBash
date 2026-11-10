@@ -27,7 +27,7 @@ class RiderSprite {
   late final SeatedRiderFigure _seated = SeatedRiderFigure(look);
   late final FrontRiderFigure _front = FrontRiderFigure(look);
 
-  static const double bikeTurnShare = 0.6;
+  static const double bikeTurnShare = 1.0;
   static const double width = RiderFrame.width;
   static const double height = RiderFrame.height;
 

@@ -13,7 +13,7 @@ class RiderRig {
 
   double scale = 1;
 
-  static const double bigScreenScale = 0.85;
+  static const double bigScreenScale = 0.75;
   static const double smallScreenScale = 1.4;
 
   /// Scale for the screen: down on square and landscape, up on portrait.

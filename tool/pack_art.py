@@ -55,6 +55,7 @@ def bike_file(base, left, right):
 
 
 RIDER_FLP = ['artwork/rider/Rider/Rider.flp', 'artwork/rider/Rider.flp']
+BIKE_FLP = ['artwork/bike/Bike/Bike.flp', 'artwork/bike/Bike.flp']
 COMBI_FLP = 'artwork/combi/combi.flp'
 FROM_COMBI = {'seated', 'bike'}
 
@@ -82,7 +83,7 @@ def main():
         write('rider_%s_data.dart' % key, rider_file(key, parts, anchors))
         packed.append(key)
     if not only or 'bike' in only:
-        write('bike_data.dart', bike_file(*build_combi_bike(combi)))
+        write('bike_data.dart', bike_file(*build_combi_bike(combi, first_existing(BIKE_FLP))))
         packed.append('bike')
     print('packed', ', '.join(packed))
 

@@ -1,4 +1,4 @@
-"""Builds the bike view sheets and the straight-to-turn morph tables."""
+"""Builds the bike rows, from the combi artwork or the older straight-to-turn views."""
 from art_geometry import *
 
 ALIASES = {
@@ -63,3 +63,24 @@ def build_bike(flp):
     left = morph_rows(straight, sheet_shapes(flp, 'SlightLeftForward'))
     right = morph_rows(straight, sheet_shapes(flp, 'SlightRightForward'))
     return base, left, right
+
+
+# Draw group of each bike group in artwork/combi/combi.flp: parts drawn before the
+# rider ('body', 'bars') and parts drawn over his legs and boots ('over').
+COMBI_BIKE_GROUPS = {'FrontPart': 'body', 'HandleBars': 'bars', 'BikeBody': 'body',
+                     'MidSections': 'over', 'BackPart': 'over', 'Bottom': 'over', '': 'over'}
+COMBI_ALIASES = {'Trye': 'Tyre', 'NumberPlate': 'NumberPlatePanel'}
+
+
+def build_combi_bike(flp):
+    """Reads the bike of the RiderOnBike layer; it has no turned views yet, so the
+    left and right tables repeat the straight outlines."""
+    layer = [l for l in flp['layers'] if l['name'] == 'RiderOnBike'][0]
+    base = []
+    for s in layer['shapes']:
+        group = s.get('groupName') or ''
+        if group in COMBI_BIKE_GROUPS:
+            name = COMBI_ALIASES.get(s['name'], s['name'])
+            base.append((COMBI_BIKE_GROUPS[group], name, fmt(shape_points(s, 40))))
+    turned = [('P', group, name, points, points) for group, name, points in base]
+    return base, turned, turned

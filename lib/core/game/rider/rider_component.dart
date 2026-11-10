@@ -46,7 +46,7 @@ class RiderComponent extends PositionComponent {
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
     final lane = DashboardLayout.lanePx(size, road.theme.lanes);
-    final height = RiderRig.heightFor(lane, size.y);
+    final height = RiderRig.heightFor(lane, size.x, size.y);
     _recoveryLateralScale =
         lane * road.theme.lanes / 4 / (height / RiderFrame.height);
     this.size = Vector2(

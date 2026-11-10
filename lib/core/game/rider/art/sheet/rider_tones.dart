@@ -34,7 +34,7 @@ const Map<String, Tone> riderTones = {
   'helmet.RightPart': Tone(ToneRole.graphicA, 0.75),
   'helmet.LeftPart': Tone(ToneRole.graphicB, 0.75),
   'torso.Torso': _suit,
-  'torso.Collar': Tone(ToneRole.neck),
+  'torso.Collar': Tone(ToneRole.accent),
   'torso.CollarFront': Tone(ToneRole.neck, 1.4),
   'torso.RightChest': Tone(ToneRole.dark, 1.0),
   'torso.LeftChest': Tone(ToneRole.dark, 1.15),

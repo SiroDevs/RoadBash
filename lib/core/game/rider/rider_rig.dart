@@ -13,12 +13,19 @@ class RiderRig {
 
   double scale = 1;
 
-  /// Returns the rider height for a lane width and screen height.
-  static double heightFor(double lanePx, double screenH) =>
+  static const double bigScreenScale = 0.85;
+  static const double smallScreenScale = 1.4;
+
+  /// Scale for the screen: down on square and landscape, up on portrait.
+  static double screenScale(double screenW, double screenH) =>
+      screenW >= screenH ? bigScreenScale : smallScreenScale;
+
+  /// Returns the rider height for a lane width and the screen size.
+  static double heightFor(double lanePx, double screenW, double screenH) =>
       sizeFactor *
+      screenScale(screenW, screenH) *
       math.min(
-        lanePx * laneFill * RiderFrame.height /
-            RiderFrame.width,
+        lanePx * laneFill * RiderFrame.height / RiderFrame.width,
         screenH * screenFill,
       );
 }

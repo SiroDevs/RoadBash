@@ -38,12 +38,14 @@ class RiderSprite {
       ..translate(RiderFrame.midX + pose.shake, RiderFrame.groundY)
       ..rotate(pose.lean + pose.tumble)
       ..translate(-RiderFrame.midX, -RiderFrame.groundY + pose.bob);
-    _bike.paint(canvas, pose.perspective * bikeTurnShare, steer: pose.steer);
+    final bikeYaw = pose.perspective * bikeTurnShare;
+    _bike.paint(canvas, bikeYaw, steer: pose.steer, layer: BikeLayer.behind);
     if (view == RiderView.front) {
       _front.paint(canvas);
     } else {
       _seated.paint(canvas, pose);
     }
+    _bike.paint(canvas, bikeYaw, steer: pose.steer, layer: BikeLayer.over);
     canvas.restore();
   }
 

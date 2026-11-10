@@ -9,7 +9,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 from art_geometry import fmt  # noqa: E402
-from pack_bike import build_bike  # noqa: E402
+from pack_bike import build_combi_bike  # noqa: E402
 from pack_rider import SHEETS, build_sheet  # noqa: E402
 
 OUT = 'lib/core/game/rider/art/sheet/data'
@@ -54,14 +54,37 @@ def bike_file(base, left, right):
     return '\n'.join(out) + '\n'
 
 
+RIDER_FLP = ['artwork/rider/Rider/Rider.flp', 'artwork/rider/Rider.flp']
+COMBI_FLP = 'artwork/combi/combi.flp'
+FROM_COMBI = {'seated', 'bike'}
+
+
+def first_existing(paths):
+    for path in paths:
+        if os.path.exists(path):
+            return json.load(open(path))
+    return None
+
+
 def main():
-    rider = json.load(open('artwork/rider/Rider.flp'))
-    bike = json.load(open('artwork/bike/Bike.flp'))
+    only = set(sys.argv[1:])
+    combi = json.load(open(COMBI_FLP))
+    rider = None if only and only <= FROM_COMBI else first_existing(RIDER_FLP)
+    packed = []
     for key in SHEETS:
-        parts, anchors = build_sheet(rider, key)
+        if only and key not in only:
+            continue
+        source = combi if key in FROM_COMBI else rider
+        if source is None:
+            print('skipped %s: its .flp file was not found' % key)
+            continue
+        parts, anchors = build_sheet(source, key)
         write('rider_%s_data.dart' % key, rider_file(key, parts, anchors))
-    write('bike_data.dart', bike_file(*build_bike(bike)))
-    print('packed', len(SHEETS), 'rider sheets and the bike')
+        packed.append(key)
+    if not only or 'bike' in only:
+        write('bike_data.dart', bike_file(*build_combi_bike(combi)))
+        packed.append('bike')
+    print('packed', ', '.join(packed))
 
 
 if __name__ == '__main__':

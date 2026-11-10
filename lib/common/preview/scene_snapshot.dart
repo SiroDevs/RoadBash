@@ -119,7 +119,7 @@ abstract final class SceneSnapshot {
     Color tone,
   ) {
     final lane = DashboardLayout.lanePx(size, road.theme.lanes);
-    final riderHeight = RiderRig.heightFor(lane, size.y);
+    final riderHeight = RiderRig.heightFor(lane, size.x, size.y);
     final ground = Offset(size.x / 2, DashboardLayout.riderTyresGround(size));
     final curve = road.track.at(road.trkPosition + road.playerZ).curve;
     final sprite = RiderSprite(look: RiderLook.main);

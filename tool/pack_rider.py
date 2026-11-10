@@ -23,6 +23,11 @@ SHEETS = {
         ('bootNear', 'LeftBoot', None), ('legFar', 'RightLeg', None), ('armFar', 'RightHand', None),
         ('helmet', 'Helmet', None), ('bootFar', 'RightBoot', None), ('legNear', 'LeftLeg', None),
         ('armNear', 'LeftHand', None), ('torso', 'Torso', None)]),
+    # Rider placed on the bike in artwork/combi/combi.flp, not in Rider.flp.
+    'seated': ('RiderOnBike', [
+        ('helmet', 'Helmet', None), ('bootL', 'LeftBoot', None), ('bootR', 'RightBoot', None),
+        ('legL', 'Legs', 'Left'), ('legR', 'Legs', 'Right'), ('torso', 'Torso', None),
+        ('armR', 'RightHand', None), ('armL', 'LeftHand', None)]),
     'sideways': ('SideWays', [
         ('helmet', 'Helmet', None), ('leg', 'Leg', 'leg'), ('boot', 'Leg', 'boot'), ('arm', 'Arm', None)]),
 }
@@ -152,7 +157,7 @@ def build_sheet(flp, key):
     for pid, group, flt in spec:
         members = pick(shapes, group, flt)
         if pid.startswith('leg'):
-            thigh, shin = split_leg(members, anchors, pid, key != 'rear')
+            thigh, shin = split_leg(members, anchors, pid, key not in ('rear', 'seated'))
             if shin is None:
                 parts.append((pid, members))
                 continue

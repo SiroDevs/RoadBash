@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
@@ -8,12 +7,16 @@ import '../art/sheet/part_motion.dart';
 import '../art/sheet/rider_sheets.dart';
 import '../look/rider_look.dart';
 import '../rider_pose.dart';
+import 'seated_upper.dart';
+import 'yaw_curves.dart';
 
 /// The rider seated on the bike, built from separate body parts.
 class SeatedRiderFigure {
   SeatedRiderFigure(RiderLook look)
     : _rear = InkedSheet.rider(RiderSheets.rear, look),
-      _side = InkedSheet.rider(RiderSheets.sideways, look);
+      _side = InkedSheet.rider(RiderSheets.sideways, look) {
+    _upper = SeatedUpper(_rear, _side);
+  }
 
   static const double raise = 24;
   static const double stanceReach = 16;
@@ -21,43 +24,28 @@ class SeatedRiderFigure {
 
   final InkedSheet _rear;
   final InkedSheet _side;
+  late final SeatedUpper _upper;
 
   /// Paints the rider for the pose: yaw, steering, tuck and foot down.
   void paint(Canvas canvas, RiderPose pose) {
-    final turn = (pose.perspective.abs() / 0.7).clamp(0.0, 1.0).toDouble();
-    final sideFade = PartMotion.smooth(0.25, 0.6, turn);
+    final sideFade = YawCurves.sideFade(pose.perspective);
     final mirrored = pose.perspective < 0;
     canvas
       ..save()
       ..translate(0, -raise);
     if (mirrored) PartMotion.mirror(canvas, midX);
-    _paintHelmet(canvas, pose, turn, sideFade);
+    _upper.helmet(canvas, pose);
     for (final side in const ['L', 'R']) {
       final reach = pose.foot * (stanceReach + raise);
       final down = (side == 'L') == !mirrored ? reach : 0.0;
       _paintLeg(canvas, side, down, side == 'L' ? sideFade * pose.foot : 0);
     }
-    _paintTorso(canvas, turn);
-    _paintArms(canvas, pose, sideFade);
+    final behind = YawCurves.farArmBehind(pose.perspective);
+    if (behind) _upper.farArm(canvas, pose);
+    _upper.torso(canvas, pose.perspective);
+    if (!behind) _upper.farArm(canvas, pose);
+    _upper.nearArm(canvas, pose);
     canvas.restore();
-  }
-
-  void _paintHelmet(Canvas canvas, RiderPose pose, double turn, double fade) {
-    final tuck = pose.speed * 2.2 - pose.pitch * 1.2;
-    final squash = 1 - 0.22 * math.sin(math.pi * fade);
-    void draw(InkedSheet sheet, double alpha) {
-      if (alpha <= 0.01) return;
-      PartMotion.around(
-        canvas,
-        sheet.anchor('helmet.neck'),
-        () => sheet.part('helmet').paint(canvas, alpha: alpha),
-        scaleX: squash,
-        shift: Offset(2 * turn, tuck),
-      );
-    }
-
-    draw(_rear, 1 - fade);
-    draw(_side, fade);
   }
 
   void _paintLeg(Canvas canvas, String side, double down, double fade) {
@@ -97,36 +85,5 @@ class SeatedRiderFigure {
     } else {
       leg.paint(canvas, alpha: fade);
     }
-  }
-
-  void _paintTorso(Canvas canvas, double turn) {
-    PartMotion.around(
-      canvas,
-      _rear.anchor('torso.waist'),
-      () => _rear.part('torso').paint(canvas),
-      scaleX: 1 - 0.1 * turn,
-      shift: Offset(2 * turn, 0),
-    );
-  }
-
-  void _paintArms(Canvas canvas, RiderPose pose, double fade) {
-    final sway = pose.steer * 0.06;
-    for (final side in const ['R', 'L']) {
-      final part = _rear.part('arm$side');
-      final alpha = side == 'R' ? 1 - fade : 1.0;
-      PartMotion.around(
-        canvas,
-        _rear.anchor('arm$side.shoulder'),
-        () => part.paint(canvas, alpha: alpha),
-        angle: sway,
-      );
-    }
-    if (fade <= 0.01) return;
-    PartMotion.around(
-      canvas,
-      _side.anchor('arm.shoulder'),
-      () => _side.part('arm').paint(canvas, alpha: fade),
-      angle: sway,
-    );
   }
 }

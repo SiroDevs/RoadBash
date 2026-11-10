@@ -16,7 +16,6 @@ import '../../feature/auth/cubit/sign_in_cubit.dart';
 import '../../feature/auth/ui/sign_in_screen.dart';
 import '../../feature/boardroom/cubit/boardroom_cubit.dart';
 import '../../feature/boardroom/ui/boardroom_screen.dart';
-import '../../feature/debug/ui/pose_lab_screen.dart';
 import '../../feature/leaderboard/cubit/leaderboard_cubit.dart';
 import '../../feature/leaderboard/ui/leaderboard_screen.dart';
 import '../../feature/menu/cubit/menu_cubit.dart';
@@ -162,12 +161,6 @@ class AppRouter {
             child: const LeaderboardScreen(),
           ),
         ),
-        if (kDebugMode)
-          GoRoute(
-            path: RoutePaths.poseLab,
-            name: RouteNames.poseLab,
-            builder: (context, state) => const PoseLabScreen(),
-          ),
       ],
       errorBuilder: (context, state) =>
           _provide<SplashCubit>(const SplashScreen()),

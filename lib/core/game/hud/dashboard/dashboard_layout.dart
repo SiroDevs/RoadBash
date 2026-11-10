@@ -17,9 +17,7 @@ class DashboardLayout {
 
   static const double visibleShare = 0.734;
 
-  static const double _tyreShare = 0.94;
-
-  static const double _tyreMaxY = 0.73;
+  static const double _tyreMaxY = 0.86;
 
   late final double ph, pw, left, top, speedRadius, rpmRadius;
   late final Offset speedOffset, rpmOffset;
@@ -96,10 +94,7 @@ class DashboardLayout {
 
   /// Returns where the rider's tyres touch the ground.
   static double riderTyresGround(Vector2 screen) {
-    final ground = math.min(
-      screen.y - heightFor(screen) * _tyreShare,
-      screen.y * _tyreMaxY,
-    );
+    final ground = screen.y * _tyreMaxY;
     if (!isPortrait(screen)) return ground;
     return math.min(ground, horizonY(screen) + screen.x * _portraitReach);
   }

@@ -14,7 +14,7 @@ mixin RoadDynamics {
   SceneTheme get theme;
 
   double speed = 0;
-  double playerX = -0.25;
+  double playerX = 0;
   double steer = 0;
   double appliedSteer = 0;
   double rpm = 0.16;

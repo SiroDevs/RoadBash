@@ -32,6 +32,7 @@ class RiderSprite {
   late final FrontRiderFigure _front = FrontRiderFigure(look);
   late final RiderPainter painter;
 
+  static const double bikeTurnShare = 0.6;
   static const double width = RiderPainter.width;
   static const double height = RiderPainter.height;
 
@@ -46,7 +47,7 @@ class RiderSprite {
       ..translate(RiderPartPainter.midX + pose.shake, RiderPartPainter.groundY)
       ..rotate(pose.lean + pose.tumble)
       ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
-    _bike.paint(canvas, pose.perspective, steer: pose.steer);
+    _bike.paint(canvas, pose.perspective * bikeTurnShare, steer: pose.steer);
     if (view == RiderView.front) {
       _front.paint(canvas);
     } else {

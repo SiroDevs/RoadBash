@@ -115,7 +115,13 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     final speedLimit = rules.speedShare(VehicleConfig.topSpeedKmh);
     racers = [
       for (var i = 0; i < race.rivals.length; i++)
-        RivalRacer(race.rivals[i], i, theme.lanes, speedLimit: speedLimit),
+        RivalRacer(
+          race.rivals[i],
+          i,
+          theme.lanes,
+          fieldSize: race.rivals.length,
+          speedLimit: speedLimit,
+        ),
     ];
     final traffic = SceneTraffic.of(scene, theme, road, race, rules);
     flow = traffic.flow;

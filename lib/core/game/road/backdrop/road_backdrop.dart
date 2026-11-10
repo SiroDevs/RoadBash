@@ -34,6 +34,7 @@ class RoadBackdrop {
   /// on scenes whose own backdrop has none.
   double skylineRise = 0;
 
+  static const _designHorizon = 0.42;
   static const _cloudX = [0.05, 0.28, 0.52, 0.74, 0.93];
   static const _cloudY = [0.20, 0.45, 0.15, 0.38, 0.25];
 
@@ -56,6 +57,7 @@ class RoadBackdrop {
     final viewWidth = size.x;
     final horizon = size.y * RoadConfig.horizonRatio;
     final unit = size.y / 700;
+    final tall = unit * RoadConfig.horizonRatio / _designHorizon;
 
     canvas.drawRect(Rect.fromLTWH(0, 0, viewWidth, horizon + 1), _sky);
     _clouds(canvas, viewWidth, horizon, big: theme.backdrop == BackdropKind.sky);
@@ -65,7 +67,7 @@ class RoadBackdrop {
         canvas,
         width: viewWidth,
         baseY: horizon,
-        height: 110 * unit,
+        height: 110 * tall,
         scroll: scroll * 0.25 + 90 * unit,
         haze: _farHaze,
       );
@@ -73,7 +75,7 @@ class RoadBackdrop {
         canvas,
         width: viewWidth,
         baseY: horizon,
-        height: 170 * unit,
+        height: 170 * tall,
         scroll: scroll * 0.5,
         haze: _nearHaze,
       );
@@ -83,7 +85,7 @@ class RoadBackdrop {
         _path,
         width: viewWidth,
         baseY: horizon,
-        amplitude: 50 * unit,
+        amplitude: 50 * tall,
         frequency: 0.006,
         scroll: scroll * 0.5,
         paint: _far,
@@ -92,7 +94,7 @@ class RoadBackdrop {
         canvas,
         width: viewWidth,
         baseY: horizon,
-        height: 70 * unit,
+        height: 70 * tall,
         scroll: scroll * 0.3 + 40 * unit,
         haze: _farHaze,
       );
@@ -101,7 +103,7 @@ class RoadBackdrop {
         _path,
         width: viewWidth,
         baseY: horizon,
-        amplitude: 20 * unit,
+        amplitude: 20 * tall,
         frequency: 0.011,
         scroll: scroll,
         paint: _near,
@@ -112,13 +114,13 @@ class RoadBackdrop {
         _path,
         width: viewWidth,
         baseY: horizon,
-        amplitude: 78 * unit,
+        amplitude: 78 * tall,
         frequency: 0.005,
         scroll: scroll * 0.35,
         paint: _far,
       );
       canvas.drawRect(
-        Rect.fromLTRB(0, horizon - 90 * unit, viewWidth, horizon),
+        Rect.fromLTRB(0, horizon - 90 * tall, viewWidth, horizon),
         Paint()..color = _farHaze.withAlpha(60),
       );
       drawHills(
@@ -126,7 +128,7 @@ class RoadBackdrop {
         _path,
         width: viewWidth,
         baseY: horizon,
-        amplitude: 54 * unit,
+        amplitude: 54 * tall,
         frequency: 0.008,
         scroll: scroll * 0.6,
         paint: _near,
@@ -136,7 +138,7 @@ class RoadBackdrop {
         _path,
         width: viewWidth,
         baseY: horizon,
-        amplitude: 30 * unit,
+        amplitude: 30 * tall,
         frequency: 0.013,
         scroll: scroll,
         paint: _front,
@@ -147,7 +149,7 @@ class RoadBackdrop {
         _path,
         width: viewWidth,
         baseY: horizon,
-        amplitude: 46 * unit,
+        amplitude: 46 * tall,
         frequency: 0.007,
         scroll: scroll * 0.6,
         paint: _far,
@@ -157,7 +159,7 @@ class RoadBackdrop {
         _path,
         width: viewWidth,
         baseY: horizon,
-        amplitude: 30 * unit,
+        amplitude: 30 * tall,
         frequency: 0.012,
         scroll: scroll,
         paint: _near,
@@ -169,16 +171,16 @@ class RoadBackdrop {
       drawCityScape(
         canvas,
         width: viewWidth,
-        baseY: horizon + 170 * unit * drop,
-        height: 110 * unit,
+        baseY: horizon + 170 * tall * drop,
+        height: 110 * tall,
         scroll: scroll * 0.25 + 90 * unit,
         haze: _farHaze,
       );
       drawCityScape(
         canvas,
         width: viewWidth,
-        baseY: horizon + 260 * unit * drop,
-        height: 170 * unit,
+        baseY: horizon + 260 * tall * drop,
+        height: 170 * tall,
         scroll: scroll * 0.5,
         haze: _nearHaze,
       );

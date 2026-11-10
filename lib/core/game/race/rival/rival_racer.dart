@@ -13,33 +13,32 @@ import '../../road/traffic/road_actor.dart';
 import '../../road/traffic/traffic_flow.dart';
 import '../race_controller.dart';
 import 'rival_brain.dart';
+import 'rival_facing.dart';
 import 'rival_ground.dart';
 import 'rival_lookout.dart';
 import 'rival_parking.dart';
 import 'rival_pose_driver.dart';
 import 'rival_sight.dart';
 import 'rival_steering.dart';
+import 'start_grid.dart';
 
 /// Computer-controlled rival drawn as a bike on the road.
 class RivalRacer implements RoadActor {
-  RivalRacer(this.rival, this.index, this.lanes, {this.speedLimit = 1.0})
-    : sprite = RiderSprite(look: rival.look, useSuppliedArt: true),
-      _brain = RivalBrain(rival, index * 7919 + rival.name.hashCode),
-      _lead = _grid[index % _grid.length].$2,
-      _steering = RivalSteering(
-        gridLateral: _grid[index % _grid.length].$1,
-        lanes: lanes,
-        index: index,
-        phase: rival.phase,
-      );
+  RivalRacer(
+    this.rival,
+    this.index,
+    this.lanes, {
+    required int fieldSize,
+    this.speedLimit = 1.0,
+  }) : sprite = RiderSprite(look: rival.look, useSuppliedArt: true),
+       _brain = RivalBrain(rival, index * 7919 + rival.name.hashCode),
+       _steering = RivalSteering(
+         gridLateral: StartGrid.lateralFor(index, fieldSize),
+         lanes: lanes,
+         index: index,
+         phase: rival.phase,
+       );
 
-  static const List<(double, double)> _grid = [
-    (-0.75, 520),
-    (0.1, 520),
-    (0.75, 520),
-    (-0.45, 1040),
-    (0.45, 1040),
-  ];
   static const double _edge = 0.92;
   static const double _slideDecel = VehicleConfig.maxSpeed * 1.6;
 
@@ -52,7 +51,6 @@ class RivalRacer implements RoadActor {
   final RiderSprite sprite;
   final RivalBrain _brain;
   final RivalSteering _steering;
-  final double _lead;
   final CrashState _crash = CrashState();
   late final RivalPoseDriver _poseDriver = RivalPoseDriver(sprite.pose, index);
   final RivalLookout _lookout = RivalLookout();
@@ -63,13 +61,13 @@ class RivalRacer implements RoadActor {
   /// Civilian traffic the rival steers around and slows for.
   TrafficFlow? flow;
 
-  double _dist = 0, _speed = 0, _visLead = 0;
+  double _dist = 0, _speed = 0;
   bool _crossed = false;
 
   @override
-  double get distance => _dist + _visLead;
+  double get distance => _dist;
 
-  /// Distance the rival has really ridden, without the start-line offset.
+  /// Distance the rival has ridden.
   double get ridden => _dist;
 
   @override
@@ -103,8 +101,6 @@ class RivalRacer implements RoadActor {
     _crash.update(dt);
     _advance(dt, race, road);
     race.rivalTracker.report(rival.name, _dist, _speed);
-    final remaining = (1 - clock / 4).clamp(0.0, 1.0).toDouble();
-    _visLead = _lead * remaining * remaining;
 
     final seg = road.track.at(distance + road.playerZ);
     _steerLateral(dt, race, road, seg.section, clock);
@@ -120,25 +116,16 @@ class RivalRacer implements RoadActor {
     _ground.updateDust(dt, _speed, down: _crash.down);
   }
 
-  /// Turns rivals sideways at the start and as the player closes the gap.
-  void _updateFacing(
-    double dt,
-    double playerLateral,
-    double playerDistance,
-    double raceClock,
-  ) {
-    final relative = lateral - playerLateral;
-    final sideDirection = relative.abs() > 0.06
-        ? relative.sign
-        : (index.isEven ? -1.0 : 1.0);
-    final gap = distance - playerDistance;
-    final sideAmount = raceClock < 3.5
-        ? 1.0
-        : (1 - ((gap - 24) / 180).clamp(0.0, 1.0)).toDouble();
-    final sideLimit = raceClock < 3.5 ? 0.82 : 0.5;
-    final perspective = sideDirection * sideAmount * sideLimit;
+  /// Eases the rival toward the yaw its place relative to the player calls for.
+  void _updateFacing(double dt, double playerLateral, double playerDistance, double raceClock) {
+    final target = RivalFacing.yaw(
+      sideOffset: lateral - playerLateral,
+      gap: distance - playerDistance,
+      index: index,
+      atStart: raceClock < 3.5,
+    );
     sprite.pose.perspective +=
-        (perspective - sprite.pose.perspective) * math.min(1.0, dt * 3.5);
+        (target - sprite.pose.perspective) * math.min(1.0, dt * 3.5);
   }
 
   /// Slows the rival and shoves it sideways after a hit.

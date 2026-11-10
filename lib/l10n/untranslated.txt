@@ -1,13 +1,1 @@
-{
-  "sw": [
-    "poseLabTitle",
-    "poseLabYawSection",
-    "poseLabFootDown",
-    "poseLabFootUp",
-    "poseLabOnFootSection",
-    "poseLabRunning",
-    "poseLabThrown",
-    "poseLabGettingUp",
-    "poseLabMounting"
-  ]
-}
+{}

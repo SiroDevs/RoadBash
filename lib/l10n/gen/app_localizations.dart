@@ -1273,60 +1273,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Riding on the wrong side: {count}'**
   String offenceWrongSide(int count);
-
-  /// Title of the debug screen that shows rider poses
-  ///
-  /// In en, this message translates to:
-  /// **'Pose lab'**
-  String get poseLabTitle;
-
-  /// Debug pose lab heading for the grid of turn angles
-  ///
-  /// In en, this message translates to:
-  /// **'Turn and foot'**
-  String get poseLabYawSection;
-
-  /// Debug pose lab label: the rider has a foot on the ground
-  ///
-  /// In en, this message translates to:
-  /// **'foot down'**
-  String get poseLabFootDown;
-
-  /// Debug pose lab label: both feet on the bike
-  ///
-  /// In en, this message translates to:
-  /// **'foot up'**
-  String get poseLabFootUp;
-
-  /// Debug pose lab heading for poses off the bike
-  ///
-  /// In en, this message translates to:
-  /// **'On foot'**
-  String get poseLabOnFootSection;
-
-  /// Debug pose lab label: rider running
-  ///
-  /// In en, this message translates to:
-  /// **'running'**
-  String get poseLabRunning;
-
-  /// Debug pose lab label: rider thrown from the bike
-  ///
-  /// In en, this message translates to:
-  /// **'thrown'**
-  String get poseLabThrown;
-
-  /// Debug pose lab label: rider getting up after a fall
-  ///
-  /// In en, this message translates to:
-  /// **'getting up'**
-  String get poseLabGettingUp;
-
-  /// Debug pose lab label: rider climbing back on the bike
-  ///
-  /// In en, this message translates to:
-  /// **'mounting'**
-  String get poseLabMounting;
 }
 
 class _AppLocalizationsDelegate

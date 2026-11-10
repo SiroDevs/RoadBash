@@ -16,6 +16,7 @@ import 'rider_painter.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
 import 'rider_sprite.dart';
+import 'rig/player_yaw.dart';
 
 /// Flame component that draws the player's bike and rider.
 class RiderComponent extends PositionComponent {
@@ -86,12 +87,12 @@ class RiderComponent extends PositionComponent {
         .toDouble();
     pose.lean += (target - pose.lean) * math.min(1.0, dt * 6);
 
-    final sharpTurn =
-        road.appliedSteer.abs() > 0.4 && sp > 0.8 && road.curveFelt.abs() > 2.5;
-    final turnDirection = road.appliedSteer.sign;
-    final perspective = sharpTurn ? turnDirection * (0.18 + sp * 0.27) : 0.0;
-    pose.perspective +=
-        (perspective - pose.perspective) * math.min(1.0, dt * 4);
+    final yaw = PlayerYaw.target(
+      steer: road.appliedSteer,
+      curve: road.curveFelt,
+      speedShare: sp,
+    );
+    pose.perspective += (yaw - pose.perspective) * math.min(1.0, dt * 3);
 
     final pitch = road.brake ? -1.0 : (road.throttle ? 0.5 : 0.0);
     pose.pitch += (pitch * sp - pose.pitch) * math.min(1.0, dt * 6);

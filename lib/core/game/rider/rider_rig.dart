@@ -6,10 +6,10 @@ import 'rider_painter.dart';
 
 /// Size and lift settings of the rider and bike.
 class RiderRig {
-  static const double sizeFactor = 0.65;
+  static const double sizeFactor = 1.0;
 
   static const double laneFill = 0.62;
-  static const double screenFill = 0.30;
+  static const double screenFill = 0.60;
 
   static const double stockBikeTop = 28;
   static const double stockRiderTop = -46;

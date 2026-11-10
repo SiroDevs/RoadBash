@@ -10,6 +10,9 @@ abstract final class RiderLooks {
   static const RiderLook player = RiderLook.main;
 
   static const RiderLook mike = RiderLook(
+    helmetGraphic: Color(0xFF111111),
+    helmetGraphic2: Color(0xFFFFC107),
+    visor: Color(0xFFB71C1C),
     suit: Color(0xFFD32F2F),
     stripe: Color(0xFFFFFFFF),
     stripeEdge: Color(0xFFFFC107),
@@ -27,6 +30,9 @@ abstract final class RiderLooks {
   );
 
   static const RiderLook bose = RiderLook(
+    helmetGraphic: Color(0xFF00E5FF),
+    helmetGraphic2: Color(0xFF0D47A1),
+    visor: Color(0xFF7E57C2),
     suit: Color(0xFF1565C0),
     stripe: Color(0xFF00E5FF),
     stripeEdge: Color(0xFFFFFFFF),
@@ -45,6 +51,9 @@ abstract final class RiderLooks {
   );
 
   static const RiderLook sam = RiderLook(
+    helmetGraphic: Color(0xFF212121),
+    helmetGraphic2: Color(0xFFFFD54F),
+    visor: Color(0xFF455A64),
     suit: Color(0xFFFF6F00),
     stripe: Color(0xFF212121),
     stripeEdge: Color(0xFFFFD54F),
@@ -62,6 +71,9 @@ abstract final class RiderLooks {
   );
 
   static const RiderLook kamau = RiderLook(
+    helmetGraphic: Color(0xFFD32F2F),
+    helmetGraphic2: Color(0xFF111111),
+    visor: Color(0xFF2E7D32),
     suit: Color(0xFFECEFF1),
     stripe: Color(0xFF2E7D32),
     stripeEdge: Color(0xFFD32F2F),
@@ -79,6 +91,9 @@ abstract final class RiderLooks {
   );
 
   static const RiderLook brayo = RiderLook(
+    helmetGraphic: Color(0xFF00897B),
+    helmetGraphic2: Color(0xFF263238),
+    visor: Color(0xFFFF7043),
     suit: Color(0xFF00897B),
     stripe: Color(0xFFFDD835),
     stripeEdge: Color(0xFFFFFFFF),

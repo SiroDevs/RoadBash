@@ -30,7 +30,7 @@ class RivalRacer implements RoadActor {
     this.lanes, {
     required int fieldSize,
     this.speedLimit = 1.0,
-  }) : sprite = RiderSprite(look: rival.look, useSuppliedArt: true),
+  }) : sprite = RiderSprite(look: rival.look),
        _brain = RivalBrain(rival, index * 7919 + rival.name.hashCode),
        _steering = RivalSteering(
          gridLateral: StartGrid.lateralFor(index, fieldSize),

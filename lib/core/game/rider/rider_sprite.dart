@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 // Project imports:
 import 'art/sheet/bike_figure.dart';
 import 'look/rider_look.dart';
-import 'rider_painter.dart';
+import 'rider_frame.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
 import 'rig/front_rider.dart';
@@ -17,36 +17,27 @@ class RiderSprite {
     this.look = RiderLook.main,
     RiderRig? rig,
     this.view = RiderView.rear,
-    this.useSuppliedArt = false,
-  }) : rig = rig ?? RiderRig() {
-    painter = RiderPainter(this.rig, look: look, view: view);
-  }
+  }) : rig = rig ?? RiderRig();
 
   final RiderLook look;
   final RiderView view;
   final RiderRig rig;
-  final bool useSuppliedArt;
   final RiderPose pose = RiderPose();
   late final BikeFigure _bike = BikeFigure(look);
   late final SeatedRiderFigure _seated = SeatedRiderFigure(look);
   late final FrontRiderFigure _front = FrontRiderFigure(look);
-  late final RiderPainter painter;
 
   static const double bikeTurnShare = 0.6;
-  static const double width = RiderPainter.width;
-  static const double height = RiderPainter.height;
+  static const double width = RiderFrame.width;
+  static const double height = RiderFrame.height;
 
   /// Paints the selected artwork in the current pose.
   void paint(Canvas canvas) {
-    if (!useSuppliedArt) {
-      painter.paint(canvas, pose);
-      return;
-    }
     canvas
       ..save()
-      ..translate(RiderPartPainter.midX + pose.shake, RiderPartPainter.groundY)
+      ..translate(RiderFrame.midX + pose.shake, RiderFrame.groundY)
       ..rotate(pose.lean + pose.tumble)
-      ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
+      ..translate(-RiderFrame.midX, -RiderFrame.groundY + pose.bob);
     _bike.paint(canvas, pose.perspective * bikeTurnShare, steer: pose.steer);
     if (view == RiderView.front) {
       _front.paint(canvas);

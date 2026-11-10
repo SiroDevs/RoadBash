@@ -135,7 +135,8 @@ class RivalRacer implements RoadActor {
     final sideAmount = raceClock < 3.5
         ? 1.0
         : (1 - ((gap - 24) / 180).clamp(0.0, 1.0)).toDouble();
-    final perspective = sideDirection * sideAmount * 0.82;
+    final sideLimit = raceClock < 3.5 ? 0.82 : 0.5;
+    final perspective = sideDirection * sideAmount * sideLimit;
     sprite.pose.perspective +=
         (perspective - sprite.pose.perspective) * math.min(1.0, dt * 3.5);
   }

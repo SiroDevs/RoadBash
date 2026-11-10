@@ -82,8 +82,8 @@ mixin RoadDynamics {
         shove = 0;
         speed = 0;
         nastyCrashKmh = 0;
-      } else if (crash.returning) {
-        playerX = crash.crashX * (1 - crash.returnProgress);
+      } else {
+        playerX = crash.cameraX;
         appliedSteer = 0;
         shove = 0;
       }

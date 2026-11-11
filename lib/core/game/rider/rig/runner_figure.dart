@@ -6,16 +6,26 @@ import '../art/sheet/art_ink.dart';
 import '../art/sheet/part_motion.dart';
 import '../art/sheet/rider_sheets.dart';
 import '../look/rider_look.dart';
+import 'rider_leg.dart';
 import 'runner_pose.dart';
 
 /// The rider on foot, side on, with every limb driven by joint angles.
 class RunnerFigure {
   RunnerFigure(RiderLook look)
     : _run = InkedSheet.rider(RiderSheets.running, look),
-      _stand = InkedSheet.rider(RiderSheets.standing, look);
+      _stand = InkedSheet.rider(RiderSheets.standing, look) {
+    _runningLegs = {
+      for (final side in _runningSides) side: RiderLeg(_run, 'leg$side'),
+    };
+    _standingLeg = RiderLeg(_stand, 'leg');
+  }
+
+  static const List<String> _runningSides = ['Near', 'Far'];
 
   final InkedSheet _run;
   final InkedSheet _stand;
+  late final Map<String, RiderLeg> _runningLegs;
+  late final RiderLeg _standingLeg;
 
   /// Paints the running art facing right with the given joint angles.
   void paintPose(Canvas canvas, RunnerPose pose) {
@@ -23,13 +33,13 @@ class RunnerFigure {
       ..save()
       ..translate(0, pose.bounce);
     _boot(canvas, 'Near', pose.near);
-    _legWithBoot(canvas, 'Far', pose.far, bootToo: false);
+    _paintLeg(canvas, 'Far', pose.far);
     _arm(canvas, 'Far', pose.armFar);
-    _upper(canvas, 'helmet', 'helmet.neck', pose.lean, _run.part('helmet'));
+    _upper(canvas, pose.lean, _run.part('helmet'));
     _boot(canvas, 'Far', pose.far);
-    _legWithBoot(canvas, 'Near', pose.near, bootToo: false);
+    _paintLeg(canvas, 'Near', pose.near);
     _arm(canvas, 'Near', pose.armNear);
-    _upper(canvas, 'torso', 'torso.waist', pose.lean, _run.part('torso'));
+    _upper(canvas, pose.lean, _run.part('torso'));
     canvas.restore();
   }
 
@@ -49,18 +59,12 @@ class RunnerFigure {
       () => _stand.part('arm').paint(canvas),
       angle: breath * 0.03,
     );
-    _stand.part('legThigh').paint(canvas);
-    _stand.part('legShin').paint(canvas);
+    _standingLeg.paint(canvas);
     _stand.part('boot').paint(canvas);
   }
 
-  void _upper(
-    Canvas canvas,
-    String id,
-    String pivot,
-    double lean,
-    InkedPart part,
-  ) {
+  /// Paints the helmet or torso turned around the waist.
+  void _upper(Canvas canvas, double lean, InkedPart part) {
     PartMotion.around(
       canvas,
       _run.anchor('torso.waist'),
@@ -69,6 +73,7 @@ class RunnerFigure {
     );
   }
 
+  /// Paints one running arm around its shoulder.
   void _arm(Canvas canvas, String side, double angle) {
     PartMotion.around(
       canvas,
@@ -78,33 +83,22 @@ class RunnerFigure {
     );
   }
 
-  void _legWithBoot(
-    Canvas canvas,
-    String side,
-    LegJoints joints, {
-    required bool bootToo,
-  }) {
-    final hip = _run.anchor('leg$side.hip');
-    final knee = _run.anchor('leg$side.knee');
-    final hipTurn = _hipTurn(side, joints);
-    PartMotion.around(canvas, hip, () {
-      _run.part('leg${side}Thigh').paint(canvas);
-      PartMotion.around(
-        canvas,
-        knee,
-        () => _run.part('leg${side}Shin').paint(canvas),
-        angle: _kneeTurn(side, joints),
-      );
-    }, angle: hipTurn);
+  /// Paints a complete running leg using its hip and knee angles.
+  void _paintLeg(Canvas canvas, String side, LegJoints joints) {
+    _runningLegs[side]!.paint(
+      canvas,
+      hipAngle: _hipTurn(side, joints),
+      kneeAngle: _kneeTurn(side, joints),
+    );
   }
 
+  /// Paints a boot following its leg, knee, and ankle joints.
   void _boot(Canvas canvas, String side, LegJoints joints) {
-    final hip = _run.anchor('leg$side.hip');
-    final knee = _run.anchor('leg$side.knee');
+    final leg = _runningLegs[side]!;
     final heel = _run.anchor('boot$side.heel');
     final kneeTurn = _kneeTurn(side, joints);
-    PartMotion.around(canvas, hip, () {
-      PartMotion.around(canvas, knee, () {
+    PartMotion.around(canvas, leg.hip, () {
+      PartMotion.around(canvas, leg.knee, () {
         PartMotion.around(
           canvas,
           heel,
@@ -115,24 +109,19 @@ class RunnerFigure {
     }, angle: _hipTurn(side, joints));
   }
 
+  /// Rotation from the artwork's resting hip angle to this pose.
   double _hipTurn(String side, LegJoints joints) {
-    final rest = PartMotion.fromDown(
-      _run.anchor('leg$side.hip'),
-      _run.anchor('leg$side.knee'),
-    );
+    final leg = _runningLegs[side]!;
+    final rest = PartMotion.fromDown(leg.hip, leg.knee);
     return rest - joints.thigh;
   }
 
+  /// Rotation from the artwork's resting knee angle to this pose.
   double _kneeTurn(String side, LegJoints joints) {
+    final leg = _runningLegs[side]!;
     final rest =
-        PartMotion.fromDown(
-          _run.anchor('leg$side.hip'),
-          _run.anchor('leg$side.knee'),
-        ) -
-        PartMotion.fromDown(
-          _run.anchor('leg$side.knee'),
-          _run.anchor('leg$side.ankle'),
-        );
+        PartMotion.fromDown(leg.hip, leg.knee) -
+        PartMotion.fromDown(leg.knee, leg.ankle);
     return joints.flex - rest;
   }
 }

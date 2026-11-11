@@ -17,7 +17,7 @@ class DashboardLayout {
 
   static const double visibleShare = 0.734;
 
-  static const double _tyreMaxY = 0.86;
+  static const double _tyreMaxY = 0.6;
 
   late final double ph, pw, left, top, speedRadius, rpmRadius;
   late final Offset speedOffset, rpmOffset;

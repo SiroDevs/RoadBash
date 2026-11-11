@@ -37,7 +37,7 @@ class ArtShape {
   final Path path;
 }
 
-/// A group of shapes that moves as one rigid piece.
+/// A named group of shapes from one artwork view.
 class ArtPart {
   ArtPart(this.id, List<String> rows)
     : shapes = [for (final row in rows) ArtShape.parse(row)];

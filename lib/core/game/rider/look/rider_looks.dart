@@ -9,90 +9,118 @@ import 'rider_look.dart';
 abstract final class RiderLooks {
   static const RiderLook player = RiderLook.main;
 
-  static const RiderLook mike = RiderLook(
-    suit: Color(0xFFD32F2F),
-    stripe: Color(0xFFFFFFFF),
-    stripeEdge: Color(0xFFFFC107),
-    backPatch: Color(0xFF5D1010),
-    helmet: Color(0xFFF5F5F5),
-    gloves: Color(0xFF212121),
+  /// Yellow rival.
+  static const RiderLook yellow = RiderLook(
+    suit: Color(0xFFF5C518),
+    stripe: Color(0xFF8A6A00),
+    stripeEdge: Color(0xFFFFE066),
+    backPatch: Color(0xFF1A1A20),
+    helmet: Color(0xFFF5C518),
+    helmetGraphic: Color(0xFF1A1A20),
+    helmetGraphic2: Color(0xFFFFE066),
+    visor: Color(0xFF14141A),
+    gloves: Color(0xFF1E1E22),
+    gloveAccent: Color(0xFF8A6A00),
     boots: Color(0xFF1A1A1A),
     bike: BikeLook(
-      panel: Color(0xFFE53935),
-      panelDark: Color(0xFF8E1B1B),
-      accent: Color(0xFFFFFFFF),
-      accentEdge: Color(0xFFFFC107),
-      trim: Color(0xFFFFF3E0),
+      frame: Color(0xFF101014),
+      panel: Color(0xFFF5C518),
+      panelDark: Color(0xFF8A6A00),
+      accent: Color(0xFF22222A),
+      accentEdge: Color(0xFFFFE066),
+      trim: Color(0xFFD9DADF),
     ),
   );
 
-  static const RiderLook bose = RiderLook(
-    suit: Color(0xFF1565C0),
-    stripe: Color(0xFF00E5FF),
-    stripeEdge: Color(0xFFFFFFFF),
-    backPatch: Color(0xFF0D2B5C),
-    helmet: Color(0xFF212121),
-    gloves: Color(0xFF00E5FF),
-    boots: Color(0xFF0D1B2A),
+  /// Blue rival.
+  static const RiderLook blue = RiderLook(
+    suit: Color(0xFF1E4FD6),
+    stripe: Color(0xFF0E2A7A),
+    stripeEdge: Color(0xFF6C93FF),
+    backPatch: Color(0xFF1A1A20),
+    helmet: Color(0xFF1E4FD6),
+    helmetGraphic: Color(0xFF1A1A20),
+    helmetGraphic2: Color(0xFF6C93FF),
+    visor: Color(0xFF14141A),
+    gloves: Color(0xFF1E1E22),
+    gloveAccent: Color(0xFF0E2A7A),
+    boots: Color(0xFF1A1A1A),
     bike: BikeLook(
-      frame: Color(0xFF0D1B2A),
-      panel: Color(0xFF1E88E5),
-      panelDark: Color(0xFF0D47A1),
-      accent: Color(0xFF00E5FF),
-      accentEdge: Color(0xFFFFFFFF),
-      trim: Color(0xFFB3E5FC),
+      frame: Color(0xFF101014),
+      panel: Color(0xFF1E4FD6),
+      panelDark: Color(0xFF0E2A7A),
+      accent: Color(0xFF22222A),
+      accentEdge: Color(0xFF6C93FF),
+      trim: Color(0xFFD9DADF),
     ),
   );
 
-  static const RiderLook sam = RiderLook(
-    suit: Color(0xFFFF6F00),
-    stripe: Color(0xFF212121),
-    stripeEdge: Color(0xFFFFD54F),
-    backPatch: Color(0xFF3E2723),
-    helmet: Color(0xFFFF8F00),
-    gloves: Color(0xFF212121),
-    boots: Color(0xFF3E2723),
+  /// Green rival.
+  static const RiderLook green = RiderLook(
+    suit: Color(0xFF2EC02E),
+    stripe: Color(0xFF14661B),
+    stripeEdge: Color(0xFF8CE86B),
+    backPatch: Color(0xFF1A1A20),
+    helmet: Color(0xFF2EC02E),
+    helmetGraphic: Color(0xFF1A1A20),
+    helmetGraphic2: Color(0xFF8CE86B),
+    visor: Color(0xFF14141A),
+    gloves: Color(0xFF1E1E22),
+    gloveAccent: Color(0xFF14661B),
+    boots: Color(0xFF1A1A1A),
     bike: BikeLook(
-      panel: Color(0xFFFF9800),
-      panelDark: Color(0xFF8D4B00),
-      accent: Color(0xFF212121),
-      accentEdge: Color(0xFFFFD54F),
-      trim: Color(0xFFFFE0B2),
+      frame: Color(0xFF101014),
+      panel: Color(0xFF2EC02E),
+      panelDark: Color(0xFF14661B),
+      accent: Color(0xFF22222A),
+      accentEdge: Color(0xFF8CE86B),
+      trim: Color(0xFFD9DADF),
     ),
   );
 
-  static const RiderLook kamau = RiderLook(
-    suit: Color(0xFFECEFF1),
-    stripe: Color(0xFF2E7D32),
-    stripeEdge: Color(0xFFD32F2F),
-    backPatch: Color(0xFF1B5E20),
-    helmet: Color(0xFF2E7D32),
-    gloves: Color(0xFFD32F2F),
-    boots: Color(0xFF111111),
+  /// Purple rival.
+  static const RiderLook purple = RiderLook(
+    suit: Color(0xFF7A35C9),
+    stripe: Color(0xFF3F1A73),
+    stripeEdge: Color(0xFFB98AF0),
+    backPatch: Color(0xFF1A1A20),
+    helmet: Color(0xFF7A35C9),
+    helmetGraphic: Color(0xFF1A1A20),
+    helmetGraphic2: Color(0xFFB98AF0),
+    visor: Color(0xFF14141A),
+    gloves: Color(0xFF1E1E22),
+    gloveAccent: Color(0xFF3F1A73),
+    boots: Color(0xFF1A1A1A),
     bike: BikeLook(
-      panel: Color(0xFFECEFF1),
-      panelDark: Color(0xFF607D8B),
-      accent: Color(0xFF2E7D32),
-      accentEdge: Color(0xFFD32F2F),
-      trim: Color(0xFFFFFFFF),
+      frame: Color(0xFF101014),
+      panel: Color(0xFF7A35C9),
+      panelDark: Color(0xFF3F1A73),
+      accent: Color(0xFF22222A),
+      accentEdge: Color(0xFFB98AF0),
+      trim: Color(0xFFD9DADF),
     ),
   );
 
-  static const RiderLook brayo = RiderLook(
-    suit: Color(0xFF00897B),
-    stripe: Color(0xFFFDD835),
-    stripeEdge: Color(0xFFFFFFFF),
-    backPatch: Color(0xFF004D40),
-    helmet: Color(0xFFFDD835),
-    gloves: Color(0xFFFDD835),
-    boots: Color(0xFF263238),
+  /// Orange rival, the fifth on the higher levels.
+  static const RiderLook orange = RiderLook(
+    suit: Color(0xFFF26A1B),
+    stripe: Color(0xFF8A3A0A),
+    stripeEdge: Color(0xFFFFB074),
+    backPatch: Color(0xFF1A1A20),
+    helmet: Color(0xFFF26A1B),
+    helmetGraphic: Color(0xFF1A1A20),
+    helmetGraphic2: Color(0xFFFFB074),
+    visor: Color(0xFF14141A),
+    gloves: Color(0xFF1E1E22),
+    gloveAccent: Color(0xFF8A3A0A),
+    boots: Color(0xFF1A1A1A),
     bike: BikeLook(
-      frame: Color(0xFF102027),
-      panel: Color(0xFF26A69A),
-      panelDark: Color(0xFF00574B),
-      accent: Color(0xFFFDD835),
-      accentEdge: Color(0xFFFFFFFF),
-      trim: Color(0xFFE0F2F1),
+      frame: Color(0xFF101014),
+      panel: Color(0xFFF26A1B),
+      panelDark: Color(0xFF8A3A0A),
+      accent: Color(0xFF22222A),
+      accentEdge: Color(0xFFFFB074),
+      trim: Color(0xFFD9DADF),
     ),
   );
 
@@ -116,5 +144,5 @@ abstract final class RiderLooks {
     ),
   );
 
-  static const List<RiderLook> field = [mike, bose, sam, kamau, brayo];
+  static const List<RiderLook> field = [yellow, blue, green, purple, orange];
 }

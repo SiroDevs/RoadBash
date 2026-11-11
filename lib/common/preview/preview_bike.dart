@@ -13,10 +13,10 @@ class PreviewBike implements RoadActor {
     required this.lateral,
     required RiderLook look,
     required double speed,
-  }) : _sprite = RiderSprite(look: look, useSuppliedArt: true) {
+  }) : _sprite = RiderSprite(look: look) {
     _sprite.pose
       ..speed = speed
-      ..perspective = lateral.sign * 0.65;
+      ..perspective = -lateral.sign * 0.25;
   }
 
   @override

@@ -111,7 +111,7 @@ class RoadTraffic {
   /// Finds the screen position and size of an actor; false when too small.
   bool _place(int i, VisionSeg vision, Vector2 size) {
     final playerLane = DashboardLayout.lanePx(size, lanes);
-    final playerHeight = RiderRig.heightFor(playerLane, size.y);
+    final playerHeight = RiderRig.heightFor(playerLane, size.x, size.y);
     final blend = _blend[i];
     final laneWidth = vision.w1 + (vision.w2 - vision.w1) * blend;
     final lanePx = 2 * laneWidth / lanes;

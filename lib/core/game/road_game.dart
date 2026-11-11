@@ -23,22 +23,20 @@ import 'hud/hud_strings.dart';
 import 'input/road_input.dart';
 import 'police/police_chase.dart';
 import 'race/race_controller.dart';
+import 'race/race_pause.dart';
 import 'race/race_result.dart';
+import 'race/race_world.dart';
 import 'race/rider_contacts.dart';
 import 'race/rival/rival_racer.dart';
-import 'race/scene_traffic.dart';
 import 'race/traffic_contacts.dart';
 import 'race/wrong_side_watch.dart';
 import 'rider/rider_component.dart';
-import 'road/config/vehicle_config.dart';
 import 'road/road_renderer.dart';
-import 'road/scene_theme.dart';
 import 'road/traffic/rival_overlay.dart';
-import 'road/traffic/road_traffic.dart';
 import 'road/traffic/traffic_flow.dart';
 
 /// Flame game that runs a race on the road.
-class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
+class RoadGame extends FlameGame with KeyboardEvents, RoadInput, RacePause {
   RoadGame({
     required this.scene,
     required this.mix,
@@ -79,8 +77,12 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
   /// The police patrol that chases a speeding or reckless player.
   late final PoliceChase police;
   late final TrafficContacts _trafficContacts;
+  late final RaceWorld _world;
   final WrongSideWatch _wrongSide = WrongSideWatch();
   RideAudio? _ride;
+
+  @override
+  RideAudio? get ride => _ride;
   late final RiderContacts _contacts = RiderContacts(
     onImpact: (strength, knockedOff) => _ride?.impact(strength, knockedOff),
     onBash: () {
@@ -90,45 +92,28 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     shoving: rules.shoving,
   );
 
-  bool _menuPaused = false;
   bool _notified = false;
   bool _shutDown = false;
   double _finishDelay = 2.4;
 
   @override
   Future<void> onLoad() async {
-    final theme = SceneTheme.of(scene);
-    final laps = rules.lapsFor(scene, theme.laps);
-    road = RoadRenderer(theme, laps: laps)
-      ..speedLimitKmh = rules.maxSpeedKmh
-      ..nastyCrashesEnabled = rules.hospital;
-    race = RaceController(
+    final world = RaceWorld.build(
       scene: scene,
-      laps: laps,
-      lapLength: road.track.length,
-      runOut: road.track.runOutLength,
-      playerName: playerName,
       rules: rules,
-      rivals: RaceController.lineup(rules),
+      playerName: playerName,
       briefingSeconds: briefing.isEmpty ? 0 : briefingSeconds,
     );
-    final speedLimit = rules.speedShare(VehicleConfig.topSpeedKmh);
-    racers = [
-      for (var i = 0; i < race.rivals.length; i++)
-        RivalRacer(race.rivals[i], i, theme.lanes, speedLimit: speedLimit),
-    ];
-    final traffic = SceneTraffic.of(scene, theme, road, race, rules);
-    flow = traffic.flow;
-    police = traffic.police;
+    _world = world;
+    road = world.road;
+    race = world.race;
+    racers = world.racers;
+    flow = world.flow;
+    police = world.police;
     _trafficContacts = TrafficContacts(
       onImpact: (strength, knockedOff) => _ride?.impact(strength, knockedOff),
       onHit: () => race.trafficHits++,
     );
-    for (final racer in racers) {
-      racer.peers = racers;
-      racer.flow = flow;
-    }
-    road.traffic = RoadTraffic([...racers, ...flow.cars, police.cop], theme.lanes);
     final handlebar = HandlebarRig(road, () => handlebars);
     await addAll([
       road,
@@ -164,7 +149,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     for (final r in racers) {
       r.update(dt, race, road);
     }
-    if (road.recovering) _checkRunnerHazards();
+    if (road.recovering) _world.checkRunnerHazards();
     _contacts.update(dt, race, road, racers, attack: attack);
     _trafficContacts.update(dt, race, road, flow, racers, police);
     _wrongSide.update(dt, race, road, flow);
@@ -185,19 +170,6 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     _ride?.update(dt);
   }
 
-  /// A runner can be struck by traffic while trying to reach the fallen bike.
-  void _checkRunnerHazards() {
-    for (final car in flow.cars) {
-      if (!car.active) continue;
-      final along = (car.distance - road.fullDistance).abs();
-      final across = (car.lateral - road.crash.runX).abs();
-      if (along < 140 && across < car.halfWidth + 0.12) {
-        road.crash.stumble();
-        break;
-      }
-    }
-  }
-
   /// True when the finish delay is over or every rival has settled.
   bool get _fieldHome =>
       _finishDelay < -3.6 || racers.every((r) => r.settled);
@@ -206,26 +178,6 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
   void updateMix(PlayerProfile profile) {
     mix = profile;
     _ride?.mix = profile;
-  }
-
-  /// True while the race is paused from the menu.
-  bool get menuPaused => _menuPaused;
-
-  /// Pauses the race and silences input and audio.
-  void pauseRace() {
-    if (_menuPaused) return;
-    _menuPaused = true;
-    clearInput();
-    pauseEngine();
-    _ride?.pause();
-  }
-
-  /// Resumes a race paused from the menu.
-  void resumeRace() {
-    if (!_menuPaused) return;
-    _menuPaused = false;
-    resumeEngine();
-    _ride?.resume();
   }
 
   @override
@@ -239,17 +191,6 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput {
     }
     readKeys(keysPressed);
     return KeyEventResult.handled;
-  }
-
-  @override
-  void lifecycleStateChange(AppLifecycleState state) {
-    super.lifecycleStateChange(state);
-    if (_menuPaused) return;
-    if (state == AppLifecycleState.resumed) {
-      _ride?.resume();
-    } else {
-      _ride?.pause();
-    }
   }
 
   /// Stops audio and releases the game's resources.

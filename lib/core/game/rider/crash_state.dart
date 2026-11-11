@@ -10,8 +10,9 @@ class CrashState {
   static const double mountDuration = 0.6;
   static const double returnDuration = 0.75;
   static const double standDuration = 0.55;
-  static const double roadsideBikeLateral = 1.25;
-  static const double roadsideRunnerLateral = 1.58;
+  static const double roadsideBikeLateral = 1.55;
+  static const double roadsideRunnerLateral = 3.0;
+  static const double standBesideBike = 0.55;
 
   double _remaining = 0;
   double _total = 0;
@@ -50,6 +51,16 @@ class CrashState {
   double get returnProgress =>
       (_returnTime / returnDuration).clamp(0.0, 1.0).toDouble();
   double get crashX => _crashX;
+
+  /// Where the camera sits while the rider is off the bike.
+  double get cameraX {
+    if (returning) return _bikeX * (1 - returnProgress);
+    if (mounting) return _runX + (_bikeX - _runX) * mountProgress;
+    if (running) return _runX;
+    final ease = standProgress * standProgress * (3 - 2 * standProgress);
+    return _crashX + (_runStartX - _crashX) * (standing ? ease : 1);
+  }
+
   double get fallProgress => down
       ? ((_total - _remaining) / fallTime).clamp(0.0, 1.0).toDouble()
       : 1.0;
@@ -136,10 +147,11 @@ class CrashState {
     _steerOffset = (_steerOffset + steer * dt * 0.2)
         .clamp(-0.15, 0.15)
         .toDouble();
-    _runX = _runStartX + (_bikeX - _runStartX) * eased + _steerOffset;
+    final target = _bikeX + _side * standBesideBike;
+    _runX = _runStartX + (target - _runStartX) * eased + _steerOffset;
     if (_runTime >= recoveryDuration) {
       _runTime = recoveryDuration;
-      _runX = _bikeX;
+      _runX = target;
       _mounting = true;
     }
     return false;

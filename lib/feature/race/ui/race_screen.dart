@@ -13,7 +13,6 @@ import '../../../common/widgets/retro/page/music_scope.dart';
 import '../../../core/audio/audio_catalog.dart';
 import '../../../core/audio/audio_service.dart';
 import '../../../core/di/injectable.dart';
-import '../../../core/game/hud/hud_strings.dart';
 import '../../../core/game/input/tilt/tilt_controller.dart';
 import '../../../core/game/road_game.dart';
 import '../../../core/router/route_names.dart';
@@ -23,7 +22,9 @@ import '../../../l10n/l10n_extension.dart';
 import '../../progress/cubit/progress_cubit.dart';
 import '../../settings/cubit/settings_cubit.dart';
 import '../cubit/race_cubit.dart';
+import 'hud_strings_l10n.dart';
 import 'level_briefing.dart';
+import 'widgets/attack_button.dart';
 import 'widgets/handlebar_pad.dart';
 import 'widgets/race_controls_menu.dart';
 import 'widgets/race_pause_overlay.dart';
@@ -68,20 +69,7 @@ class _RaceScreenState extends State<RaceScreen> {
       playerName: profile.displayName(l10n),
       onFinished: race.finish,
       onPauseKey: _togglePause,
-      strings: HudStrings(
-        go: l10n.hudGo,
-        finish: l10n.hudFinish,
-        holdGas: l10n.hudHoldGas,
-        gas: l10n.hudGasLabel,
-        speedUnit: l10n.hudSpeedUnit,
-        rpmUnit: l10n.hudRpmUnit,
-        lap: l10n.hudLap,
-        remaining: l10n.hudRemaining,
-        police: l10n.hudPolice,
-        pullOver: l10n.hudPullOver,
-        busted: l10n.hudBusted,
-        crashed: l10n.hudCrashed,
-      ),
+      strings: hudStringsFor(l10n),
     );
   }
 
@@ -180,30 +168,7 @@ class _RaceScreenState extends State<RaceScreen> {
             child: Stack(
               children: [
                 GameWidget(game: _game),
-                if (combat && showTouchUi)
-                  Positioned(
-                    right: 24,
-                    bottom: 112,
-                    child: GestureDetector(
-                      onTapDown: (_) => _game.setAttack(true),
-                      onTapUp: (_) => _game.setAttack(false),
-                      onTapCancel: () => _game.setAttack(false),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: const Color(0xCC8E241D),
-                          border: Border.all(color: Colors.white70, width: 2),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        child: const SizedBox(
-                          width: 72,
-                          height: 72,
-                          child: Center(
-                            child: Text('HIT', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                if (combat && showTouchUi) AttackButton(onHold: _game.setAttack),
                 Positioned.fill(
                   child: HandlebarPad(
                     key: ValueKey(_inputEpoch),

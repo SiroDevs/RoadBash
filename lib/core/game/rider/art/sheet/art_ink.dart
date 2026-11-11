@@ -1,0 +1,110 @@
+// Dart imports:
+import 'dart:ui';
+
+// Project imports:
+import '../../look/rider_look.dart';
+import 'art_shape.dart';
+import 'art_tone.dart';
+import 'rider_tones.dart';
+
+/// Fill and outline paints for one shape.
+class ShapeInk {
+  ShapeInk(Color color)
+    : fill = Paint()
+        ..isAntiAlias = true
+        ..color = color,
+      edge = Paint()
+        ..isAntiAlias = true
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 0.4
+        ..strokeJoin = StrokeJoin.round
+        ..color = ToneColors.edgeOf(color);
+
+  final Paint fill;
+  final Paint edge;
+}
+
+/// Turns tones into real colours for one rider look.
+class LookColors {
+  LookColors(this.look, {this.forBike = false});
+
+  final RiderLook look;
+  final bool forBike;
+
+  /// Colour of a tone for this look.
+  Color of(Tone tone) => ToneColors.shaded(_base(tone.role), tone.shade);
+
+  Color _base(ToneRole role) {
+    final bike = look.bike;
+    return switch (role) {
+      ToneRole.primary => forBike ? bike.panel : look.suit,
+      ToneRole.helmet => look.helmet,
+      ToneRole.trim || ToneRole.accent => forBike ? bike.accent : look.stripe,
+      ToneRole.light => forBike ? bike.accentEdge : look.stripeEdge,
+      ToneRole.dark => forBike ? bike.panelDark : look.backPatch,
+      ToneRole.graphicA => look.graphicA,
+      ToneRole.graphicB => look.graphicB,
+      ToneRole.knuckle => look.knuckle,
+      ToneRole.neck => look.neck,
+      ToneRole.glove => look.gloves,
+      ToneRole.boot => _lifted(look.boots),
+      ToneRole.visor => look.visor ?? ToneColors.visor,
+      ToneRole.black => ToneColors.black,
+      ToneRole.gray => ToneColors.gray,
+      ToneRole.metal => forBike ? bike.trim : ToneColors.metal,
+      ToneRole.pad => ToneColors.pad,
+      ToneRole.plate => ToneColors.plate,
+      ToneRole.lamp => bike.brakeLight,
+    };
+  }
+
+  Color _lifted(Color color) =>
+      color.computeLuminance() < 0.03 ? const Color(0xFF282930) : color;
+}
+
+/// An artwork part with its paints ready to draw.
+class InkedPart {
+  InkedPart(this.part, this.inks);
+
+  final ArtPart part;
+  final List<ShapeInk> inks;
+
+  /// Draws every shape of the part, fading it by [alpha].
+  void paint(Canvas canvas, {double alpha = 1}) {
+    if (alpha <= 0.01) return;
+    for (var index = 0; index < inks.length; index++) {
+      final ink = inks[index];
+      final path = part.shapes[index].path;
+      if (alpha >= 0.99) {
+        canvas.drawPath(path, ink.fill);
+        canvas.drawPath(path, ink.edge);
+        continue;
+      }
+      final fade = Paint()
+        ..isAntiAlias = true
+        ..color = ink.fill.color.withValues(alpha: alpha);
+      canvas.drawPath(path, fade);
+    }
+  }
+}
+
+/// A whole artwork sheet coloured for one look.
+class InkedSheet {
+  InkedSheet.rider(this.sheet, RiderLook look)
+    : parts = {
+        for (final part in sheet.parts.values)
+          part.id: InkedPart(part, [
+            for (final shape in part.shapes)
+              ShapeInk(LookColors(look).of(riderToneOf(part.kind, shape.name))),
+          ]),
+      };
+
+  final ArtSheet sheet;
+  final Map<String, InkedPart> parts;
+
+  /// Returns the coloured part with this id.
+  InkedPart part(String id) => parts[id]!;
+
+  /// Returns a joint position of the sheet.
+  Offset anchor(String name) => sheet.anchor(name);
+}

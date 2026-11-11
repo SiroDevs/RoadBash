@@ -15,27 +15,27 @@ class RightBoot2 {
   void _drawBoot2(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(75.0, 140.0)
-      ..lineTo(79.0, 143.0)
-      ..lineTo(81.0, 144.0)
-      ..lineTo(90.0, 146.0)
-      ..lineTo(95.0, 145.0)
-      ..lineTo(95.0, 142.0)
-      ..lineTo(93.0, 138.0)
+      ..moveTo(87.0, 163.0)
+      ..lineTo(91.0, 166.0)
+      ..lineTo(93.0, 167.0)
+      ..lineTo(102.0, 169.0)
+      ..lineTo(107.0, 168.0)
+      ..lineTo(107.0, 165.0)
+      ..lineTo(105.0, 161.0)
+      ..lineTo(103.0, 160.0)
+      ..lineTo(100.0, 156.0)
+      ..lineTo(100.0, 150.0)
+      ..lineTo(103.0, 145.0)
+      ..lineTo(104.0, 141.0)
+      ..lineTo(100.0, 137.0)
+      ..lineTo(95.0, 137.0)
       ..lineTo(91.0, 137.0)
-      ..lineTo(88.0, 133.0)
-      ..lineTo(88.0, 127.0)
-      ..lineTo(91.0, 122.0)
-      ..lineTo(92.0, 118.0)
-      ..lineTo(88.0, 114.0)
-      ..lineTo(83.0, 114.0)
-      ..lineTo(79.0, 114.0)
-      ..lineTo(78.0, 116.0)
-      ..lineTo(78.0, 123.0)
-      ..lineTo(78.0, 126.0)
-      ..lineTo(76.0, 128.0)
-      ..lineTo(76.0, 130.0)
-      ..lineTo(75.0, 134.0)
+      ..lineTo(90.0, 139.0)
+      ..lineTo(90.0, 146.0)
+      ..lineTo(90.0, 149.0)
+      ..lineTo(88.0, 151.0)
+      ..lineTo(88.0, 153.0)
+      ..lineTo(87.0, 157.0)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -48,11 +48,11 @@ class RightBoot2 {
   void _drawFrontBlack2(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(89.0, 125.0)
-      ..lineTo(90.0, 117.0)
-      ..lineTo(91.0, 118.0)
-      ..lineTo(92.0, 120.0)
-      ..lineTo(88.0, 126.0)
+      ..moveTo(101.0, 148.0)
+      ..lineTo(102.0, 140.0)
+      ..lineTo(103.0, 141.0)
+      ..lineTo(104.0, 143.0)
+      ..lineTo(100.0, 149.0)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -65,11 +65,11 @@ class RightBoot2 {
   void _drawSideBlack(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(89.0, 136.0)
-      ..lineTo(85.0, 130.0)
-      ..lineTo(87.0, 125.0)
-      ..lineTo(88.0, 128.0)
-      ..lineTo(89.0, 134.0)
+      ..moveTo(101.0, 159.0)
+      ..lineTo(97.0, 153.0)
+      ..lineTo(99.0, 148.0)
+      ..lineTo(100.0, 151.0)
+      ..lineTo(101.0, 157.0)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -82,21 +82,21 @@ class RightBoot2 {
   void _drawSole2(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(75.0, 139.0)
-      ..lineTo(75.0, 135.0)
-      ..lineTo(76.0, 131.0)
-      ..lineTo(79.0, 130.0)
-      ..lineTo(83.0, 130.0)
-      ..lineTo(86.0, 134.0)
-      ..lineTo(87.0, 140.0)
-      ..lineTo(90.0, 142.0)
-      ..lineTo(92.0, 143.0)
-      ..lineTo(95.0, 142.0)
-      ..lineTo(95.0, 145.0)
-      ..lineTo(89.0, 146.0)
-      ..lineTo(81.0, 145.0)
-      ..lineTo(80.0, 143.0)
-      ..lineTo(77.0, 142.0)
+      ..moveTo(87.0, 162.0)
+      ..lineTo(87.0, 158.0)
+      ..lineTo(88.0, 154.0)
+      ..lineTo(91.0, 153.0)
+      ..lineTo(95.0, 153.0)
+      ..lineTo(98.0, 157.0)
+      ..lineTo(99.0, 163.0)
+      ..lineTo(102.0, 165.0)
+      ..lineTo(104.0, 166.0)
+      ..lineTo(107.0, 165.0)
+      ..lineTo(107.0, 168.0)
+      ..lineTo(101.0, 169.0)
+      ..lineTo(93.0, 168.0)
+      ..lineTo(92.0, 166.0)
+      ..lineTo(89.0, 165.0)
       ..close();
     _paint
       ..style = PaintingStyle.stroke

@@ -1,26 +1,36 @@
 // Dart imports:
-import 'dart:math' as math;
 import 'dart:ui';
 
 // Project imports:
-import 'art/user_bike_art_painter.dart';
-import 'art/user_rider_art_painter.dart';
+import 'art/sheet/bike_figure.dart';
+import 'look/rider_look.dart';
 import 'rider_pose.dart';
-import 'view/part_painter.dart';
+import 'rig/rider_on_foot.dart';
+import 'rig/seated_rider.dart';
 
-/// Paints the fall, roadside run, mount and return using the supplied parts.
-class RecoveryPainter extends RiderPartPainter {
-  RecoveryPainter(super.look)
-    : _bikeArt = UserBikeArtPainter(look),
-      _riderArt = UserRiderArtPainter(look);
+/// Paints the fall, roadside run, mount and return as separate objects.
+class RecoveryPainter {
+  RecoveryPainter(RiderLook look)
+    : _bike = BikeFigure(look),
+      _seated = SeatedRiderFigure(look),
+      _onFoot = RiderOnFoot(look);
 
-  static const Rect _fadeBounds = Rect.fromLTWH(-1600, -200, 3200, 420);
+  static const double groundY = 166;
+  static const double midX = 60;
+  static const double figureScale = 0.6;
+  static const double strideLength = 45;
+  static const double minCycleRate = 0.15;
 
-  final UserBikeArtPainter _bikeArt;
-  final UserRiderArtPainter _riderArt;
+  final BikeFigure _bike;
+  final SeatedRiderFigure _seated;
+  final RiderOnFoot _onFoot;
   final RiderPose _pose = RiderPose();
+  double _cycle = 0;
+  double _lastRun = 0;
+  double _lastTime = 0;
+  final Paint _shadow = Paint()..color = const Color(0x44000000);
 
-  /// Paints the bike and rider at separate road positions during recovery.
+  /// Paints the bike and rider at their own road positions during recovery.
   void paint(
     Canvas canvas, {
     required bool running,
@@ -39,174 +49,145 @@ class RecoveryPainter extends RiderPartPainter {
     required double currentLateral,
     required double lateralScale,
   }) {
-    final bikePosition = returning
-        ? _mix(bikeLateral, 0, returnProgress)
-        : (running || mounting
-              ? bikeLateral
-              : _mix(crashLateral, bikeLateral, fallProgress));
-    final bikeTilt = returning
-        ? 0.0
-        : mounting
+    _advanceStride(running, runLateral, lateralScale, time);
+    double screenX(double lateral) =>
+        midX + (lateral - currentLateral) * lateralScale;
+    final recovering = running || standing || mounting || returning;
+    if (returning) {
+      _paintReturn(canvas, fallSide, returnProgress);
+      return;
+    }
+    final bikePosition = recovering
+        ? bikeLateral
+        : crashLateral + (bikeLateral - crashLateral) * fallProgress;
+    final bikeTilt = mounting
         ? 1 - mountProgress
-        : fallProgress;
-    _drawBike(
-      canvas,
-      _canvasX(bikePosition, currentLateral, lateralScale),
-      fallSide,
-      bikeTilt,
-    );
-
-    if (standing) {
-      final riderX = _canvasX(runLateral, currentLateral, lateralScale);
-      _drawFaded(canvas, 1 - standProgress, () {
-        _drawFallen(canvas, riderX, fallSide, 1);
-      });
-      _drawFaded(canvas, standProgress, () {
-        _drawStanding(canvas, riderX, fallSide);
-      });
-    } else if (running) {
-      _drawRunner(
-        canvas,
-        _canvasX(runLateral, currentLateral, lateralScale),
-        fallSide,
-        time,
-      );
-    } else if (mounting) {
-      final riderX = _canvasX(
-        _mix(runLateral, bikeLateral, mountProgress),
-        currentLateral,
-        lateralScale,
-      );
-      _drawFaded(canvas, 1 - mountProgress, () {
-        _drawRunner(canvas, riderX, fallSide, time);
-      });
-      _drawFaded(canvas, mountProgress, () {
-        _drawMounted(canvas, riderX, fallSide);
-      });
-    } else if (returning) {
-      final position = _mix(bikeLateral, 0, returnProgress);
-      _drawMounted(
-        canvas,
-        _canvasX(position, currentLateral, lateralScale),
-        fallSide,
-      );
+        : (recovering ? 1.0 : fallProgress);
+    _paintBike(canvas, screenX(bikePosition), fallSide, bikeTilt);
+    final riderLateral = recovering
+        ? runLateral
+        : crashLateral + (runLateral - crashLateral) * fallProgress;
+    if (mounting) {
+      final lateral = runLateral + (bikeLateral - runLateral) * mountProgress;
+      _paintMounting(canvas, screenX(lateral), fallSide, mountProgress);
     } else {
-      final landed = _mix(crashLateral, runLateral, fallProgress);
-      final riderX = _canvasX(landed, currentLateral, lateralScale);
-      if (fallProgress < 0.55) {
-        _drawMounted(canvas, riderX, fallSide);
-      } else {
-        final throwProgress = ((fallProgress - 0.35) / 0.65)
-            .clamp(0.0, 1.0)
-            .toDouble();
-        _drawFaded(canvas, 1 - throwProgress, () {
-          _drawMounted(canvas, riderX, fallSide);
-        });
-        _drawFaded(canvas, throwProgress, () {
-          _drawFallen(canvas, riderX, fallSide, throwProgress);
-        });
-      }
+      _paintOnFoot(
+        canvas,
+        screenX(riderLateral),
+        fallSide,
+        running: running,
+        standing: standing,
+        standProgress: standProgress,
+        fallProgress: fallProgress,
+        time: time,
+      );
     }
   }
 
-  void _drawBike(Canvas canvas, double x, double side, double tilt) {
-    oval(
-      canvas,
-      Rect.fromCenter(
-        center: Offset(x, RiderPartPainter.groundY - 1),
-        width: 72,
-        height: 9,
-      ),
-      const Color(0x55000000),
-    );
+  /// Moves the stride on by the ground the runner covered, so feet do not slide.
+  void _advanceStride(
+    bool running,
+    double runLateral,
+    double scale,
+    double time,
+  ) {
+    final elapsed = (time - _lastTime).clamp(0.0, 0.1).toDouble();
+    if (running) {
+      final travel = (runLateral - _lastRun).abs() * scale / figureScale;
+      _cycle += travel / strideLength + minCycleRate * elapsed;
+    }
+    _lastRun = runLateral;
+    _lastTime = time;
+  }
+
+  void _paintBike(Canvas canvas, double x, double side, double tilt) {
+    _paintShadow(canvas, x, 72);
     canvas
       ..save()
-      ..translate(x, RiderPartPainter.groundY - 2)
+      ..translate(x, groundY - 2)
       ..rotate(side * 1.3 * tilt)
-      ..scale(0.46)
-      ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY);
-    _bikeArt.paint(canvas, side * 0.7);
+      ..scale(figureScale)
+      ..translate(-midX, -groundY);
+    _bike.paint(canvas, side * 0.7 * tilt);
     canvas.restore();
   }
 
-  void _drawRunner(Canvas canvas, double x, double side, double time) {
-    final bounce = math.sin(time * 13).abs() * 1.5;
-    oval(
-      canvas,
-      Rect.fromCenter(
-        center: Offset(x, RiderPartPainter.groundY - 1),
-        width: 22,
-        height: 5,
-      ),
-      const Color(0x44000000),
-    );
+  void _paintOnFoot(
+    Canvas canvas,
+    double x,
+    double side, {
+    required bool running,
+    required bool standing,
+    required double standProgress,
+    required double fallProgress,
+    required double time,
+  }) {
+    _paintShadow(canvas, x, 30);
+    final towardBike = -side;
+    final facing = (running ? towardBike : side) >= 0 ? 1.0 : -1.0;
     canvas
       ..save()
-      ..translate(x, RiderPartPainter.groundY - bounce)
-      ..scale(side > 0 ? -0.58 : 0.58, 0.58)
-      ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY);
-    _riderArt.paintRunning(canvas, time * 9);
+      ..translate(x, groundY - 2)
+      ..scale(figureScale * facing, figureScale)
+      ..translate(-midX, -groundY);
+    if (running) {
+      _onFoot.paintRunning(canvas, _cycle);
+    } else if (standing) {
+      _onFoot.paintGettingUp(canvas, standProgress);
+    } else if (fallProgress < 0.12) {
+      _paintSeatedAt(canvas);
+    } else {
+      _onFoot.paintThrown(canvas, fallProgress);
+    }
     canvas.restore();
   }
 
-  void _drawStanding(Canvas canvas, double x, double side) {
+  void _paintMounting(Canvas canvas, double x, double side, double progress) {
+    _paintShadow(canvas, x, 30);
     canvas
       ..save()
-      ..translate(x, RiderPartPainter.groundY)
-      ..scale(side > 0 ? -0.58 : 0.58, 0.58)
-      ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY);
-    _riderArt.paintSideStanding(canvas);
+      ..translate(x, groundY - 2)
+      ..scale(figureScale * (-side >= 0 ? 1 : -1), figureScale)
+      ..translate(-midX, -groundY);
+    final seated = _onFoot.paintMounting(canvas, progress);
+    canvas.restore();
+    if (!seated) return;
+    canvas
+      ..save()
+      ..translate(x, groundY - 2)
+      ..scale(figureScale)
+      ..translate(-midX, -groundY);
+    _paintSeatedAt(canvas);
     canvas.restore();
   }
 
-  void _drawMounted(Canvas canvas, double x, double side) {
+  void _paintReturn(Canvas canvas, double side, double progress) {
+    final yaw = -side * 0.65 * (1 - progress);
+    _paintShadow(canvas, midX, 72);
     canvas
       ..save()
-      ..translate(x, RiderPartPainter.groundY - 2)
-      ..scale(0.62)
-      ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY);
+      ..translate(midX, groundY - 2)
+      ..scale(figureScale)
+      ..translate(-midX, -groundY);
+    _bike.paint(canvas, yaw);
     _pose
-      ..perspective = side * 0.65
+      ..perspective = yaw
       ..foot = 0;
-    _riderArt.paintRacing(canvas, _pose);
+    _seated.paint(canvas, _pose);
     canvas.restore();
   }
 
-  void _drawFallen(Canvas canvas, double x, double side, double progress) {
-    final lift = math.sin(progress * math.pi) * 10;
-    oval(
-      canvas,
-      Rect.fromCenter(
-        center: Offset(x, RiderPartPainter.groundY - 1),
-        width: 46,
-        height: 7,
-      ),
-      const Color(0x44000000),
+  void _paintSeatedAt(Canvas canvas) {
+    _pose
+      ..perspective = 0
+      ..foot = 0;
+    _seated.paint(canvas, _pose);
+  }
+
+  void _paintShadow(Canvas canvas, double x, double width) {
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(x, groundY - 1), width: width, height: 7),
+      _shadow,
     );
-    canvas
-      ..save()
-      ..translate(x, RiderPartPainter.groundY - 3 - lift)
-      ..rotate(side * math.pi / 2 * progress)
-      ..scale(0.45)
-      ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY);
-    _pose.perspective = 0;
-    _riderArt.paintRacing(canvas, _pose);
-    canvas.restore();
   }
-
-  void _drawFaded(Canvas canvas, double opacity, void Function() paint) {
-    if (opacity <= 0) return;
-    canvas.saveLayer(
-      _fadeBounds,
-      Paint()..color = Color.fromARGB((opacity * 255).round(), 255, 255, 255),
-    );
-    paint();
-    canvas.restore();
-  }
-
-  double _canvasX(double lateral, double current, double scale) =>
-      RiderPartPainter.midX + (lateral - current) * scale;
-
-  double _mix(double start, double end, double amount) =>
-      start + (end - start) * amount.clamp(0.0, 1.0).toDouble();
 }

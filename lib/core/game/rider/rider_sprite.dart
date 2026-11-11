@@ -2,12 +2,13 @@
 import 'package:flutter/rendering.dart';
 
 // Project imports:
-import 'art/user_bike_art_painter.dart';
-import 'art/user_rider_art_painter.dart';
+import 'art/sheet/bike_figure.dart';
 import 'look/rider_look.dart';
-import 'rider_painter.dart';
+import 'rider_frame.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
+import 'rig/front_rider.dart';
+import 'rig/seated_rider.dart';
 import 'view/rider_view.dart';
 
 /// Rider and bike that can be drawn anywhere, such as a rival.
@@ -16,40 +17,35 @@ class RiderSprite {
     this.look = RiderLook.main,
     RiderRig? rig,
     this.view = RiderView.rear,
-    this.useSuppliedArt = false,
-  }) : rig = rig ?? RiderRig() {
-    painter = RiderPainter(this.rig, look: look, view: view);
-  }
+  }) : rig = rig ?? RiderRig();
 
   final RiderLook look;
   final RiderView view;
   final RiderRig rig;
-  final bool useSuppliedArt;
   final RiderPose pose = RiderPose();
-  late final UserRiderArtPainter _userRider = UserRiderArtPainter(look);
-  late final UserBikeArtPainter _userBike = UserBikeArtPainter(look);
-  late final RiderPainter painter;
+  late final BikeFigure _bike = BikeFigure(look);
+  late final SeatedRiderFigure _seated = SeatedRiderFigure(look);
+  late final FrontRiderFigure _front = FrontRiderFigure(look);
 
-  static const double width = RiderPainter.width;
-  static const double height = RiderPainter.height;
+  static const double bikeTurnShare = 1.0;
+  static const double width = RiderFrame.width;
+  static const double height = RiderFrame.height;
 
   /// Paints the selected artwork in the current pose.
   void paint(Canvas canvas) {
-    if (!useSuppliedArt) {
-      painter.paint(canvas, pose);
-      return;
-    }
     canvas
       ..save()
-      ..translate(RiderPartPainter.midX + pose.shake, RiderPartPainter.groundY)
+      ..translate(RiderFrame.midX + pose.shake, RiderFrame.groundY)
       ..rotate(pose.lean + pose.tumble)
-      ..translate(-RiderPartPainter.midX, -RiderPartPainter.groundY + pose.bob);
-    _userBike.paint(canvas, pose.perspective, steer: pose.steer);
+      ..translate(-RiderFrame.midX, -RiderFrame.groundY + pose.bob);
+    final bikeYaw = pose.perspective * bikeTurnShare;
+    _bike.paint(canvas, bikeYaw, steer: pose.steer, layer: BikeLayer.behind);
     if (view == RiderView.front) {
-      _userRider.paintFrontFacing(canvas);
+      _front.paint(canvas);
     } else {
-      _userRider.paintRacing(canvas, pose);
+      _seated.paint(canvas, pose);
     }
+    _bike.paint(canvas, bikeYaw, steer: pose.steer, layer: BikeLayer.over);
     canvas.restore();
   }
 

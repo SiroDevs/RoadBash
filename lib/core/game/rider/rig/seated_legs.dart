@@ -18,12 +18,8 @@ class SeatedLegs {
   /// Paints both legs; the leg on [plantedSide] is put down by [amount].
   void paintLegs(Canvas canvas, String plantedSide, double amount) {
     for (final side in _sides) {
-      _sheet.part('leg${side}Thigh').paint(canvas);
-      if (side == plantedSide && amount > 0.01) {
-        _planted[side]!.paintShin(canvas, amount);
-      } else {
-        _sheet.part('leg${side}Shin').paint(canvas);
-      }
+      final plantedAmount = side == plantedSide ? amount : 0.0;
+      _planted[side]!.paint(canvas, plantedAmount);
     }
   }
 

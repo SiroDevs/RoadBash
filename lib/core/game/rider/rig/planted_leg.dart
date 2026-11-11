@@ -5,35 +5,37 @@ import 'dart:ui';
 
 // Project imports:
 import '../art/sheet/art_ink.dart';
+import 'rider_leg.dart';
 
-/// A leg put down on the ground: the thigh stays as seated, the shin turns about
-/// the knee to a set knee angle and stretches until the boot touches the ground.
+/// A leg placed on the ground, with its knee bent to reach the road.
 class PlantedLeg {
   PlantedLeg(InkedSheet sheet, String side)
-    : _shin = sheet.part('leg${side}Shin'),
-      _knee = sheet.anchor('leg$side.knee') {
-    final hip = sheet.anchor('leg$side.hip');
-    final ankle = sheet.anchor('leg$side.ankle');
-    final shinLength = (ankle - _knee).distance;
-    final seatedAngle = math.atan2(ankle.dy - _knee.dy, ankle.dx - _knee.dx);
+    : _leg = RiderLeg(sheet, 'leg$side'),
+      _boot = sheet.part('boot$side') {
+    final shinLength = (_leg.ankle - _leg.knee).distance;
+    final seatedAngle = math.atan2(
+      _leg.ankle.dy - _leg.knee.dy,
+      _leg.ankle.dx - _leg.knee.dx,
+    );
     _axis = Offset(math.cos(seatedAngle), math.sin(seatedAngle));
-    final raw = _plantedAngle(hip) - seatedAngle;
+    final raw = _plantedAngle() - seatedAngle;
     _turn = math.atan2(math.sin(raw), math.cos(raw));
-    final bootBottom = _bottomOf(sheet.part('boot$side'));
+    final bootBottom = _bottomOf(_boot);
     final drop = groundY - bootBottom;
     final plantedAngle = seatedAngle + _turn;
-    final reach = (ankle.dy + drop - _knee.dy) / math.sin(plantedAngle);
+    final reach =
+        (_leg.ankle.dy + drop - _leg.knee.dy) / math.sin(plantedAngle);
     _stretch = reach / shinLength;
-    final planted = _knee + Offset.fromDirection(plantedAngle, reach);
-    _bootShift = planted - ankle;
+    final planted = _leg.knee + Offset.fromDirection(plantedAngle, reach);
+    _bootShift = planted - _leg.ankle;
   }
 
-  static const double kneeAngle = 140 * math.pi / 180;
-  static const double groundY = 158;
+  static const double kneeAngle = 150 * math.pi / 180;
+  static const double groundY = 120;
   static const double jointRadius = 5.5;
 
-  final InkedPart _shin;
-  final Offset _knee;
+  final RiderLeg _leg;
+  final InkedPart _boot;
   late final Offset _axis;
   late final double _turn;
   late final double _stretch;
@@ -42,8 +44,19 @@ class PlantedLeg {
   /// How far the boot moves from its seated place at full [amount].
   Offset bootShift(double amount) => _bootShift * amount;
 
-  /// Paints the shin turned and stretched by [amount] from 0 to 1.
-  void paintShin(Canvas canvas, double amount) {
+  /// Paints the complete leg as its foot moves down to the ground.
+  void paint(Canvas canvas, double amount) {
+    _leg.paintWithLowerLeg(canvas, (canvas, lowerLeg) {
+      if (amount <= 0.01) {
+        lowerLeg.paint(canvas);
+      } else {
+        _paintPlantedLowerLeg(canvas, lowerLeg, amount);
+      }
+    });
+  }
+
+  /// Turns and stretches the lower leg as its foot reaches the road.
+  void _paintPlantedLowerLeg(Canvas canvas, InkedPart lowerLeg, double amount) {
     final stretch = (_stretch - 1) * amount;
     final turn = _turn * amount;
     final xx = 1 + stretch * _axis.dx * _axis.dx;
@@ -65,34 +78,30 @@ class PlantedLeg {
       0,
       1,
       0,
-      _knee.dx - (m00 * _knee.dx + m01 * _knee.dy),
-      _knee.dy - (m10 * _knee.dx + m11 * _knee.dy),
+      _leg.knee.dx - (m00 * _leg.knee.dx + m01 * _leg.knee.dy),
+      _leg.knee.dy - (m10 * _leg.knee.dx + m11 * _leg.knee.dy),
       0,
       1,
     ]);
-    canvas.drawCircle(_knee, jointRadius, _legFill);
+    _leg.paintKnee(canvas, jointRadius);
     canvas
       ..save()
       ..transform(matrix);
-    _shin.paint(canvas);
+    lowerLeg.paint(canvas);
     canvas.restore();
   }
 
-  /// Fill of the leg itself, not of its pads.
-  Paint get _legFill {
-    final index = _shin.part.shapes.indexWhere(
-      (shape) => shape.name.endsWith('Leg'),
+  /// Direction of the lower leg that gives the knee angle, pointing down.
+  double _plantedAngle() {
+    final up = math.atan2(
+      _leg.hip.dy - _leg.knee.dy,
+      _leg.hip.dx - _leg.knee.dx,
     );
-    return _shin.inks[index < 0 ? 0 : index].fill;
-  }
-
-  /// Direction of the shin that gives the knee angle, pointing downward.
-  double _plantedAngle(Offset hip) {
-    final up = math.atan2(hip.dy - _knee.dy, hip.dx - _knee.dx);
     final first = up + kneeAngle, second = up - kneeAngle;
     return math.sin(first) >= math.sin(second) ? first : second;
   }
 
+  /// Lowest point of the boot artwork.
   static double _bottomOf(InkedPart boot) {
     var bottom = -double.infinity;
     for (final shape in boot.part.shapes) {

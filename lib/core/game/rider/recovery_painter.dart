@@ -18,11 +18,16 @@ class RecoveryPainter {
   static const double groundY = 166;
   static const double midX = 60;
   static const double figureScale = 0.6;
+  static const double strideLength = 45;
+  static const double minCycleRate = 0.15;
 
   final BikeFigure _bike;
   final SeatedRiderFigure _seated;
   final RiderOnFoot _onFoot;
   final RiderPose _pose = RiderPose();
+  double _cycle = 0;
+  double _lastRun = 0;
+  double _lastTime = 0;
   final Paint _shadow = Paint()..color = const Color(0x44000000);
 
   /// Paints the bike and rider at their own road positions during recovery.
@@ -44,6 +49,7 @@ class RecoveryPainter {
     required double currentLateral,
     required double lateralScale,
   }) {
+    _advanceStride(running, runLateral, lateralScale, time);
     double screenX(double lateral) =>
         midX + (lateral - currentLateral) * lateralScale;
     final recovering = running || standing || mounting || returning;
@@ -78,6 +84,22 @@ class RecoveryPainter {
     }
   }
 
+  /// Moves the stride on by the ground the runner covered, so feet do not slide.
+  void _advanceStride(
+    bool running,
+    double runLateral,
+    double scale,
+    double time,
+  ) {
+    final elapsed = (time - _lastTime).clamp(0.0, 0.1).toDouble();
+    if (running) {
+      final travel = (runLateral - _lastRun).abs() * scale / figureScale;
+      _cycle += travel / strideLength + minCycleRate * elapsed;
+    }
+    _lastRun = runLateral;
+    _lastTime = time;
+  }
+
   void _paintBike(Canvas canvas, double x, double side, double tilt) {
     _paintShadow(canvas, x, 72);
     canvas
@@ -109,7 +131,7 @@ class RecoveryPainter {
       ..scale(figureScale * facing, figureScale)
       ..translate(-midX, -groundY);
     if (running) {
-      _onFoot.paintRunning(canvas, time * 2.2);
+      _onFoot.paintRunning(canvas, _cycle);
     } else if (standing) {
       _onFoot.paintGettingUp(canvas, standProgress);
     } else if (fallProgress < 0.12) {

@@ -44,6 +44,9 @@ class _BikeRow {
   bool get isPair => mode == 'P';
 }
 
+/// Which parts of the bike to draw: those behind the rider, over him, or all.
+enum BikeLayer { behind, over, all }
+
 /// The motorcycle drawn from its parts, turning smoothly with the rider's yaw.
 class BikeFigure {
   BikeFigure(RiderLook look)
@@ -58,7 +61,7 @@ class BikeFigure {
   }
 
   static const double maxYaw = 0.7;
-  static const Offset steerPivot = Offset(60, 55);
+  static const Offset steerPivot = Offset(61, 58);
 
   final List<_BikeRow> _straight;
   final List<_BikeRow> _left;
@@ -67,13 +70,22 @@ class BikeFigure {
   final Path _scratch = Path();
 
   /// Paints the bike turned by [yaw] (negative left, positive right).
-  void paint(Canvas canvas, double yaw, {double steer = 0}) {
+  void paint(
+    Canvas canvas,
+    double yaw, {
+    double steer = 0,
+    BikeLayer layer = BikeLayer.all,
+  }) {
     final turn = (yaw.abs() / maxYaw).clamp(0.0, 1.0).toDouble();
+    final blend = PartMotion.smooth(0.2, 0.9, turn);
     final rows = turn < 0.01 ? _straight : (yaw < 0 ? _left : _right);
     for (final row in rows) {
+      final over = row.group == 'over';
+      if (layer == BikeLayer.behind && over) continue;
+      if (layer == BikeLayer.over && !over) continue;
       final fade = switch (row.mode) {
-        'A' => 1 - turn,
-        'B' => turn,
+        'A' => 1 - blend,
+        'B' => blend,
         _ => 1.0,
       };
       if (fade < 0.04) continue;

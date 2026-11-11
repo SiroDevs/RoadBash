@@ -96,7 +96,7 @@ abstract final class SceneSnapshot {
 
   /// Places a few rivals ahead of the rider.
   static List<PreviewBike> _rivals(double at, int lanes) {
-    const looks = [RiderLooks.mike, RiderLooks.sam, RiderLooks.brayo];
+    const looks = [RiderLooks.yellow, RiderLooks.blue, RiderLooks.green];
     const gaps = [2600.0, 4400.0, 7200.0];
     const sides = [-0.45, 0.4, -0.1];
     return [
@@ -119,10 +119,10 @@ abstract final class SceneSnapshot {
     Color tone,
   ) {
     final lane = DashboardLayout.lanePx(size, road.theme.lanes);
-    final riderHeight = RiderRig.heightFor(lane, size.y);
+    final riderHeight = RiderRig.heightFor(lane, size.x, size.y);
     final ground = Offset(size.x / 2, DashboardLayout.riderTyresGround(size));
     final curve = road.track.at(road.trkPosition + road.playerZ).curve;
-    final sprite = RiderSprite(look: RiderLook.main, useSuppliedArt: true);
+    final sprite = RiderSprite(look: RiderLook.main);
     sprite.pose
       ..speed = _riderSpeed
       ..lean = (curve * 0.04 * _riderSpeed).clamp(-0.3, 0.3).toDouble()

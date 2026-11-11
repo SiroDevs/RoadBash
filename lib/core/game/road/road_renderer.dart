@@ -20,7 +20,9 @@ import 'road_props.dart';
 import 'scene_theme.dart';
 import 'tarmac/road_segment_painter.dart';
 import 'track/road_track.dart';
+import 'road_decor_layer.dart';
 import 'traffic/road_traffic.dart';
+import 'vision_buffer.dart';
 
 /// Draws the road, scenery and traffic of a scene and runs the rider physics.
 class RoadRenderer extends PositionComponent with RoadDynamics {
@@ -56,14 +58,13 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
 
   double _spread = 1;
 
-  final List<VisionSeg> _vis = List.generate(
-    RoadConfig.drawDistance,
-    (_) => VisionSeg(),
+  final VisionBuffer _view = VisionBuffer(RoadConfig.drawDistance);
+  late final RoadDecorLayer _decorLayer = RoadDecorLayer(
+    track,
+    props,
+    finish,
+    _decor,
   );
-  final List<VisionSeg?> _byN = List.filled(RoadConfig.drawDistance, null);
-  int _visCount = 0;
-  int _firstN = 0;
-  int _lastN = 0;
   final _p1 = ProjectionPoint();
   final _p2 = ProjectionPoint();
 
@@ -129,10 +130,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
     var curveOffset = 0.0;
     var dx = -(base.curve * basePercent);
     var maxY = size.y;
-    _visCount = 0;
-    _firstN = -1;
-    _lastN = -1;
-    _byN.fillRange(0, _byN.length, null);
+    _view.reset();
 
     for (var n = 0; n < RoadConfig.drawDistance; n++) {
       final seg = track.segments[(baseIdx + n) % track.count];
@@ -170,10 +168,7 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
       }
       if (_p2.y >= _p1.y || _p2.y >= maxY) continue;
 
-      final vision = _vis[_visCount++]..fill(seg, n, _p1, _p2, maxY);
-      _byN[n] = vision;
-      if (_firstN < 0) _firstN = n;
-      _lastN = n;
+      final vision = _view.add(n)..fill(seg, n, _p1, _p2, maxY);
       _roads.draw(canvas, vision, size.x);
       if (finish.on) {
         final row = finish.padRow(seg.index);
@@ -184,52 +179,11 @@ class RoadRenderer extends PositionComponent with RoadDynamics {
       if (vision.fog >= 1) break;
     }
 
-    if (_visCount > 0) {
+    if (_view.count > 0) {
       traffic?.prepare(trkPosition, fullDistance, playerZ, props, baseIdx);
-      traffic?.locateBehind(_visionAt, size);
-      _decor.drawCliffs(canvas, _vis, _visCount, size);
-      _drawDecor(canvas, baseIdx);
+      traffic?.locateBehind(_view.at, size);
+      _decor.drawCliffs(canvas, _view.segments, _view.count, size);
+      _decorLayer.draw(canvas, _view, baseIdx, size, traffic);
     }
-  }
-
-  /// Draws the scenery and rivals from the far end back to the near end.
-  void _drawDecor(Canvas canvas, int baseIdx) {
-    final near = _byN[_firstN]!;
-    final limit = math.min(RoadConfig.decorDistance, _lastN + 1);
-
-    for (var n = limit - 1; n >= -RoadConfig.maxPropDepth; n--) {
-      final anchor = n < _firstN ? near : _byN[n];
-      if (anchor != null) _drawProps(canvas, baseIdx, n, anchor);
-      traffic?.paintAt(canvas, n, _visionAt, size);
-    }
-  }
-
-  /// Draws the props anchored on [row] using the segment [anchor].
-  void _drawProps(Canvas canvas, int baseIdx, int row, VisionSeg anchor) {
-    final list = props.at((baseIdx + row + track.count * 2) % track.count);
-    for (final prop in list) {
-      if (!finish.shows(prop)) continue;
-      if (prop.depth == 0) {
-        _decor.drawBillboard(canvas, anchor, prop, size);
-        continue;
-      }
-      final backN = math.min(row + prop.depth, _lastN);
-      if (backN <= _firstN) continue;
-      final back = _byN[backN] ?? _findBack(backN);
-      if (back == null || back == anchor) continue;
-      _decor.drawBox(canvas, anchor, back, prop, size);
-    }
-  }
-
-  /// Returns the drawn segment of a row, or the nearest one before the road.
-  VisionSeg? _visionAt(int row) => row < _firstN ? _byN[_firstN] : _byN[row];
-
-  /// Returns the nearest visible segment at or before an index.
-  VisionSeg? _findBack(int index) {
-    for (var i = index; i >= _firstN; i--) {
-      final vision = _byN[i];
-      if (vision != null) return vision;
-    }
-    return null;
   }
 }

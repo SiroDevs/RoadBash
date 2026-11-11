@@ -2,7 +2,7 @@
 import 'dart:math' as math;
 
 // Project imports:
-import '../../rider/rider_painter.dart';
+import '../../rider/rider_frame.dart';
 import '../../rider/rider_pose.dart';
 import '../../road/config/vehicle_config.dart';
 
@@ -41,7 +41,7 @@ class RivalPoseDriver {
         (pose.steer * 0.30 + curve * 0.040) * (0.3 + 0.7 * speedRatio) -
         0.12 * pose.foot;
     final lean = bank
-        .clamp(-RiderPainter.maxLean, RiderPainter.maxLean)
+        .clamp(-RiderFrame.maxLean, RiderFrame.maxLean)
         .toDouble();
     pose.lean += (lean - pose.lean) * math.min(1.0, dt * 6);
     final pitch = braking ? -1.0 : 0.5;

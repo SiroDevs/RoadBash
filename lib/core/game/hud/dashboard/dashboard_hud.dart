@@ -14,8 +14,10 @@ import '../../road/config/vehicle_config.dart';
 import '../../road/road_renderer.dart';
 import '../../utils/canvas_text.dart';
 import '../../utils/paint_utils.dart';
+import '../hud_colors.dart';
 import '../hud_strings.dart';
 import '../police_warning_hud.dart';
+import '../race_banner.dart';
 import 'dashboard_face.dart';
 import 'dashboard_layout.dart';
 
@@ -37,14 +39,10 @@ class DashboardHud extends PositionComponent {
   /// Hint lines shown before the countdown; the first is the level's title.
   final List<String> briefing;
   final PoliceWarningHud _policeWarning = PoliceWarningHud();
+  late final RaceBanner _banner = RaceBanner(road, race, strings, briefing);
 
   DashboardLayout? _layout;
   Picture? _face;
-
-  static const _white = Color(0xFFFFFFFF);
-  static const _green = Color(0xFF35D06B);
-  static const _red = Color(0xFFE5483A);
-  static const _gold = Color(0xFFFFC857);
 
   final Paint _needle = fillPaint(const Color(0xFFC0301F))
     ..strokeCap = StrokeCap.round;
@@ -79,7 +77,7 @@ class DashboardHud extends PositionComponent {
     _needleAt(canvas, layout.rpmOffset, layout.rpmRadius, road.rpm);
     _progress(canvas, layout);
     _readouts(canvas, layout);
-    _banner(canvas);
+    _banner.paint(canvas, Size(size.x, size.y));
     _policeWarning.paint(canvas, size, police, race, strings);
   }
 
@@ -141,7 +139,7 @@ class DashboardHud extends PositionComponent {
       '${race.position}',
       layout.centre.center,
       layout.ph * 0.16,
-      _white,
+      HudColors.white,
       fontFamily: AppConstants.displayFont,
     );
 
@@ -151,7 +149,7 @@ class DashboardHud extends PositionComponent {
       formatTime(race.elapsed, short: true),
       at(0.5, 0.62),
       layout.ph * 0.14,
-      _white,
+      HudColors.white,
     );
 
     // Laps, or the kilometres left when the scene is one long road
@@ -162,89 +160,23 @@ class DashboardHud extends PositionComponent {
           : strings.remaining(race.remainingKm(road.fullDistance).toStringAsFixed(1)),
       at(0.13, 0.4),
       layout.ph * 0.1,
-      _white,
+      HudColors.white,
     );
 
     // Current player name
-    paintText(canva, race.playerName, at(0.13, 0.60), small, _white);
+    paintText(canva, race.playerName, at(0.13, 0.60), small, HudColors.white);
 
     // Rival player name
     final rival = race.nearest;
     if (rival == null || !race.running) return;
-    paintText(canva, rival.name, at(0.87, 0.60), small, _white);
+    paintText(canva, rival.name, at(0.87, 0.60), small, HudColors.white);
     final ahead = race.playerAhead;
     paintText(
       canva,
       '${ahead ? '▼' : '▲'} ${race.gapSeconds.toStringAsFixed(2)}',
       at(0.87, 0.4),
       layout.ph * 0.1,
-      ahead ? _green : _red,
+      ahead ? HudColors.green : HudColors.red,
     );
-  }
-
-  /// The banner at the end of the race: busted, crashed or finished.
-  String _endBanner() => race.busted
-      ? strings.busted
-      : (race.crashedOut ? strings.crashed : strings.finish);
-
-  /// Draws the countdown, go and finish banner.
-  void _banner(Canvas canva) {
-    if (race.briefing > 0) {
-      _briefing(canva);
-      return;
-    }
-    final big = math.min(size.y * 0.16, size.x * 0.2);
-    final centre = Offset(size.x / 2, size.y * 0.12);
-    final text = race.countdown > 0
-        ? '${race.countdown.ceil()}'
-        : race.finished
-        ? _endBanner()
-        : (race.elapsed < 0.9 ? strings.go : null);
-    if (text != null) {
-      paintText(
-        canva,
-        text,
-        centre,
-        big,
-        race.busted || race.crashedOut ? _red : _gold,
-        fontFamily: AppConstants.displayFont,
-        weight: FontWeight.w400,
-        shadow: true,
-      );
-    } else if (race.running && road.stopped && !road.throttle) {
-      paintText(
-        canva,
-        strings.holdGas,
-        centre,
-        math.min(size.y * 0.06, size.x * 0.06),
-        _white,
-        shadow: true,
-      );
-    }
-  }
-
-  /// Draws the level title and its hints where the banner normally goes, so
-  /// the player reads them just before the countdown.
-  void _briefing(Canvas canva) {
-    if (briefing.isEmpty) return;
-    final title = math.min(size.y * 0.075, size.x * 0.075);
-    final line = math.min(size.y * 0.045, size.x * 0.036);
-    final height = title * 1.3 + (briefing.length - 1) * line * 1.45;
-    var y = math.max(size.y * 0.02, size.y * 0.12 - height / 2) + title * 0.65;
-    paintText(
-      canva,
-      briefing.first,
-      Offset(size.x / 2, y),
-      title,
-      _gold,
-      fontFamily: AppConstants.displayFont,
-      weight: FontWeight.w400,
-      shadow: true,
-    );
-    y += title * 0.65 + line * 0.85;
-    for (final text in briefing.skip(1)) {
-      paintText(canva, text, Offset(size.x / 2, y), line, _white, shadow: true);
-      y += line * 1.45;
-    }
   }
 }

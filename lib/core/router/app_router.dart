@@ -100,14 +100,16 @@ class AppRouter {
           name: RouteNames.race,
           // A scene the player's level has not opened yet goes back to the menu.
           redirect: (context, state) {
-            final id = SceneId.values.asNameMap()[state.pathParameters['scene']];
+            final id = SceneId.values
+                .asNameMap()[state.pathParameters['scene']];
             final open =
                 id == null ||
                 getIt<ProgressCubit>().state.career.rules.isOpen(id);
             return open ? null : RoutePaths.menu;
           },
           builder: (context, state) {
-            final id = SceneId.values.asNameMap()[state.pathParameters['scene']];
+            final id = SceneId.values
+                .asNameMap()[state.pathParameters['scene']];
             return _provide<RaceCubit>(
               RaceScreen(key: ValueKey(id), scene: id ?? SceneId.city),
             );

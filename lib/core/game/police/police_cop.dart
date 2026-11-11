@@ -5,7 +5,7 @@ import 'dart:ui';
 // Project imports:
 import '../race/rival/rival_pose_driver.dart';
 import '../rider/look/rider_looks.dart';
-import '../rider/rider_painter.dart';
+import '../rider/rider_frame.dart';
 import '../rider/rider_sprite.dart';
 import '../road/config/vehicle_config.dart';
 import '../road/traffic/road_actor.dart';
@@ -13,7 +13,7 @@ import '../road/traffic/road_actor.dart';
 /// A police rider with flashing lights, drawn like a rival.
 class PoliceCop implements RoadActor {
   PoliceCop()
-    : sprite = RiderSprite(look: RiderLooks.cop, useSuppliedArt: true);
+    : sprite = RiderSprite(look: RiderLooks.cop);
 
   /// Distance used to hide the cop while it is off the road.
   static const double parked = -1e9;
@@ -116,7 +116,7 @@ class PoliceCop implements RoadActor {
 
   // Paints the two flashing roof lights above the rider's head.
   void _lights(Canvas canvas, Offset ground, double scale) {
-    final top = ground.dy - RiderPartPainter.groundY * scale;
+    final top = ground.dy - RiderFrame.groundY * scale;
     final redLeft = (clock * 5).floor().isEven;
     final left = Offset(ground.dx - 9 * scale, top + 2 * scale);
     final right = Offset(ground.dx + 9 * scale, top + 2 * scale);

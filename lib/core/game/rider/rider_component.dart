@@ -12,17 +12,18 @@ import '../road/road_renderer.dart';
 import 'dust_trail.dart';
 import 'look/rider_look.dart';
 import 'recovery_painter.dart';
-import 'rider_painter.dart';
+import 'rider_frame.dart';
 import 'rider_pose.dart';
 import 'rider_rig.dart';
 import 'rider_sprite.dart';
+import 'rig/player_yaw.dart';
 
 /// Flame component that draws the player's bike and rider.
 class RiderComponent extends PositionComponent {
   RiderComponent(this.road, {RiderRig? rig, this.look = RiderLook.main})
     : rig = rig ?? RiderRig(),
       super(
-        anchor: Anchor(0.5, RiderPartPainter.groundY / RiderPainter.height),
+        anchor: Anchor(0.5, RiderFrame.groundY / RiderFrame.height),
         priority: 1,
       );
 
@@ -32,7 +33,6 @@ class RiderComponent extends PositionComponent {
   late final RiderSprite _sprite = RiderSprite(
     look: look,
     rig: rig,
-    useSuppliedArt: true,
   );
   late final RecoveryPainter _recoveryPainter = RecoveryPainter(look);
 
@@ -46,11 +46,11 @@ class RiderComponent extends PositionComponent {
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
     final lane = DashboardLayout.lanePx(size, road.theme.lanes);
-    final height = RiderRig.heightFor(lane, size.y);
+    final height = RiderRig.heightFor(lane, size.x, size.y);
     _recoveryLateralScale =
-        lane * road.theme.lanes / 4 / (height / RiderPainter.height);
+        lane * road.theme.lanes / 4 / (height / RiderFrame.height);
     this.size = Vector2(
-      height * RiderPainter.width / RiderPainter.height,
+      height * RiderFrame.width / RiderFrame.height,
       height,
     );
     position = Vector2(size.x / 2, DashboardLayout.riderTyresGround(size));
@@ -82,16 +82,16 @@ class RiderComponent extends PositionComponent {
         (road.appliedSteer * 0.30 + road.curveFelt * 0.040) * (0.3 + 0.7 * sp) -
         0.12 * pose.foot;
     final target = bank
-        .clamp(-RiderPainter.maxLean, RiderPainter.maxLean)
+        .clamp(-RiderFrame.maxLean, RiderFrame.maxLean)
         .toDouble();
     pose.lean += (target - pose.lean) * math.min(1.0, dt * 6);
 
-    final sharpTurn =
-        road.appliedSteer.abs() > 0.4 && sp > 0.8 && road.curveFelt.abs() > 2.5;
-    final turnDirection = road.appliedSteer.sign;
-    final perspective = sharpTurn ? turnDirection * (0.18 + sp * 0.27) : 0.0;
-    pose.perspective +=
-        (perspective - pose.perspective) * math.min(1.0, dt * 4);
+    final yaw = PlayerYaw.target(
+      steer: road.appliedSteer,
+      curve: road.curveFelt,
+      speedShare: sp,
+    );
+    pose.perspective += (yaw - pose.perspective) * math.min(1.0, dt * 3);
 
     final pitch = road.brake ? -1.0 : (road.throttle ? 0.5 : 0.0);
     pose.pitch += (pitch * sp - pose.pitch) * math.min(1.0, dt * 6);
@@ -106,7 +106,7 @@ class RiderComponent extends PositionComponent {
 
   @override
   void render(Canvas canvas) {
-    canvas.scale(size.y / RiderPainter.height);
+    canvas.scale(size.y / RiderFrame.height);
     if (road.crashed || road.recovering) {
       _recoveryPainter.paint(
         canvas,
@@ -131,8 +131,8 @@ class RiderComponent extends PositionComponent {
     _sprite.paint(canvas);
     _dust.paint(
       canvas,
-      const Offset(RiderPartPainter.midX, RiderPartPainter.groundY),
-      RiderPainter.height,
+      const Offset(RiderFrame.midX, RiderFrame.groundY),
+      RiderFrame.height,
       road.ride.current.dustTone,
     );
   }

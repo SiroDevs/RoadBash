@@ -86,6 +86,22 @@ class InkedPart {
       canvas.drawPath(path, fade);
     }
   }
+
+  /// Paints every shape after mapping its points through a continuous pose.
+  void paintMapped(Canvas canvas, Offset Function(Offset point) mapPoint) {
+    for (var index = 0; index < inks.length; index++) {
+      final points = part.shapes[index].points;
+      final first = mapPoint(points.first);
+      final path = Path()..moveTo(first.dx, first.dy);
+      for (final point in points.skip(1)) {
+        final mapped = mapPoint(point);
+        path.lineTo(mapped.dx, mapped.dy);
+      }
+      path.close();
+      canvas.drawPath(path, inks[index].fill);
+      canvas.drawPath(path, inks[index].edge);
+    }
+  }
 }
 
 /// A whole artwork sheet coloured for one look.

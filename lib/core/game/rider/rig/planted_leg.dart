@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:math' as math;
-import 'dart:typed_data';
 import 'dart:ui';
 
 // Project imports:
@@ -17,7 +16,6 @@ class PlantedLeg {
       _leg.ankle.dy - _leg.knee.dy,
       _leg.ankle.dx - _leg.knee.dx,
     );
-    _axis = Offset(math.cos(seatedAngle), math.sin(seatedAngle));
     final raw = _plantedAngle() - seatedAngle;
     _turn = math.atan2(math.sin(raw), math.cos(raw));
     final bootBottom = _bottomOf(_boot);
@@ -32,11 +30,9 @@ class PlantedLeg {
 
   static const double kneeAngle = 150 * math.pi / 180;
   static const double groundY = 120;
-  static const double jointRadius = 5.5;
 
   final RiderLeg _leg;
   final InkedPart _boot;
-  late final Offset _axis;
   late final double _turn;
   late final double _stretch;
   late final Offset _bootShift;
@@ -46,49 +42,11 @@ class PlantedLeg {
 
   /// Paints the complete leg as its foot moves down to the ground.
   void paint(Canvas canvas, double amount) {
-    _leg.paintWithLowerLeg(canvas, (canvas, lowerLeg) {
-      if (amount <= 0.01) {
-        lowerLeg.paint(canvas);
-      } else {
-        _paintPlantedLowerLeg(canvas, lowerLeg, amount);
-      }
-    });
-  }
-
-  /// Turns and stretches the lower leg as its foot reaches the road.
-  void _paintPlantedLowerLeg(Canvas canvas, InkedPart lowerLeg, double amount) {
-    final stretch = (_stretch - 1) * amount;
-    final turn = _turn * amount;
-    final xx = 1 + stretch * _axis.dx * _axis.dx;
-    final xy = stretch * _axis.dx * _axis.dy;
-    final yy = 1 + stretch * _axis.dy * _axis.dy;
-    final cos = math.cos(turn), sin = math.sin(turn);
-    final m00 = cos * xx - sin * xy, m01 = cos * xy - sin * yy;
-    final m10 = sin * xx + cos * xy, m11 = sin * xy + cos * yy;
-    final matrix = Float64List.fromList([
-      m00,
-      m10,
-      0,
-      0,
-      m01,
-      m11,
-      0,
-      0,
-      0,
-      0,
-      1,
-      0,
-      _leg.knee.dx - (m00 * _leg.knee.dx + m01 * _leg.knee.dy),
-      _leg.knee.dy - (m10 * _leg.knee.dx + m11 * _leg.knee.dy),
-      0,
-      1,
-    ]);
-    _leg.paintKnee(canvas, jointRadius);
-    canvas
-      ..save()
-      ..transform(matrix);
-    lowerLeg.paint(canvas);
-    canvas.restore();
+    _leg.paint(
+      canvas,
+      kneeAngle: _turn * amount,
+      lowerStretch: 1 + (_stretch - 1) * amount,
+    );
   }
 
   /// Direction of the lower leg that gives the knee angle, pointing down.

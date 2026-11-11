@@ -72,7 +72,6 @@ const Map<String, Tone> riderTones = {
   'leg.Leg': Tone(ToneRole.primary, 0.92),
   'leg.LeftLeg': Tone(ToneRole.primary, 0.92),
   'leg.RightLeg': Tone(ToneRole.primary, 0.92),
-  'leg.KneeJoint': Tone(ToneRole.primary, 0.85),
   'boot.LeftBoot': Tone(ToneRole.boot),
   'boot.RightBoot': Tone(ToneRole.boot),
   'boot.BackBlack': Tone(ToneRole.black, 0.8),

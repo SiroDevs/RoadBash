@@ -1,4 +1,4 @@
-"""Builds rider parts, joints and glove/knee splits from Rider.flp."""
+"""Builds rider parts and joints from Rider.flp."""
 import math
 from art_geometry import *
 
@@ -85,37 +85,15 @@ def knee_of(shapes):
     return centroid(pads[-1]['poly']) if pads else None
 
 
-def split_leg(shapes, anchors, pid, joint_cap=True):
-    """Splits a leg into thigh and shin parts at its knee pad."""
+def leg_anchors(shapes, anchors, pid):
+    """Records leg joints while keeping its silhouette as one polygon."""
     sil = [s for s in shapes if s['name'] in LEG_SILHOUETTES]
     knee = knee_of(shapes)
     if not sil or knee is None:
-        return shapes, None
+        return
     hip = near_end(sil[0]['poly'])
     ankle = far_end(sil[0]['poly'], hip)
-    normal = unit((unit((knee[0] - hip[0], knee[1] - hip[1]))[0] + unit((ankle[0] - knee[0], ankle[1] - knee[1]))[0],
-                   unit((knee[0] - hip[0], knee[1] - hip[1]))[1] + unit((ankle[0] - knee[0], ankle[1] - knee[1]))[1]))
     anchors[pid + '.hip'], anchors[pid + '.knee'], anchors[pid + '.ankle'] = hip, knee, ankle
-    overlap = (knee[0] - normal[0] * 2.0, knee[1] - normal[1] * 2.0)
-    thigh, shin = [], []
-    for s in shapes:
-        c = centroid(s['poly'])
-        side = (c[0] - knee[0]) * normal[0] + (c[1] - knee[1]) * normal[1]
-        if s['name'] in LEG_SILHOUETTES:
-            up = clip_half_plane(s['poly'], knee, normal, False)
-            down = clip_half_plane(s['poly'], overlap, normal, True)
-            thigh.append(dict(s, poly=up))
-            shin.append(dict(s, poly=down))
-            span = [p for p in s['poly'] if abs((p[0] - knee[0]) * normal[0] + (p[1] - knee[1]) * normal[1]) < 3]
-            width = min(max([math.dist(a, b) for a in span for b in span] or [8]), 15)
-            joint = [(knee[0] + math.cos(a * math.pi / 12) * width * 0.46, knee[1] + math.sin(a * math.pi / 12) * width * 0.46) for a in range(24)]
-            if joint_cap:
-                shin.append(dict(name='KneeJoint', group=s['group'], gid=s['gid'], poly=joint, kind='polygon'))
-        elif 'KneePad' in s['name'] or side > 0:
-            shin.append(s)
-        else:
-            thigh.append(s)
-    return thigh, shin
 
 
 def split_arm(shapes, anchors, pid, torso):
@@ -157,12 +135,8 @@ def build_sheet(flp, key):
     for pid, group, flt in spec:
         members = pick(shapes, group, flt)
         if pid.startswith('leg'):
-            thigh, shin = split_leg(members, anchors, pid, key not in ('rear', 'seated'))
-            if shin is None:
-                parts.append((pid, members))
-                continue
-            parts.append((pid + 'Thigh', thigh))
-            parts.append((pid + 'Shin', shin))
+            leg_anchors(members, anchors, pid)
+            parts.append((pid, members))
             continue
         if pid.startswith('arm'):
             members = split_arm(members, anchors, pid, torso[0] if torso else None)

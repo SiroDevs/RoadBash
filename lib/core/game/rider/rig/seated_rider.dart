@@ -37,7 +37,7 @@ class SeatedRiderFigure {
     _upper.arms(canvas, pose);
     _legs.paintLegs(canvas, plantedSide, pose.foot);
     _upper.torso(canvas, pose.perspective);
-    _legs.paintBoots(canvas, plantedSide, pose.foot);
+    _legs.paintBoots(canvas, plantedSide, pose.foot, mirrored: mirrored);
     _upper.sideArm(canvas, pose);
     canvas.restore();
   }

@@ -3,6 +3,8 @@
 import 'dart:ui';
 
 import 'layers/facing_straight/facing_straight_layer.dart';
+import 'layers/facing_slightly_left/facing_slightly_left_layer.dart';
+import 'layers/facing_slightly_right/facing_slightly_right_layer.dart';
 
 /// Paints every layer of "LegPlanted", bottom to top.
 class LegPlantedPainter {
@@ -27,15 +29,32 @@ class LegPlantedPainter {
   static const Color colorEFE4B0 = Color(0xFFEFE4B0);
   static const Color color770E12 = Color(0xFF770E12);
   static const Color color3C0709 = Color(0xFF3C0709);
+  static const Color color2F5C37 = Color(0xFF2F5C37);
+  static const Color color0D190E = Color(0xFF0D190E);
+  static const Color color626262 = Color(0xFF626262);
+  static const Color colorB97A57 = Color(0xFFB97A57);
+  static const Color color563828 = Color(0xFF563828);
 
   final LegPlantedFacingStraightLayer _facingStraight = LegPlantedFacingStraightLayer();
+  final LegPlantedFacingSlightlyLeftLayer _facingSlightlyLeft = LegPlantedFacingSlightlyLeftLayer();
+  final LegPlantedFacingSlightlyRightLayer _facingSlightlyRight = LegPlantedFacingSlightlyRightLayer();
 
   void paint(Canvas canvas) {
-    _facingStraight.paint(canvas);
+    _facingSlightlyRight.paint(canvas);
   }
 
   /// Paints layer "FacingStraight".
   void paintFacingStraight(Canvas canvas) {
     _facingStraight.paint(canvas);
+  }
+
+  /// Paints layer "FacingSlightlyLeft".
+  void paintFacingSlightlyLeft(Canvas canvas) {
+    _facingSlightlyLeft.paint(canvas);
+  }
+
+  /// Paints layer "FacingSlightlyRight".
+  void paintFacingSlightlyRight(Canvas canvas) {
+    _facingSlightlyRight.paint(canvas);
   }
 }

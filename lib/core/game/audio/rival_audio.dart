@@ -57,8 +57,6 @@ class RivalAudio {
   static const double _near = 1500;
   static const double _far = 16000;
   static const double _soundSpeed = 343;
-  static const double _unitsPerMetre =
-      VehicleConfig.maxSpeed / (VehicleConfig.topSpeedKmh / 3.6);
 
   final RoadRenderer road;
   final RaceController race;
@@ -125,7 +123,8 @@ class RivalAudio {
     final heard = cut * cut / (1 + dist / _near) * (dz < 0 ? 0.85 : 1.0);
 
     final ahead = _tanh(dz / 500);
-    final closing = ahead * (racer.speed - road.speed) / _unitsPerMetre;
+    final closing =
+        ahead * (racer.speed - road.speed) / VehicleConfig.unitsPerMetre;
     final shift = (_soundSpeed / (_soundSpeed + closing)).clamp(0.7, 1.4).toDouble();
     voice.doppler += (shift - voice.doppler) * math.min(1.0, step * 12);
 

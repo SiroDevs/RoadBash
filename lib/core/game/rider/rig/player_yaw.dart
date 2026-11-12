@@ -1,5 +1,5 @@
 // Project imports:
-import '../art/sheet/part_motion.dart';
+import '../../../../common/art/sheet/part_motion.dart';
 
 /// Turns steering, speed and road curve into the player's yaw, with no hard gate.
 abstract final class PlayerYaw {

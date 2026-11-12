@@ -10,12 +10,13 @@ import '../hud/dashboard/dashboard_layout.dart';
 import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 import 'dust_trail.dart';
-import 'look/rider_look.dart';
-import 'recovery_painter.dart';
-import 'rider_frame.dart';
-import 'rider_pose.dart';
+import '../../../common/art/look/rider_look.dart';
+import '../../../common/art/recovery_painter.dart';
+import '../../../common/art/rider_frame.dart';
+import '../../../common/art/rider_pose.dart';
 import 'rider_rig.dart';
-import 'rider_sprite.dart';
+import '../../../common/art/rider_sprite.dart';
+import 'rig/corner_facing.dart';
 import 'rig/player_yaw.dart';
 
 /// Flame component that draws the player's bike and rider.
@@ -30,10 +31,8 @@ class RiderComponent extends PositionComponent {
   final RoadRenderer road;
   final RiderRig rig;
   final RiderLook look;
-  late final RiderSprite _sprite = RiderSprite(
-    look: look,
-    rig: rig,
-  );
+  late final RiderSprite _sprite = RiderSprite(look: look);
+  final CornerFacing _corner = CornerFacing();
   late final RecoveryPainter _recoveryPainter = RecoveryPainter(look);
 
   /// Returns the rider's current pose.
@@ -92,6 +91,7 @@ class RiderComponent extends PositionComponent {
       speedShare: sp,
     );
     pose.perspective += (yaw - pose.perspective) * math.min(1.0, dt * 3);
+    pose.facing = _corner.update(pose.perspective);
 
     final pitch = road.brake ? -1.0 : (road.throttle ? 0.5 : 0.0);
     pose.pitch += (pitch * sp - pose.pitch) * math.min(1.0, dt * 6);

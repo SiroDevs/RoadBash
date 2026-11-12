@@ -1,26 +1,34 @@
 // Project imports:
-import '../../rider/art/sheet/part_motion.dart';
+import '../../../../common/art/rider_facing.dart';
+import '../../road/config/vehicle_config.dart';
 
-/// Turns a rival's place relative to the player into a yaw toward the player.
-abstract final class RivalFacing {
-  static const double maxYaw = 0.25;
-  static const double levelBand = 0.06;
-  static const double aheadFrom = 24;
-  static const double aheadTo = 204;
+/// Chooses which way a rival faces from where it is beside the player.
+class RivalFacing {
+  static const double startSeconds = 3.5;
+  static const double enterSide = 0.08;
+  static const double leaveSide = 0.04;
+  static const double aheadMetres = 3;
+  static const double aheadSlackMetres = 0.5;
 
-  /// Yaw for a rival [sideOffset] road widths from the player and [gap] ahead.
-  static double yaw({
+  RiderFacing _current = RiderFacing.straight;
+
+  /// Facing for a rival [sideOffset] road widths away and [gap] ahead.
+  ///
+  /// A rival turns toward the player only while beside him and up to a few
+  /// metres ahead, and rides straight from the start and everywhere else.
+  RiderFacing update({
     required double sideOffset,
     required double gap,
-    required int index,
-    required bool atStart,
+    required double raceClock,
   }) {
-    final direction = sideOffset.abs() > levelBand
-        ? -sideOffset.sign
-        : (index.isEven ? 1.0 : -1.0);
-    final amount = atStart
-        ? 1.0
-        : 1 - PartMotion.smooth(aheadFrom, aheadTo, gap);
-    return direction * amount * maxYaw;
+    final holding = _current != RiderFacing.straight;
+    final side = holding ? leaveSide : enterSide;
+    final reach = aheadMetres + (holding ? aheadSlackMetres : 0);
+    final beside = sideOffset.abs() > side;
+    final near = gap <= reach * VehicleConfig.unitsPerMetre;
+    if (raceClock < startSeconds || !beside || !near) {
+      return _current = RiderFacing.straight;
+    }
+    return _current = sideOffset < 0 ? RiderFacing.right : RiderFacing.left;
   }
 }

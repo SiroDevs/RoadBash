@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../../leg_planted_painter.dart';
+import '../../../../look/art_gradient.dart';
 
 /// Group "BikeTyre".
 class BikeTyre2 {
@@ -39,7 +40,7 @@ class BikeTyre2 {
     canvas.translate(-75.07, -130.31);
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(64.58, 130.31),
         const Offset(85.56, 130.31),
         const [LegPlantedPainter.color7F7F7F, LegPlantedPainter.color404040],
@@ -215,7 +216,7 @@ class BikeTyre2 {
     canvas.translate(-72.83, -133.65);
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(67.33, 133.65),
         const Offset(78.33, 133.65),
         const [LegPlantedPainter.color000000, LegPlantedPainter.color626262],

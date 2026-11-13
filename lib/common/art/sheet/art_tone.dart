@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 /// The colour roles a shape can take from a rider or bike look.
 enum ToneRole {
   primary,
+  jacket,
   helmet,
   trim,
   accent,

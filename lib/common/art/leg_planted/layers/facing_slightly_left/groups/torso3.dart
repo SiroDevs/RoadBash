@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../../leg_planted_painter.dart';
+import '../../../../look/art_gradient.dart';
 
 /// Group "Torso".
 class Torso3 {
@@ -24,7 +25,7 @@ class Torso3 {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.radial(
+      ..shader = ArtGradient.radial(
         const Offset(61.55, 53.09),
         12.55,
         const [LegPlantedPainter.color3A3D4E, LegPlantedPainter.color1D1F27],

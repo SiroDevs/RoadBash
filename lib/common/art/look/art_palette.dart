@@ -1,6 +1,9 @@
 // Dart imports:
 import 'dart:ui';
 
+// Project imports:
+import '../sheet/art_tone.dart';
+
 /// Colors of the recolorable parts of the layered rider and bike artwork.
 /// The defaults are the colors the artwork was drawn in.
 class ArtPalette {
@@ -41,5 +44,41 @@ class ArtPalette {
     source.jacket: jacket,
     source.sleeve: sleeve,
     source.bikeDark: bikeDark,
+    source.bike: bike,
   };
+
+  static const Color _drawnBikeDark = Color(0xFF19311D);
+  static const Color _drawnBikeSide = Color(0xFF2F5C37);
+  static const Color _drawnUnderPanel = Color(0xFF39317F);
+  static const Color _drawnJacket = Color(0xFF3A3D4E);
+  static const Color _drawnGlass = Color(0xFF563828);
+  static const Color _drawnJacketDark = Color(0xFF1D1F27);
+
+  /// Shaded variants of the drawn colors that are not in [swapsFrom].
+  Map<Color, Color> get shadeSwaps => {
+    _drawnGlass: ToneColors.shaded(visor, 0.6),
+    _drawnJacketDark: ToneColors.shaded(jacket, 0.55),
+  };
+
+  /// Colors that replace the drawn colors of one gradient.
+  ///
+  /// Gradients that are not part of the suit or the bike body, such as tyres,
+  /// chrome and the brake light, keep their drawn colors.
+  List<Color> gradientColors(List<Color> drawn) {
+    final first = drawn.first;
+    if (first == _drawnBikeDark) return [bikeDark, bike];
+    if (first == _drawnBikeSide) {
+      return [
+        ToneColors.shaded(bike, 0.7),
+        ToneColors.shaded(bikeDark, 0.5),
+      ];
+    }
+    if (first == _drawnUnderPanel) {
+      return [ToneColors.shaded(bike, 0.55), drawn.last];
+    }
+    if (first == _drawnJacket) {
+      return [jacket, ToneColors.shaded(jacket, 0.55)];
+    }
+    return drawn;
+  }
 }

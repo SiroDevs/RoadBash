@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../../leg_planted_painter.dart';
+import '../../../../look/art_gradient.dart';
 
 /// Group "BackPart".
 class BackPart3 {
@@ -79,7 +80,7 @@ class BackPart3 {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.radial(
+      ..shader = ArtGradient.radial(
         const Offset(71.11, 77.16),
         19.19,
         const [LegPlantedPainter.color7F7F7F, LegPlantedPainter.color404040],

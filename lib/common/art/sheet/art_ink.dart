@@ -36,18 +36,24 @@ class LookColors {
 
   Color _base(ToneRole role) {
     final bike = look.bike;
+    // Riders with an artwork palette are dressed as in the riding artwork,
+    // so the rider looks the same on the bike, falling and running back.
+    final art = forBike ? null : look.art;
     return switch (role) {
-      ToneRole.primary => forBike ? bike.panel : look.suit,
+      ToneRole.primary => forBike ? bike.panel : (art?.legs ?? look.suit),
+      ToneRole.jacket => forBike ? bike.panel : (art?.jacket ?? look.suit),
       ToneRole.helmet => look.helmet,
-      ToneRole.trim || ToneRole.accent => forBike ? bike.accent : look.stripe,
-      ToneRole.light => forBike ? bike.accentEdge : look.stripeEdge,
+      ToneRole.trim ||
+      ToneRole.accent => forBike ? bike.accent : (art?.panel ?? look.stripe),
+      ToneRole.light =>
+        forBike ? bike.accentEdge : (art?.sleeve ?? look.stripeEdge),
       ToneRole.dark => forBike ? bike.panelDark : look.backPatch,
       ToneRole.graphicA => look.graphicA,
       ToneRole.graphicB => look.graphicB,
       ToneRole.knuckle => look.knuckle,
       ToneRole.neck => look.neck,
       ToneRole.glove => look.gloves,
-      ToneRole.boot => _lifted(look.boots),
+      ToneRole.boot => _lifted(art?.panel ?? look.boots),
       ToneRole.visor => look.visor ?? ToneColors.visor,
       ToneRole.black => ToneColors.black,
       ToneRole.gray => ToneColors.gray,

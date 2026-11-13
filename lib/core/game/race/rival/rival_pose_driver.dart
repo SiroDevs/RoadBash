@@ -40,15 +40,13 @@ class RivalPoseDriver {
     final bank =
         (pose.steer * 0.30 + curve * 0.040) * (0.3 + 0.7 * speedRatio) -
         0.12 * pose.foot;
-    final lean = bank
-        .clamp(-RiderFrame.maxLean, RiderFrame.maxLean)
-        .toDouble();
+    final lean = bank.clamp(-RiderFrame.maxLean, RiderFrame.maxLean).toDouble();
     pose.lean += (lean - pose.lean) * math.min(1.0, dt * 6);
     final pitch = braking ? -1.0 : 0.5;
     pose.pitch += (pitch * speedRatio - pose.pitch) * math.min(1.0, dt * 6);
     pose.bob =
         math.sin(_time * 13 + seed) * 1.1 * speedRatio +
         math.max(0.0, -pose.pitch) * 2.5;
-    pose.phase = (pose.phase + speed * dt / 900) % 1;
+    if (!stopped) pose.phase = (pose.phase + speedRatio * dt * 3) % 1;
   }
 }

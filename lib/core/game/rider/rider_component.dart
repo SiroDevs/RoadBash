@@ -7,7 +7,6 @@ import 'package:flame/components.dart';
 
 // Project imports:
 import '../hud/dashboard/dashboard_layout.dart';
-import '../road/config/vehicle_config.dart';
 import '../road/road_renderer.dart';
 import 'dust_trail.dart';
 import '../../../common/art/look/rider_look.dart';
@@ -47,10 +46,7 @@ class RiderComponent extends PositionComponent {
     final height = RiderRig.heightFor(lane, size.x, size.y);
     _recoveryLateralScale =
         lane * road.theme.lanes / 4 / (height / RiderFrame.height);
-    this.size = Vector2(
-      height * RiderFrame.width / RiderFrame.height,
-      height,
-    );
+    this.size = Vector2(height * RiderFrame.width / RiderFrame.height, height);
     position = Vector2(size.x / 2, DashboardLayout.riderTyresGround(size));
   }
 
@@ -66,8 +62,7 @@ class RiderComponent extends PositionComponent {
     pose.steer += (road.appliedSteer - pose.steer) * ease;
     pose.braking = road.brake;
 
-    final spin = math.min(road.speed, VehicleConfig.maxSpeed * 0.2);
-    pose.phase = (pose.phase + spin * dt / 900) % 1;
+    if (!road.stopped) pose.phase = (pose.phase + sp * dt * 3) % 1;
 
     _dust.update(dt, emitting: road.kickingDust, strength: sp);
     pose.tumble = road.crash.tilt;

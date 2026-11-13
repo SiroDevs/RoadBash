@@ -14,6 +14,7 @@ import 'groups/right_boot2.dart';
 import 'groups/back_part2.dart';
 import 'groups/exhaust.dart';
 import 'groups/helmet2.dart';
+import '../../../look/art_gradient.dart';
 
 /// Layer "FacingSlightlyRight".
 class LegPlantedFacingSlightlyRightLayer {
@@ -90,7 +91,7 @@ class LegPlantedFacingSlightlyRightLayer {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(60.82, 59.43),
         const Offset(66.3, 133.12),
         const [LegPlantedPainter.color2F5C37, LegPlantedPainter.color0D190E],
@@ -185,7 +186,7 @@ class LegPlantedFacingSlightlyRightLayer {
     canvas.translate(-64.37, -127.47);
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(53.88, 127.47),
         const Offset(74.86, 127.47),
         const [LegPlantedPainter.color7F7F7F, LegPlantedPainter.color404040],
@@ -361,7 +362,7 @@ class LegPlantedFacingSlightlyRightLayer {
     canvas.translate(-67.51, -129.98);
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(62.01, 129.98),
         const Offset(73.01, 129.98),
         const [LegPlantedPainter.color000000, LegPlantedPainter.color626262],

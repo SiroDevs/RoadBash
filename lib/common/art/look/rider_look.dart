@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 // Project imports:
 import 'art_palette.dart';
 import 'bike_look.dart';
+import 'bike_looks.dart';
 
 /// Colors of the rider's suit, helmet and details.
 class RiderLook {
@@ -26,27 +27,31 @@ class RiderLook {
   });
 
   static const RiderLook main = RiderLook(
-    suit: Color(0xFFD81F26),
-    stripe: Color(0xFFF4F4F4),
-    stripeEdge: Color(0xFFF4F4F4),
-    backPatch: Color(0xFFF0F0F0),
-    helmet: Color(0xFFD81F26),
-    helmetGraphic: Color(0xFFF4F4F4),
-    helmetGraphic2: Color(0xFF9E1117),
+    suit: Color(0xFFF28C28),
+    stripe: Color(0xFF70452D),
+    stripeEdge: Color(0xFFC62828),
+    backPatch: Color(0xFF70452D),
+    helmet: Color(0xFFF28C28),
+    helmetGraphic: Color(0xFF70452D),
+    helmetGraphic2: Color(0xFFC62828),
     visor: Color(0xFF14141A),
     neck: Color(0xFF23242B),
     gloves: Color(0xFF1E1E22),
-    gloveAccent: Color(0xFFD81F26),
+    gloveAccent: Color(0xFFC62828),
     boots: Color(0xFF1A1A1A),
-    bike: BikeLook(
-      frame: Color(0xFF101014),
-      panel: Color(0xFFD81F26),
-      panelDark: Color(0xFF7E0F14),
-      accent: Color(0xFF1A1A1F),
-      accentEdge: Color(0xFFF4F4F4),
-      trim: Color(0xFFC4C7CE),
+    bike: BikeLooks.player,
+    art: ArtPalette(
+      helmet: Color(0xFFF28C28),
+      helmetPrint: Color(0xFF70452D),
+      helmetStripe: Color(0xFFC62828),
+      visor: Color(0xFF3B261B),
+      legs: Color(0xFFF28C28),
+      panel: Color(0xFFC62828),
+      jacket: Color(0xFF70452D),
+      sleeve: Color(0xFFB86127),
+      bikeDark: Color(0xFF124A29),
+      bike: Color(0xFF238342),
     ),
-    art: ArtPalette.drawn,
   );
 
   final Color suit;

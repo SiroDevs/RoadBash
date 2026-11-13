@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../rider_in_motion_painter.dart';
+import '../../../wheel_thread_motion.dart';
 import 'groups/front_part5.dart';
 import 'groups/handle_bars5.dart';
 import 'groups/helmet5.dart';
@@ -15,6 +16,7 @@ import 'groups/back_part5.dart';
 import 'groups/left_boot5.dart';
 import 'groups/bike_tyre5.dart';
 import 'groups/chain.dart';
+import '../../../look/art_gradient.dart';
 
 /// Layer "FacingSlightlyLeft".
 class RiderInMotionFacingSlightlyLeftLayer {
@@ -37,7 +39,7 @@ class RiderInMotionFacingSlightlyLeftLayer {
   final Chain _chain = Chain();
   final Path _path = Path();
 
-  void paint(Canvas canvas) {
+  void paint(Canvas canvas, {double wheelPhase = 0}) {
     _drawBikeFrame(canvas);
     _frontPart5.paint(canvas);
     _handleBars5.paint(canvas);
@@ -52,7 +54,13 @@ class RiderInMotionFacingSlightlyLeftLayer {
     _exhaust2.paint(canvas);
     _backPart5.paint(canvas);
     _leftBoot5.paint(canvas);
-    _bikeTyre5.paint(canvas);
+    _bikeTyre5.paint(
+      WheelThreadMotion(
+        canvas,
+        phase: wheelPhase,
+        clipBounds: const Rect.fromLTRB(63.51, 89.96, 84.72, 161.16),
+      ),
+    );
     _chain.paint(canvas);
     _drawLeftSideStepper(canvas);
   }
@@ -83,10 +91,13 @@ class RiderInMotionFacingSlightlyLeftLayer {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.radial(
+      ..shader = ArtGradient.radial(
         const Offset(68.15, 96.63),
         39.56,
-        const [RiderInMotionPainter.color19311D, RiderInMotionPainter.color468638],
+        const [
+          RiderInMotionPainter.color19311D,
+          RiderInMotionPainter.color468638,
+        ],
         const [0.366, 1.0],
       );
     canvas.drawPath(_path, _paint);

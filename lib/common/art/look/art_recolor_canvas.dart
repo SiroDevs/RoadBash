@@ -1,65 +1,32 @@
 // Dart imports:
-import 'dart:math' as math;
 import 'dart:ui';
-
-// Flutter imports:
-import 'package:flutter/painting.dart';
 
 // Project imports:
 import 'art_palette.dart';
 
 /// Canvas that repaints the generated artwork in a rider's palette.
 ///
-/// Solid fills take the palette color that replaces their drawn color, and
-/// large gradient panels, the bike body, are turned to the bike's hue.
+/// Solid fills take the palette color that replaces their drawn color.
+/// Gradients are recolored when they are built, see [ArtGradient].
 class ArtRecolorCanvas implements Canvas {
-  ArtRecolorCanvas(ArtPalette palette)
-    : _swaps = palette.swapsFrom(ArtPalette.drawn),
-      _hueFilter = _hueFilterFor(palette);
+  ArtRecolorCanvas(this.palette)
+    : _swaps = {...palette.shadeSwaps, ...palette.swapsFrom(ArtPalette.drawn)};
 
-  static const double panelMinArea = 1000;
-
+  final ArtPalette palette;
   final Map<Color, Color> _swaps;
-  final ColorFilter _hueFilter;
 
   late Canvas target;
 
-  static ColorFilter _hueFilterFor(ArtPalette palette) {
-    final drawnHue = HSLColor.fromColor(ArtPalette.drawn.bike).hue;
-    final shift = HSLColor.fromColor(palette.bike).hue - drawnHue;
-    final angle = shift * math.pi / 180;
-    final cos = math.cos(angle);
-    final sin = math.sin(angle);
-    return ColorFilter.matrix([
-      0.213 + cos * 0.787 - sin * 0.213,
-      0.715 - cos * 0.715 - sin * 0.715,
-      0.072 - cos * 0.072 + sin * 0.928,
-      0, 0,
-      0.213 - cos * 0.213 + sin * 0.143,
-      0.715 + cos * 0.285 + sin * 0.140,
-      0.072 - cos * 0.072 - sin * 0.283,
-      0, 0,
-      0.213 - cos * 0.213 - sin * 0.787,
-      0.715 - cos * 0.715 + sin * 0.715,
-      0.072 + cos * 0.928 + sin * 0.072,
-      0, 0,
-      0, 0, 0, 1, 0,
-    ]);
-  }
-
   /// Draws with [paint] recolored, then puts the paint back as it was.
-  void _recolored(Paint paint, double area, void Function() draw) {
+  ///
+  /// Gradients are already built in the rider's colors, see [ArtGradient].
+  void _recolored(Paint paint, void Function() draw) {
     final color = paint.color;
-    final filter = paint.colorFilter;
-    if (paint.shader != null) {
-      if (area > panelMinArea) paint.colorFilter = _hueFilter;
-    } else if (paint.style == PaintingStyle.fill) {
+    if (paint.shader == null && paint.style == PaintingStyle.fill) {
       paint.color = _swaps[color] ?? color;
     }
     draw();
-    paint
-      ..color = color
-      ..colorFilter = filter;
+    paint.color = color;
   }
 
   @override
@@ -75,28 +42,30 @@ class ArtRecolorCanvas implements Canvas {
   void translate(double dx, double dy) => target.translate(dx, dy);
 
   @override
-  void drawPath(Path path, Paint paint) {
-    final bounds = path.getBounds();
-    _recolored(
-      paint,
-      bounds.width * bounds.height,
-      () => target.drawPath(path, paint),
-    );
-  }
+  void clipRect(
+    Rect rect, {
+    ClipOp clipOp = ClipOp.intersect,
+    bool doAntiAlias = true,
+  }) => target.clipRect(rect, clipOp: clipOp, doAntiAlias: doAntiAlias);
+
+  @override
+  void drawPath(Path path, Paint paint) =>
+      _recolored(paint, () => target.drawPath(path, paint));
 
   @override
   void drawOval(Rect rect, Paint paint) =>
-      _recolored(paint, 0, () => target.drawOval(rect, paint));
+      _recolored(paint, () => target.drawOval(rect, paint));
 
   @override
   void drawRect(Rect rect, Paint paint) =>
-      _recolored(paint, 0, () => target.drawRect(rect, paint));
+      _recolored(paint, () => target.drawRect(rect, paint));
 
   @override
   void drawRRect(RRect rrect, Paint paint) =>
-      _recolored(paint, 0, () => target.drawRRect(rrect, paint));
+      _recolored(paint, () => target.drawRRect(rrect, paint));
 
   @override
-  dynamic noSuchMethod(Invocation invocation) =>
-      throw UnsupportedError('Unsupported canvas call: ${invocation.memberName}');
+  dynamic noSuchMethod(Invocation invocation) => throw UnsupportedError(
+    'Unsupported canvas call: ${invocation.memberName}',
+  );
 }

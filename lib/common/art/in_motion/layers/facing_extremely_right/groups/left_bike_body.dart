@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../../rider_in_motion_painter.dart';
+import '../../../../look/art_gradient.dart';
 
 /// Group "LeftBikeBody".
 class LeftBikeBody {
@@ -52,7 +53,7 @@ class LeftBikeBody {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(46.42, 54.65),
         const Offset(48.36, 126.98),
         const [RiderInMotionPainter.color2F5C37, RiderInMotionPainter.color0D190E],

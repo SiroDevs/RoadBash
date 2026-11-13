@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../rider_in_motion_painter.dart';
+import '../../../wheel_thread_motion.dart';
 import 'groups/front_part2.dart';
 import 'groups/handle_bars2.dart';
 import 'groups/bike_body2.dart';
@@ -37,7 +38,7 @@ class RiderInMotionFacingSlightlyRightLayer {
   final Bottom2 _bottom2 = Bottom2();
   final Path _path = Path();
 
-  void paint(Canvas canvas) {
+  void paint(Canvas canvas, {double wheelPhase = 0}) {
     _frontPart2.paint(canvas);
     _handleBars2.paint(canvas);
     _bikeBody2.paint(canvas);
@@ -51,7 +52,13 @@ class RiderInMotionFacingSlightlyRightLayer {
     _midSections2.paint(canvas);
     _leftBoot2.paint(canvas);
     _backPart2.paint(canvas);
-    _bikeTyre2.paint(canvas);
+    _bikeTyre2.paint(
+      WheelThreadMotion(
+        canvas,
+        phase: wheelPhase,
+        clipBounds: const Rect.fromLTRB(48.86, 90.45, 70.07, 161.65),
+      ),
+    );
     _bottom2.paint(canvas);
   }
 

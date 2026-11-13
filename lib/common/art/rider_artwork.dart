@@ -4,6 +4,7 @@ import 'dart:ui';
 // Project imports:
 import 'in_motion/rider_in_motion_painter.dart';
 import 'leg_planted/leg_planted_painter.dart';
+import 'look/art_gradient.dart';
 import 'look/art_palette.dart';
 import 'look/art_palettes.dart';
 import 'look/art_recolor_canvas.dart';
@@ -26,28 +27,34 @@ class RiderArtwork {
     Canvas canvas, {
     required RiderFacing facing,
     required bool planted,
+    double wheelPhase = 0,
   }) {
     final recolor = _recolor?..target = canvas;
     final art = recolor ?? canvas;
-    if (planted) {
-      _paintPlanted(art, facing);
-    } else {
-      _paintInMotion(art, facing);
+    ArtGradient.recolor = recolor == null ? null : _palette.gradientColors;
+    try {
+      if (planted) {
+        _paintPlanted(art, facing);
+      } else {
+        _paintInMotion(art, facing, wheelPhase);
+      }
+    } finally {
+      ArtGradient.recolor = null;
     }
   }
 
-  void _paintInMotion(Canvas canvas, RiderFacing facing) {
+  void _paintInMotion(Canvas canvas, RiderFacing facing, double wheelPhase) {
     switch (facing) {
       case RiderFacing.extremelyLeft:
-        _inMotion.paintFacingExtremelyLeft(canvas);
+        _inMotion.paintFacingExtremelyLeft(canvas, wheelPhase: wheelPhase);
       case RiderFacing.slightlyLeft:
-        _inMotion.paintFacingSlightlyLeft(canvas);
+        _inMotion.paintFacingSlightlyLeft(canvas, wheelPhase: wheelPhase);
       case RiderFacing.straight:
-        _inMotion.paintFacingStraight(canvas);
+        _inMotion.paintFacingStraight(canvas, wheelPhase: wheelPhase);
       case RiderFacing.slightlyRight:
-        _inMotion.paintFacingSlightlyRight(canvas);
+        _inMotion.paintFacingSlightlyRight(canvas, wheelPhase: wheelPhase);
       case RiderFacing.extremelyRight:
-        _inMotion.paintFacingExtremelyRight(canvas);
+        _inMotion.paintFacingExtremelyRight(canvas, wheelPhase: wheelPhase);
     }
   }
 

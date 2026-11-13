@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../../rider_in_motion_painter.dart';
+import '../../../../look/art_gradient.dart';
 
 /// Group "BikeBody".
 class BikeBody {
@@ -37,7 +38,7 @@ class BikeBody {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.radial(
+      ..shader = ArtGradient.radial(
         const Offset(62.51, 96.07),
         38.96,
         const [RiderInMotionPainter.color19311D, RiderInMotionPainter.color468638],

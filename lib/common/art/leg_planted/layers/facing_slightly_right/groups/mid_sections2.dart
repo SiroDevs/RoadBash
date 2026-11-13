@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../../leg_planted_painter.dart';
+import '../../../../look/art_gradient.dart';
 
 /// Group "MidSections".
 class MidSections2 {
@@ -116,7 +117,7 @@ class MidSections2 {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(51.79, 80.68),
         const Offset(47.17, 102.88),
         const [LegPlantedPainter.color39317F, LegPlantedPainter.color000000],

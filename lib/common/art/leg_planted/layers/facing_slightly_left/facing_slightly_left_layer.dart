@@ -15,6 +15,7 @@ import 'groups/bike_tyre2.dart';
 import 'groups/back_part3.dart';
 import 'groups/chain_set.dart';
 import 'groups/left_boot3.dart';
+import '../../../look/art_gradient.dart';
 
 /// Layer "FacingSlightlyLeft".
 class LegPlantedFacingSlightlyLeftLayer {
@@ -82,7 +83,7 @@ class LegPlantedFacingSlightlyLeftLayer {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(60.02, 61.32),
         const Offset(65.04, 138.2),
         const [LegPlantedPainter.color2F5C37, LegPlantedPainter.color0D190E],

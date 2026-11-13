@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../../rider_in_motion_painter.dart';
+import '../../../../look/art_gradient.dart';
 
 /// Group "BikeTyre".
 class BikeTyre2 {
@@ -39,7 +40,7 @@ class BikeTyre2 {
     canvas.translate(-68.94, -126.95);
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(66.95, 126.95),
         const Offset(70.94, 126.95),
         const [RiderInMotionPainter.color7F7F7F, RiderInMotionPainter.color404040],
@@ -63,7 +64,7 @@ class BikeTyre2 {
     canvas.translate(-69.27, -126.85);
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(68.35, 126.85),
         const Offset(70.2, 126.85),
         const [RiderInMotionPainter.color000000, RiderInMotionPainter.color626262],

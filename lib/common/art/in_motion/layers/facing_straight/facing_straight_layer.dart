@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../rider_in_motion_painter.dart';
+import '../../../wheel_thread_motion.dart';
 import 'groups/front_part.dart';
 import 'groups/handle_bars.dart';
 import 'groups/bike_body.dart';
@@ -37,7 +38,7 @@ class RiderInMotionFacingStraightLayer {
   final BikeTyre _bikeTyre = BikeTyre();
   final Path _path = Path();
 
-  void paint(Canvas canvas) {
+  void paint(Canvas canvas, {double wheelPhase = 0}) {
     _frontPart.paint(canvas);
     _handleBars.paint(canvas);
     _bikeBody.paint(canvas);
@@ -52,7 +53,13 @@ class RiderInMotionFacingStraightLayer {
     _midSections.paint(canvas);
     _bottom.paint(canvas);
     _backPart.paint(canvas);
-    _bikeTyre.paint(canvas);
+    _bikeTyre.paint(
+      WheelThreadMotion(
+        canvas,
+        phase: wheelPhase,
+        clipBounds: const Rect.fromLTRB(52, 98.45, 70.69, 163.52),
+      ),
+    );
   }
 
   /// Shape "RightLeg".

@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../../rider_in_motion_painter.dart';
+import '../../../../look/art_gradient.dart';
 
 /// Group "MidSections".
 class MidSections5 {
@@ -136,7 +137,7 @@ class MidSections5 {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(71.68, 82.48),
         const Offset(67.58, 107.64),
         const [RiderInMotionPainter.color39317F, RiderInMotionPainter.color000000],

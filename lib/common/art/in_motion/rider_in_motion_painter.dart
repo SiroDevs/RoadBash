@@ -37,38 +37,43 @@ class RiderInMotionPainter {
   static const Color color0D190E = Color(0xFF0D190E);
   static const Color color563828 = Color(0xFF563828);
 
-  final RiderInMotionFacingStraightLayer _facingStraight = RiderInMotionFacingStraightLayer();
-  final RiderInMotionFacingSlightlyRightLayer _facingSlightlyRight = RiderInMotionFacingSlightlyRightLayer();
-  final RiderInMotionFacingExtremelyRightLayer _facingExtremelyRight = RiderInMotionFacingExtremelyRightLayer();
-  final RiderInMotionFacingExtremelyLeftLayer _facingExtremelyLeft = RiderInMotionFacingExtremelyLeftLayer();
-  final RiderInMotionFacingSlightlyLeftLayer _facingSlightlyLeft = RiderInMotionFacingSlightlyLeftLayer();
+  final RiderInMotionFacingStraightLayer _facingStraight =
+      RiderInMotionFacingStraightLayer();
+  final RiderInMotionFacingSlightlyRightLayer _facingSlightlyRight =
+      RiderInMotionFacingSlightlyRightLayer();
+  final RiderInMotionFacingExtremelyRightLayer _facingExtremelyRight =
+      RiderInMotionFacingExtremelyRightLayer();
+  final RiderInMotionFacingExtremelyLeftLayer _facingExtremelyLeft =
+      RiderInMotionFacingExtremelyLeftLayer();
+  final RiderInMotionFacingSlightlyLeftLayer _facingSlightlyLeft =
+      RiderInMotionFacingSlightlyLeftLayer();
 
-  void paint(Canvas canvas) {
-    _facingSlightlyLeft.paint(canvas);
+  void paint(Canvas canvas, {double wheelPhase = 0}) {
+    _facingStraight.paint(canvas, wheelPhase: wheelPhase);
   }
 
   /// Paints layer "FacingStraight".
-  void paintFacingStraight(Canvas canvas) {
-    _facingStraight.paint(canvas);
+  void paintFacingStraight(Canvas canvas, {double wheelPhase = 0}) {
+    _facingStraight.paint(canvas, wheelPhase: wheelPhase);
   }
 
   /// Paints layer "FacingSlightlyRight".
-  void paintFacingSlightlyRight(Canvas canvas) {
-    _facingSlightlyRight.paint(canvas);
+  void paintFacingSlightlyRight(Canvas canvas, {double wheelPhase = 0}) {
+    _facingSlightlyRight.paint(canvas, wheelPhase: wheelPhase);
   }
 
   /// Paints layer "FacingExtremelyRight".
-  void paintFacingExtremelyRight(Canvas canvas) {
-    _facingExtremelyRight.paint(canvas);
+  void paintFacingExtremelyRight(Canvas canvas, {double wheelPhase = 0}) {
+    _facingExtremelyRight.paint(canvas, wheelPhase: wheelPhase);
   }
 
   /// Paints layer "FacingExtremelyLeft".
-  void paintFacingExtremelyLeft(Canvas canvas) {
-    _facingExtremelyLeft.paint(canvas);
+  void paintFacingExtremelyLeft(Canvas canvas, {double wheelPhase = 0}) {
+    _facingExtremelyLeft.paint(canvas, wheelPhase: wheelPhase);
   }
 
   /// Paints layer "FacingSlightlyLeft".
-  void paintFacingSlightlyLeft(Canvas canvas) {
-    _facingSlightlyLeft.paint(canvas);
+  void paintFacingSlightlyLeft(Canvas canvas, {double wheelPhase = 0}) {
+    _facingSlightlyLeft.paint(canvas, wheelPhase: wheelPhase);
   }
 }

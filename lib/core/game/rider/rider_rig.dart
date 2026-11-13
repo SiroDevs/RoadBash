@@ -2,7 +2,7 @@
 import 'dart:math' as math;
 
 // Project imports:
-import 'rider_frame.dart';
+import '../../../common/art/rider_frame.dart';
 
 /// Size and lift settings of the rider and bike.
 class RiderRig {

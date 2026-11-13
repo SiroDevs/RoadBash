@@ -1,12 +1,16 @@
 // Dart imports:
 import 'dart:math' as math;
 
+// Project imports:
+import 'start_grid.dart';
+
 /// Steers one rival across the road: lane keeping, dodging and shoves.
 class RivalSteering {
   RivalSteering({
     required this.gridLateral,
     required this.lanes,
     required this.index,
+    required this.fieldSize,
     required this.phase,
   }) : lateral = gridLateral;
 
@@ -26,6 +30,7 @@ class RivalSteering {
   final double gridLateral;
   final int lanes;
   final int index;
+  final int fieldSize;
   final double phase;
 
   double lateral;
@@ -87,7 +92,7 @@ class RivalSteering {
   /// Returns the lane line for this rival, easing off the grid after the start.
   double _laneTarget(double clock) {
     final width = 2 / lanes;
-    final lane = -1 + width * ((index % lanes) + 0.5);
+    final lane = StartGrid.settledFor(index, fieldSize, lanes);
     final weaveIn = ((clock - _weaveStart) / _weaveStart).clamp(0.0, 1.0).toDouble();
     final weave = width * 0.15 * math.sin(clock * 0.6 + phase) * weaveIn;
     final progress = (clock / _launchBlend).clamp(0.0, 1.0).toDouble();

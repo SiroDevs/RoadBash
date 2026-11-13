@@ -2,8 +2,8 @@
 import 'dart:ui';
 
 // Project imports:
-import '../../core/game/rider/look/rider_look.dart';
-import '../../core/game/rider/rider_sprite.dart';
+import '../art/look/rider_look.dart';
+import '../art/rider_sprite.dart';
 import '../../core/game/road/traffic/road_actor.dart';
 
 /// A bike standing in a scene preview, drawn like a rival.
@@ -14,9 +14,7 @@ class PreviewBike implements RoadActor {
     required RiderLook look,
     required double speed,
   }) : _sprite = RiderSprite(look: look) {
-    _sprite.pose
-      ..speed = speed
-      ..perspective = -lateral.sign * 0.25;
+    _sprite.pose.speed = speed;
   }
 
   @override

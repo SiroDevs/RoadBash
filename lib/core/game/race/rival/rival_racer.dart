@@ -4,7 +4,7 @@ import 'dart:ui';
 
 // Project imports:
 import '../../rider/crash_state.dart';
-import '../../rider/rider_sprite.dart';
+import '../../../../common/art/rider_sprite.dart';
 import '../../road/config/vehicle_config.dart';
 import '../../road/road_renderer.dart';
 import '../../road/traffic/road_actor.dart';
@@ -34,6 +34,7 @@ class RivalRacer implements RoadActor {
          gridLateral: StartGrid.lateralFor(index, fieldSize),
          lanes: lanes,
          index: index,
+         fieldSize: fieldSize,
          phase: rival.phase,
        ) {
     _lane = RivalLane(
@@ -59,6 +60,7 @@ class RivalRacer implements RoadActor {
   final RivalSteering _steering;
   final CrashState _crash = CrashState();
   late final RivalPoseDriver _poseDriver = RivalPoseDriver(sprite.pose, index);
+  final RivalFacing _facing = RivalFacing();
   final RivalLookout _lookout = RivalLookout();
   final RivalGround _ground = RivalGround();
   late final RivalLane _lane;
@@ -104,7 +106,6 @@ class RivalRacer implements RoadActor {
   /// Advances the rival for one frame.
   void update(double dt, RaceController race, RoadRenderer road) {
     if (dt <= 0) return;
-    final clock = race.raceClock;
     _crash.update(dt);
     _advance(dt, race, road);
     race.rivalTracker.report(rival.name, _dist, _speed);
@@ -119,7 +120,7 @@ class RivalRacer implements RoadActor {
       crossed: _crossed,
       flow: flow,
     );
-    _updateFacing(dt, road.playerX, road.fullDistance, clock);
+    _updateFacing(dt, road.playerX, road.fullDistance);
     _poseDriver.update(
       dt: dt,
       speed: _speed,
@@ -131,16 +132,13 @@ class RivalRacer implements RoadActor {
     _ground.updateDust(dt, _speed, down: _crash.down);
   }
 
-  /// Eases the rival toward the yaw its place relative to the player calls for.
-  void _updateFacing(double dt, double playerLateral, double playerDistance, double raceClock) {
-    final target = RivalFacing.yaw(
+  /// Turns the rival toward the player by how far ahead of him it rides.
+  void _updateFacing(double dt, double playerLateral, double playerDistance) {
+    sprite.pose.facing = _facing.update(
+      dt: dt,
       sideOffset: lateral - playerLateral,
       gap: distance - playerDistance,
-      index: index,
-      atStart: raceClock < 3.5,
     );
-    sprite.pose.perspective +=
-        (target - sprite.pose.perspective) * math.min(1.0, dt * 3.5);
   }
 
   /// Slows the rival and shoves it sideways after a hit.

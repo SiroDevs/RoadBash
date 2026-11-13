@@ -5,6 +5,7 @@ import 'road_config.dart';
 abstract final class VehicleConfig {
   static const double maxSpeed = RoadConfig.segmentLength * 60;
   static const double topSpeedKmh = 240;
+  static const double unitsPerMetre = maxSpeed / (topSpeedKmh / 3.6);
   static const double nastyCrashKmh = 100;
   static const double accel = maxSpeed / 5.4;
   static const double braking = -maxSpeed * 1.1;

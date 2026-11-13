@@ -4,9 +4,9 @@ import 'dart:ui';
 
 // Project imports:
 import '../race/rival/rival_pose_driver.dart';
-import '../rider/look/rider_looks.dart';
-import '../rider/rider_frame.dart';
-import '../rider/rider_sprite.dart';
+import '../../../common/art/look/rider_looks.dart';
+import '../../../common/art/rider_frame.dart';
+import '../../../common/art/rider_sprite.dart';
 import '../road/config/vehicle_config.dart';
 import '../road/traffic/road_actor.dart';
 

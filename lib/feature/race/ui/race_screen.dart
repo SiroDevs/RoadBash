@@ -24,7 +24,6 @@ import '../../settings/cubit/settings_cubit.dart';
 import '../cubit/race_cubit.dart';
 import 'hud_strings_l10n.dart';
 import 'level_briefing.dart';
-import 'widgets/attack_button.dart';
 import 'widgets/handlebar_pad.dart';
 import 'widgets/race_controls_menu.dart';
 import 'widgets/race_pause_overlay.dart';
@@ -60,6 +59,7 @@ class _RaceScreenState extends State<RaceScreen> {
     final profile = context.read<SettingsCubit>().state.profile;
     final race = context.read<RaceCubit>();
     final career = context.read<ProgressCubit>().state.career;
+    final strings = hudStringsFor(l10n);
     return RoadGame(
       scene: widget.scene,
       rules: career.rules,
@@ -67,9 +67,10 @@ class _RaceScreenState extends State<RaceScreen> {
       mix: profile,
       audio: getIt<AudioService>(),
       playerName: profile.displayName(l10n),
+      attackLabel: career.rules.combat ? strings.attack : null,
       onFinished: race.finish,
       onPauseKey: _togglePause,
-      strings: hudStringsFor(l10n),
+      strings: strings,
     );
   }
 
@@ -168,17 +169,18 @@ class _RaceScreenState extends State<RaceScreen> {
             child: Stack(
               children: [
                 GameWidget(game: _game),
-                if (combat && showTouchUi) AttackButton(onHold: _game.setAttack),
                 Positioned.fill(
                   child: HandlebarPad(
                     key: ValueKey(_inputEpoch),
-                    onChanged: _game.setHandlebars,
+                    attackEnabled: combat,
+                    onChanged: (pose) {
+                      _game.setHandlebars(pose);
+                      _game.setAttack(combat && pose.leftHeld);
+                    },
                   ),
                 ),
                 if (_paused)
-                  Positioned.fill(
-                    child: RacePauseOverlay(onTap: _togglePause),
-                  ),
+                  Positioned.fill(child: RacePauseOverlay(onTap: _togglePause)),
                 RaceTopBar(
                   game: _game,
                   laps: _laps,

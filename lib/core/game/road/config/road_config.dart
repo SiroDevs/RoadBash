@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 // Project imports:
 import '../../../../common/utils/app_util.dart';
+import '../../../layout/app_breakpoints.dart';
 
 /// Road drawing constants.
 abstract final class RoadConfig {
@@ -13,6 +14,8 @@ abstract final class RoadConfig {
   static const double cameraHeight = 1000;
   static const double cameraDepth = 0.84;
   static const double horizonRatio = 0.14;
+  static const double portraitHorizonOffset = 0.02;
+  static const double smallScreenHorizonOffset = 0.015;
   static final int drawDistance = _lite ? 170 : 240;
   static final int decorDistance = _lite ? 130 : 200;
   static const int rumbleLength = 4;
@@ -29,4 +32,14 @@ abstract final class RoadConfig {
   static const double medianWidth = 0.42;
   static const double oppositeWidth = 2.0;
   static const double unitKm = 0.0000044;
+
+  /// Returns the horizon placement for the current screen shape and size.
+  static double horizonRatioFor(double width, double height) {
+    var offset = 0.0;
+    if (width < height) offset += portraitHorizonOffset;
+    if (AppBreakpoints.layoutWidth(width, height) <= AppBreakpoints.small) {
+      offset += smallScreenHorizonOffset;
+    }
+    return horizonRatio + offset;
+  }
 }

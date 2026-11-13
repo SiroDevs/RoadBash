@@ -45,6 +45,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput, RacePause {
     required this.playerName,
     required this.onFinished,
     required this.rules,
+    this.attackLabel,
     this.briefing = const [],
     this.onPauseKey,
   });
@@ -56,6 +57,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput, RacePause {
 
   /// The rules of the level being raced.
   final LevelRules rules;
+  final String? attackLabel;
 
   /// Hint lines shown before the countdown; the first is the level's title.
   final List<String> briefing;
@@ -122,7 +124,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput, RacePause {
       handlebar,
       HandlebarPipeHud(handlebar),
       DashboardHud(road, race, strings, police, briefing),
-      HandlebarGripsHud(handlebar, strings.gas),
+      HandlebarGripsHud(handlebar, strings.gas, attackLabel: attackLabel),
     ]);
     if (_shutDown) return;
     final ride = RideAudio(
@@ -171,8 +173,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput, RacePause {
   }
 
   /// True when the finish delay is over or every rival has settled.
-  bool get _fieldHome =>
-      _finishDelay < -3.6 || racers.every((r) => r.settled);
+  bool get _fieldHome => _finishDelay < -3.6 || racers.every((r) => r.settled);
 
   /// Applies a new player profile to the game and its audio.
   void updateMix(PlayerProfile profile) {

@@ -166,7 +166,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get controlsHelp =>
-      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: pande mbili za usukani husogea pamoja. Shikilia upande wa kulia (MAFUTA) kuendesha na uachilie kufunga breki. Buruta upande wowote kugeuka: kulia ukishuka (kushoto ukipanda) unaelekea kulia, kushoto ukishuka (kulia ukipanda) unaelekea kushoto. Unaweza pia kuinamisha kifaa kama usukani, au kuwasha Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa usukani wa skrini pekee.';
+      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: pande mbili za usukani husogea pamoja. Shikilia upande wa kulia (MAFUTA) kuendesha na uachilie kufunga breki. Buruta upande wowote kugeuka: kulia ukishuka (kushoto ukipanda) unaelekea kulia, kushoto ukishuka (kulia ukipanda) unaelekea kushoto. Kuanzia kiwango cha 4, shikilia mpini wa kushoto kushambulia. Unaweza pia kuinamisha kifaa kama usukani, au kuwasha Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa usukani wa skrini pekee.';
 
   @override
   String get hudGo => 'ANZA!';
@@ -179,6 +179,9 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get hudGasLabel => 'Mafuta';
+
+  @override
+  String get hudAttackLabel => 'PIGA';
 
   @override
   String hudLap(int lap, int laps) {
@@ -257,6 +260,10 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get handlebarLeft =>
       'Upande wa kushoto wa usukani: buruta chini kuelekea kushoto, juu kuelekea kulia';
+
+  @override
+  String get handlebarAttack =>
+      'Upande wa kushoto wa usukani: shikilia kushambulia; buruta kuelekeza';
 
   @override
   String get handlebarRight =>

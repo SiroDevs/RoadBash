@@ -90,7 +90,8 @@ class DashboardLayout {
   static const double _maxSpread = 1.8;
 
   /// Returns the horizon's vertical position.
-  static double horizonY(Vector2 screen) => screen.y * RoadConfig.horizonRatio;
+  static double horizonY(Vector2 screen) =>
+      screen.y * RoadConfig.horizonRatioFor(screen.x, screen.y);
 
   /// Returns where the rider's tyres touch the ground.
   static double riderTyresGround(Vector2 screen) {

@@ -26,7 +26,9 @@ class ProjectionPoint {
     final unit = size.y / 2;
     z = depth;
     x = size.x / 2 + scale * (0 - camX) * unit * spread;
-    y = size.y * RoadConfig.horizonRatio - scale * (wy - camY) * unit;
+    y =
+        size.y * RoadConfig.horizonRatioFor(size.x, size.y) -
+        scale * (wy - camY) * unit;
     w = scale * RoadConfig.roadWidth * unit * spread;
     k = scale * unit;
   }
@@ -78,9 +80,16 @@ class SpanPoint {
   double x = 0, y = 0, k = 0;
 
   /// Interpolates a point between two projected segments.
-  void lerp(VisionSeg near, VisionSeg far, double fraction, double cx, double horizonY) {
+  void lerp(
+    VisionSeg near,
+    VisionSeg far,
+    double fraction,
+    double cx,
+    double horizonY,
+  ) {
     final an = (near.x1 - cx) / near.k1, af = (far.x1 - cx) / far.k1;
-    final bn = (near.y1 - horizonY) / near.k1, bf = (far.y1 - horizonY) / far.k1;
+    final bn = (near.y1 - horizonY) / near.k1,
+        bf = (far.y1 - horizonY) / far.k1;
     k = 1 / ((1 - fraction) / near.k1 + fraction / far.k1);
     x = cx + k * (an + (af - an) * fraction);
     y = horizonY + k * (bn + (bf - bn) * fraction);

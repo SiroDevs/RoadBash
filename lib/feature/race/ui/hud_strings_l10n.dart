@@ -8,6 +8,7 @@ HudStrings hudStringsFor(AppLocalizations l10n) => HudStrings(
   finish: l10n.hudFinish,
   holdGas: l10n.hudHoldGas,
   gas: l10n.hudGasLabel,
+  attack: l10n.hudAttackLabel,
   speedUnit: l10n.hudSpeedUnit,
   rpmUnit: l10n.hudRpmUnit,
   lap: l10n.hudLap,

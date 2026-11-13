@@ -8,6 +8,7 @@ import 'package:flame/components.dart';
 import '../../../../common/objects/building/skyline/skyline.dart';
 import '../../../../common/objects/mountain/hills.dart';
 import '../../utils/paint_utils.dart';
+import 'backdrop_clouds.dart';
 import '../config/road_config.dart';
 import '../scene_theme.dart';
 
@@ -16,7 +17,9 @@ class RoadBackdrop {
   RoadBackdrop(this.theme)
     : _far = fillPaint(Color.lerp(theme.backFar, theme.fog, 0.35)!),
       _near = fillPaint(Color.lerp(theme.backNear, theme.fog, 0.18)!),
-      _front = fillPaint(Color.lerp(theme.backNear, const Color(0xFF000000), 0.18)!),
+      _front = fillPaint(
+        Color.lerp(theme.backNear, const Color(0xFF000000), 0.18)!,
+      ),
       _farHaze = theme.fog.withAlpha(150),
       _nearHaze = theme.fog.withAlpha(45);
 
@@ -25,7 +28,6 @@ class RoadBackdrop {
   final Color _farHaze, _nearHaze;
   final Paint _sky = Paint();
   final Paint _ground = Paint()..isAntiAlias = false;
-  final Paint _cloud = fillPaint(const Color(0xB3FFFFFF));
   final Path _path = Path();
 
   double scroll = 0;
@@ -35,12 +37,11 @@ class RoadBackdrop {
   double skylineRise = 0;
 
   static const _designHorizon = 0.42;
-  static const _cloudX = [0.05, 0.28, 0.52, 0.74, 0.93];
-  static const _cloudY = [0.20, 0.45, 0.15, 0.38, 0.25];
 
   /// Rebuilds the sky shader for a new screen size.
   void resize(Vector2 size) {
-    final horizon = size.y * RoadConfig.horizonRatio;
+    final horizonRatio = RoadConfig.horizonRatioFor(size.x, size.y);
+    final horizon = size.y * horizonRatio;
     _sky.shader = Gradient.linear(Offset.zero, Offset(0, horizon), [
       theme.skyTop,
       theme.skyHorizon,
@@ -55,12 +56,19 @@ class RoadBackdrop {
   /// Draws the sky, hills, clouds and skyline.
   void draw(Canvas canvas, Vector2 size) {
     final viewWidth = size.x;
-    final horizon = size.y * RoadConfig.horizonRatio;
+    final horizonRatio = RoadConfig.horizonRatioFor(size.x, size.y);
+    final horizon = size.y * horizonRatio;
     final unit = size.y / 700;
-    final tall = unit * RoadConfig.horizonRatio / _designHorizon;
+    final tall = unit * horizonRatio / _designHorizon;
 
     canvas.drawRect(Rect.fromLTWH(0, 0, viewWidth, horizon + 1), _sky);
-    _clouds(canvas, viewWidth, horizon, big: theme.backdrop == BackdropKind.sky);
+    BackdropClouds.draw(
+      canvas,
+      viewWidth,
+      horizon,
+      scroll,
+      big: theme.backdrop == BackdropKind.sky,
+    );
 
     if (theme.backdrop == BackdropKind.skyline) {
       drawCityScape(
@@ -186,28 +194,5 @@ class RoadBackdrop {
       );
     }
     canvas.drawRect(Rect.fromLTRB(0, horizon, viewWidth, size.y), _ground);
-  }
-
-  /// Draws a band of clouds across the sky.
-  void _clouds(Canvas canvas, double viewWidth, double horizon, {bool big = false}) {
-    final span = viewWidth * 1.4;
-    final grow = big ? 1.9 : 1.0;
-    for (var i = 0; i < _cloudX.length; i++) {
-      final cloudX = (_cloudX[i] * span - scroll * 0.2) % span - viewWidth * 0.2;
-      final cloudY = horizon * _cloudY[i];
-      final cloudSize = horizon * (0.10 + 0.02 * (i % 3)) * grow;
-      canvas.drawOval(
-        Rect.fromCenter(center: Offset(cloudX, cloudY), width: cloudSize * 3.2, height: cloudSize),
-        _cloud,
-      );
-      canvas.drawOval(
-        Rect.fromCenter(
-          center: Offset(cloudX + cloudSize * 0.7, cloudY - cloudSize * 0.25),
-          width: cloudSize * 2.0,
-          height: cloudSize * 0.9,
-        ),
-        _cloud,
-      );
-    }
   }
 }

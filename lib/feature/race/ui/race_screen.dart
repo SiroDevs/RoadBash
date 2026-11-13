@@ -183,7 +183,10 @@ class _RaceScreenState extends State<RaceScreen> {
                     if (!accessoryArea.isEmpty)
                       Positioned.fromRect(
                         rect: accessoryArea,
-                        child: AccessoryControls(game: _game),
+                        child: AccessoryControls(
+                          game: _game,
+                          portrait: DashboardLayout.isPortrait(screen),
+                        ),
                       ),
                     if (_paused)
                       Positioned.fill(

@@ -15,10 +15,9 @@ class DashboardLayout {
   static const double dialStart = 0.75 * math.pi;
   static const double dialSweep = 1.5 * math.pi;
 
-  static const double visibleShare = 0.734;
-
   static const double _tyreMaxY = 0.6;
-  static const double _portraitAccessoryShare = 0.08;
+  static const double _portraitAccessoryShare = 0.11;
+  static const double _landscapeAccessoryShare = 0.09;
 
   late final double ph, pw, left, top, speedRadius, rpmRadius;
   late final Offset speedOffset, rpmOffset;
@@ -69,37 +68,27 @@ class DashboardLayout {
   static double heightFor(Vector2 screen) =>
       math.min(screen.x * aspectFor(screen), screen.y * maxShareFor(screen));
 
-  /// Returns the part of the dashboard that is visible.
-  static double visibleHeight(Vector2 screen) =>
-      isPortrait(screen) ? heightFor(screen) : heightFor(screen) * visibleShare;
-
-  /// Returns the reserved accessory strip at the bottom of a portrait screen.
+  /// Returns the accessory strip at the bottom of the screen.
   static Rect accessoryArea(Vector2 screen) {
-    if (!isPortrait(screen)) return Rect.zero;
-    final height = screen.y * _portraitAccessoryShare;
+    if (screen.x <= 0 || screen.y <= 0) return Rect.zero;
+    final share = isPortrait(screen)
+        ? _portraitAccessoryShare
+        : _landscapeAccessoryShare;
+    final height = screen.y * share;
     return Rect.fromLTWH(0, screen.y - height, screen.x, height);
   }
 
-  /// Returns the dashboard's top edge, above its visible area and accessories.
+  /// Returns the dashboard's top edge above the accessory strip.
   static double topFor(Vector2 screen) {
     final height = heightFor(screen);
-    if (isPortrait(screen)) {
-      return screen.y - height - accessoryArea(screen).height;
-    }
-    return screen.y - height * visibleShare;
+    return screen.y - height - accessoryArea(screen).height;
   }
 
   /// Returns the dashboard's rectangle on screen.
   static Rect footprint(Vector2 screen) {
     final height = heightFor(screen);
     final width = height / aspectFor(screen);
-    final visible = visibleHeight(screen);
-    return Rect.fromLTWH(
-      (screen.x - width) / 2,
-      topFor(screen),
-      width,
-      visible,
-    );
+    return Rect.fromLTWH((screen.x - width) / 2, topFor(screen), width, height);
   }
 
   static const double _portraitReach = 0.45;

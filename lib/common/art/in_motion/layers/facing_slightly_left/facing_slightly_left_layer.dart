@@ -2,19 +2,19 @@
 import 'dart:ui';
 
 import '../../rider_in_motion_painter.dart';
-import 'groups/front_part2.dart';
-import 'groups/handle_bars2.dart';
-import 'groups/left_hand2.dart';
-import 'groups/right_hand2.dart';
-import 'groups/torso2.dart';
-import 'groups/left_boot2.dart';
-import 'groups/left_bike_body.dart';
-import 'groups/mid_sections2.dart';
-import 'groups/right_boot2.dart';
-import 'groups/bike_tyre2.dart';
-import 'groups/back_part2.dart';
-import 'groups/exhaust.dart';
-import 'groups/helmeta.dart';
+import 'groups/front_part3.dart';
+import 'groups/handle_bars3.dart';
+import 'groups/right_hand3.dart';
+import 'groups/left_hand3.dart';
+import 'groups/torso3.dart';
+import 'groups/right_boot3.dart';
+import 'groups/right_bike_body.dart';
+import 'groups/helmet2.dart';
+import 'groups/mid_sections3.dart';
+import 'groups/bike_tyre3.dart';
+import 'groups/back_part3.dart';
+import 'groups/chain_set.dart';
+import 'groups/left_boot3.dart';
 
 /// Layer "FacingSlightlyLeft".
 class RiderInMotionFacingSlightlyLeftLayer {
@@ -22,69 +22,69 @@ class RiderInMotionFacingSlightlyLeftLayer {
     ..isAntiAlias = true
     ..strokeCap = StrokeCap.round
     ..strokeJoin = StrokeJoin.round;
-  final FrontPart2 _frontPart2 = FrontPart2();
-  final HandleBars2 _handleBars2 = HandleBars2();
-  final LeftHand2 _leftHand2 = LeftHand2();
-  final RightHand2 _rightHand2 = RightHand2();
-  final Torso2 _torso2 = Torso2();
-  final LeftBoot2 _leftBoot2 = LeftBoot2();
-  final LeftBikeBody _leftBikeBody = LeftBikeBody();
-  final MidSections2 _midSections2 = MidSections2();
-  final RightBoot2 _rightBoot2 = RightBoot2();
-  final BikeTyre2 _bikeTyre2 = BikeTyre2();
-  final BackPart2 _backPart2 = BackPart2();
-  final Exhaust _exhaust = Exhaust();
-  final Helmeta _helmeta = Helmeta();
+  final FrontPart3 _frontPart3 = FrontPart3();
+  final HandleBars3 _handleBars3 = HandleBars3();
+  final RightHand3 _rightHand3 = RightHand3();
+  final LeftHand3 _leftHand3 = LeftHand3();
+  final Torso3 _torso3 = Torso3();
+  final RightBoot3 _rightBoot3 = RightBoot3();
+  final RightBikeBody _rightBikeBody = RightBikeBody();
+  final Helmet2 _helmet2 = Helmet2();
+  final MidSections3 _midSections3 = MidSections3();
+  final BikeTyre3 _bikeTyre3 = BikeTyre3();
+  final BackPart3 _backPart3 = BackPart3();
+  final ChainSet _chainSet = ChainSet();
+  final LeftBoot3 _leftBoot3 = LeftBoot3();
   final Path _path = Path();
 
   void paint(Canvas canvas) {
-    _frontPart2.paint(canvas);
-    _handleBars2.paint(canvas);
-    _leftHand2.paint(canvas);
-    _rightHand2.paint(canvas);
+    _frontPart3.paint(canvas);
+    _handleBars3.paint(canvas);
+    _rightHand3.paint(canvas);
+    _leftHand3.paint(canvas);
     _drawBikeFrame(canvas);
     _drawLeftLeg(canvas);
-    _torso2.paint(canvas);
-    _leftBoot2.paint(canvas);
-    _leftBikeBody.paint(canvas);
-    _midSections2.paint(canvas);
-    _drawRightLeg(canvas);
-    _rightBoot2.paint(canvas);
-    _bikeTyre2.paint(canvas);
-    _backPart2.paint(canvas);
-    _exhaust.paint(canvas);
-    _helmeta.paint(canvas);
+    _torso3.paint(canvas);
+    _rightBoot3.paint(canvas);
+    _rightBikeBody.paint(canvas);
+    _helmet2.paint(canvas);
+    _midSections3.paint(canvas);
+    _drawLeftLeg2(canvas);
+    _bikeTyre3.paint(canvas);
+    _backPart3.paint(canvas);
+    _chainSet.paint(canvas);
+    _leftBoot3.paint(canvas);
   }
 
   /// Shape "BikeFrame".
   void _drawBikeFrame(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(68.66, 127.28)
-      ..lineTo(42.07, 122.59)
-      ..lineTo(39.66, 116.64)
-      ..lineTo(38.07, 93.45)
-      ..lineTo(39.57, 90.67)
-      ..lineTo(40.44, 85.75)
-      ..lineTo(38.53, 79.32)
-      ..lineTo(37.31, 68.95)
-      ..lineTo(39.51, 62.23)
-      ..lineTo(44.49, 57.02)
-      ..lineTo(57.81, 56.32)
-      ..lineTo(78.15, 61.93)
-      ..lineTo(89.68, 77.17)
-      ..lineTo(90.43, 84.41)
-      ..lineTo(91.19, 91.65)
-      ..lineTo(87.19, 97.04)
-      ..lineTo(87.48, 101.15)
-      ..lineTo(85.46, 106.88)
-      ..lineTo(78.62, 116.85)
+      ..moveTo(62.41, 127.38)
+      ..lineTo(88.86, 121.96)
+      ..lineTo(91.11, 115.95)
+      ..lineTo(92.06, 92.73)
+      ..lineTo(90.48, 89.99)
+      ..lineTo(89.48, 85.09)
+      ..lineTo(91.21, 78.61)
+      ..lineTo(92.15, 68.21)
+      ..lineTo(89.76, 61.55)
+      ..lineTo(84.64, 56.48)
+      ..lineTo(71.3, 56.15)
+      ..lineTo(51.13, 62.32)
+      ..lineTo(40.02, 77.86)
+      ..lineTo(39.47, 85.12)
+      ..lineTo(38.91, 92.38)
+      ..lineTo(43.05, 97.65)
+      ..lineTo(42.88, 101.77)
+      ..lineTo(45.06, 107.45)
+      ..lineTo(52.16, 117.23)
       ..close();
     _paint
       ..style = PaintingStyle.fill
       ..shader = Gradient.linear(
-        const Offset(61.71, 53.51),
-        const Offset(66.79, 130.09),
+        const Offset(63.02, 53.32),
+        const Offset(68.04, 130.2),
         const [RiderInMotionPainter.color2F5C37, RiderInMotionPainter.color0D190E],
         const [0.0, 1.0],
       );
@@ -101,20 +101,20 @@ class RiderInMotionFacingSlightlyLeftLayer {
   void _drawLeftLeg(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(58.39, 47.28)
-      ..lineTo(56.66, 57.13)
-      ..lineTo(50.23, 59.04)
-      ..lineTo(46.58, 62.46)
-      ..lineTo(43.74, 67.04)
-      ..lineTo(41.71, 72.77)
-      ..lineTo(39.51, 79.49)
-      ..lineTo(36.74, 95.25)
-      ..lineTo(29.38, 90.91)
-      ..lineTo(30.65, 77.93)
-      ..lineTo(31.92, 64.95)
-      ..lineTo(36.26, 57.6)
-      ..lineTo(40.43, 51.22)
-      ..lineTo(47.24, 44.3)
+      ..moveTo(70.48, 47.13)
+      ..lineTo(72.48, 56.92)
+      ..lineTo(78.96, 58.66)
+      ..lineTo(82.7, 61.98)
+      ..lineTo(85.67, 66.48)
+      ..lineTo(87.85, 72.15)
+      ..lineTo(90.23, 78.81)
+      ..lineTo(93.44, 94.48)
+      ..lineTo(100.68, 89.94)
+      ..lineTo(99.05, 77.0)
+      ..lineTo(96.0, 63.0)
+      ..lineTo(92.88, 56.83)
+      ..lineTo(88.54, 50.58)
+      ..lineTo(81.54, 43.84)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -123,24 +123,24 @@ class RiderInMotionFacingSlightlyLeftLayer {
     canvas.drawPath(_path, _paint);
   }
 
-  /// Shape "RightLeg".
-  void _drawRightLeg(Canvas canvas) {
+  /// Shape "LeftLeg".
+  void _drawLeftLeg2(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(57.41, 47.11)
-      ..lineTo(55.67, 56.96)
-      ..lineTo(66.79, 62.98)
-      ..lineTo(73.98, 68.31)
-      ..lineTo(78.21, 73.11)
-      ..lineTo(76.53, 76.88)
-      ..lineTo(75.66, 81.8)
-      ..lineTo(73.58, 93.62)
-      ..lineTo(82.44, 95.18)
-      ..lineTo(85.97, 86.67)
-      ..lineTo(88.78, 76.5)
-      ..lineTo(88.75, 70.91)
-      ..lineTo(78.84, 57.99)
-      ..lineTo(69.22, 49.19)
+      ..moveTo(71.46, 46.93)
+      ..lineTo(73.46, 56.72)
+      ..lineTo(62.51, 63.05)
+      ..lineTo(55.47, 68.57)
+      ..lineTo(51.38, 73.49)
+      ..lineTo(53.16, 77.21)
+      ..lineTo(54.16, 82.11)
+      ..lineTo(56.57, 93.87)
+      ..lineTo(47.75, 95.67)
+      ..lineTo(43.99, 87.26)
+      ..lineTo(40.9, 77.17)
+      ..lineTo(40.78, 71.58)
+      ..lineTo(50.33, 58.4)
+      ..lineTo(59.7, 49.33)
       ..close();
     _paint
       ..style = PaintingStyle.fill

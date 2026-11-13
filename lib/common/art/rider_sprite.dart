@@ -43,7 +43,6 @@ class RiderSprite {
         canvas,
         facing: pose.facing,
         planted: pose.foot > plantedFoot,
-        steer: pose.steer,
       );
     }
     canvas.restore();

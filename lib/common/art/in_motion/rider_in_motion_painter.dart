@@ -3,8 +3,8 @@
 import 'dart:ui';
 
 import 'layers/facing_straight/facing_straight_layer.dart';
-import 'layers/facing_slightly_left/facing_slightly_left_layer.dart';
 import 'layers/facing_slightly_right/facing_slightly_right_layer.dart';
+import 'layers/facing_slightly_left/facing_slightly_left_layer.dart';
 
 /// Paints every layer of "RiderInMotion", bottom to top.
 class RiderInMotionPainter {
@@ -36,8 +36,8 @@ class RiderInMotionPainter {
   static const Color color563828 = Color(0xFF563828);
 
   final RiderInMotionFacingStraightLayer _facingStraight = RiderInMotionFacingStraightLayer();
-  final RiderInMotionFacingSlightlyLeftLayer _facingSlightlyLeft = RiderInMotionFacingSlightlyLeftLayer();
   final RiderInMotionFacingSlightlyRightLayer _facingSlightlyRight = RiderInMotionFacingSlightlyRightLayer();
+  final RiderInMotionFacingSlightlyLeftLayer _facingSlightlyLeft = RiderInMotionFacingSlightlyLeftLayer();
 
   void paint(Canvas canvas) {
     _facingSlightlyRight.paint(canvas);
@@ -48,13 +48,13 @@ class RiderInMotionPainter {
     _facingStraight.paint(canvas);
   }
 
-  /// Paints layer "FacingSlightlyLeft".
-  void paintFacingSlightlyLeft(Canvas canvas) {
-    _facingSlightlyLeft.paint(canvas);
-  }
-
   /// Paints layer "FacingSlightlyRight".
   void paintFacingSlightlyRight(Canvas canvas) {
     _facingSlightlyRight.paint(canvas);
+  }
+
+  /// Paints layer "FacingSlightlyLeft".
+  void paintFacingSlightlyLeft(Canvas canvas) {
+    _facingSlightlyLeft.paint(canvas);
   }
 }

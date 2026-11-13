@@ -6,6 +6,7 @@ import 'in_motion/rider_in_motion_painter.dart';
 import 'leg_planted/leg_planted_painter.dart';
 import 'look/art_palette.dart';
 import 'look/art_palettes.dart';
+import 'look/art_recolor_canvas.dart';
 import 'look/rider_look.dart';
 import 'rider_facing.dart';
 
@@ -14,6 +15,9 @@ class RiderArtwork {
   RiderArtwork(RiderLook look) : _palette = ArtPalettes.of(look);
 
   final ArtPalette _palette;
+  late final ArtRecolorCanvas? _recolor = identical(_palette, ArtPalette.drawn)
+      ? null
+      : ArtRecolorCanvas(_palette);
   final RiderInMotionPainter _inMotion = RiderInMotionPainter();
   final LegPlantedPainter _legPlanted = LegPlantedPainter();
 
@@ -22,37 +26,35 @@ class RiderArtwork {
     Canvas canvas, {
     required RiderFacing facing,
     required bool planted,
-    double steer = 0,
   }) {
-    ArtPalette.use(_palette, () {
-      if (planted) {
-        _paintPlanted(canvas, facing, steer);
-      } else {
-        _paintInMotion(canvas, facing, steer);
-      }
-    });
-  }
-
-  // Drawings are named for the side shown, opposite to where the bike points.
-  void _paintInMotion(Canvas canvas, RiderFacing facing, double steer) {
-    switch (facing) {
-      case RiderFacing.straight:
-        _inMotion.paintFacingStraight(canvas, steer: steer);
-      case RiderFacing.right:
-        _inMotion.paintFacingSlightlyLeft(canvas, steer: steer);
-      case RiderFacing.left:
-        _inMotion.paintFacingSlightlyRight(canvas, steer: steer);
+    final recolor = _recolor?..target = canvas;
+    final art = recolor ?? canvas;
+    if (planted) {
+      _paintPlanted(art, facing);
+    } else {
+      _paintInMotion(art, facing);
     }
   }
 
-  void _paintPlanted(Canvas canvas, RiderFacing facing, double steer) {
+  void _paintInMotion(Canvas canvas, RiderFacing facing) {
     switch (facing) {
       case RiderFacing.straight:
-        _legPlanted.paintFacingStraight(canvas, steer: steer);
+        _inMotion.paintFacingStraight(canvas);
       case RiderFacing.right:
-        _legPlanted.paintFacingSlightlyLeft(canvas, steer: steer);
+        _inMotion.paintFacingSlightlyRight(canvas);
       case RiderFacing.left:
-        _legPlanted.paintFacingSlightlyRight(canvas, steer: steer);
+        _inMotion.paintFacingSlightlyLeft(canvas);
+    }
+  }
+
+  void _paintPlanted(Canvas canvas, RiderFacing facing) {
+    switch (facing) {
+      case RiderFacing.straight:
+        _legPlanted.paintFacingStraight(canvas);
+      case RiderFacing.right:
+        _legPlanted.paintFacingSlightlyRight(canvas);
+      case RiderFacing.left:
+        _legPlanted.paintFacingSlightlyLeft(canvas);
     }
   }
 }

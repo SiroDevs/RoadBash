@@ -33,9 +33,9 @@ class WheelThreadMotion implements Canvas {
 
   @override
   void drawPath(Path path, Paint paint) {
-    final offsetY = phase * clipBounds.height;
+    final offsetY = -phase * clipBounds.height;
     _drawClipped(path, paint, offsetY);
-    _drawClipped(path, paint, offsetY - clipBounds.height);
+    _drawClipped(path, paint, offsetY + clipBounds.height);
   }
 
   void _drawClipped(Path path, Paint paint, double offsetY) {

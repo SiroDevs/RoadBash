@@ -16,6 +16,7 @@ enum ToneRole {
   neck,
   glove,
   boot,
+  bootDark,
   visor,
   black,
   gray,
@@ -23,6 +24,7 @@ enum ToneRole {
   pad,
   plate,
   lamp,
+  leg
 }
 
 /// A colour role and how much lighter or darker the shape is drawn.

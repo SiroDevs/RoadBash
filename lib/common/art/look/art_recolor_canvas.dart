@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 // Project imports:
+import '../sheet/art_tone.dart';
 import 'art_palette.dart';
 
 /// Canvas that repaints the generated artwork in a rider's palette.
@@ -22,11 +23,21 @@ class ArtRecolorCanvas implements Canvas {
   /// Gradients are already built in the rider's colors, see [ArtGradient].
   void _recolored(Paint paint, void Function() draw) {
     final color = paint.color;
-    if (paint.shader == null && paint.style == PaintingStyle.fill) {
-      paint.color = _swaps[color] ?? color;
+    final replacement = paint.shader == null ? _swaps[color] : null;
+    if (replacement != null) {
+      paint.color = switch (paint.style) {
+        PaintingStyle.stroke when replacement != color => ToneColors.shaded(
+          replacement,
+          0.55,
+        ),
+        _ => replacement,
+      };
     }
-    draw();
-    paint.color = color;
+    try {
+      draw();
+    } finally {
+      paint.color = color;
+    }
   }
 
   @override

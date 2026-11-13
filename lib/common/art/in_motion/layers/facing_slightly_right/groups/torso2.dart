@@ -28,14 +28,17 @@ class Torso2 {
       ..shader = ArtGradient.radial(
         const Offset(62.15, 54.17),
         11.43,
-        const [RiderInMotionPainter.color3A3D4E, RiderInMotionPainter.color1D1F27],
+        const [
+          RiderInMotionPainter.color3A3D4E,
+          RiderInMotionPainter.color1D1F27,
+        ],
         const [0.0, 1.0],
       );
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "Torso".
-  void _drawTorso(Canvas canvas) {
+  void _drawTorso(Canvas canvas, Color jacketColor) {
     _path
       ..reset()
       ..moveTo(51.0, 51.5)
@@ -58,12 +61,12 @@ class Torso2 {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.color000000;
+      ..color = jacketColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "BackPart".
-  void _drawBackPart(Canvas canvas) {
+  void _drawBackPart(Canvas canvas, Color jacketColor) {
     _path
       ..reset()
       ..moveTo(61.0, 52.0)
@@ -81,12 +84,12 @@ class Torso2 {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.color3A3D4E;
+      ..color = jacketColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "RightShoulder".
-  void _drawRightShoulder(Canvas canvas) {
+  void _drawRightShoulder(Canvas canvas, Color panelColor) {
     _path
       ..reset()
       ..moveTo(74.0, 48.0)
@@ -101,12 +104,12 @@ class Torso2 {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.colorED1C24;
+      ..color = panelColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "LeftShoulder".
-  void _drawLeftShoulder(Canvas canvas) {
+  void _drawLeftShoulder(Canvas canvas, Color panelColor) {
     _path
       ..reset()
       ..moveTo(51.7, 46.32)
@@ -122,12 +125,12 @@ class Torso2 {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.colorED1C24;
+      ..color = panelColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "Collar".
-  void _drawCollar(Canvas canvas) {
+  void _drawCollar(Canvas canvas, Color panelColor) {
     _path
       ..reset()
       ..moveTo(54.12, 32.69)
@@ -144,23 +147,27 @@ class Torso2 {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.colorED1C24;
+      ..color = panelColor;
     canvas.drawPath(_path, _paint);
     _paint
       ..style = PaintingStyle.stroke
       ..shader = null
       ..strokeWidth = 0.25
-      ..color = RiderInMotionPainter.colorED1C24;
+      ..color = panelColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Paints every shape in this group.
-  void paint(Canvas canvas) {
+  void paint(
+    Canvas canvas, {
+    required Color jacketColor,
+    required Color panelColor,
+  }) {
     _drawBelt(canvas);
-    _drawTorso(canvas);
-    _drawBackPart(canvas);
-    _drawRightShoulder(canvas);
-    _drawLeftShoulder(canvas);
-    _drawCollar(canvas);
+    _drawTorso(canvas, jacketColor);
+    _drawBackPart(canvas, jacketColor);
+    _drawRightShoulder(canvas, panelColor);
+    _drawLeftShoulder(canvas, panelColor);
+    _drawCollar(canvas, panelColor);
   }
 }

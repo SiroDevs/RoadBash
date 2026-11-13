@@ -42,18 +42,29 @@ class LookColors {
     return switch (role) {
       ToneRole.primary => forBike ? bike.panel : (art?.legs ?? look.suit),
       ToneRole.jacket => forBike ? bike.panel : (art?.jacket ?? look.suit),
+      ToneRole.leg => forBike ? bike.panel : (art?.legs ?? look.suit),
       ToneRole.helmet => look.helmet,
       ToneRole.trim ||
       ToneRole.accent => forBike ? bike.accent : (art?.panel ?? look.stripe),
       ToneRole.light =>
         forBike ? bike.accentEdge : (art?.sleeve ?? look.stripeEdge),
-      ToneRole.dark => forBike ? bike.panelDark : look.backPatch,
+      ToneRole.dark =>
+        forBike
+            ? bike.panelDark
+            : (art == null
+                  ? look.backPatch
+                  : ToneColors.shaded(art.jacket, 0.75)),
       ToneRole.graphicA => look.graphicA,
       ToneRole.graphicB => look.graphicB,
       ToneRole.knuckle => look.knuckle,
       ToneRole.neck => look.neck,
-      ToneRole.glove => look.gloves,
+      ToneRole.glove =>
+        art == null ? look.gloves : ToneColors.shaded(art.jacket, 0.7),
       ToneRole.boot => _lifted(art?.panel ?? look.boots),
+      ToneRole.bootDark => ToneColors.shaded(
+        art == null ? ToneColors.black : art.panel,
+        art == null ? 0.8 : 0.5,
+      ),
       ToneRole.visor => look.visor ?? ToneColors.visor,
       ToneRole.black => ToneColors.black,
       ToneRole.gray => ToneColors.gray,

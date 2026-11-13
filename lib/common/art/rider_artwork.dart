@@ -34,39 +34,110 @@ class RiderArtwork {
     ArtGradient.recolor = recolor == null ? null : _palette.gradientColors;
     try {
       if (planted) {
-        _paintPlanted(art, facing);
+        _paintPlanted(
+          art,
+          facing,
+          _palette.legs,
+          _palette.jacket,
+          _palette.panel,
+        );
       } else {
-        _paintInMotion(art, facing, wheelPhase);
+        _paintInMotion(
+          art,
+          facing,
+          wheelPhase,
+          _palette.legs,
+          _palette.jacket,
+          _palette.panel,
+        );
       }
     } finally {
       ArtGradient.recolor = null;
     }
   }
 
-  void _paintInMotion(Canvas canvas, RiderFacing facing, double wheelPhase) {
+  void _paintInMotion(
+    Canvas canvas,
+    RiderFacing facing,
+    double wheelPhase,
+    Color legColor,
+    Color jacketColor,
+    Color panelColor,
+  ) {
     switch (facing) {
       case RiderFacing.extremelyLeft:
-        _inMotion.paintFacingExtremelyLeft(canvas, wheelPhase: wheelPhase);
+        _inMotion.paintFacingExtremelyLeft(
+          canvas,
+          wheelPhase: wheelPhase,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.slightlyLeft:
-        _inMotion.paintFacingSlightlyLeft(canvas, wheelPhase: wheelPhase);
+        _inMotion.paintFacingSlightlyLeft(
+          canvas,
+          wheelPhase: wheelPhase,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.straight:
-        _inMotion.paintFacingStraight(canvas, wheelPhase: wheelPhase);
+        _inMotion.paintFacingStraight(
+          canvas,
+          wheelPhase: wheelPhase,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.slightlyRight:
-        _inMotion.paintFacingSlightlyRight(canvas, wheelPhase: wheelPhase);
+        _inMotion.paintFacingSlightlyRight(
+          canvas,
+          wheelPhase: wheelPhase,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.extremelyRight:
-        _inMotion.paintFacingExtremelyRight(canvas, wheelPhase: wheelPhase);
+        _inMotion.paintFacingExtremelyRight(
+          canvas,
+          wheelPhase: wheelPhase,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
     }
   }
 
   // The planted leg artwork only turns slightly, so extreme turns share it.
-  void _paintPlanted(Canvas canvas, RiderFacing facing) {
+  void _paintPlanted(
+    Canvas canvas,
+    RiderFacing facing,
+    Color legColor,
+    Color jacketColor,
+    Color panelColor,
+  ) {
     switch (facing) {
       case RiderFacing.straight:
-        _legPlanted.paintFacingStraight(canvas);
+        _legPlanted.paintFacingStraight(
+          canvas,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.slightlyRight || RiderFacing.extremelyRight:
-        _legPlanted.paintFacingSlightlyRight(canvas);
+        _legPlanted.paintFacingSlightlyRight(
+          canvas,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.slightlyLeft || RiderFacing.extremelyLeft:
-        _legPlanted.paintFacingSlightlyLeft(canvas);
+        _legPlanted.paintFacingSlightlyLeft(
+          canvas,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
     }
   }
 }

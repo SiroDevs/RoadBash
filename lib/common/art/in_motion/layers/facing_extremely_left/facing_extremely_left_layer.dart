@@ -39,19 +39,25 @@ class RiderInMotionFacingExtremelyLeftLayer {
   final LeftBoot4 _leftBoot4 = LeftBoot4();
   final Path _path = Path();
 
-  void paint(Canvas canvas, {double wheelPhase = 0}) {
+  void paint(
+    Canvas canvas, {
+    double wheelPhase = 0,
+    Color legColor = RiderInMotionPainter.color00A2E8,
+    Color jacketColor = RiderInMotionPainter.color3A3D4E,
+    Color panelColor = RiderInMotionPainter.colorED1C24,
+  }) {
     _frontPart4.paint(canvas);
     _handleBars4.paint(canvas);
     _rightHand4.paint(canvas);
     _leftHand4.paint(canvas);
     _drawBikeFrame(canvas);
-    _drawLeftLeg(canvas);
-    _torso4.paint(canvas);
+    _drawLeftLeg(canvas, legColor);
+    _torso4.paint(canvas, jacketColor: jacketColor, panelColor: panelColor);
     _rightBoot4.paint(canvas);
     _rightBikeBody.paint(canvas);
     _helmet4.paint(canvas);
     _midSections4.paint(canvas);
-    _drawLeftLeg2(canvas);
+    _drawLeftLeg2(canvas, legColor);
     _bikeTyre4.paint(
       WheelThreadMotion(
         canvas,
@@ -109,7 +115,7 @@ class RiderInMotionFacingExtremelyLeftLayer {
   }
 
   /// Shape "LeftLeg".
-  void _drawLeftLeg(Canvas canvas) {
+  void _drawLeftLeg(Canvas canvas, Color legColor) {
     _path
       ..reset()
       ..moveTo(70.48, 47.13)
@@ -130,12 +136,12 @@ class RiderInMotionFacingExtremelyLeftLayer {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.color00A2E8;
+      ..color = legColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "LeftLeg".
-  void _drawLeftLeg2(Canvas canvas) {
+  void _drawLeftLeg2(Canvas canvas, Color legColor) {
     _path
       ..reset()
       ..moveTo(71.46, 46.93)
@@ -156,7 +162,7 @@ class RiderInMotionFacingExtremelyLeftLayer {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.color00A2E8;
+      ..color = legColor;
     canvas.drawPath(_path, _paint);
   }
 }

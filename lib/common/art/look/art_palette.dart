@@ -39,12 +39,10 @@ class ArtPalette {
     source.helmetPrint: helmetPrint,
     source.helmetStripe: helmetStripe,
     source.visor: visor,
-    source.legs: legs,
     source.panel: panel,
     source.jacket: jacket,
     source.sleeve: sleeve,
     source.bikeDark: bikeDark,
-    source.bike: bike,
   };
 
   static const Color _drawnBikeDark = Color(0xFF19311D);
@@ -53,11 +51,15 @@ class ArtPalette {
   static const Color _drawnJacket = Color(0xFF3A3D4E);
   static const Color _drawnGlass = Color(0xFF563828);
   static const Color _drawnJacketDark = Color(0xFF1D1F27);
+  static const Color _drawnBodyArm = Color(0xFF000002);
+  static const Color _drawnBodyBoot = Color(0xFF000003);
 
   /// Shaded variants of the drawn colors that are not in [swapsFrom].
   Map<Color, Color> get shadeSwaps => {
     _drawnGlass: ToneColors.shaded(visor, 0.6),
     _drawnJacketDark: ToneColors.shaded(jacket, 0.55),
+    _drawnBodyArm: ToneColors.shaded(jacket, 0.7),
+    _drawnBodyBoot: ToneColors.shaded(panel, 0.5),
   };
 
   /// Colors that replace the drawn colors of one gradient.
@@ -68,10 +70,7 @@ class ArtPalette {
     final first = drawn.first;
     if (first == _drawnBikeDark) return [bikeDark, bike];
     if (first == _drawnBikeSide) {
-      return [
-        ToneColors.shaded(bike, 0.7),
-        ToneColors.shaded(bikeDark, 0.5),
-      ];
+      return [ToneColors.shaded(bike, 0.7), ToneColors.shaded(bikeDark, 0.5)];
     }
     if (first == _drawnUnderPanel) {
       return [ToneColors.shaded(bike, 0.55), drawn.last];

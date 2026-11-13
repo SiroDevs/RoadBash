@@ -57,7 +57,7 @@ class LeftBoot4 {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.color000000;
+      ..color = RiderInMotionPainter.colorBodyBoot;
     canvas.drawPath(_path, _paint);
   }
 
@@ -74,7 +74,7 @@ class LeftBoot4 {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.color000000;
+      ..color = RiderInMotionPainter.colorBodyBoot;
     canvas.drawPath(_path, _paint);
   }
 

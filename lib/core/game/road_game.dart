@@ -45,7 +45,6 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput, RacePause {
     required this.playerName,
     required this.onFinished,
     required this.rules,
-    this.attackLabel,
     this.briefing = const [],
     this.onPauseKey,
   });
@@ -57,7 +56,6 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput, RacePause {
 
   /// The rules of the level being raced.
   final LevelRules rules;
-  final String? attackLabel;
 
   /// Hint lines shown before the countdown; the first is the level's title.
   final List<String> briefing;
@@ -124,7 +122,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput, RacePause {
       handlebar,
       HandlebarPipeHud(handlebar),
       DashboardHud(road, race, strings, police, briefing),
-      HandlebarGripsHud(handlebar, strings.gas, attackLabel: attackLabel),
+      HandlebarGripsHud(handlebar, strings.gas),
     ]);
     if (_shutDown) return;
     final ride = RideAudio(

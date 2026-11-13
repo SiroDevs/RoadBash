@@ -22,6 +22,7 @@ mixin RoadDynamics {
   bool analogSteer = false;
   bool throttle = false;
   bool brake = false;
+  bool boost = false;
   bool locked = true;
   bool skidding = false;
   bool railContact = false;
@@ -111,7 +112,7 @@ mixin RoadDynamics {
     } else if (brake) {
       speed += VehicleConfig.braking * dt;
     } else if (throttle) {
-      speed += VehicleConfig.accel * dt;
+      speed += VehicleConfig.accel * (boost ? 1.5 : 1.0) * dt;
     } else {
       speed += VehicleConfig.decel * dt;
     }

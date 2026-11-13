@@ -14,11 +14,11 @@ abstract final class RoadConfig {
   static const double cameraHeight = 1000;
   static const double cameraDepth = 0.84;
   static const double horizonRatio = 0.14;
-  static const double portraitHorizonOffset = 0.02;
-  static const double smallScreenHorizonOffset = 0.015;
+  static const double portraitHorizonOffset = 0.1;
+  static const double smallScreenHorizonOffset = 0.15;
   static final int drawDistance = _lite ? 170 : 240;
   static final int decorDistance = _lite ? 130 : 200;
-  static const int rumbleLength = 4;
+  static const int rumbleLength = 7;
 
   static const double nearClip = 200;
 

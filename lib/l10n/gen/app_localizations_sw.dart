@@ -166,7 +166,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get controlsHelp =>
-      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: pande mbili za usukani husogea pamoja. Shikilia upande wa kulia (MAFUTA) kuendesha na uachilie kufunga breki. Buruta upande wowote kugeuka: kulia ukishuka (kushoto ukipanda) unaelekea kulia, kushoto ukishuka (kulia ukipanda) unaelekea kushoto. Kuanzia kiwango cha 4, shikilia mpini wa kushoto kushambulia. Unaweza pia kuinamisha kifaa kama usukani, au kuwasha Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa usukani wa skrini pekee.';
+      'Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: shikilia mpini wowote (MAFUTA) kuendesha, na uachilie yote miwili kufunga breki. Buruta mpini wowote kugeuka: wa kulia ukishuka (wa kushoto ukipanda) unaelekea kulia; wa kushoto ukishuka (wa kulia ukipanda) unaelekea kushoto. Tumia vitufe vya kuongeza kasi na kushambulia kwenye safu ya vifaa chini ya dashibodi unapoendesha; kushambulia hufunguliwa kiwango cha 4. Unaweza pia kuinamisha kifaa kama usukani, au kuwasha Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa usukani wa skrini pekee.';
 
   @override
   String get hudGo => 'ANZA!';
@@ -182,6 +182,17 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get hudAttackLabel => 'PIGA';
+
+  @override
+  String get hudBoostLabel => 'ONGEZA';
+
+  @override
+  String get hudItemLabel => 'KITU';
+
+  @override
+  String hudItemSlot(int slot) {
+    return 'Nafasi ya kitu $slot';
+  }
 
   @override
   String hudLap(int lap, int laps) {
@@ -259,15 +270,11 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get handlebarLeft =>
-      'Upande wa kushoto wa usukani: buruta chini kuelekea kushoto, juu kuelekea kulia';
-
-  @override
-  String get handlebarAttack =>
-      'Upande wa kushoto wa usukani: shikilia kushambulia; buruta kuelekeza';
+      'Upande wa kushoto wa usukani, MAFUTA: shikilia kuendesha; buruta chini kuelekea kushoto, juu kuelekea kulia';
 
   @override
   String get handlebarRight =>
-      'Upande wa kulia wa usukani, mafuta: shikilia kuendesha, achilia kufunga breki, buruta chini kuelekea kulia';
+      'Upande wa kulia wa usukani, MAFUTA: shikilia kuendesha; achilia mipini yote miwili kufunga breki, buruta chini kuelekea kulia';
 
   @override
   String get controlsTitle => 'Vidhibiti';

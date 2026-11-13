@@ -13,48 +13,37 @@ import 'handlebar_rig.dart';
 /// Both handlebar grips and their labels, drawn above everything else so they
 /// are always visible and easy to find with a thumb.
 class HandlebarGripsHud extends Component {
-  HandlebarGripsHud(this.rig, this.gasLabel, {this.attackLabel})
-    : super(priority: 20);
+  HandlebarGripsHud(this.rig, this.gasLabel) : super(priority: 20);
 
   final HandlebarRig rig;
   final String gasLabel;
-  final String? attackLabel;
 
   static const _labelColor = Color(0xFFFFFFFF);
-  static const _heldFill = Color(0xFF666666);
   static const _gasFill = Color(0xFF3DBB5A);
-  static const _attackFill = Color(0xFF8E241D);
   static const double _labelSize = 0.6;
 
   @override
   void render(Canvas canvas) {
     rig.inArtSpace(canvas, (layout) {
       final extension = layout.pipeExtension;
-      final leftFill = attackLabel == null
-          ? (rig.leftHeld ? _heldFill : HandlebarArt.color000000)
-          : (rig.leftHeld ? _attackFill : const Color(0xFF4D1410));
-      rig.art.paintLeftGrip(canvas, extension: extension, fill: leftFill);
+      rig.art.paintLeftGrip(
+        canvas,
+        extension: extension,
+        fill: rig.leftGasOn ? _gasFill : HandlebarArt.color000000,
+      );
       rig.art.paintRightGrip(
         canvas,
         extension: extension,
-        fill: rig.gasOn ? _gasFill : HandlebarArt.color000000,
+        fill: rig.rightGasOn ? _gasFill : HandlebarArt.color000000,
       );
     });
-    _paintGasLabel(canvas);
-    _paintAttackLabel(canvas);
+    _paintGasLabels(canvas);
   }
 
-  /// Prints the gas label on the right grip, turned with the handlebar.
-  void _paintGasLabel(Canvas canvas) {
+  /// Prints the gas label on both grips, turned with the handlebar.
+  void _paintGasLabels(Canvas canvas) {
+    _paintGripLabel(canvas, gasLabel, HandlebarArt.leftGripCentre, false);
     _paintGripLabel(canvas, gasLabel, HandlebarArt.rightGripCentre, true);
-  }
-
-  /// Prints the attack label on the left grip when combat is unlocked.
-  void _paintAttackLabel(Canvas canvas) {
-    final label = attackLabel;
-    if (label != null) {
-      _paintGripLabel(canvas, label, HandlebarArt.leftGripCentre, false);
-    }
   }
 
   void _paintGripLabel(

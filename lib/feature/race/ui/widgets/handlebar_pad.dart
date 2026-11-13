@@ -12,14 +12,9 @@ import '../../../../l10n/l10n_extension.dart';
 
 /// Invisible touch layer that grabs and drags the handlebars drawn by the game.
 class HandlebarPad extends StatefulWidget {
-  const HandlebarPad({
-    super.key,
-    required this.onChanged,
-    this.attackEnabled = false,
-  });
+  const HandlebarPad({super.key, required this.onChanged});
 
   final ValueChanged<HandlebarPose> onChanged;
-  final bool attackEnabled;
 
   @override
   State<HandlebarPad> createState() => _HandlebarPadState();
@@ -111,13 +106,7 @@ class _HandlebarPadState extends State<HandlebarPad> {
           onPointerCancel: _release,
           child: Stack(
             children: [
-              _label(
-                layout,
-                HandlebarSide.left,
-                widget.attackEnabled
-                    ? l10n.handlebarAttack
-                    : l10n.handlebarLeft,
-              ),
+              _label(layout, HandlebarSide.left, l10n.handlebarLeft),
               _label(layout, HandlebarSide.right, l10n.handlebarRight),
             ],
           ),

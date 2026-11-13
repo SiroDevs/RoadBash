@@ -37,9 +37,23 @@ class HandlebarArt {
 
   /// Centre of each grip's body, and the body's thickness in art units before
   /// [HandlebarConfig.gripThicken] is added.
-  static const Offset rightGripCentre = Offset(272.0, 72.0);
-  static const Offset leftGripCentre = Offset(29.0, 72.0);
+  static const Offset _rightGripCentreAtScaleOne = Offset(272.0, 72.0);
+  static const Offset _leftGripCentreAtScaleOne = Offset(29.0, 72.0);
   static const double gripThickness = 13.0;
+
+  static Offset get rightGripCentre => Offset(
+    rightEdge +
+        (_rightGripCentreAtScaleOne.dx - rightEdge) *
+            HandlebarConfig.gripLengthScale,
+    _rightGripCentreAtScaleOne.dy,
+  );
+
+  static Offset get leftGripCentre => Offset(
+    leftEdge +
+        (_leftGripCentreAtScaleOne.dx - leftEdge) *
+            HandlebarConfig.gripLengthScale,
+    _leftGripCentreAtScaleOne.dy,
+  );
 
   // The pipe's outer rods are stretched; everything between them stays put.
   static const double _leftRodEnd = 81.0;
@@ -65,6 +79,9 @@ class HandlebarArt {
   }) {
     canvas.save();
     canvas.translate(extension / 2, 0);
+    canvas.translate(rightEdge, 0);
+    canvas.scale(HandlebarConfig.gripLengthScale, 1);
+    canvas.translate(-rightEdge, 0);
     _drawRightHandleGrip(canvas, fill);
     canvas.restore();
   }
@@ -77,6 +94,9 @@ class HandlebarArt {
   }) {
     canvas.save();
     canvas.translate(-extension / 2, 0);
+    canvas.translate(leftEdge, 0);
+    canvas.scale(HandlebarConfig.gripLengthScale, 1);
+    canvas.translate(-leftEdge, 0);
     _drawLeftHandleGrip(canvas, fill);
     canvas.restore();
   }
@@ -87,8 +107,8 @@ class HandlebarArt {
     double x(double v) => v <= _leftRodEnd
         ? v - half
         : v >= _rightRodStart
-            ? v + half
-            : v;
+        ? v + half
+        : v;
     _path
       ..reset()
       ..moveTo(x(10.0), 68.0)

@@ -13,6 +13,7 @@ class CrashState {
   static const double roadsideBikeLateral = 1.55;
   static const double roadsideRunnerLateral = 3.0;
   static const double standBesideBike = 0.55;
+  static const double restartLateral = 0.9;
 
   double _remaining = 0;
   double _total = 0;
@@ -42,6 +43,10 @@ class CrashState {
   double get runX => _runX;
   double get bikeX => _bikeX;
   double get side => _side;
+
+  /// Where the rider rejoins the road: its edge on the side he fell.
+  double get restartX => _side * restartLateral;
+
   double get runProgress =>
       (_runTime / recoveryDuration).clamp(0.0, 1.0).toDouble();
   double get mountProgress =>
@@ -54,7 +59,7 @@ class CrashState {
 
   /// Where the camera sits while the rider is off the bike.
   double get cameraX {
-    if (returning) return _bikeX * (1 - returnProgress);
+    if (returning) return _bikeX + (restartX - _bikeX) * returnProgress;
     if (mounting) return _runX + (_bikeX - _runX) * mountProgress;
     if (running) return _runX;
     final ease = standProgress * standProgress * (3 - 2 * standProgress);

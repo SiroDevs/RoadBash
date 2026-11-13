@@ -38,22 +38,27 @@ class RiderArtwork {
 
   void _paintInMotion(Canvas canvas, RiderFacing facing) {
     switch (facing) {
+      case RiderFacing.extremelyLeft:
+        _inMotion.paintFacingExtremelyLeft(canvas);
+      case RiderFacing.slightlyLeft:
+        _inMotion.paintFacingSlightlyLeft(canvas);
       case RiderFacing.straight:
         _inMotion.paintFacingStraight(canvas);
-      case RiderFacing.right:
+      case RiderFacing.slightlyRight:
         _inMotion.paintFacingSlightlyRight(canvas);
-      case RiderFacing.left:
-        _inMotion.paintFacingSlightlyLeft(canvas);
+      case RiderFacing.extremelyRight:
+        _inMotion.paintFacingExtremelyRight(canvas);
     }
   }
 
+  // The planted leg artwork only turns slightly, so extreme turns share it.
   void _paintPlanted(Canvas canvas, RiderFacing facing) {
     switch (facing) {
       case RiderFacing.straight:
         _legPlanted.paintFacingStraight(canvas);
-      case RiderFacing.right:
+      case RiderFacing.slightlyRight || RiderFacing.extremelyRight:
         _legPlanted.paintFacingSlightlyRight(canvas);
-      case RiderFacing.left:
+      case RiderFacing.slightlyLeft || RiderFacing.extremelyLeft:
         _legPlanted.paintFacingSlightlyLeft(canvas);
     }
   }

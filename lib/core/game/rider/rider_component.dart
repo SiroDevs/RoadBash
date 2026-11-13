@@ -16,8 +16,7 @@ import '../../../common/art/rider_frame.dart';
 import '../../../common/art/rider_pose.dart';
 import 'rider_rig.dart';
 import '../../../common/art/rider_sprite.dart';
-import 'rig/corner_facing.dart';
-import 'rig/player_yaw.dart';
+import 'rig/steer_facing.dart';
 
 /// Flame component that draws the player's bike and rider.
 class RiderComponent extends PositionComponent {
@@ -32,7 +31,7 @@ class RiderComponent extends PositionComponent {
   final RiderRig rig;
   final RiderLook look;
   late final RiderSprite _sprite = RiderSprite(look: look);
-  final CornerFacing _corner = CornerFacing();
+  final SteerFacing _steerFacing = SteerFacing();
   late final RecoveryPainter _recoveryPainter = RecoveryPainter(look);
 
   /// Returns the rider's current pose.
@@ -85,13 +84,12 @@ class RiderComponent extends PositionComponent {
         .toDouble();
     pose.lean += (target - pose.lean) * math.min(1.0, dt * 6);
 
-    final yaw = PlayerYaw.target(
-      steer: road.appliedSteer,
-      curve: road.curveFelt,
+    pose.facing = _steerFacing.update(
+      dt: dt,
+      steer: road.steer,
       speedShare: sp,
+      curve: road.curveFelt,
     );
-    pose.perspective += (yaw - pose.perspective) * math.min(1.0, dt * 3);
-    pose.facing = _corner.update(pose.perspective);
 
     final pitch = road.brake ? -1.0 : (road.throttle ? 0.5 : 0.0);
     pose.pitch += (pitch * sp - pose.pitch) * math.min(1.0, dt * 6);

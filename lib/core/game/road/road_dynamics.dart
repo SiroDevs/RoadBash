@@ -76,8 +76,8 @@ mixin RoadDynamics {
   void stepDynamics(double dt, RoadSegment segment, double speedRatio) {
     if (recovering) {
       if (crash.run(dt, steer)) {
+        playerX = crash.restartX;
         crash.remount();
-        playerX = 0;
         appliedSteer = 0;
         shove = 0;
         speed = 0;

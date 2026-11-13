@@ -4,6 +4,7 @@ import 'dart:ui';
 // Project imports:
 import 'in_motion/rider_in_motion_painter.dart';
 import 'leg_planted/leg_planted_painter.dart';
+import 'look/art_gradient.dart';
 import 'look/art_palette.dart';
 import 'look/art_palettes.dart';
 import 'look/art_recolor_canvas.dart';
@@ -26,40 +27,117 @@ class RiderArtwork {
     Canvas canvas, {
     required RiderFacing facing,
     required bool planted,
+    double wheelPhase = 0,
   }) {
     final recolor = _recolor?..target = canvas;
     final art = recolor ?? canvas;
-    if (planted) {
-      _paintPlanted(art, facing);
-    } else {
-      _paintInMotion(art, facing);
+    ArtGradient.recolor = recolor == null ? null : _palette.gradientColors;
+    try {
+      if (planted) {
+        _paintPlanted(
+          art,
+          facing,
+          _palette.legs,
+          _palette.jacket,
+          _palette.panel,
+        );
+      } else {
+        _paintInMotion(
+          art,
+          facing,
+          wheelPhase,
+          _palette.legs,
+          _palette.jacket,
+          _palette.panel,
+        );
+      }
+    } finally {
+      ArtGradient.recolor = null;
     }
   }
 
-  void _paintInMotion(Canvas canvas, RiderFacing facing) {
+  void _paintInMotion(
+    Canvas canvas,
+    RiderFacing facing,
+    double wheelPhase,
+    Color legColor,
+    Color jacketColor,
+    Color panelColor,
+  ) {
     switch (facing) {
       case RiderFacing.extremelyLeft:
-        _inMotion.paintFacingExtremelyLeft(canvas);
+        _inMotion.paintFacingExtremelyLeft(
+          canvas,
+          wheelPhase: wheelPhase,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.slightlyLeft:
-        _inMotion.paintFacingSlightlyLeft(canvas);
+        _inMotion.paintFacingSlightlyLeft(
+          canvas,
+          wheelPhase: wheelPhase,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.straight:
-        _inMotion.paintFacingStraight(canvas);
+        _inMotion.paintFacingStraight(
+          canvas,
+          wheelPhase: wheelPhase,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.slightlyRight:
-        _inMotion.paintFacingSlightlyRight(canvas);
+        _inMotion.paintFacingSlightlyRight(
+          canvas,
+          wheelPhase: wheelPhase,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.extremelyRight:
-        _inMotion.paintFacingExtremelyRight(canvas);
+        _inMotion.paintFacingExtremelyRight(
+          canvas,
+          wheelPhase: wheelPhase,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
     }
   }
 
   // The planted leg artwork only turns slightly, so extreme turns share it.
-  void _paintPlanted(Canvas canvas, RiderFacing facing) {
+  void _paintPlanted(
+    Canvas canvas,
+    RiderFacing facing,
+    Color legColor,
+    Color jacketColor,
+    Color panelColor,
+  ) {
     switch (facing) {
       case RiderFacing.straight:
-        _legPlanted.paintFacingStraight(canvas);
+        _legPlanted.paintFacingStraight(
+          canvas,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.slightlyRight || RiderFacing.extremelyRight:
-        _legPlanted.paintFacingSlightlyRight(canvas);
+        _legPlanted.paintFacingSlightlyRight(
+          canvas,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
       case RiderFacing.slightlyLeft || RiderFacing.extremelyLeft:
-        _legPlanted.paintFacingSlightlyLeft(canvas);
+        _legPlanted.paintFacingSlightlyLeft(
+          canvas,
+          legColor: legColor,
+          jacketColor: jacketColor,
+          panelColor: panelColor,
+        );
     }
   }
 }

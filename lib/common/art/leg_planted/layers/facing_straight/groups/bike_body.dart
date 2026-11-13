@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../../leg_planted_painter.dart';
+import '../../../../look/art_gradient.dart';
 
 /// Group "BikeBody".
 class BikeBody {
@@ -37,7 +38,7 @@ class BikeBody {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.radial(
+      ..shader = ArtGradient.radial(
         const Offset(61.68, 98.07),
         39.64,
         const [LegPlantedPainter.color19311D, LegPlantedPainter.color468638],

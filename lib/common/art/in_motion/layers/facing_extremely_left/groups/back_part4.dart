@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../../rider_in_motion_painter.dart';
+import '../../../../look/art_gradient.dart';
 
 /// Group "BackPart".
 class BackPart4 {
@@ -79,7 +80,7 @@ class BackPart4 {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.radial(
+      ..shader = ArtGradient.radial(
         const Offset(74.11, 69.16),
         19.19,
         const [RiderInMotionPainter.color7F7F7F, RiderInMotionPainter.color404040],

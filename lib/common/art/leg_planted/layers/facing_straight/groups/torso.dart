@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../../leg_planted_painter.dart';
+import '../../../../look/art_gradient.dart';
 
 /// Group "Torso".
 class Torso {
@@ -24,7 +25,7 @@ class Torso {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.radial(
+      ..shader = ArtGradient.radial(
         const Offset(54.0, 54.0),
         12.0,
         const [LegPlantedPainter.color3A3D4E, LegPlantedPainter.color1D1F27],
@@ -34,7 +35,7 @@ class Torso {
   }
 
   /// Shape "Torso".
-  void _drawTorso(Canvas canvas) {
+  void _drawTorso(Canvas canvas, Color jacketColor) {
     _path
       ..reset()
       ..moveTo(42.0, 54.0)
@@ -57,12 +58,12 @@ class Torso {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = LegPlantedPainter.color000000;
+      ..color = jacketColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "BackPart".
-  void _drawBackPart(Canvas canvas) {
+  void _drawBackPart(Canvas canvas, Color jacketColor) {
     _path
       ..reset()
       ..moveTo(53.0, 48.0)
@@ -80,12 +81,12 @@ class Torso {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = LegPlantedPainter.color3A3D4E;
+      ..color = jacketColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "RightShoulder".
-  void _drawRightShoulder(Canvas canvas) {
+  void _drawRightShoulder(Canvas canvas, Color panelColor) {
     _path
       ..reset()
       ..moveTo(64.0, 38.0)
@@ -100,12 +101,12 @@ class Torso {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = LegPlantedPainter.colorED1C24;
+      ..color = panelColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "LeftShoulder".
-  void _drawLeftShoulder(Canvas canvas) {
+  void _drawLeftShoulder(Canvas canvas, Color panelColor) {
     _path
       ..reset()
       ..moveTo(40.0, 41.0)
@@ -121,12 +122,12 @@ class Torso {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = LegPlantedPainter.colorED1C24;
+      ..color = panelColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "Collar".
-  void _drawCollar(Canvas canvas) {
+  void _drawCollar(Canvas canvas, Color panelColor) {
     _path
       ..reset()
       ..moveTo(41.78, 26.58)
@@ -143,23 +144,27 @@ class Torso {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = LegPlantedPainter.colorED1C24;
+      ..color = panelColor;
     canvas.drawPath(_path, _paint);
     _paint
       ..style = PaintingStyle.stroke
       ..shader = null
       ..strokeWidth = 0.25
-      ..color = LegPlantedPainter.colorED1C24;
+      ..color = panelColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Paints every shape in this group.
-  void paint(Canvas canvas) {
+  void paint(
+    Canvas canvas, {
+    required Color jacketColor,
+    required Color panelColor,
+  }) {
     _drawBelt(canvas);
-    _drawTorso(canvas);
-    _drawBackPart(canvas);
-    _drawRightShoulder(canvas);
-    _drawLeftShoulder(canvas);
-    _drawCollar(canvas);
+    _drawTorso(canvas, jacketColor);
+    _drawBackPart(canvas, jacketColor);
+    _drawRightShoulder(canvas, panelColor);
+    _drawLeftShoulder(canvas, panelColor);
+    _drawCollar(canvas, panelColor);
   }
 }

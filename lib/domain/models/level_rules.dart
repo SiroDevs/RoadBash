@@ -68,7 +68,7 @@ class LevelRules {
   static const int top = 7;
 
   /// Wins in a row at a level that unlock the next one.
-  static const int winsToAdvance = 2;
+  static const int winsToAdvance = 1;
 
   /// Share of the win prize paid for a new best time.
   static const double bestTimeBonus = 0.05;
@@ -84,7 +84,7 @@ class LevelRules {
       laps: LevelPresets.twoLaps,
       rivals: 0,
       maxSpeedKmh: 100,
-      winPrize: 0,
+      winPrize: 50,
       trafficPerLap: 0,
       oncomingPerLap: 0,
     ),

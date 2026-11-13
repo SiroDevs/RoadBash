@@ -47,10 +47,10 @@ class RaceController {
   }) : briefing = briefingSeconds;
 
   static const List<RiderRival> defaultRivals = [
-    RiderRival('Mike', 0.86, 0.0, RiderLooks.orange, 0.8, 0.8, 0.7),
-    RiderRival('Bose', 0.82, 1.7, RiderLooks.purple, 0.5, 0.6, 0.8),
-    RiderRival('Sam', 0.78, 3.1, RiderLooks.yellow, 0.65, 0.4, 0.5),
-    RiderRival('Kamau', 0.72, 4.4, RiderLooks.green, 0.3, 0.85, 0.4),
+    RiderRival('Mike', 0.86, 0.0, RiderLooks.white, 0.8, 0.8, 0.7),
+    RiderRival('Bose', 0.82, 1.7, RiderLooks.black, 0.5, 0.6, 0.8),
+    RiderRival('Sam', 0.78, 3.1, RiderLooks.red, 0.65, 0.4, 0.5),
+    RiderRival('Kamau', 0.72, 4.4, RiderLooks.lime, 0.3, 0.85, 0.4),
     RiderRival('Brayo', 0.66, 5.6, RiderLooks.blue, 0.9, 0.3, 0.6),
   ];
 

@@ -14,6 +14,7 @@ import 'groups/right_boot2.dart';
 import 'groups/back_part2.dart';
 import 'groups/exhaust.dart';
 import 'groups/helmet2.dart';
+import '../../../look/art_gradient.dart';
 
 /// Layer "FacingSlightlyRight".
 class LegPlantedFacingSlightlyRightLayer {
@@ -35,18 +36,23 @@ class LegPlantedFacingSlightlyRightLayer {
   final Helmet2 _helmet2 = Helmet2();
   final Path _path = Path();
 
-  void paint(Canvas canvas) {
+  void paint(
+    Canvas canvas, {
+    Color legColor = LegPlantedPainter.color00A2E8,
+    Color jacketColor = LegPlantedPainter.color3A3D4E,
+    Color panelColor = LegPlantedPainter.colorED1C24,
+  }) {
     _frontPart2.paint(canvas);
     _handleBars2.paint(canvas);
     _leftHand2.paint(canvas);
     _rightHand2.paint(canvas);
     _drawBikeFrame(canvas);
-    _drawLeftLeg(canvas);
-    _torso2.paint(canvas);
+    _drawLeftLeg(canvas, legColor);
+    _torso2.paint(canvas, jacketColor: jacketColor, panelColor: panelColor);
     _leftBoot2.paint(canvas);
     _leftBikeBody.paint(canvas);
     _midSections2.paint(canvas);
-    _drawRightLeg(canvas);
+    _drawRightLeg(canvas, legColor);
     _rightBoot2.paint(canvas);
     _drawTyreOuter(canvas);
     _drawTyreInner(canvas);
@@ -90,7 +96,7 @@ class LegPlantedFacingSlightlyRightLayer {
       ..close();
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(60.82, 59.43),
         const Offset(66.3, 133.12),
         const [LegPlantedPainter.color2F5C37, LegPlantedPainter.color0D190E],
@@ -106,7 +112,7 @@ class LegPlantedFacingSlightlyRightLayer {
   }
 
   /// Shape "LeftLeg".
-  void _drawLeftLeg(Canvas canvas) {
+  void _drawLeftLeg(Canvas canvas, Color legColor) {
     _path
       ..reset()
       ..moveTo(46.0, 51.0)
@@ -127,12 +133,12 @@ class LegPlantedFacingSlightlyRightLayer {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = LegPlantedPainter.color00A2E8;
+      ..color = legColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "RightLeg".
-  void _drawRightLeg(Canvas canvas) {
+  void _drawRightLeg(Canvas canvas, Color legColor) {
     _path
       ..reset()
       ..moveTo(46.0, 52.0)
@@ -153,7 +159,7 @@ class LegPlantedFacingSlightlyRightLayer {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = LegPlantedPainter.color00A2E8;
+      ..color = legColor;
     canvas.drawPath(_path, _paint);
   }
 
@@ -185,7 +191,7 @@ class LegPlantedFacingSlightlyRightLayer {
     canvas.translate(-64.37, -127.47);
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(53.88, 127.47),
         const Offset(74.86, 127.47),
         const [LegPlantedPainter.color7F7F7F, LegPlantedPainter.color404040],
@@ -361,7 +367,7 @@ class LegPlantedFacingSlightlyRightLayer {
     canvas.translate(-67.51, -129.98);
     _paint
       ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
+      ..shader = ArtGradient.linear(
         const Offset(62.01, 129.98),
         const Offset(73.01, 129.98),
         const [LegPlantedPainter.color000000, LegPlantedPainter.color626262],

@@ -12,10 +12,7 @@ import 'view/rider_view.dart';
 
 /// Rider and bike that can be drawn anywhere, such as a rival.
 class RiderSprite {
-  RiderSprite({
-    this.look = RiderLook.main,
-    this.view = RiderView.rear,
-  });
+  RiderSprite({this.look = RiderLook.main, this.view = RiderView.rear});
 
   final RiderLook look;
   final RiderView view;
@@ -43,6 +40,7 @@ class RiderSprite {
         canvas,
         facing: pose.facing,
         planted: pose.foot > plantedFoot,
+        wheelPhase: pose.phase,
       );
     }
     canvas.restore();

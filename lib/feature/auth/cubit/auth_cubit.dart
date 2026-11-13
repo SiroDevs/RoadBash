@@ -38,6 +38,8 @@ class AuthCubit extends Cubit<AuthState> {
   final ProgressCubit _progress;
   late final StreamSubscription<PlayerSession?> _sub;
   late final StreamSubscription<int> _levelSub;
+  Future<void>? _levelSync;
+  String? _levelSyncAccount;
   int _syncedLevel = 0;
 
   /// Restores the saved session or anonymous mode on startup.
@@ -67,17 +69,37 @@ class AuthCubit extends Cubit<AuthState> {
 
   /// Sends the level reached in this session and takes the level kept on the
   /// account into the career. Does nothing offline or when not signed in.
-  Future<void> syncLevel() async {
-    final level = _progress.state.level;
-    if (state.session == null || level <= _syncedLevel) return;
-    final previous = _syncedLevel;
-    _syncedLevel = level;
-    try {
-      final remote = await _repo.syncLevel(level);
-      if (remote > level) _syncedLevel = remote;
-      await _progress.applyLevel(remote);
-    } on ApiException {
-      _syncedLevel = previous;
+  Future<void> syncLevel() {
+    final account = state.session?.playerId;
+    if (account == null) return Future<void>.value();
+    final pending = _levelSync;
+    if (pending != null && _levelSyncAccount == account) return pending;
+    late final Future<void> task;
+    task = _syncLevel(account).whenComplete(() {
+      if (!identical(_levelSync, task)) return;
+      _levelSync = null;
+      _levelSyncAccount = null;
+    });
+    _levelSyncAccount = account;
+    _levelSync = task;
+    return task;
+  }
+
+  Future<void> _syncLevel(String account) async {
+    while (state.session?.playerId == account) {
+      final level = _progress.state.level;
+      if (level <= _syncedLevel) return;
+      final previous = _syncedLevel;
+      _syncedLevel = level;
+      try {
+        final remote = await _repo.syncLevel(level);
+        if (state.session?.playerId != account) return;
+        if (remote > level) _syncedLevel = remote;
+        await _progress.applyLevel(remote);
+      } on ApiException {
+        if (state.session?.playerId == account) _syncedLevel = previous;
+        return;
+      }
     }
   }
 

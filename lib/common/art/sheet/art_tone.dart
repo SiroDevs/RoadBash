@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 /// The colour roles a shape can take from a rider or bike look.
 enum ToneRole {
   primary,
+  jacket,
   helmet,
   trim,
   accent,
@@ -15,6 +16,7 @@ enum ToneRole {
   neck,
   glove,
   boot,
+  bootDark,
   visor,
   black,
   gray,
@@ -22,6 +24,7 @@ enum ToneRole {
   pad,
   plate,
   lamp,
+  leg
 }
 
 /// A colour role and how much lighter or darker the shape is drawn.

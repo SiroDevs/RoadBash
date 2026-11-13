@@ -14,6 +14,9 @@ class RiderInMotionPainter {
   static const double height = 170.0;
 
   static const Color color000000 = Color(0xFF000000);
+  // Body parts drawn in black, kept apart so they can take the rider's colors.
+  static const Color colorBodyArm = Color(0xFF000002);
+  static const Color colorBodyBoot = Color(0xFF000003);
   static const Color color3A3D4E = Color(0xFF3A3D4E);
   static const Color color7F7F7F = Color(0xFF7F7F7F);
   static const Color colorFFFFFF = Color(0xFFFFFFFF);
@@ -37,38 +40,115 @@ class RiderInMotionPainter {
   static const Color color0D190E = Color(0xFF0D190E);
   static const Color color563828 = Color(0xFF563828);
 
-  final RiderInMotionFacingStraightLayer _facingStraight = RiderInMotionFacingStraightLayer();
-  final RiderInMotionFacingSlightlyRightLayer _facingSlightlyRight = RiderInMotionFacingSlightlyRightLayer();
-  final RiderInMotionFacingExtremelyRightLayer _facingExtremelyRight = RiderInMotionFacingExtremelyRightLayer();
-  final RiderInMotionFacingExtremelyLeftLayer _facingExtremelyLeft = RiderInMotionFacingExtremelyLeftLayer();
-  final RiderInMotionFacingSlightlyLeftLayer _facingSlightlyLeft = RiderInMotionFacingSlightlyLeftLayer();
+  final RiderInMotionFacingStraightLayer _facingStraight =
+      RiderInMotionFacingStraightLayer();
+  final RiderInMotionFacingSlightlyRightLayer _facingSlightlyRight =
+      RiderInMotionFacingSlightlyRightLayer();
+  final RiderInMotionFacingExtremelyRightLayer _facingExtremelyRight =
+      RiderInMotionFacingExtremelyRightLayer();
+  final RiderInMotionFacingExtremelyLeftLayer _facingExtremelyLeft =
+      RiderInMotionFacingExtremelyLeftLayer();
+  final RiderInMotionFacingSlightlyLeftLayer _facingSlightlyLeft =
+      RiderInMotionFacingSlightlyLeftLayer();
 
-  void paint(Canvas canvas) {
-    _facingSlightlyLeft.paint(canvas);
+  void paint(
+    Canvas canvas, {
+    double wheelPhase = 0,
+    Color legColor = color00A2E8,
+    Color jacketColor = color3A3D4E,
+    Color panelColor = colorED1C24,
+  }) {
+    _facingStraight.paint(
+      canvas,
+      wheelPhase: wheelPhase,
+      legColor: legColor,
+      jacketColor: jacketColor,
+      panelColor: panelColor,
+    );
   }
 
   /// Paints layer "FacingStraight".
-  void paintFacingStraight(Canvas canvas) {
-    _facingStraight.paint(canvas);
+  void paintFacingStraight(
+    Canvas canvas, {
+    double wheelPhase = 0,
+    Color legColor = color00A2E8,
+    Color jacketColor = color3A3D4E,
+    Color panelColor = colorED1C24,
+  }) {
+    _facingStraight.paint(
+      canvas,
+      wheelPhase: wheelPhase,
+      legColor: legColor,
+      jacketColor: jacketColor,
+      panelColor: panelColor,
+    );
   }
 
   /// Paints layer "FacingSlightlyRight".
-  void paintFacingSlightlyRight(Canvas canvas) {
-    _facingSlightlyRight.paint(canvas);
+  void paintFacingSlightlyRight(
+    Canvas canvas, {
+    double wheelPhase = 0,
+    Color legColor = color00A2E8,
+    Color jacketColor = color3A3D4E,
+    Color panelColor = colorED1C24,
+  }) {
+    _facingSlightlyRight.paint(
+      canvas,
+      wheelPhase: wheelPhase,
+      legColor: legColor,
+      jacketColor: jacketColor,
+      panelColor: panelColor,
+    );
   }
 
   /// Paints layer "FacingExtremelyRight".
-  void paintFacingExtremelyRight(Canvas canvas) {
-    _facingExtremelyRight.paint(canvas);
+  void paintFacingExtremelyRight(
+    Canvas canvas, {
+    double wheelPhase = 0,
+    Color legColor = color00A2E8,
+    Color jacketColor = color3A3D4E,
+    Color panelColor = colorED1C24,
+  }) {
+    _facingExtremelyRight.paint(
+      canvas,
+      wheelPhase: wheelPhase,
+      legColor: legColor,
+      jacketColor: jacketColor,
+      panelColor: panelColor,
+    );
   }
 
   /// Paints layer "FacingExtremelyLeft".
-  void paintFacingExtremelyLeft(Canvas canvas) {
-    _facingExtremelyLeft.paint(canvas);
+  void paintFacingExtremelyLeft(
+    Canvas canvas, {
+    double wheelPhase = 0,
+    Color legColor = color00A2E8,
+    Color jacketColor = color3A3D4E,
+    Color panelColor = colorED1C24,
+  }) {
+    _facingExtremelyLeft.paint(
+      canvas,
+      wheelPhase: wheelPhase,
+      legColor: legColor,
+      jacketColor: jacketColor,
+      panelColor: panelColor,
+    );
   }
 
   /// Paints layer "FacingSlightlyLeft".
-  void paintFacingSlightlyLeft(Canvas canvas) {
-    _facingSlightlyLeft.paint(canvas);
+  void paintFacingSlightlyLeft(
+    Canvas canvas, {
+    double wheelPhase = 0,
+    Color legColor = color00A2E8,
+    Color jacketColor = color3A3D4E,
+    Color panelColor = colorED1C24,
+  }) {
+    _facingSlightlyLeft.paint(
+      canvas,
+      wheelPhase: wheelPhase,
+      legColor: legColor,
+      jacketColor: jacketColor,
+      panelColor: panelColor,
+    );
   }
 }

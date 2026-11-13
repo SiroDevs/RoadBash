@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 // Project imports:
-import 'bike_look.dart';
+import 'bike_looks.dart';
 import 'rider_look.dart';
 import 'rider_palettes.dart';
 
@@ -10,146 +10,103 @@ import 'rider_palettes.dart';
 abstract final class RiderLooks {
   static const RiderLook player = RiderLook.main;
 
-  /// Yellow rival.
-  static const RiderLook yellow = RiderLook(
-    suit: Color(0xFFF5C518),
-    stripe: Color(0xFF8A6A00),
-    stripeEdge: Color(0xFFFFE066),
-    backPatch: Color(0xFF1A1A20),
-    helmet: Color(0xFFF5C518),
-    helmetGraphic: Color(0xFF1A1A20),
-    helmetGraphic2: Color(0xFFFFE066),
-    visor: Color(0xFF14141A),
-    gloves: Color(0xFF1E1E22),
-    gloveAccent: Color(0xFF8A6A00),
-    boots: Color(0xFF1A1A1A),
-    bike: BikeLook(
-      frame: Color(0xFF101014),
-      panel: Color(0xFFF5C518),
-      panelDark: Color(0xFF8A6A00),
-      accent: Color(0xFF22222A),
-      accentEdge: Color(0xFFFFE066),
-      trim: Color(0xFFD9DADF),
-    ),
-    art: RiderPalettes.yellow,
-  );
-
-  /// Blue rival.
+  /// Blue, purple and light-blue suit with a black and red bike.
   static const RiderLook blue = RiderLook(
-    suit: Color(0xFF1E4FD6),
-    stripe: Color(0xFF0E2A7A),
-    stripeEdge: Color(0xFF6C93FF),
-    backPatch: Color(0xFF1A1A20),
-    helmet: Color(0xFF1E4FD6),
-    helmetGraphic: Color(0xFF1A1A20),
-    helmetGraphic2: Color(0xFF6C93FF),
+    suit: Color(0xFF2563EB),
+    stripe: Color(0xFF7E22CE),
+    stripeEdge: Color(0xFF7DD3FC),
+    backPatch: Color(0xFF54208A),
+    helmet: Color(0xFF2563EB),
+    helmetGraphic: Color(0xFF7E22CE),
+    helmetGraphic2: Color(0xFF7DD3FC),
     visor: Color(0xFF14141A),
     gloves: Color(0xFF1E1E22),
-    gloveAccent: Color(0xFF0E2A7A),
+    gloveAccent: Color(0xFF7E22CE),
     boots: Color(0xFF1A1A1A),
-    bike: BikeLook(
-      frame: Color(0xFF101014),
-      panel: Color(0xFF1E4FD6),
-      panelDark: Color(0xFF0E2A7A),
-      accent: Color(0xFF22222A),
-      accentEdge: Color(0xFF6C93FF),
-      trim: Color(0xFFD9DADF),
-    ),
+    bike: BikeLooks.blackRed,
     art: RiderPalettes.blue,
   );
 
-  /// Green rival.
-  static const RiderLook green = RiderLook(
-    suit: Color(0xFF2EC02E),
-    stripe: Color(0xFF14661B),
-    stripeEdge: Color(0xFF8CE86B),
-    backPatch: Color(0xFF1A1A20),
-    helmet: Color(0xFF2EC02E),
-    helmetGraphic: Color(0xFF1A1A20),
-    helmetGraphic2: Color(0xFF8CE86B),
+  /// Black, silver and gold suit with a white and silver bike.
+  static const RiderLook black = RiderLook(
+    suit: Color(0xFF22252B),
+    stripe: Color(0xFFD5D8DD),
+    stripeEdge: Color(0xFFD6A528),
+    backPatch: Color(0xFF17191D),
+    helmet: Color(0xFF22252B),
+    helmetGraphic: Color(0xFFD5D8DD),
+    helmetGraphic2: Color(0xFFD6A528),
     visor: Color(0xFF14141A),
     gloves: Color(0xFF1E1E22),
-    gloveAccent: Color(0xFF14661B),
+    gloveAccent: Color(0xFFD6A528),
     boots: Color(0xFF1A1A1A),
-    bike: BikeLook(
-      frame: Color(0xFF101014),
-      panel: Color(0xFF2EC02E),
-      panelDark: Color(0xFF14661B),
-      accent: Color(0xFF22222A),
-      accentEdge: Color(0xFF8CE86B),
-      trim: Color(0xFFD9DADF),
-    ),
-    art: RiderPalettes.green,
+    bike: BikeLooks.whiteSilver,
+    art: RiderPalettes.black,
   );
 
-  /// Purple rival.
-  static const RiderLook purple = RiderLook(
-    suit: Color(0xFF7A35C9),
-    stripe: Color(0xFF3F1A73),
-    stripeEdge: Color(0xFFB98AF0),
-    backPatch: Color(0xFF1A1A20),
-    helmet: Color(0xFF7A35C9),
-    helmetGraphic: Color(0xFF1A1A20),
-    helmetGraphic2: Color(0xFFB98AF0),
+  /// Red, brown and yellow suit with a cream and yellow bike.
+  static const RiderLook red = RiderLook(
+    suit: Color(0xFFC62828),
+    stripe: Color(0xFF70452D),
+    stripeEdge: Color(0xFFF2C94C),
+    backPatch: Color(0xFF70452D),
+    helmet: Color(0xFFC62828),
+    helmetGraphic: Color(0xFF70452D),
+    helmetGraphic2: Color(0xFFF2C94C),
     visor: Color(0xFF14141A),
     gloves: Color(0xFF1E1E22),
-    gloveAccent: Color(0xFF3F1A73),
+    gloveAccent: Color(0xFF70452D),
     boots: Color(0xFF1A1A1A),
-    bike: BikeLook(
-      frame: Color(0xFF101014),
-      panel: Color(0xFF7A35C9),
-      panelDark: Color(0xFF3F1A73),
-      accent: Color(0xFF22222A),
-      accentEdge: Color(0xFFB98AF0),
-      trim: Color(0xFFD9DADF),
-    ),
-    art: RiderPalettes.purple,
+    bike: BikeLooks.creamYellow,
+    art: RiderPalettes.red,
   );
 
-  /// Orange rival, the fifth on the higher levels.
-  static const RiderLook orange = RiderLook(
-    suit: Color(0xFFF26A1B),
-    stripe: Color(0xFF8A3A0A),
-    stripeEdge: Color(0xFFFFB074),
-    backPatch: Color(0xFF1A1A20),
-    helmet: Color(0xFFF26A1B),
-    helmetGraphic: Color(0xFF1A1A20),
-    helmetGraphic2: Color(0xFFFFB074),
+  /// Lime, beige and dark-green suit with a dark-red and brown bike.
+  static const RiderLook lime = RiderLook(
+    suit: Color(0xFFA3D900),
+    stripe: Color(0xFFE6D5A8),
+    stripeEdge: Color(0xFF174A2A),
+    backPatch: Color(0xFF174A2A),
+    helmet: Color(0xFFA3D900),
+    helmetGraphic: Color(0xFF174A2A),
+    helmetGraphic2: Color(0xFFE6D5A8),
     visor: Color(0xFF14141A),
     gloves: Color(0xFF1E1E22),
-    gloveAccent: Color(0xFF8A3A0A),
+    gloveAccent: Color(0xFF174A2A),
     boots: Color(0xFF1A1A1A),
-    bike: BikeLook(
-      frame: Color(0xFF101014),
-      panel: Color(0xFFF26A1B),
-      panelDark: Color(0xFF8A3A0A),
-      accent: Color(0xFF22222A),
-      accentEdge: Color(0xFFFFB074),
-      trim: Color(0xFFD9DADF),
-    ),
-    art: RiderPalettes.orange,
+    bike: BikeLooks.darkRedBrown,
+    art: RiderPalettes.lime,
   );
 
-  /// Traffic police rider: navy suit, white helmet, blue and white bike.
-  /// Not part of [field], so it never joins the race grid.
+  /// White, black and silver suit with a blue and green bike.
+  static const RiderLook white = RiderLook(
+    suit: Color(0xFFF2F2EC),
+    stripe: Color(0xFF17191D),
+    stripeEdge: Color(0xFFBFC4CC),
+    backPatch: Color(0xFF17191D),
+    helmet: Color(0xFFF2F2EC),
+    helmetGraphic: Color(0xFF17191D),
+    helmetGraphic2: Color(0xFFBFC4CC),
+    visor: Color(0xFF14141A),
+    gloves: Color(0xFF1E1E22),
+    gloveAccent: Color(0xFF17191D),
+    boots: Color(0xFF1A1A1A),
+    bike: BikeLooks.blueGreen,
+    art: RiderPalettes.white,
+  );
+
+  /// Traffic police uses the remaining silver and black bike scheme.
   static const RiderLook cop = RiderLook(
     suit: Color(0xFF1B2A49),
-    stripe: Color(0xFFFFFFFF),
-    stripeEdge: Color(0xFF2979FF),
+    stripe: Color(0xFFBFC4CC),
+    stripeEdge: Color(0xFF17191D),
     backPatch: Color(0xFF0B1224),
     helmet: Color(0xFFF5F5F5),
     gloves: Color(0xFF111111),
     boots: Color(0xFF0A0A0A),
-    bike: BikeLook(
-      frame: Color(0xFF0B1224),
-      panel: Color(0xFFF2F4F8),
-      panelDark: Color(0xFF8E99AD),
-      accent: Color(0xFF2979FF),
-      accentEdge: Color(0xFFFFFFFF),
-      trim: Color(0xFFFFFFFF),
-    ),
+    bike: BikeLooks.silverBlack,
     art: RiderPalettes.cop,
   );
 
-  static const List<RiderLook> field = [yellow, blue, green, purple, orange];
+  static const List<RiderLook> field = [red, blue, lime, black, white];
 }

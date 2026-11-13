@@ -37,16 +37,21 @@ class LegPlantedFacingStraightLayer {
   final BikeTyre _bikeTyre = BikeTyre();
   final Path _path = Path();
 
-  void paint(Canvas canvas) {
+  void paint(
+    Canvas canvas, {
+    Color legColor = LegPlantedPainter.color00A2E8,
+    Color jacketColor = LegPlantedPainter.color3A3D4E,
+    Color panelColor = LegPlantedPainter.colorED1C24,
+  }) {
     _frontPart.paint(canvas);
     _handleBars.paint(canvas);
     _bikeBody.paint(canvas);
     _helmet.paint(canvas);
     _leftHand.paint(canvas);
     _rightHand.paint(canvas);
-    _torso.paint(canvas);
-    _drawRightLeg(canvas);
-    _drawLeftLeg(canvas);
+    _torso.paint(canvas, jacketColor: jacketColor, panelColor: panelColor);
+    _drawRightLeg(canvas, legColor);
+    _drawLeftLeg(canvas, legColor);
     _rightBoot.paint(canvas);
     _leftBoot.paint(canvas);
     _midSections.paint(canvas);
@@ -56,7 +61,7 @@ class LegPlantedFacingStraightLayer {
   }
 
   /// Shape "RightLeg".
-  void _drawRightLeg(Canvas canvas) {
+  void _drawRightLeg(Canvas canvas, Color legColor) {
     _path
       ..reset()
       ..moveTo(53.0, 57.0)
@@ -77,12 +82,12 @@ class LegPlantedFacingStraightLayer {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = LegPlantedPainter.color00A2E8;
+      ..color = legColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "LeftLeg".
-  void _drawLeftLeg(Canvas canvas) {
+  void _drawLeftLeg(Canvas canvas, Color legColor) {
     _path
       ..reset()
       ..moveTo(53.0, 57.0)
@@ -103,7 +108,7 @@ class LegPlantedFacingStraightLayer {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = LegPlantedPainter.color00A2E8;
+      ..color = legColor;
     canvas.drawPath(_path, _paint);
   }
 }

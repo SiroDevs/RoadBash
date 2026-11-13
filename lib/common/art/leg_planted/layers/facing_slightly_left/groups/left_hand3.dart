@@ -41,7 +41,7 @@ class LeftHand3 {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = LegPlantedPainter.color000000;
+      ..color = LegPlantedPainter.colorBodyArm;
     canvas.drawPath(_path, _paint);
   }
 

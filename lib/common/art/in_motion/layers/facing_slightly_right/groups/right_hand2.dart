@@ -41,7 +41,7 @@ class RightHand2 {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.color000000;
+      ..color = RiderInMotionPainter.colorBodyArm;
     canvas.drawPath(_path, _paint);
   }
 

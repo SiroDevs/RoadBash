@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import '../../rider_in_motion_painter.dart';
+import '../../../wheel_thread_motion.dart';
 import 'groups/front_part2.dart';
 import 'groups/handle_bars2.dart';
 import 'groups/bike_body2.dart';
@@ -37,26 +38,38 @@ class RiderInMotionFacingSlightlyRightLayer {
   final Bottom2 _bottom2 = Bottom2();
   final Path _path = Path();
 
-  void paint(Canvas canvas) {
+  void paint(
+    Canvas canvas, {
+    double wheelPhase = 0,
+    Color legColor = RiderInMotionPainter.color00A2E8,
+    Color jacketColor = RiderInMotionPainter.color3A3D4E,
+    Color panelColor = RiderInMotionPainter.colorED1C24,
+  }) {
     _frontPart2.paint(canvas);
     _handleBars2.paint(canvas);
     _bikeBody2.paint(canvas);
     _helmet2.paint(canvas);
     _leftHand2.paint(canvas);
     _rightHand2.paint(canvas);
-    _torso2.paint(canvas);
-    _drawRightLeg(canvas);
-    _drawLeftLeg(canvas);
+    _torso2.paint(canvas, jacketColor: jacketColor, panelColor: panelColor);
+    _drawRightLeg(canvas, legColor);
+    _drawLeftLeg(canvas, legColor);
     _rightBoot2.paint(canvas);
     _midSections2.paint(canvas);
     _leftBoot2.paint(canvas);
     _backPart2.paint(canvas);
-    _bikeTyre2.paint(canvas);
+    _bikeTyre2.paint(
+      WheelThreadMotion(
+        canvas,
+        phase: wheelPhase,
+        clipBounds: const Rect.fromLTRB(48.86, 90.45, 70.07, 161.65),
+      ),
+    );
     _bottom2.paint(canvas);
   }
 
   /// Shape "RightLeg".
-  void _drawRightLeg(Canvas canvas) {
+  void _drawRightLeg(Canvas canvas, Color legColor) {
     _path
       ..reset()
       ..moveTo(61.5, 56.5)
@@ -77,12 +90,12 @@ class RiderInMotionFacingSlightlyRightLayer {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.color00A2E8;
+      ..color = legColor;
     canvas.drawPath(_path, _paint);
   }
 
   /// Shape "LeftLeg".
-  void _drawLeftLeg(Canvas canvas) {
+  void _drawLeftLeg(Canvas canvas, Color legColor) {
     _path
       ..reset()
       ..moveTo(61.5, 56.5)
@@ -103,7 +116,7 @@ class RiderInMotionFacingSlightlyRightLayer {
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
-      ..color = RiderInMotionPainter.color00A2E8;
+      ..color = legColor;
     canvas.drawPath(_path, _paint);
   }
 }

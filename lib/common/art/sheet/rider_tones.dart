@@ -33,7 +33,7 @@ const Map<String, Tone> riderTones = {
   'helmet.BackpartTop': Tone(ToneRole.graphicB),
   'helmet.RightPart': Tone(ToneRole.graphicA, 0.75),
   'helmet.LeftPart': Tone(ToneRole.graphicB, 0.75),
-  'torso.Torso': _suit,
+  'torso.Torso': Tone(ToneRole.jacket),
   'torso.Collar': Tone(ToneRole.accent),
   'torso.CollarFront': Tone(ToneRole.neck, 1.4),
   'torso.RightChest': Tone(ToneRole.dark, 1.0),
@@ -54,8 +54,8 @@ const Map<String, Tone> riderTones = {
   'arm.BackPart': Tone(ToneRole.knuckle),
   'arm.BackPart1': Tone(ToneRole.knuckle),
   'arm.BackPart2': Tone(ToneRole.knuckle, 0.85),
-  'leg.Thigh1': Tone(ToneRole.accent),
-  'leg.Thigh2': Tone(ToneRole.light),
+  'leg.Thigh1': Tone(ToneRole.leg),
+  'leg.Thigh2': Tone(ToneRole.leg, 0.85),
   'leg.KneePad1': Tone(ToneRole.accent, 1.2),
   'leg.KneePad2': Tone(ToneRole.accent, 0.8),
   'leg.LeftKneePad': Tone(ToneRole.accent),
@@ -74,15 +74,15 @@ const Map<String, Tone> riderTones = {
   'leg.RightLeg': Tone(ToneRole.primary, 0.92),
   'boot.LeftBoot': Tone(ToneRole.boot),
   'boot.RightBoot': Tone(ToneRole.boot),
-  'boot.BackBlack': Tone(ToneRole.black, 0.8),
-  'boot.BlackBack': Tone(ToneRole.black, 0.8),
-  'boot.BlackFront': Tone(ToneRole.black, 0.8),
-  'boot.BlackPatch': Tone(ToneRole.black, 0.8),
-  'boot.BlackSide': Tone(ToneRole.black, 0.8),
-  'boot.FrontBlack': Tone(ToneRole.black, 0.8),
-  'boot.SideBlack': Tone(ToneRole.black, 0.8),
-  'boot.SmallBlack': Tone(ToneRole.black, 0.8),
-  'boot.SmallPatch': Tone(ToneRole.black, 0.8),
+  'boot.BackBlack': Tone(ToneRole.bootDark),
+  'boot.BlackBack': Tone(ToneRole.bootDark),
+  'boot.BlackFront': Tone(ToneRole.bootDark),
+  'boot.BlackPatch': Tone(ToneRole.bootDark),
+  'boot.BlackSide': Tone(ToneRole.bootDark),
+  'boot.FrontBlack': Tone(ToneRole.bootDark),
+  'boot.SideBlack': Tone(ToneRole.bootDark),
+  'boot.SmallBlack': Tone(ToneRole.bootDark),
+  'boot.SmallPatch': Tone(ToneRole.bootDark),
 };
 
 /// Tone for shapes that are not listed, by body piece.
@@ -90,7 +90,7 @@ Tone riderToneOf(String kind, String name) {
   final listed = riderTones['$kind.$name'];
   if (listed != null) return listed;
   if (kind == 'boot') {
-    return const Tone(ToneRole.black, 0.8);
+    return const Tone(ToneRole.bootDark);
   }
   if (kind == 'leg') return const Tone(ToneRole.primary, 0.92);
   if (kind == 'helmet') return const Tone(ToneRole.helmet);

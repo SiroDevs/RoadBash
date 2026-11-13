@@ -12,6 +12,9 @@ class LegPlantedPainter {
   static const double height = 170.0;
 
   static const Color color000000 = Color(0xFF000000);
+  // Body parts drawn in black, kept apart so they can take the rider's colors.
+  static const Color colorBodyArm = Color(0xFF000002);
+  static const Color colorBodyBoot = Color(0xFF000003);
   static const Color color3A3D4E = Color(0xFF3A3D4E);
   static const Color color7F7F7F = Color(0xFF7F7F7F);
   static const Color colorFFFFFF = Color(0xFFFFFFFF);
@@ -35,26 +38,69 @@ class LegPlantedPainter {
   static const Color colorB97A57 = Color(0xFFB97A57);
   static const Color color563828 = Color(0xFF563828);
 
-  final LegPlantedFacingStraightLayer _facingStraight = LegPlantedFacingStraightLayer();
-  final LegPlantedFacingSlightlyRightLayer _facingSlightlyRight = LegPlantedFacingSlightlyRightLayer();
-  final LegPlantedFacingSlightlyLeftLayer _facingSlightlyLeft = LegPlantedFacingSlightlyLeftLayer();
+  final LegPlantedFacingStraightLayer _facingStraight =
+      LegPlantedFacingStraightLayer();
+  final LegPlantedFacingSlightlyRightLayer _facingSlightlyRight =
+      LegPlantedFacingSlightlyRightLayer();
+  final LegPlantedFacingSlightlyLeftLayer _facingSlightlyLeft =
+      LegPlantedFacingSlightlyLeftLayer();
 
-  void paint(Canvas canvas) {
-    _facingSlightlyLeft.paint(canvas);
+  void paint(
+    Canvas canvas, {
+    Color legColor = color00A2E8,
+    Color jacketColor = color3A3D4E,
+    Color panelColor = colorED1C24,
+  }) {
+    _facingSlightlyLeft.paint(
+      canvas,
+      legColor: legColor,
+      jacketColor: jacketColor,
+      panelColor: panelColor,
+    );
   }
 
   /// Paints layer "FacingStraight".
-  void paintFacingStraight(Canvas canvas) {
-    _facingStraight.paint(canvas);
+  void paintFacingStraight(
+    Canvas canvas, {
+    Color legColor = color00A2E8,
+    Color jacketColor = color3A3D4E,
+    Color panelColor = colorED1C24,
+  }) {
+    _facingStraight.paint(
+      canvas,
+      legColor: legColor,
+      jacketColor: jacketColor,
+      panelColor: panelColor,
+    );
   }
 
   /// Paints layer "FacingSlightlyRight".
-  void paintFacingSlightlyRight(Canvas canvas) {
-    _facingSlightlyRight.paint(canvas);
+  void paintFacingSlightlyRight(
+    Canvas canvas, {
+    Color legColor = color00A2E8,
+    Color jacketColor = color3A3D4E,
+    Color panelColor = colorED1C24,
+  }) {
+    _facingSlightlyRight.paint(
+      canvas,
+      legColor: legColor,
+      jacketColor: jacketColor,
+      panelColor: panelColor,
+    );
   }
 
   /// Paints layer "FacingSlightlyLeft".
-  void paintFacingSlightlyLeft(Canvas canvas) {
-    _facingSlightlyLeft.paint(canvas);
+  void paintFacingSlightlyLeft(
+    Canvas canvas, {
+    Color legColor = color00A2E8,
+    Color jacketColor = color3A3D4E,
+    Color panelColor = colorED1C24,
+  }) {
+    _facingSlightlyLeft.paint(
+      canvas,
+      legColor: legColor,
+      jacketColor: jacketColor,
+      panelColor: panelColor,
+    );
   }
 }

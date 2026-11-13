@@ -96,7 +96,7 @@ abstract final class SceneSnapshot {
 
   /// Places a few rivals ahead of the rider.
   static List<PreviewBike> _rivals(double at, int lanes) {
-    const looks = [RiderLooks.yellow, RiderLooks.blue, RiderLooks.green];
+    const looks = [RiderLooks.red, RiderLooks.blue, RiderLooks.lime];
     const gaps = [2600.0, 4400.0, 7200.0];
     const sides = [-0.45, 0.4, -0.1];
     return [

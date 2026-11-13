@@ -116,9 +116,6 @@ class AppLocalizationsSw extends AppLocalizations {
   String get startRace => 'Anza shindano';
 
   @override
-  String get mostPlayed => 'Inachezwa zaidi';
-
-  @override
   String get enterLabel => 'Ingia';
 
   @override
@@ -540,7 +537,13 @@ class AppLocalizationsSw extends AppLocalizations {
       'Hakuna aliyemaliza mbio bado. Kuwa wa kwanza!';
 
   @override
-  String get menuScenes => 'Mandhari';
+  String get menuScenes => 'Chagua mandhari ya kucheza';
+
+  @override
+  String get menuStartRide => 'Anza Mbio';
+
+  @override
+  String get menuHowToPlay => 'Jinsi ya kucheza';
 
   @override
   String get boardroomTitle => 'Boardroom';

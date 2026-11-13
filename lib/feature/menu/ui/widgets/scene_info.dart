@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
 import '../../../../common/layout/retro_sizes.dart';
+import '../../../../common/widgets/retro/controls/retro_controls.dart';
+import '../../../../common/widgets/retro/controls/retro_link_button.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 import '../../../../core/game/race/race_result.dart';
 import '../../../../domain/models/level_rules.dart';
@@ -20,6 +22,8 @@ class SceneInfo extends StatelessWidget {
     required this.target,
     required this.km,
     required this.laps,
+    required this.canStartRide,
+    required this.onStartRide,
   });
 
   final MenuTarget target;
@@ -27,6 +31,8 @@ class SceneInfo extends StatelessWidget {
 
   /// Laps of the selected scene at the player's level.
   final int laps;
+  final bool canStartRide;
+  final VoidCallback onStartRide;
 
   @override
   Widget build(BuildContext context) {
@@ -78,13 +84,52 @@ class SceneInfo extends StatelessWidget {
                     if (locked)
                       Text(
                         l10n.sceneLocked(LevelRules.unlockLevelOf(id)),
-                        style: retroBody(size: sizes.small, color: Retro.yellow),
+                        style: retroBody(
+                          size: sizes.small,
+                          color: Retro.yellow,
+                        ),
                       ),
                   ],
                 );
               },
             ),
           ],
+          if (id != null && canStartRide) ...[
+            SizedBox(height: sizes.gap),
+            SizedBox(
+              width: double.infinity,
+              child: RetroButton(l10n.menuStartRide, onTap: onStartRide),
+            ),
+          ],
+          SizedBox(height: sizes.gapSmall),
+          RetroLinkButton(
+            l10n.menuHowToPlay,
+            onTap: () => _showControls(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Opens the existing controls guide in a readable dialog.
+  void _showControls(BuildContext context) {
+    final sizes = context.sizes;
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+        title: Text(context.l10n.menuHowToPlay),
+        content: SingleChildScrollView(
+          child: Text(
+            context.l10n.controlsHelp,
+            style: retroBody(size: sizes.small),
+          ),
+        ),
+        actions: [
+          RetroButton(
+            context.l10n.commonBack,
+            onTap: () => Navigator.of(dialogContext).pop(),
+          ),
         ],
       ),
     );

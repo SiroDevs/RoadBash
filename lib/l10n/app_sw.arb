@@ -153,10 +153,6 @@
   "@startRace": {
     "description": "Start button"
   },
-  "mostPlayed": "Inachezwa zaidi",
-  "@mostPlayed": {
-    "description": "Small badge on the scene the player has raced most"
-  },
   "enterLabel": "Ingia",
   "@enterLabel": {
     "description": "Enter button"
@@ -757,7 +753,9 @@
   "@leaderboardEmpty": {
     "description": "Empty board"
   },
-  "menuScenes": "Mandhari",
+  "menuScenes": "Chagua mandhari ya kucheza",
+  "menuStartRide": "Anza Mbio",
+  "menuHowToPlay": "Jinsi ya kucheza",
   "boardroomTitle": "Boardroom",
   "blurbBoardroom": "Soma matangazo, nitumie pendekezo, na ujiunge na mazungumzo chini ya machapisho ya wazi.",
   "boardroomAnnouncements": "Matangazo",

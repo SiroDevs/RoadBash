@@ -153,10 +153,6 @@
   "@startRace": {
     "description": "Start button"
   },
-  "mostPlayed": "Most played",
-  "@mostPlayed": {
-    "description": "Small badge on the scene the player has raced most"
-  },
   "enterLabel": "Enter",
   "@enterLabel": {
     "description": "Enter button"
@@ -757,9 +753,17 @@
   "@leaderboardEmpty": {
     "description": "Empty board"
   },
-  "menuScenes": "Scenes",
+  "menuScenes": "Pick a scene to play",
   "@menuScenes": {
     "description": "Menu section label"
+  },
+  "menuStartRide": "Start Ride",
+  "@menuStartRide": {
+    "description": "Starts the selected race from the main menu"
+  },
+  "menuHowToPlay": "How to Play",
+  "@menuHowToPlay": {
+    "description": "Opens the riding controls guide from the main menu"
   },
   "boardroomTitle": "Boardroom",
   "@boardroomTitle": {

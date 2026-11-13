@@ -365,7 +365,7 @@ abstract class AppLocalizations {
   /// Controls help text
   ///
   /// In en, this message translates to:
-  /// **'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold either handlebar (GAS) to ride and release both to brake. Drag either handlebar to turn: right bar down (left bar up) steers right, left bar down (right bar up) steers left. Use Boost and Attack in the accessory row below the dashboard while moving; Attack unlocks in level 4. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.'**
+  /// **'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold either handlebar (GAS) to ride and release both to brake. Drag either handlebar to turn: right bar down (left bar up) steers right, left bar down (right bar up) steers left. Use Boost and Attack in the accessory row below the dashboard while moving; Attack unlocks in level 4.\n\nController: left stick or D-pad steers, RT accelerates, LT brakes, A/Cross attacks (level 4+), X/Square boosts, and Start pauses.\n\nYou can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.'**
   String get controlsHelp;
 
   /// Race start banner

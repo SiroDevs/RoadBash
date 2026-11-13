@@ -6,9 +6,10 @@ import 'package:flame/game.dart';
 
 // Project imports:
 import '../road/road_renderer.dart';
+import 'gamepad_controls.dart';
 import 'handlebar_pose.dart';
 
-// Merges keyboard, handlebar and tilt input into the rider controls.
+// Merges keyboard, gamepad, handlebar and tilt input into the rider controls.
 mixin RoadInput on FlameGame {
   RoadRenderer get road;
 
@@ -19,7 +20,9 @@ mixin RoadInput on FlameGame {
   bool _keyThrottle = false;
   bool _keyBrake = false;
   bool _boost = false;
-  bool attack = false;
+  bool _keyAttack = false;
+  bool _accessoryAttack = false;
+  GamepadControls _gamepad = GamepadControls.neutral;
   HandlebarPose _handlebars = HandlebarPose.rest;
   bool _handlebarsLatched = false;
 
@@ -38,7 +41,7 @@ mixin RoadInput on FlameGame {
   ];
   static const _attackKey = LogicalKeyboardKey.keyC;
 
-  /// Combines key, handlebar and tilt input into the rider controls.
+  /// Combines keyboard, gamepad, handlebar and tilt input into the rider controls.
   void applyInput() {
     if (!isLoaded) return;
     if (finishing) {
@@ -50,16 +53,24 @@ mixin RoadInput on FlameGame {
       return;
     }
     final barSteer = _handlebars.steer;
-    final combined = _keySteer + barSteer + _tiltSteer;
+    final combined = _keySteer + barSteer + _tiltSteer + _gamepad.steer;
     road.steer = combined.clamp(-1.0, 1.0).toDouble();
-    // Bars and tilt are already smooth, so the bike follows them directly.
-    road.analogSteer = _keySteer == 0 && (barSteer != 0 || _tiltSteer != 0);
-    // Releasing both gas grips brakes after either grip was used.
-    final barBrake = _handlebarsLatched && !_handlebars.throttle;
-    road.brake = _keyBrake || barBrake;
-    road.throttle = (_keyThrottle || _handlebars.throttle) && !road.brake;
+    // Analog controls are smooth, so the bike follows them directly.
+    road.analogSteer =
+        _keySteer == 0 &&
+        (barSteer != 0 || _tiltSteer != 0 || _gamepad.steer != 0);
+    // Releasing both gas grips brakes unless keyboard or controller gas is held.
+    final barBrake =
+        _handlebarsLatched &&
+        !_handlebars.throttle &&
+        !_keyThrottle &&
+        !_gamepad.throttle;
+    road.brake = _keyBrake || _gamepad.brake || barBrake;
+    road.throttle =
+        (_keyThrottle || _gamepad.throttle || _handlebars.throttle) &&
+        !road.brake;
     road.boost =
-        _boost &&
+        (_boost || _gamepad.boost) &&
         road.throttle &&
         !road.locked &&
         !road.crashed &&
@@ -74,7 +85,7 @@ mixin RoadInput on FlameGame {
         (anyDown(_rightKeys) ? 1.0 : 0.0) - (anyDown(_leftKeys) ? 1.0 : 0.0);
     _keyThrottle = anyDown(_upKeys);
     _keyBrake = anyDown(_downKeys);
-    attack = anyDown([_attackKey]);
+    _keyAttack = anyDown([_attackKey]);
     if (_keyThrottle || _keyBrake || _keySteer != 0) _handlebarsLatched = false;
     applyInput();
   }
@@ -86,7 +97,9 @@ mixin RoadInput on FlameGame {
     _keyThrottle = false;
     _keyBrake = false;
     _boost = false;
-    attack = false;
+    _keyAttack = false;
+    _accessoryAttack = false;
+    _gamepad = GamepadControls.neutral;
     _handlebars = HandlebarPose.rest;
     _handlebarsLatched = false;
     applyInput();
@@ -99,7 +112,16 @@ mixin RoadInput on FlameGame {
   }
 
   void setAttack(bool value) {
-    attack = value;
+    _accessoryAttack = value;
+  }
+
+  /// Applies the latest gamepad controls.
+  void setGamepadControls(GamepadControls controls) {
+    _gamepad = controls;
+    if (controls.throttle || controls.brake || controls.steer != 0) {
+      _handlebarsLatched = false;
+    }
+    applyInput();
   }
 
   /// Holds boost while its accessory control is pressed.
@@ -110,6 +132,9 @@ mixin RoadInput on FlameGame {
 
   /// The current handlebar pose.
   HandlebarPose get handlebars => _handlebars;
+
+  /// True while any supported input is holding attack.
+  bool get attack => _keyAttack || _accessoryAttack || _gamepad.attack;
 
   /// Applies the handlebar pose: either grip is gas and either steers.
   void setHandlebars(HandlebarPose pose) {

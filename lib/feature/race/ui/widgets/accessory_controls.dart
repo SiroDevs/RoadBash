@@ -11,9 +11,14 @@ import '../../../../l10n/l10n_extension.dart';
 
 /// Portrait race controls for boost, attacks, and available item slots.
 class AccessoryControls extends StatelessWidget {
-  const AccessoryControls({super.key, required this.game});
+  const AccessoryControls({
+    super.key,
+    required this.game,
+    required this.portrait,
+  });
 
   final RoadGame game;
+  final bool portrait;
 
   /// Enables race accessories only while the moving race is active.
   bool get _canUse =>
@@ -46,7 +51,10 @@ class AccessoryControls extends StatelessWidget {
       builder: (context, snapshot) {
         final active = snapshot.data ?? false;
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+          padding: EdgeInsets.symmetric(
+            horizontal: portrait ? 8 : 5,
+            vertical: portrait ? 8 : 2,
+          ),
           child: Row(
             children: [
               Expanded(

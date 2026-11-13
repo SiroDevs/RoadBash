@@ -66,12 +66,10 @@ class HandlebarLayout {
   /// grip goes up, by [travel] pixels at full lean.
   double tilt(double lean) => math.atan2(lean * travel, halfSpan);
 
-  /// Returns the grip's touch area, ending above the portrait accessory row.
+  /// Returns the grip's touch area, ending above the accessory row.
   Rect zone(HandlebarSide side) {
     final top = restGripY - travel - dashboard.ph * 0.2;
-    final bottom = DashboardLayout.isPortrait(screen)
-        ? DashboardLayout.accessoryArea(screen).top
-        : screen.y;
+    final bottom = DashboardLayout.accessoryArea(screen).top;
     return side == HandlebarSide.left
         ? Rect.fromLTRB(0, top, centreX, bottom)
         : Rect.fromLTRB(centreX, top, screen.x, bottom);

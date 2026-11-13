@@ -3,8 +3,8 @@ import 'dart:ui';
 
 import '../../../rider_in_motion_painter.dart';
 
-/// Group "Helmeta".
-class Helmeta {
+/// Group "Helmet".
+class Helmet4 {
   final Paint _paint = Paint()
     ..isAntiAlias = true
     ..strokeCap = StrokeCap.round
@@ -15,20 +15,20 @@ class Helmeta {
   void _drawHelmet(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(58.06, 20.13)
-      ..lineTo(58.58, 14.26)
-      ..lineTo(60.47, 10.2)
-      ..lineTo(65.42, 7.21)
-      ..lineTo(71.91, 7.89)
-      ..lineTo(75.48, 10.3)
-      ..lineTo(77.56, 13.24)
-      ..lineTo(78.17, 17.23)
-      ..lineTo(77.58, 24.59)
-      ..lineTo(75.9, 28.36)
-      ..lineTo(72.48, 24.71)
-      ..lineTo(69.87, 22.21)
-      ..lineTo(65.13, 20.36)
-      ..lineTo(61.19, 19.66)
+      ..moveTo(69.18, 20.85)
+      ..lineTo(68.5, 15.0)
+      ..lineTo(66.5, 11.0)
+      ..lineTo(61.48, 8.14)
+      ..lineTo(55.0, 9.0)
+      ..lineTo(51.5, 11.5)
+      ..lineTo(49.5, 14.5)
+      ..lineTo(49.0, 18.5)
+      ..lineTo(49.79, 25.84)
+      ..lineTo(51.57, 29.56)
+      ..lineTo(54.89, 25.82)
+      ..lineTo(57.43, 23.26)
+      ..lineTo(62.12, 21.28)
+      ..lineTo(66.04, 20.48)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -41,12 +41,12 @@ class Helmeta {
   void _drawBackPartDown(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(59.91, 18.31)
-      ..lineTo(62.04, 14.38)
-      ..lineTo(64.83, 14.87)
-      ..lineTo(66.31, 18.72)
-      ..lineTo(64.22, 18.36)
-      ..lineTo(62.12, 17.99)
+      ..moveTo(67.28, 19.09)
+      ..lineTo(65.04, 15.21)
+      ..lineTo(62.27, 15.78)
+      ..lineTo(60.9, 19.68)
+      ..lineTo(62.98, 19.25)
+      ..lineTo(65.06, 18.82)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -59,10 +59,10 @@ class Helmeta {
   void _drawRightPart(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(68.42, 18.04)
-      ..lineTo(68.22, 15.13)
-      ..lineTo(71.75, 11.44)
-      ..lineTo(72.2, 12.95)
+      ..moveTo(58.77, 19.05)
+      ..lineTo(58.89, 16.13)
+      ..lineTo(55.26, 12.54)
+      ..lineTo(54.85, 14.07)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -75,15 +75,15 @@ class Helmeta {
   void _drawBackpartTop(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(62.06, 14.74)
-      ..lineTo(63.46, 9.62)
-      ..lineTo(60.83, 9.97)
-      ..lineTo(65.63, 7.23)
-      ..lineTo(70.52, 7.09)
-      ..lineTo(74.97, 9.81)
-      ..lineTo(74.99, 10.81)
-      ..lineTo(69.99, 10.05)
-      ..lineTo(65.01, 15.26)
+      ..moveTo(65.04, 15.58)
+      ..lineTo(63.5, 10.5)
+      ..lineTo(66.13, 10.78)
+      ..lineTo(61.26, 8.16)
+      ..lineTo(56.38, 8.16)
+      ..lineTo(52.0, 11.0)
+      ..lineTo(52.0, 12.0)
+      ..lineTo(56.98, 11.1)
+      ..lineTo(62.1, 16.18)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -96,10 +96,10 @@ class Helmeta {
   void _drawRightPart2(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(75.84, 27.77)
-      ..lineTo(70.74, 17.29)
-      ..lineTo(72.71, 17.64)
-      ..lineTo(76.42, 25.4)
+      ..moveTo(51.62, 28.98)
+      ..lineTo(56.42, 18.36)
+      ..lineTo(54.46, 18.76)
+      ..lineTo(50.97, 26.62)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -112,10 +112,10 @@ class Helmeta {
   void _drawGlass(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(77.58, 24.59)
-      ..lineTo(76.26, 20.78)
-      ..lineTo(76.63, 15.77)
-      ..lineTo(78.17, 17.23)
+      ..moveTo(49.79, 25.84)
+      ..lineTo(51.0, 22.0)
+      ..lineTo(50.5, 17.0)
+      ..lineTo(49.0, 18.5)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -134,12 +134,12 @@ class Helmeta {
   void _drawGlassHinge(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(75.16, 16.81)
-      ..lineTo(75.12, 15.31)
-      ..lineTo(75.81, 15.03)
-      ..lineTo(76.63, 15.77)
-      ..lineTo(76.26, 20.78)
-      ..lineTo(75.21, 18.81)
+      ..moveTo(52.0, 18.0)
+      ..lineTo(52.0, 16.5)
+      ..lineTo(51.3, 16.24)
+      ..lineTo(50.5, 17.0)
+      ..lineTo(51.0, 22.0)
+      ..lineTo(52.0, 20.0)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -158,16 +158,16 @@ class Helmeta {
   void _drawHelmetShape1(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(61.19, 19.66)
-      ..lineTo(65.13, 20.36)
-      ..lineTo(70.86, 22.39)
-      ..lineTo(75.9, 28.36)
-      ..lineTo(76.07, 27.37)
-      ..lineTo(70.22, 20.24)
-      ..lineTo(65.47, 18.39)
-      ..lineTo(61.53, 17.69)
-      ..lineTo(58.23, 19.14)
-      ..lineTo(58.06, 20.13)
+      ..moveTo(66.04, 20.48)
+      ..lineTo(62.12, 21.28)
+      ..lineTo(56.45, 23.46)
+      ..lineTo(51.57, 29.56)
+      ..lineTo(51.37, 28.58)
+      ..lineTo(57.02, 21.3)
+      ..lineTo(61.72, 19.32)
+      ..lineTo(65.64, 18.52)
+      ..lineTo(68.98, 19.87)
+      ..lineTo(69.18, 20.85)
       ..close();
     _paint
       ..style = PaintingStyle.fill

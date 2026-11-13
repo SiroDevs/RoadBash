@@ -11,60 +11,84 @@ class BikeTyre2 {
     ..strokeJoin = StrokeJoin.round;
   final Path _path = Path();
 
-  /// Shape "TyreOuter".
-  void _drawTyreOuter(Canvas canvas) {
+  /// Shape "TryeShape0".
+  void _drawTryeShape0(Canvas canvas) {
     canvas.save();
-    canvas.translate(44.35, 121.58);
-    canvas.rotate(0.14);
-    canvas.translate(-44.35, -121.58);
+    canvas.translate(59.47, 126.05);
+    canvas.rotate(0.05);
+    canvas.translate(-59.47, -126.05);
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
       ..color = RiderInMotionPainter.color000000;
-    canvas.drawOval(const Rect.fromLTRB(25.29, 84.19, 63.42, 158.97), _paint);
+    canvas.drawRRect(RRect.fromRectXY(const Rect.fromLTRB(48.86, 90.45, 70.07, 161.65), 9.75, 9.75), _paint);
     _paint
       ..style = PaintingStyle.stroke
       ..shader = null
       ..strokeWidth = 0.25
-      ..color = RiderInMotionPainter.colorC3C3C3;
-    canvas.drawOval(const Rect.fromLTRB(25.29, 84.19, 63.42, 158.97), _paint);
+      ..color = RiderInMotionPainter.color7F7F7F;
+    canvas.drawRRect(RRect.fromRectXY(const Rect.fromLTRB(48.86, 90.45, 70.07, 161.65), 9.75, 9.75), _paint);
     canvas.restore();
   }
 
   /// Shape "TyreInner".
   void _drawTyreInner(Canvas canvas) {
     canvas.save();
-    canvas.translate(52.86, 122.64);
-    canvas.rotate(0.14);
-    canvas.translate(-52.86, -122.64);
+    canvas.translate(68.94, 126.95);
+    canvas.rotate(0.05);
+    canvas.translate(-68.94, -126.95);
     _paint
       ..style = PaintingStyle.fill
       ..shader = Gradient.linear(
-        const Offset(42.37, 122.64),
-        const Offset(63.35, 122.64),
+        const Offset(66.95, 126.95),
+        const Offset(70.94, 126.95),
         const [RiderInMotionPainter.color7F7F7F, RiderInMotionPainter.color404040],
         const [0.0, 1.0],
       );
-    canvas.drawOval(const Rect.fromLTRB(42.37, 93.46, 63.35, 151.82), _paint);
+    canvas.drawOval(const Rect.fromLTRB(66.95, 95.56, 70.94, 158.33), _paint);
     _paint
       ..style = PaintingStyle.stroke
       ..shader = null
       ..strokeWidth = 0.25
-      ..color = RiderInMotionPainter.colorC3C3C3;
-    canvas.drawOval(const Rect.fromLTRB(42.37, 93.46, 63.35, 151.82), _paint);
+      ..color = RiderInMotionPainter.color7F7F7F;
+    canvas.drawOval(const Rect.fromLTRB(66.95, 95.56, 70.94, 158.33), _paint);
     canvas.restore();
   }
 
-  /// Shape "TyreThread1".
-  void _drawTyreThread1(Canvas canvas) {
+  /// Shape "InnerWheel".
+  void _drawInnerWheel(Canvas canvas) {
+    canvas.save();
+    canvas.translate(69.27, 126.85);
+    canvas.rotate(0.05);
+    canvas.translate(-69.27, -126.85);
+    _paint
+      ..style = PaintingStyle.fill
+      ..shader = Gradient.linear(
+        const Offset(68.35, 126.85),
+        const Offset(70.2, 126.85),
+        const [RiderInMotionPainter.color000000, RiderInMotionPainter.color626262],
+        const [0.0, 1.0],
+      );
+    canvas.drawOval(const Rect.fromLTRB(68.35, 114.32, 70.2, 139.37), _paint);
+    _paint
+      ..style = PaintingStyle.stroke
+      ..shader = null
+      ..strokeWidth = 0.75
+      ..color = RiderInMotionPainter.color000000;
+    canvas.drawOval(const Rect.fromLTRB(68.35, 114.32, 70.2, 139.37), _paint);
+    canvas.restore();
+  }
+
+  /// Shape "TyreThread8".
+  void _drawTyreThread8(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(38.85, 89.02)
-      ..lineTo(46.87, 92.47)
-      ..lineTo(55.1, 91.89)
-      ..lineTo(55.01, 92.38)
-      ..lineTo(46.79, 92.96)
-      ..lineTo(38.76, 89.51)
+      ..moveTo(49.07, 152.98)
+      ..lineTo(57.38, 155.66)
+      ..lineTo(65.51, 154.31)
+      ..lineTo(65.47, 154.81)
+      ..lineTo(57.34, 156.16)
+      ..lineTo(49.03, 153.48)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -78,88 +102,12 @@ class BikeTyre2 {
   void _drawTyreThread2(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(33.61, 95.71)
-      ..lineTo(41.63, 99.16)
-      ..lineTo(49.86, 98.58)
-      ..lineTo(49.77, 99.07)
-      ..lineTo(41.54, 99.65)
-      ..lineTo(33.52, 96.21)
-      ..close();
-    _paint
-      ..style = PaintingStyle.stroke
-      ..shader = null
-      ..strokeWidth = 1.0
-      ..color = RiderInMotionPainter.color7F7F7F;
-    canvas.drawPath(_path, _paint);
-  }
-
-  /// Shape "TyreThread3".
-  void _drawTyreThread3(Canvas canvas) {
-    _path
-      ..reset()
-      ..moveTo(30.34, 102.75)
-      ..lineTo(38.36, 106.2)
-      ..lineTo(46.59, 105.62)
-      ..lineTo(46.5, 106.11)
-      ..lineTo(38.27, 106.69)
-      ..lineTo(30.25, 103.25)
-      ..close();
-    _paint
-      ..style = PaintingStyle.stroke
-      ..shader = null
-      ..strokeWidth = 1.0
-      ..color = RiderInMotionPainter.color7F7F7F;
-    canvas.drawPath(_path, _paint);
-  }
-
-  /// Shape "TyreThread4".
-  void _drawTyreThread4(Canvas canvas) {
-    _path
-      ..reset()
-      ..moveTo(27.88, 110.95)
-      ..lineTo(35.9, 114.4)
-      ..lineTo(44.13, 113.81)
-      ..lineTo(44.04, 114.31)
-      ..lineTo(35.81, 114.89)
-      ..lineTo(27.79, 111.44)
-      ..close();
-    _paint
-      ..style = PaintingStyle.stroke
-      ..shader = null
-      ..strokeWidth = 1.0
-      ..color = RiderInMotionPainter.color7F7F7F;
-    canvas.drawPath(_path, _paint);
-  }
-
-  /// Shape "TyreThread5".
-  void _drawTyreThread5(Canvas canvas) {
-    _path
-      ..reset()
-      ..moveTo(25.07, 121.12)
-      ..lineTo(33.09, 124.56)
-      ..lineTo(41.32, 123.98)
-      ..lineTo(41.23, 124.47)
-      ..lineTo(33.01, 125.05)
-      ..lineTo(24.98, 121.61)
-      ..close();
-    _paint
-      ..style = PaintingStyle.stroke
-      ..shader = null
-      ..strokeWidth = 1.0
-      ..color = RiderInMotionPainter.color7F7F7F;
-    canvas.drawPath(_path, _paint);
-  }
-
-  /// Shape "TyreThread6".
-  void _drawTyreThread6(Canvas canvas) {
-    _path
-      ..reset()
-      ..moveTo(25.3, 131.31)
-      ..lineTo(33.33, 134.76)
-      ..lineTo(41.55, 134.18)
-      ..lineTo(41.47, 134.67)
-      ..lineTo(33.24, 135.25)
-      ..lineTo(25.22, 131.81)
+      ..moveTo(51.03, 105.92)
+      ..lineTo(59.34, 108.61)
+      ..lineTo(67.47, 107.26)
+      ..lineTo(67.43, 107.76)
+      ..lineTo(59.3, 109.1)
+      ..lineTo(50.99, 106.42)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -173,12 +121,12 @@ class BikeTyre2 {
   void _drawTyreThread7(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(25.88, 139.54)
-      ..lineTo(33.91, 142.98)
-      ..lineTo(42.13, 142.4)
-      ..lineTo(42.05, 142.89)
-      ..lineTo(33.82, 143.48)
-      ..lineTo(25.8, 140.03)
+      ..moveTo(48.63, 146.34)
+      ..lineTo(56.94, 149.02)
+      ..lineTo(65.08, 147.67)
+      ..lineTo(65.04, 148.17)
+      ..lineTo(56.9, 149.52)
+      ..lineTo(48.59, 146.83)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -188,16 +136,16 @@ class BikeTyre2 {
     canvas.drawPath(_path, _paint);
   }
 
-  /// Shape "TyreThread8".
-  void _drawTyreThread8(Canvas canvas) {
+  /// Shape "TyreThread3".
+  void _drawTyreThread3(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(28.52, 147.62)
-      ..lineTo(36.54, 151.06)
-      ..lineTo(44.77, 150.48)
-      ..lineTo(44.68, 150.98)
-      ..lineTo(36.46, 151.56)
-      ..lineTo(28.43, 148.11)
+      ..moveTo(50.37, 114.34)
+      ..lineTo(58.68, 117.02)
+      ..lineTo(66.82, 115.68)
+      ..lineTo(66.78, 116.18)
+      ..lineTo(58.64, 117.52)
+      ..lineTo(50.33, 114.84)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -207,42 +155,94 @@ class BikeTyre2 {
     canvas.drawPath(_path, _paint);
   }
 
-  /// Shape "InnerWheel".
-  void _drawInnerWheel(Canvas canvas) {
-    canvas.save();
-    canvas.translate(55.19, 125.92);
-    canvas.rotate(0.17);
-    canvas.translate(-55.19, -125.92);
-    _paint
-      ..style = PaintingStyle.fill
-      ..shader = Gradient.linear(
-        const Offset(49.69, 125.92),
-        const Offset(60.69, 125.92),
-        const [RiderInMotionPainter.color000000, RiderInMotionPainter.color626262],
-        const [0.0, 1.0],
-      );
-    canvas.drawOval(const Rect.fromLTRB(49.69, 112.92, 60.69, 138.92), _paint);
+  /// Shape "TyreThread1".
+  void _drawTyreThread1(Canvas canvas) {
+    _path
+      ..reset()
+      ..moveTo(51.68, 97.56)
+      ..lineTo(59.99, 100.25)
+      ..lineTo(68.12, 98.9)
+      ..lineTo(68.08, 99.4)
+      ..lineTo(59.95, 100.74)
+      ..lineTo(51.64, 98.06)
+      ..close();
     _paint
       ..style = PaintingStyle.stroke
       ..shader = null
-      ..strokeWidth = 2.75
-      ..color = RiderInMotionPainter.color000000;
-    canvas.drawOval(const Rect.fromLTRB(49.69, 112.92, 60.69, 138.92), _paint);
-    canvas.restore();
+      ..strokeWidth = 1.0
+      ..color = RiderInMotionPainter.color7F7F7F;
+    canvas.drawPath(_path, _paint);
+  }
+
+  /// Shape "TyreThread4".
+  void _drawTyreThread4(Canvas canvas) {
+    _path
+      ..reset()
+      ..moveTo(49.68, 122.78)
+      ..lineTo(57.99, 125.47)
+      ..lineTo(66.13, 124.12)
+      ..lineTo(66.09, 124.62)
+      ..lineTo(57.95, 125.96)
+      ..lineTo(49.64, 123.28)
+      ..close();
+    _paint
+      ..style = PaintingStyle.stroke
+      ..shader = null
+      ..strokeWidth = 1.0
+      ..color = RiderInMotionPainter.color7F7F7F;
+    canvas.drawPath(_path, _paint);
+  }
+
+  /// Shape "TyreThread5".
+  void _drawTyreThread5(Canvas canvas) {
+    _path
+      ..reset()
+      ..moveTo(48.94, 131.22)
+      ..lineTo(57.25, 133.91)
+      ..lineTo(65.39, 132.56)
+      ..lineTo(65.35, 133.06)
+      ..lineTo(57.21, 134.4)
+      ..lineTo(48.9, 131.72)
+      ..close();
+    _paint
+      ..style = PaintingStyle.stroke
+      ..shader = null
+      ..strokeWidth = 1.0
+      ..color = RiderInMotionPainter.color7F7F7F;
+    canvas.drawPath(_path, _paint);
+  }
+
+  /// Shape "TyreThread6".
+  void _drawTyreThread6(Canvas canvas) {
+    _path
+      ..reset()
+      ..moveTo(49.23, 139.3)
+      ..lineTo(57.54, 141.99)
+      ..lineTo(65.68, 140.64)
+      ..lineTo(65.64, 141.14)
+      ..lineTo(57.5, 142.48)
+      ..lineTo(49.19, 139.8)
+      ..close();
+    _paint
+      ..style = PaintingStyle.stroke
+      ..shader = null
+      ..strokeWidth = 1.0
+      ..color = RiderInMotionPainter.color7F7F7F;
+    canvas.drawPath(_path, _paint);
   }
 
   /// Paints every shape in this group.
   void paint(Canvas canvas) {
-    _drawTyreOuter(canvas);
+    _drawTryeShape0(canvas);
     _drawTyreInner(canvas);
-    _drawTyreThread1(canvas);
+    _drawInnerWheel(canvas);
+    _drawTyreThread8(canvas);
     _drawTyreThread2(canvas);
+    _drawTyreThread7(canvas);
     _drawTyreThread3(canvas);
+    _drawTyreThread1(canvas);
     _drawTyreThread4(canvas);
     _drawTyreThread5(canvas);
     _drawTyreThread6(canvas);
-    _drawTyreThread7(canvas);
-    _drawTyreThread8(canvas);
-    _drawInnerWheel(canvas);
   }
 }

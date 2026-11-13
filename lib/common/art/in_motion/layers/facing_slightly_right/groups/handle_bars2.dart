@@ -15,22 +15,22 @@ class HandleBars2 {
   void _drawHandleBar(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(35.23, 63.38)
-      ..lineTo(35.85, 64.36)
-      ..lineTo(49.17, 61.47)
-      ..lineTo(54.96, 61.18)
-      ..lineTo(64.05, 66.31)
-      ..lineTo(76.72, 69.19)
-      ..lineTo(83.02, 68.56)
-      ..lineTo(87.36, 71.81)
-      ..lineTo(97.69, 78.37)
-      ..lineTo(98.68, 77.75)
-      ..lineTo(88.52, 70.39)
-      ..lineTo(84.43, 66.08)
-      ..lineTo(76.19, 67.02)
-      ..lineTo(64.49, 64.36)
-      ..lineTo(55.4, 59.23)
-      ..lineTo(48.55, 60.48)
+      ..moveTo(31.43, 61.78)
+      ..lineTo(32.1, 62.73)
+      ..lineTo(45.25, 59.15)
+      ..lineTo(51.01, 58.56)
+      ..lineTo(60.35, 63.22)
+      ..lineTo(73.16, 65.43)
+      ..lineTo(79.42, 64.48)
+      ..lineTo(83.92, 67.5)
+      ..lineTo(94.58, 73.52)
+      ..lineTo(95.53, 72.85)
+      ..lineTo(85.01, 66.02)
+      ..lineTo(80.7, 61.93)
+      ..lineTo(72.52, 63.29)
+      ..lineTo(60.69, 61.25)
+      ..lineTo(51.35, 56.59)
+      ..lineTo(44.58, 58.2)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -49,10 +49,10 @@ class HandleBars2 {
   void _drawLeftGrip(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(38.01, 62.32)
-      ..lineTo(39.25, 64.29)
-      ..lineTo(50.6, 62.64)
-      ..lineTo(48.92, 58.88)
+      ..moveTo(34.14, 60.58)
+      ..lineTo(35.48, 62.48)
+      ..lineTo(46.73, 60.24)
+      ..lineTo(44.86, 56.58)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -71,10 +71,10 @@ class HandleBars2 {
   void _drawRightGrip(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(94.3, 78.45)
-      ..lineTo(96.63, 75.6)
-      ..lineTo(88.09, 68.6)
-      ..lineTo(85.75, 71.45)
+      ..moveTo(91.19, 73.77)
+      ..lineTo(93.37, 70.81)
+      ..lineTo(84.48, 64.26)
+      ..lineTo(82.29, 67.22)
       ..close();
     _paint
       ..style = PaintingStyle.fill

@@ -11,87 +11,87 @@ class BackPart2 {
     ..strokeJoin = StrokeJoin.round;
   final Path _path = Path();
 
-  /// Shape "Polygon 91".
-  void _drawPolygon91(Canvas canvas) {
-    _path
-      ..reset()
-      ..moveTo(48.43, 57.71)
-      ..lineTo(59.09, 60.6)
-      ..lineTo(56.89, 67.32)
-      ..lineTo(46.23, 64.43)
-      ..close();
-    _paint
-      ..style = PaintingStyle.fill
-      ..shader = null
-      ..color = RiderInMotionPainter.color770E12;
-    canvas.drawPath(_path, _paint);
-    _paint
-      ..style = PaintingStyle.stroke
-      ..shader = null
-      ..strokeWidth = 0.25
-      ..color = RiderInMotionPainter.colorED1C24;
-    canvas.drawPath(_path, _paint);
-  }
-
-  /// Shape "Polygon 92".
-  void _drawPolygon92(Canvas canvas) {
-    _path
-      ..reset()
-      ..moveTo(44.26, 64.08)
-      ..lineTo(60.83, 68.02)
-      ..lineTo(57.93, 78.68)
-      ..lineTo(41.37, 74.74)
-      ..close();
-    _paint
-      ..style = PaintingStyle.fill
-      ..shader = null
-      ..color = RiderInMotionPainter.colorEFE4B0;
-    canvas.drawPath(_path, _paint);
-    _paint
-      ..style = PaintingStyle.stroke
-      ..shader = null
-      ..strokeWidth = 0.25
-      ..color = RiderInMotionPainter.color1D1F27;
-    canvas.drawPath(_path, _paint);
-  }
-
   /// Shape "BackSeatFrame".
   void _drawBackSeatFrame(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(39.69, 78.51)
-      ..lineTo(40.61, 67.5)
-      ..lineTo(44.32, 58.0)
-      ..lineTo(52.37, 58.4)
-      ..lineTo(59.09, 60.6)
-      ..lineTo(62.16, 66.22)
-      ..lineTo(65.89, 74.05)
-      ..lineTo(58.77, 86.13)
-      ..lineTo(67.09, 84.35)
-      ..lineTo(74.73, 75.55)
-      ..lineTo(71.02, 67.78)
-      ..lineTo(65.69, 57.71)
-      ..lineTo(55.21, 53.83)
-      ..lineTo(44.2, 52.9)
-      ..lineTo(39.57, 56.15)
-      ..lineTo(36.03, 64.66)
-      ..lineTo(36.62, 72.89)
+      ..moveTo(50.6, 90.02)
+      ..lineTo(47.97, 78.78)
+      ..lineTo(51.0, 72.0)
+      ..lineTo(58.22, 69.55)
+      ..lineTo(69.19, 70.41)
+      ..lineTo(73.02, 72.72)
+      ..lineTo(77.49, 80.15)
+      ..lineTo(71.56, 92.85)
+      ..lineTo(76.59, 91.6)
+      ..lineTo(83.09, 82.23)
+      ..lineTo(82.44, 75.71)
+      ..lineTo(75.72, 67.85)
+      ..lineTo(64.8, 63.52)
+      ..lineTo(51.45, 65.76)
+      ..lineTo(43.58, 71.73)
+      ..lineTo(42.25, 78.21)
+      ..lineTo(46.32, 89.23)
       ..close();
     _paint
       ..style = PaintingStyle.fill
       ..shader = Gradient.radial(
-        const Offset(55.38, 69.51),
-        19.35,
+        const Offset(62.67, 78.18),
+        20.42,
         const [RiderInMotionPainter.color7F7F7F, RiderInMotionPainter.color404040],
         const [0.0, 1.0],
       );
     canvas.drawPath(_path, _paint);
   }
 
+  /// Shape "NumberPlate".
+  void _drawNumberPlate(Canvas canvas) {
+    canvas.save();
+    canvas.translate(62.54, 81.49);
+    canvas.rotate(0.02);
+    canvas.translate(-62.54, -81.49);
+    _paint
+      ..style = PaintingStyle.fill
+      ..shader = null
+      ..color = RiderInMotionPainter.colorEFE4B0;
+    canvas.drawRect(const Rect.fromLTRB(52.57, 77.18, 72.51, 85.81), _paint);
+    _paint
+      ..style = PaintingStyle.stroke
+      ..shader = null
+      ..strokeWidth = 0.25
+      ..color = RiderInMotionPainter.color000000;
+    canvas.drawRect(const Rect.fromLTRB(52.57, 77.18, 72.51, 85.81), _paint);
+    canvas.restore();
+  }
+
+  /// Shape "BackLight".
+  void _drawBackLight(Canvas canvas) {
+    canvas.save();
+    canvas.translate(62.35, 73.85);
+    canvas.rotate(0.02);
+    canvas.translate(-62.35, -73.85);
+    _paint
+      ..style = PaintingStyle.fill
+      ..shader = Gradient.linear(
+        const Offset(54.71, 73.85),
+        const Offset(69.99, 73.85),
+        const [RiderInMotionPainter.color770E12, RiderInMotionPainter.color3C0709],
+        const [0.0, 1.0],
+      );
+    canvas.drawRRect(RRect.fromRectXY(const Rect.fromLTRB(54.71, 70.52, 69.99, 77.17), 3.32, 3.32), _paint);
+    _paint
+      ..style = PaintingStyle.stroke
+      ..shader = null
+      ..strokeWidth = 0.25
+      ..color = RiderInMotionPainter.colorED1C24;
+    canvas.drawRRect(RRect.fromRectXY(const Rect.fromLTRB(54.71, 70.52, 69.99, 77.17), 3.32, 3.32), _paint);
+    canvas.restore();
+  }
+
   /// Paints every shape in this group.
   void paint(Canvas canvas) {
-    _drawPolygon91(canvas);
-    _drawPolygon92(canvas);
     _drawBackSeatFrame(canvas);
+    _drawNumberPlate(canvas);
+    _drawBackLight(canvas);
   }
 }

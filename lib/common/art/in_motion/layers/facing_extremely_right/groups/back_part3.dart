@@ -15,10 +15,10 @@ class BackPart3 {
   void _drawPolygon91(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(80.72, 57.28)
-      ..lineTo(70.15, 60.47)
-      ..lineTo(72.53, 67.12)
-      ..lineTo(83.11, 63.94)
+      ..moveTo(48.43, 57.71)
+      ..lineTo(59.09, 60.6)
+      ..lineTo(56.89, 67.32)
+      ..lineTo(46.23, 64.43)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -37,10 +37,10 @@ class BackPart3 {
   void _drawPolygon92(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(85.06, 63.54)
-      ..lineTo(68.61, 67.93)
-      ..lineTo(71.8, 78.5)
-      ..lineTo(88.25, 74.11)
+      ..moveTo(44.26, 64.08)
+      ..lineTo(60.83, 68.02)
+      ..lineTo(57.93, 78.68)
+      ..lineTo(41.37, 74.74)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -59,29 +59,29 @@ class BackPart3 {
   void _drawBackSeatFrame(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(90.03, 77.83)
-      ..lineTo(88.81, 66.85)
-      ..lineTo(84.84, 57.46)
-      ..lineTo(76.8, 58.08)
-      ..lineTo(70.15, 60.47)
-      ..lineTo(67.23, 66.17)
-      ..lineTo(63.71, 74.09)
-      ..lineTo(71.17, 85.97)
-      ..lineTo(62.8, 84.43)
-      ..lineTo(54.92, 75.83)
-      ..lineTo(58.41, 67.97)
-      ..lineTo(63.47, 57.75)
-      ..lineTo(73.84, 53.58)
-      ..lineTo(84.82, 52.36)
-      ..lineTo(89.54, 55.47)
-      ..lineTo(93.3, 63.89)
-      ..lineTo(92.95, 72.13)
+      ..moveTo(39.69, 78.51)
+      ..lineTo(40.61, 67.5)
+      ..lineTo(44.32, 58.0)
+      ..lineTo(52.37, 58.4)
+      ..lineTo(59.09, 60.6)
+      ..lineTo(62.16, 66.22)
+      ..lineTo(65.89, 74.05)
+      ..lineTo(58.77, 86.13)
+      ..lineTo(67.09, 84.35)
+      ..lineTo(74.73, 75.55)
+      ..lineTo(71.02, 67.78)
+      ..lineTo(65.69, 57.71)
+      ..lineTo(55.21, 53.83)
+      ..lineTo(44.2, 52.9)
+      ..lineTo(39.57, 56.15)
+      ..lineTo(36.03, 64.66)
+      ..lineTo(36.62, 72.89)
       ..close();
     _paint
       ..style = PaintingStyle.fill
       ..shader = Gradient.radial(
-        const Offset(74.11, 69.16),
-        19.19,
+        const Offset(55.38, 69.51),
+        19.35,
         const [RiderInMotionPainter.color7F7F7F, RiderInMotionPainter.color404040],
         const [0.0, 1.0],
       );

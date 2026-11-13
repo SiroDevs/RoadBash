@@ -4,7 +4,7 @@ import 'dart:ui';
 import '../../../rider_in_motion_painter.dart';
 
 /// Group "FrontPart".
-class FrontPart3 {
+class FrontPart4 {
   final Paint _paint = Paint()
     ..isAntiAlias = true
     ..strokeCap = StrokeCap.round

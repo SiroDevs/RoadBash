@@ -12,16 +12,16 @@ class LeftBoot2 {
   final Path _path = Path();
 
   /// Shape "Boot".
-  void _drawBoot(Canvas canvas) {
+  void _drawBoot2(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(27.93, 87.61)
-      ..lineTo(38.59, 90.5)
-      ..lineTo(35.69, 101.16)
-      ..lineTo(34.94, 111.18)
-      ..lineTo(27.24, 108.81)
-      ..lineTo(26.66, 100.58)
-      ..lineTo(28.28, 102.9)
+      ..moveTo(32.32, 96.6)
+      ..lineTo(43.34, 95.88)
+      ..lineTo(44.05, 106.91)
+      ..lineTo(46.59, 116.63)
+      ..lineTo(38.53, 116.88)
+      ..lineTo(35.32, 109.29)
+      ..lineTo(37.6, 110.95)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -31,15 +31,15 @@ class LeftBoot2 {
   }
 
   /// Shape "Sole".
-  void _drawSole(Canvas canvas) {
+  void _drawSole2(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(34.94, 111.18)
-      ..lineTo(35.17, 104.11)
-      ..lineTo(32.57, 101.62)
-      ..lineTo(29.26, 103.07)
-      ..lineTo(27.12, 103.71)
-      ..lineTo(27.24, 108.81)
+      ..moveTo(46.59, 116.63)
+      ..lineTo(44.52, 109.87)
+      ..lineTo(41.25, 108.36)
+      ..lineTo(38.59, 110.8)
+      ..lineTo(36.77, 112.1)
+      ..lineTo(38.53, 116.88)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -50,7 +50,7 @@ class LeftBoot2 {
 
   /// Paints every shape in this group.
   void paint(Canvas canvas) {
-    _drawBoot(canvas);
-    _drawSole(canvas);
+    _drawBoot2(canvas);
+    _drawSole2(canvas);
   }
 }

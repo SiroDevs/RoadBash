@@ -14,44 +14,44 @@ class BikeTyre3 {
   /// Shape "TyreOuter".
   void _drawTyreOuter(Canvas canvas) {
     canvas.save();
-    canvas.translate(86.55, 121.01);
-    canvas.rotate(-0.17);
-    canvas.translate(-86.55, -121.01);
+    canvas.translate(44.35, 121.58);
+    canvas.rotate(0.14);
+    canvas.translate(-44.35, -121.58);
     _paint
       ..style = PaintingStyle.fill
       ..shader = null
       ..color = RiderInMotionPainter.color000000;
-    canvas.drawOval(const Rect.fromLTRB(67.49, 83.62, 105.61, 158.41), _paint);
+    canvas.drawOval(const Rect.fromLTRB(25.29, 84.19, 63.42, 158.97), _paint);
     _paint
       ..style = PaintingStyle.stroke
       ..shader = null
       ..strokeWidth = 0.25
       ..color = RiderInMotionPainter.colorC3C3C3;
-    canvas.drawOval(const Rect.fromLTRB(67.49, 83.62, 105.61, 158.41), _paint);
+    canvas.drawOval(const Rect.fromLTRB(25.29, 84.19, 63.42, 158.97), _paint);
     canvas.restore();
   }
 
   /// Shape "TyreInner".
   void _drawTyreInner(Canvas canvas) {
     canvas.save();
-    canvas.translate(78.07, 122.31);
-    canvas.rotate(-0.17);
-    canvas.translate(-78.07, -122.31);
+    canvas.translate(52.86, 122.64);
+    canvas.rotate(0.14);
+    canvas.translate(-52.86, -122.64);
     _paint
       ..style = PaintingStyle.fill
       ..shader = Gradient.linear(
-        const Offset(67.58, 122.31),
-        const Offset(88.56, 122.31),
+        const Offset(42.37, 122.64),
+        const Offset(63.35, 122.64),
         const [RiderInMotionPainter.color7F7F7F, RiderInMotionPainter.color404040],
         const [0.0, 1.0],
       );
-    canvas.drawOval(const Rect.fromLTRB(67.58, 93.13, 88.56, 151.49), _paint);
+    canvas.drawOval(const Rect.fromLTRB(42.37, 93.46, 63.35, 151.82), _paint);
     _paint
       ..style = PaintingStyle.stroke
       ..shader = null
       ..strokeWidth = 0.25
       ..color = RiderInMotionPainter.colorC3C3C3;
-    canvas.drawOval(const Rect.fromLTRB(67.58, 93.13, 88.56, 151.49), _paint);
+    canvas.drawOval(const Rect.fromLTRB(42.37, 93.46, 63.35, 151.82), _paint);
     canvas.restore();
   }
 
@@ -59,12 +59,12 @@ class BikeTyre3 {
   void _drawTyreThread1(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(91.16, 88.32)
-      ..lineTo(83.23, 91.98)
-      ..lineTo(74.99, 91.63)
-      ..lineTo(75.09, 92.12)
-      ..lineTo(83.33, 92.47)
-      ..lineTo(91.26, 88.81)
+      ..moveTo(38.85, 89.02)
+      ..lineTo(46.87, 92.47)
+      ..lineTo(55.1, 91.89)
+      ..lineTo(55.01, 92.38)
+      ..lineTo(46.79, 92.96)
+      ..lineTo(38.76, 89.51)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -78,12 +78,12 @@ class BikeTyre3 {
   void _drawTyreThread2(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(96.58, 94.86)
-      ..lineTo(88.66, 98.53)
-      ..lineTo(80.42, 98.17)
-      ..lineTo(80.52, 98.66)
-      ..lineTo(88.76, 99.02)
-      ..lineTo(96.68, 95.35)
+      ..moveTo(33.61, 95.71)
+      ..lineTo(41.63, 99.16)
+      ..lineTo(49.86, 98.58)
+      ..lineTo(49.77, 99.07)
+      ..lineTo(41.54, 99.65)
+      ..lineTo(33.52, 96.21)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -97,12 +97,12 @@ class BikeTyre3 {
   void _drawTyreThread3(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(100.05, 101.81)
-      ..lineTo(92.12, 105.47)
-      ..lineTo(83.88, 105.12)
-      ..lineTo(83.98, 105.61)
-      ..lineTo(92.22, 105.96)
-      ..lineTo(100.15, 102.3)
+      ..moveTo(30.34, 102.75)
+      ..lineTo(38.36, 106.2)
+      ..lineTo(46.59, 105.62)
+      ..lineTo(46.5, 106.11)
+      ..lineTo(38.27, 106.69)
+      ..lineTo(30.25, 103.25)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -116,12 +116,12 @@ class BikeTyre3 {
   void _drawTyreThread4(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(102.73, 109.94)
-      ..lineTo(94.8, 113.6)
-      ..lineTo(86.56, 113.25)
-      ..lineTo(86.67, 113.73)
-      ..lineTo(94.9, 114.09)
-      ..lineTo(102.83, 110.43)
+      ..moveTo(27.88, 110.95)
+      ..lineTo(35.9, 114.4)
+      ..lineTo(44.13, 113.81)
+      ..lineTo(44.04, 114.31)
+      ..lineTo(35.81, 114.89)
+      ..lineTo(27.79, 111.44)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -135,12 +135,12 @@ class BikeTyre3 {
   void _drawTyreThread5(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(105.82, 120.02)
-      ..lineTo(97.89, 123.69)
-      ..lineTo(89.65, 123.33)
-      ..lineTo(89.75, 123.82)
-      ..lineTo(97.99, 124.18)
-      ..lineTo(105.92, 120.51)
+      ..moveTo(25.07, 121.12)
+      ..lineTo(33.09, 124.56)
+      ..lineTo(41.32, 123.98)
+      ..lineTo(41.23, 124.47)
+      ..lineTo(33.01, 125.05)
+      ..lineTo(24.98, 121.61)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -154,12 +154,12 @@ class BikeTyre3 {
   void _drawTyreThread6(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(105.86, 130.22)
-      ..lineTo(97.94, 133.88)
-      ..lineTo(89.7, 133.53)
-      ..lineTo(89.8, 134.02)
-      ..lineTo(98.04, 134.37)
-      ..lineTo(105.96, 130.71)
+      ..moveTo(25.3, 131.31)
+      ..lineTo(33.33, 134.76)
+      ..lineTo(41.55, 134.18)
+      ..lineTo(41.47, 134.67)
+      ..lineTo(33.24, 135.25)
+      ..lineTo(25.22, 131.81)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -173,12 +173,12 @@ class BikeTyre3 {
   void _drawTyreThread7(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(105.51, 138.46)
-      ..lineTo(97.58, 142.12)
-      ..lineTo(89.34, 141.77)
-      ..lineTo(89.44, 142.26)
-      ..lineTo(97.68, 142.61)
-      ..lineTo(105.61, 138.95)
+      ..moveTo(25.88, 139.54)
+      ..lineTo(33.91, 142.98)
+      ..lineTo(42.13, 142.4)
+      ..lineTo(42.05, 142.89)
+      ..lineTo(33.82, 143.48)
+      ..lineTo(25.8, 140.03)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -192,12 +192,12 @@ class BikeTyre3 {
   void _drawTyreThread8(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(103.09, 146.61)
-      ..lineTo(95.17, 150.27)
-      ..lineTo(86.93, 149.92)
-      ..lineTo(87.03, 150.41)
-      ..lineTo(95.27, 150.76)
-      ..lineTo(103.19, 147.1)
+      ..moveTo(28.52, 147.62)
+      ..lineTo(36.54, 151.06)
+      ..lineTo(44.77, 150.48)
+      ..lineTo(44.68, 150.98)
+      ..lineTo(36.46, 151.56)
+      ..lineTo(28.43, 148.11)
       ..close();
     _paint
       ..style = PaintingStyle.stroke
@@ -210,24 +210,24 @@ class BikeTyre3 {
   /// Shape "InnerWheel".
   void _drawInnerWheel(Canvas canvas) {
     canvas.save();
-    canvas.translate(75.83, 125.65);
-    canvas.rotate(-0.2);
-    canvas.translate(-75.83, -125.65);
+    canvas.translate(55.19, 125.92);
+    canvas.rotate(0.17);
+    canvas.translate(-55.19, -125.92);
     _paint
       ..style = PaintingStyle.fill
       ..shader = Gradient.linear(
-        const Offset(70.33, 125.65),
-        const Offset(81.33, 125.65),
+        const Offset(49.69, 125.92),
+        const Offset(60.69, 125.92),
         const [RiderInMotionPainter.color000000, RiderInMotionPainter.color626262],
         const [0.0, 1.0],
       );
-    canvas.drawOval(const Rect.fromLTRB(70.33, 112.65, 81.33, 138.65), _paint);
+    canvas.drawOval(const Rect.fromLTRB(49.69, 112.92, 60.69, 138.92), _paint);
     _paint
       ..style = PaintingStyle.stroke
       ..shader = null
       ..strokeWidth = 2.75
       ..color = RiderInMotionPainter.color000000;
-    canvas.drawOval(const Rect.fromLTRB(70.33, 112.65, 81.33, 138.65), _paint);
+    canvas.drawOval(const Rect.fromLTRB(49.69, 112.92, 60.69, 138.92), _paint);
     canvas.restore();
   }
 

@@ -4,6 +4,8 @@ import 'dart:ui';
 
 import 'layers/facing_straight/facing_straight_layer.dart';
 import 'layers/facing_slightly_right/facing_slightly_right_layer.dart';
+import 'layers/facing_extremely_right/facing_extremely_right_layer.dart';
+import 'layers/facing_extremely_left/facing_extremely_left_layer.dart';
 import 'layers/facing_slightly_left/facing_slightly_left_layer.dart';
 
 /// Paints every layer of "RiderInMotion", bottom to top.
@@ -29,18 +31,20 @@ class RiderInMotionPainter {
   static const Color colorEFE4B0 = Color(0xFFEFE4B0);
   static const Color color770E12 = Color(0xFF770E12);
   static const Color color3C0709 = Color(0xFF3C0709);
-  static const Color color2F5C37 = Color(0xFF2F5C37);
-  static const Color color0D190E = Color(0xFF0D190E);
   static const Color color626262 = Color(0xFF626262);
   static const Color colorB97A57 = Color(0xFFB97A57);
+  static const Color color2F5C37 = Color(0xFF2F5C37);
+  static const Color color0D190E = Color(0xFF0D190E);
   static const Color color563828 = Color(0xFF563828);
 
   final RiderInMotionFacingStraightLayer _facingStraight = RiderInMotionFacingStraightLayer();
   final RiderInMotionFacingSlightlyRightLayer _facingSlightlyRight = RiderInMotionFacingSlightlyRightLayer();
+  final RiderInMotionFacingExtremelyRightLayer _facingExtremelyRight = RiderInMotionFacingExtremelyRightLayer();
+  final RiderInMotionFacingExtremelyLeftLayer _facingExtremelyLeft = RiderInMotionFacingExtremelyLeftLayer();
   final RiderInMotionFacingSlightlyLeftLayer _facingSlightlyLeft = RiderInMotionFacingSlightlyLeftLayer();
 
   void paint(Canvas canvas) {
-    _facingSlightlyRight.paint(canvas);
+    _facingSlightlyLeft.paint(canvas);
   }
 
   /// Paints layer "FacingStraight".
@@ -51,6 +55,16 @@ class RiderInMotionPainter {
   /// Paints layer "FacingSlightlyRight".
   void paintFacingSlightlyRight(Canvas canvas) {
     _facingSlightlyRight.paint(canvas);
+  }
+
+  /// Paints layer "FacingExtremelyRight".
+  void paintFacingExtremelyRight(Canvas canvas) {
+    _facingExtremelyRight.paint(canvas);
+  }
+
+  /// Paints layer "FacingExtremelyLeft".
+  void paintFacingExtremelyLeft(Canvas canvas) {
+    _facingExtremelyLeft.paint(canvas);
   }
 
   /// Paints layer "FacingSlightlyLeft".

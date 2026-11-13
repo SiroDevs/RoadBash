@@ -3,8 +3,8 @@ import 'dart:ui';
 
 import '../../../rider_in_motion_painter.dart';
 
-/// Group "RightBoot".
-class RightBoot3 {
+/// Group "LeftBoot".
+class LeftBoot3 {
   final Paint _paint = Paint()
     ..isAntiAlias = true
     ..strokeCap = StrokeCap.round
@@ -15,13 +15,13 @@ class RightBoot3 {
   void _drawBoot(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(102.04, 86.6)
-      ..lineTo(91.46, 89.79)
-      ..lineTo(94.65, 100.36)
-      ..lineTo(95.67, 110.36)
-      ..lineTo(103.31, 107.78)
-      ..lineTo(103.66, 99.54)
-      ..lineTo(102.1, 101.9)
+      ..moveTo(27.93, 87.61)
+      ..lineTo(38.59, 90.5)
+      ..lineTo(35.69, 101.16)
+      ..lineTo(34.94, 111.18)
+      ..lineTo(27.24, 108.81)
+      ..lineTo(26.66, 100.58)
+      ..lineTo(28.28, 102.9)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -34,12 +34,12 @@ class RightBoot3 {
   void _drawSole(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(95.67, 110.36)
-      ..lineTo(95.25, 103.3)
-      ..lineTo(97.78, 100.74)
-      ..lineTo(101.13, 102.1)
-      ..lineTo(103.29, 102.68)
-      ..lineTo(103.31, 107.78)
+      ..moveTo(34.94, 111.18)
+      ..lineTo(35.17, 104.11)
+      ..lineTo(32.57, 101.62)
+      ..lineTo(29.26, 103.07)
+      ..lineTo(27.12, 103.71)
+      ..lineTo(27.24, 108.81)
       ..close();
     _paint
       ..style = PaintingStyle.fill

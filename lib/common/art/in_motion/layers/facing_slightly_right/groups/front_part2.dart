@@ -15,12 +15,12 @@ class FrontPart2 {
   void _drawRightFrontShieldPipe(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(84.47, 66.8)
-      ..lineTo(88.71, 70.97)
-      ..lineTo(90.48, 70.47)
-      ..lineTo(84.91, 60.18)
-      ..lineTo(84.41, 58.41)
-      ..lineTo(82.82, 62.3)
+      ..moveTo(78.87, 63.83)
+      ..lineTo(83.18, 67.91)
+      ..lineTo(84.95, 67.38)
+      ..lineTo(79.18, 57.2)
+      ..lineTo(78.65, 55.43)
+      ..lineTo(77.14, 59.35)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -39,10 +39,10 @@ class FrontPart2 {
   void _drawLeftFrontShieldPipe(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(59.99, 54.56)
-      ..lineTo(60.02, 58.76)
-      ..lineTo(52.31, 63.99)
-      ..lineTo(51.01, 62.06)
+      ..moveTo(54.17, 52.04)
+      ..lineTo(54.28, 56.24)
+      ..lineTo(46.67, 61.61)
+      ..lineTo(45.33, 59.7)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -61,17 +61,17 @@ class FrontPart2 {
   void _drawFrontShield(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(57.52, 65.55)
-      ..lineTo(60.87, 54.29)
-      ..lineTo(57.22, 51.51)
-      ..lineTo(60.82, 48.33)
-      ..lineTo(66.08, 45.76)
-      ..lineTo(74.55, 45.01)
-      ..lineTo(82.15, 48.85)
-      ..lineTo(86.3, 52.9)
-      ..lineTo(88.92, 56.76)
-      ..lineTo(84.41, 58.41)
-      ..lineTo(83.71, 71.77)
+      ..moveTo(51.9, 63.08)
+      ..lineTo(55.04, 51.75)
+      ..lineTo(51.35, 49.04)
+      ..lineTo(54.88, 45.79)
+      ..lineTo(60.09, 43.13)
+      ..lineTo(68.55, 42.22)
+      ..lineTo(76.22, 45.92)
+      ..lineTo(80.45, 49.89)
+      ..lineTo(83.13, 53.7)
+      ..lineTo(78.65, 55.43)
+      ..lineTo(78.2, 68.81)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -90,14 +90,14 @@ class FrontPart2 {
   void _drawLeftSideMirror(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(53.9, 60.1)
-      ..lineTo(49.51, 56.74)
-      ..lineTo(39.31, 53.11)
-      ..lineTo(39.28, 48.91)
-      ..lineTo(41.36, 46.79)
-      ..lineTo(51.25, 52.05)
-      ..lineTo(52.9, 56.55)
-      ..lineTo(55.83, 58.79)
+      ..moveTo(48.18, 57.69)
+      ..lineTo(43.73, 54.41)
+      ..lineTo(33.46, 50.97)
+      ..lineTo(33.35, 46.77)
+      ..lineTo(35.4, 44.62)
+      ..lineTo(45.39, 49.69)
+      ..lineTo(47.12, 54.16)
+      ..lineTo(50.08, 56.35)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -116,15 +116,15 @@ class FrontPart2 {
   void _drawRightSideMirror(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(86.25, 66.31)
-      ..lineTo(93.18, 65.12)
-      ..lineTo(103.35, 64.56)
-      ..lineTo(105.43, 62.44)
-      ..lineTo(104.28, 59.7)
-      ..lineTo(92.65, 59.15)
-      ..lineTo(88.95, 60.96)
-      ..lineTo(88.48, 63.38)
-      ..lineTo(85.75, 64.53)
+      ..moveTo(80.64, 63.3)
+      ..lineTo(87.55, 61.98)
+      ..lineTo(97.71, 61.23)
+      ..lineTo(99.75, 59.08)
+      ..lineTo(98.55, 56.36)
+      ..lineTo(86.91, 56.02)
+      ..lineTo(83.24, 57.9)
+      ..lineTo(82.82, 60.33)
+      ..lineTo(80.11, 61.53)
       ..close();
     _paint
       ..style = PaintingStyle.fill

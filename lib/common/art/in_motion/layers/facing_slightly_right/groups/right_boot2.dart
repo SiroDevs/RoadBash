@@ -12,30 +12,30 @@ class RightBoot2 {
   final Path _path = Path();
 
   /// Shape "Boot".
-  void _drawBoot2(Canvas canvas) {
+  void _drawBoot(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(70.01, 109.38)
-      ..lineTo(73.11, 111.9)
-      ..lineTo(74.67, 112.76)
-      ..lineTo(81.78, 114.64)
-      ..lineTo(84.24, 113.78)
-      ..lineTo(84.94, 109.84)
-      ..lineTo(83.14, 108.51)
-      ..lineTo(81.34, 107.17)
-      ..lineTo(80.6, 104.21)
-      ..lineTo(80.79, 99.43)
-      ..lineTo(83.34, 95.54)
-      ..lineTo(84.26, 92.38)
-      ..lineTo(81.2, 89.07)
-      ..lineTo(77.22, 88.91)
-      ..lineTo(74.03, 88.78)
-      ..lineTo(73.17, 90.35)
-      ..lineTo(72.95, 95.92)
-      ..lineTo(72.85, 98.32)
-      ..lineTo(71.19, 99.85)
-      ..lineTo(71.13, 101.44)
-      ..lineTo(70.21, 104.6)
+      ..moveTo(79.7, 115.97)
+      ..lineTo(83.07, 118.1)
+      ..lineTo(84.73, 118.76)
+      ..lineTo(92.01, 119.76)
+      ..lineTo(94.35, 118.61)
+      ..lineTo(94.56, 114.62)
+      ..lineTo(92.62, 113.51)
+      ..lineTo(90.67, 112.41)
+      ..lineTo(89.57, 109.56)
+      ..lineTo(89.18, 104.79)
+      ..lineTo(91.24, 100.62)
+      ..lineTo(91.77, 97.37)
+      ..lineTo(88.33, 94.45)
+      ..lineTo(84.36, 94.78)
+      ..lineTo(81.18, 95.04)
+      ..lineTo(80.51, 96.7)
+      ..lineTo(80.97, 102.26)
+      ..lineTo(81.17, 104.65)
+      ..lineTo(79.71, 106.37)
+      ..lineTo(79.84, 107.96)
+      ..lineTo(79.31, 111.2)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -48,11 +48,11 @@ class RightBoot2 {
   void _drawFrontBlack(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(81.28, 95.99)
-      ..lineTo(82.15, 91.07)
-      ..lineTo(83.47, 92.35)
-      ..lineTo(84.2, 93.98)
-      ..lineTo(81.92, 98.14)
+      ..moveTo(89.25, 101.32)
+      ..lineTo(89.52, 96.32)
+      ..lineTo(90.98, 97.44)
+      ..lineTo(91.9, 98.96)
+      ..lineTo(90.15, 103.37)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -65,11 +65,11 @@ class RightBoot2 {
   void _drawSideBlack(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(81.3, 106.64)
-      ..lineTo(78.3, 101.73)
-      ..lineTo(80.06, 97.8)
-      ..lineTo(80.76, 100.23)
-      ..lineTo(81.36, 105.04)
+      ..moveTo(90.56, 111.88)
+      ..lineTo(86.99, 107.37)
+      ..lineTo(88.26, 103.26)
+      ..lineTo(89.25, 105.58)
+      ..lineTo(90.43, 110.29)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -79,23 +79,23 @@ class RightBoot2 {
   }
 
   /// Shape "Sole".
-  void _drawSole2(Canvas canvas) {
+  void _drawSole(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(69.82, 109.2)
-      ..lineTo(70.17, 105.39)
-      ..lineTo(71.1, 102.24)
-      ..lineTo(73.52, 101.54)
-      ..lineTo(76.71, 101.66)
-      ..lineTo(78.97, 104.95)
-      ..lineTo(79.58, 109.76)
-      ..lineTo(81.63, 111.29)
-      ..lineTo(84.76, 110.82)
-      ..lineTo(84.24, 113.78)
-      ..lineTo(80.94, 115.23)
-      ..lineTo(74.64, 113.55)
-      ..lineTo(73.9, 111.93)
-      ..lineTo(73.23, 112.85)
+      ..moveTo(79.48, 115.82)
+      ..lineTo(79.37, 112.0)
+      ..lineTo(79.9, 108.75)
+      ..lineTo(82.22, 107.76)
+      ..lineTo(85.4, 107.5)
+      ..lineTo(88.05, 110.48)
+      ..lineTo(89.24, 115.19)
+      ..lineTo(91.46, 116.45)
+      ..lineTo(94.51, 115.61)
+      ..lineTo(94.35, 118.61)
+      ..lineTo(91.25, 120.45)
+      ..lineTo(84.79, 119.56)
+      ..lineTo(83.87, 118.03)
+      ..lineTo(83.32, 119.03)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -106,9 +106,9 @@ class RightBoot2 {
 
   /// Paints every shape in this group.
   void paint(Canvas canvas) {
-    _drawBoot2(canvas);
+    _drawBoot(canvas);
     _drawFrontBlack(canvas);
     _drawSideBlack(canvas);
-    _drawSole2(canvas);
+    _drawSole(canvas);
   }
 }

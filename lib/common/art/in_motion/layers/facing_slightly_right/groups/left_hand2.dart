@@ -15,28 +15,28 @@ class LeftHand2 {
   void _drawFullHand(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(51.78, 32.92)
-      ..lineTo(51.15, 30.77)
-      ..lineTo(50.65, 26.26)
-      ..lineTo(51.38, 23.71)
-      ..lineTo(54.5, 23.24)
-      ..lineTo(49.23, 24.34)
-      ..lineTo(45.58, 27.76)
-      ..lineTo(44.43, 28.57)
-      ..lineTo(43.09, 30.37)
-      ..lineTo(41.76, 32.16)
-      ..lineTo(41.59, 33.15)
-      ..lineTo(40.26, 34.95)
-      ..lineTo(38.92, 36.74)
-      ..lineTo(38.4, 39.7)
-      ..lineTo(37.71, 43.64)
-      ..lineTo(37.02, 47.57)
-      ..lineTo(36.96, 53.66)
-      ..lineTo(40.96, 65.53)
-      ..lineTo(47.39, 63.62)
-      ..lineTo(43.74, 49.77)
-      ..lineTo(44.6, 44.85)
-      ..lineTo(46.28, 41.08)
+      ..moveTo(51.31, 44.29)
+      ..lineTo(50.5, 42.0)
+      ..lineTo(51.5, 38.0)
+      ..lineTo(53.5, 35.0)
+      ..lineTo(54.5, 32.5)
+      ..lineTo(47.98, 33.76)
+      ..lineTo(44.59, 37.58)
+      ..lineTo(41.99, 41.43)
+      ..lineTo(41.11, 42.99)
+      ..lineTo(38.59, 45.25)
+      ..lineTo(38.51, 46.84)
+      ..lineTo(37.63, 48.39)
+      ..lineTo(35.41, 51.47)
+      ..lineTo(33.25, 54.36)
+      ..lineTo(32.99, 59.35)
+      ..lineTo(34.78, 63.45)
+      ..lineTo(38.61, 66.66)
+      ..lineTo(44.5, 68.97)
+      ..lineTo(46.65, 66.08)
+      ..lineTo(41.03, 58.77)
+      ..lineTo(42.24, 54.83)
+      ..lineTo(45.45, 50.99)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -52,23 +52,23 @@ class LeftHand2 {
   }
 
   /// Shape "ArmSide".
-  void _drawArmSide(Canvas canvas) {
+  void _drawArmSide2(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(38.06, 41.67)
-      ..lineTo(41.01, 42.19)
-      ..lineTo(42.69, 38.42)
-      ..lineTo(43.21, 35.47)
-      ..lineTo(44.54, 33.67)
-      ..lineTo(47.03, 31.06)
-      ..lineTo(50.47, 27.25)
-      ..lineTo(53.38, 24.52)
-      ..lineTo(55.37, 22.44)
-      ..lineTo(49.59, 23.04)
-      ..lineTo(45.76, 26.78)
-      ..lineTo(43.09, 30.37)
-      ..lineTo(40.43, 33.96)
-      ..lineTo(38.75, 37.73)
+      ..moveTo(36.79, 49.15)
+      ..lineTo(38.3, 50.83)
+      ..lineTo(39.18, 49.27)
+      ..lineTo(42.53, 46.26)
+      ..lineTo(44.25, 43.95)
+      ..lineTo(45.22, 40.81)
+      ..lineTo(49.37, 37.83)
+      ..lineTo(52.0, 36.5)
+      ..lineTo(54.5, 33.0)
+      ..lineTo(47.98, 33.76)
+      ..lineTo(43.71, 39.13)
+      ..lineTo(41.11, 42.99)
+      ..lineTo(38.59, 45.25)
+      ..lineTo(37.63, 48.39)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -80,6 +80,6 @@ class LeftHand2 {
   /// Paints every shape in this group.
   void paint(Canvas canvas) {
     _drawFullHand(canvas);
-    _drawArmSide(canvas);
+    _drawArmSide2(canvas);
   }
 }

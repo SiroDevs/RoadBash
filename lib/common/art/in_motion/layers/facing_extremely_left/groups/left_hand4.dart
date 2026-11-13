@@ -4,7 +4,7 @@ import 'dart:ui';
 import '../../../rider_in_motion_painter.dart';
 
 /// Group "LeftHand".
-class LeftHand3 {
+class LeftHand4 {
   final Paint _paint = Paint()
     ..isAntiAlias = true
     ..strokeCap = StrokeCap.round

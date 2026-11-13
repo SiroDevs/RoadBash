@@ -59,7 +59,7 @@ class RivalRacer implements RoadActor {
   final RivalSteering _steering;
   final CrashState _crash = CrashState();
   late final RivalPoseDriver _poseDriver = RivalPoseDriver(sprite.pose, index);
-  final RivalFacing _facing = RivalFacing();
+  late final RivalFacing _facing = RivalFacing(index);
   final RivalLookout _lookout = RivalLookout();
   final RivalGround _ground = RivalGround();
   late final RivalLane _lane;

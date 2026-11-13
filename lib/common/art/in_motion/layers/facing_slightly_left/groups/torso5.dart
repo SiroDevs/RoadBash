@@ -4,7 +4,7 @@ import 'dart:ui';
 import '../../../rider_in_motion_painter.dart';
 
 /// Group "Torso".
-class Torso3 {
+class Torso5 {
   final Paint _paint = Paint()
     ..isAntiAlias = true
     ..strokeCap = StrokeCap.round
@@ -15,18 +15,18 @@ class Torso3 {
   void _drawBelt(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(82.03, 43.74)
-      ..lineTo(80.45, 41.0)
-      ..lineTo(69.48, 42.23)
-      ..lineTo(58.31, 46.07)
-      ..lineTo(59.7, 49.33)
-      ..lineTo(71.46, 46.93)
+      ..moveTo(78.11, 54.47)
+      ..lineTo(77.64, 50.5)
+      ..lineTo(66.72, 51.81)
+      ..lineTo(55.82, 54.23)
+      ..lineTo(55.41, 57.49)
+      ..lineTo(67.31, 56.77)
       ..close();
     _paint
       ..style = PaintingStyle.fill
       ..shader = Gradient.radial(
-        const Offset(70.17, 45.17),
-        11.86,
+        const Offset(66.76, 53.99),
+        11.35,
         const [RiderInMotionPainter.color3A3D4E, RiderInMotionPainter.color1D1F27],
         const [0.0, 1.0],
       );
@@ -37,22 +37,22 @@ class Torso3 {
   void _drawTorso(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(80.45, 41.0)
-      ..lineTo(79.05, 34.15)
-      ..lineTo(77.77, 28.61)
-      ..lineTo(76.81, 25.77)
-      ..lineTo(74.91, 23.24)
-      ..lineTo(70.0, 21.17)
-      ..lineTo(67.72, 19.41)
-      ..lineTo(61.67, 18.91)
-      ..lineTo(56.13, 22.46)
-      ..lineTo(55.13, 27.0)
-      ..lineTo(51.85, 29.78)
-      ..lineTo(51.39, 33.68)
-      ..lineTo(52.2, 37.6)
-      ..lineTo(55.16, 42.1)
-      ..lineTo(58.12, 46.6)
-      ..lineTo(70.45, 42.03)
+      ..moveTo(77.58, 50.61)
+      ..lineTo(77.03, 45.43)
+      ..lineTo(76.91, 40.63)
+      ..lineTo(76.68, 37.14)
+      ..lineTo(75.48, 34.21)
+      ..lineTo(72.32, 31.36)
+      ..lineTo(70.45, 29.17)
+      ..lineTo(64.62, 27.46)
+      ..lineTo(58.48, 29.8)
+      ..lineTo(56.58, 34.05)
+      ..lineTo(52.81, 36.11)
+      ..lineTo(51.37, 40.84)
+      ..lineTo(52.63, 44.77)
+      ..lineTo(54.43, 49.16)
+      ..lineTo(55.8, 54.58)
+      ..lineTo(67.14, 51.81)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -65,17 +65,17 @@ class Torso3 {
   void _drawBackPart(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(67.5, 43.07)
-      ..lineTo(71.46, 34.95)
-      ..lineTo(75.87, 29.25)
-      ..lineTo(72.7, 26.09)
-      ..lineTo(69.0, 25.71)
-      ..lineTo(66.22, 25.63)
-      ..lineTo(61.01, 27.38)
-      ..lineTo(56.9, 29.77)
-      ..lineTo(55.39, 32.8)
-      ..lineTo(54.7, 35.3)
-      ..lineTo(61.98, 38.13)
+      ..moveTo(67.64, 51.78)
+      ..lineTo(70.95, 45.15)
+      ..lineTo(76.43, 40.46)
+      ..lineTo(73.97, 36.73)
+      ..lineTo(70.42, 35.6)
+      ..lineTo(67.72, 34.96)
+      ..lineTo(62.26, 35.62)
+      ..lineTo(57.75, 37.12)
+      ..lineTo(55.66, 39.78)
+      ..lineTo(54.47, 42.09)
+      ..lineTo(61.65, 44.66)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -88,14 +88,14 @@ class Torso3 {
   void _drawLeftShoulder(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(55.16, 42.1)
-      ..lineTo(52.0, 36.62)
-      ..lineTo(51.97, 31.52)
-      ..lineTo(52.86, 27.76)
-      ..lineTo(55.63, 25.99)
-      ..lineTo(61.18, 27.49)
-      ..lineTo(56.9, 29.77)
-      ..lineTo(55.71, 34.84)
+      ..moveTo(54.4, 48.66)
+      ..lineTo(51.49, 42.45)
+      ..lineTo(51.02, 38.48)
+      ..lineTo(54.2, 34.34)
+      ..lineTo(57.27, 33.16)
+      ..lineTo(62.41, 35.76)
+      ..lineTo(57.75, 37.12)
+      ..lineTo(54.36, 42.35)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -108,15 +108,15 @@ class Torso3 {
   void _drawRightShoulder(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(79.05, 34.15)
-      ..lineTo(75.11, 29.85)
-      ..lineTo(71.37, 26.53)
-      ..lineTo(68.23, 26.15)
-      ..lineTo(64.58, 26.35)
-      ..lineTo(69.11, 22.3)
-      ..lineTo(74.16, 22.29)
-      ..lineTo(77.29, 25.61)
-      ..lineTo(77.77, 28.61)
+      ..moveTo(76.53, 45.49)
+      ..lineTo(74.45, 40.7)
+      ..lineTo(71.99, 36.97)
+      ..lineTo(69.38, 36.27)
+      ..lineTo(65.96, 35.33)
+      ..lineTo(71.82, 31.95)
+      ..lineTo(75.48, 34.21)
+      ..lineTo(76.71, 37.64)
+      ..lineTo(77.41, 40.6)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -129,16 +129,16 @@ class Torso3 {
   void _drawCollar(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(71.01, 21.67)
-      ..lineTo(66.97, 22.18)
-      ..lineTo(62.18, 22.95)
-      ..lineTo(55.63, 25.99)
-      ..lineTo(55.67, 24.64)
-      ..lineTo(58.15, 23.46)
-      ..lineTo(60.16, 21.94)
-      ..lineTo(63.19, 20.93)
-      ..lineTo(65.46, 20.17)
-      ..lineTo(68.0, 20.07)
+      ..moveTo(73.21, 32.05)
+      ..lineTo(69.15, 31.74)
+      ..lineTo(64.31, 31.51)
+      ..lineTo(57.27, 33.16)
+      ..lineTo(58.28, 31.86)
+      ..lineTo(60.25, 31.2)
+      ..lineTo(62.53, 30.12)
+      ..lineTo(65.7, 29.74)
+      ..lineTo(68.08, 29.46)
+      ..lineTo(71.19, 29.99)
       ..close();
     _paint
       ..style = PaintingStyle.fill

@@ -4,6 +4,7 @@ import 'dart:ui';
 // Project imports:
 import 'bike_look.dart';
 import 'rider_look.dart';
+import 'rider_palettes.dart';
 
 /// Predefined rider looks for the player and rivals.
 abstract final class RiderLooks {
@@ -30,6 +31,7 @@ abstract final class RiderLooks {
       accentEdge: Color(0xFFFFE066),
       trim: Color(0xFFD9DADF),
     ),
+    art: RiderPalettes.yellow,
   );
 
   /// Blue rival.
@@ -53,6 +55,7 @@ abstract final class RiderLooks {
       accentEdge: Color(0xFF6C93FF),
       trim: Color(0xFFD9DADF),
     ),
+    art: RiderPalettes.blue,
   );
 
   /// Green rival.
@@ -76,6 +79,7 @@ abstract final class RiderLooks {
       accentEdge: Color(0xFF8CE86B),
       trim: Color(0xFFD9DADF),
     ),
+    art: RiderPalettes.green,
   );
 
   /// Purple rival.
@@ -99,6 +103,7 @@ abstract final class RiderLooks {
       accentEdge: Color(0xFFB98AF0),
       trim: Color(0xFFD9DADF),
     ),
+    art: RiderPalettes.purple,
   );
 
   /// Orange rival, the fifth on the higher levels.
@@ -122,6 +127,7 @@ abstract final class RiderLooks {
       accentEdge: Color(0xFFFFB074),
       trim: Color(0xFFD9DADF),
     ),
+    art: RiderPalettes.orange,
   );
 
   /// Traffic police rider: navy suit, white helmet, blue and white bike.
@@ -142,6 +148,7 @@ abstract final class RiderLooks {
       accentEdge: Color(0xFFFFFFFF),
       trim: Color(0xFFFFFFFF),
     ),
+    art: RiderPalettes.cop,
   );
 
   static const List<RiderLook> field = [yellow, blue, green, purple, orange];

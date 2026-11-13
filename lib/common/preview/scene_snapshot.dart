@@ -12,7 +12,6 @@ import '../../core/game/rider/dust_trail.dart';
 import '../art/look/rider_look.dart';
 import '../art/look/rider_looks.dart';
 import '../../core/game/rider/rider_rig.dart';
-import '../art/rider_facing.dart';
 import '../art/rider_sprite.dart';
 import '../../core/game/road/config/vehicle_config.dart';
 import '../../core/game/road/road_renderer.dart';
@@ -127,7 +126,6 @@ abstract final class SceneSnapshot {
     sprite.pose
       ..speed = _riderSpeed
       ..lean = (curve * 0.04 * _riderSpeed).clamp(-0.3, 0.3).toDouble()
-      ..facing = RiderFacing.ofYaw(curve * 0.06 * _riderSpeed)
       ..phase = 0.3;
     sprite.paintAt(canvas, ground, riderHeight / RiderSprite.height);
     if (!dusty) return;

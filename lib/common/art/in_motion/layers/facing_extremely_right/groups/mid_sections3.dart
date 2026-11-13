@@ -11,17 +11,17 @@ class MidSections3 {
     ..strokeJoin = StrokeJoin.round;
   final Path _path = Path();
 
-  /// Shape "LeftBackPipe".
-  void _drawLeftBackPipe(Canvas canvas) {
+  /// Shape "RightBackPipe".
+  void _drawRightBackPipe(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(67.49, 84.0)
-      ..lineTo(63.3, 92.5)
-      ..lineTo(59.35, 102.48)
-      ..lineTo(59.75, 104.44)
-      ..lineTo(62.09, 103.2)
-      ..lineTo(65.89, 95.68)
-      ..lineTo(69.44, 87.98)
+      ..moveTo(62.39, 84.06)
+      ..lineTo(66.81, 92.43)
+      ..lineTo(71.03, 102.31)
+      ..lineTo(70.68, 104.28)
+      ..lineTo(68.32, 103.1)
+      ..lineTo(64.31, 95.69)
+      ..lineTo(60.55, 88.09)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -36,18 +36,18 @@ class MidSections3 {
     canvas.drawPath(_path, _paint);
   }
 
-  /// Shape "LeftMidPanel".
-  void _drawLeftMidPanel(Canvas canvas) {
+  /// Shape "RightMidPanel".
+  void _drawRightMidPanel(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(60.71, 99.14)
-      ..lineTo(59.02, 87.09)
-      ..lineTo(56.52, 83.67)
-      ..lineTo(51.45, 77.39)
-      ..lineTo(45.02, 75.13)
-      ..lineTo(43.23, 83.85)
-      ..lineTo(45.1, 93.02)
-      ..lineTo(53.48, 103.69)
+      ..moveTo(69.58, 99.01)
+      ..lineTo(70.94, 86.92)
+      ..lineTo(73.34, 83.42)
+      ..lineTo(78.24, 77.01)
+      ..lineTo(84.61, 74.57)
+      ..lineTo(86.64, 83.24)
+      ..lineTo(85.02, 92.46)
+      ..lineTo(76.94, 103.35)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -56,15 +56,15 @@ class MidSections3 {
     canvas.drawPath(_path, _paint);
   }
 
-  /// Shape "RightBackPipe".
-  void _drawRightBackPipe(Canvas canvas) {
+  /// Shape "LeftBackPipe".
+  void _drawLeftBackPipe(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(84.12, 85.32)
-      ..lineTo(92.08, 95.46)
-      ..lineTo(94.97, 93.18)
-      ..lineTo(84.9, 80.95)
-      ..lineTo(82.81, 83.06)
+      ..moveTo(45.81, 85.83)
+      ..lineTo(38.13, 96.18)
+      ..lineTo(35.17, 93.99)
+      ..lineTo(44.9, 81.49)
+      ..lineTo(47.05, 83.54)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -83,12 +83,12 @@ class MidSections3 {
   void _drawLowerUnderBody(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(90.96, 106.43)
-      ..lineTo(97.38, 98.78)
-      ..lineTo(93.62, 90.37)
-      ..lineTo(61.29, 96.98)
-      ..lineTo(58.4, 107.78)
-      ..lineTo(68.02, 109.9)
+      ..moveTo(39.55, 107.12)
+      ..lineTo(32.91, 99.65)
+      ..lineTo(36.45, 91.14)
+      ..lineTo(68.94, 96.87)
+      ..lineTo(72.13, 107.58)
+      ..lineTo(62.57, 109.96)
       ..close();
     _paint
       ..style = PaintingStyle.fill
@@ -107,18 +107,18 @@ class MidSections3 {
   void _drawBigUnderPanel(Canvas canvas) {
     _path
       ..reset()
-      ..moveTo(88.72, 91.37)
-      ..lineTo(91.14, 76.5)
-      ..lineTo(87.89, 72.96)
-      ..lineTo(73.35, 76.14)
-      ..lineTo(69.66, 83.02)
-      ..lineTo(73.45, 96.54)
+      ..moveTo(41.37, 92.0)
+      ..lineTo(38.55, 77.2)
+      ..lineTo(41.69, 73.58)
+      ..lineTo(56.31, 76.36)
+      ..lineTo(60.19, 83.14)
+      ..lineTo(56.78, 96.75)
       ..close();
     _paint
       ..style = PaintingStyle.fill
       ..shader = Gradient.linear(
-        const Offset(82.56, 71.3),
-        const Offset(78.24, 98.2),
+        const Offset(51.55, 71.95),
+        const Offset(47.19, 98.38),
         const [RiderInMotionPainter.color39317F, RiderInMotionPainter.color000000],
         const [0.0, 1.0],
       );
@@ -127,9 +127,9 @@ class MidSections3 {
 
   /// Paints every shape in this group.
   void paint(Canvas canvas) {
-    _drawLeftBackPipe(canvas);
-    _drawLeftMidPanel(canvas);
     _drawRightBackPipe(canvas);
+    _drawRightMidPanel(canvas);
+    _drawLeftBackPipe(canvas);
     _drawLowerUnderBody(canvas);
     _drawBigUnderPanel(canvas);
   }

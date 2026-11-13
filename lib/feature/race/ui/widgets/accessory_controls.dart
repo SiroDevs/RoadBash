@@ -53,7 +53,7 @@ class AccessoryControls extends StatelessWidget {
         return Padding(
           padding: EdgeInsets.symmetric(
             horizontal: portrait ? 8 : 5,
-            vertical: portrait ? 8 : 2,
+            vertical: portrait ? 8 : 0,
           ),
           child: Row(
             children: [
@@ -116,8 +116,8 @@ class _AccessoryButton extends StatelessWidget {
     final border = enabled ? const Color(0xFF666873) : const Color(0xFF303137);
     return LayoutBuilder(
       builder: (context, constraints) {
-        final iconSize = math.min(17.0, constraints.maxHeight * 0.36);
-        final textSize = math.min(8.0, constraints.maxHeight * 0.17);
+        final iconSize = math.min(17.0, constraints.maxHeight * 0.48);
+        final textSize = math.min(10.0, constraints.maxHeight * 0.28);
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Semantics(
@@ -147,19 +147,24 @@ class _AccessoryButton extends StatelessWidget {
                   color: fill,
                   border: Border.all(color: border),
                 ),
-                child: Column(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Icon(icon, size: iconSize, color: ink),
-                    Text(
-                      label.toUpperCase(),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: ink,
-                        fontFamily: AppConstants.displayFont,
-                        fontSize: textSize,
-                        fontWeight: FontWeight.w800,
+                    const SizedBox(width: 4),
+                    Flexible(
+                      child: Text(
+                        label.toUpperCase(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: ink,
+                          fontFamily: AppConstants.displayFont,
+                          fontSize: textSize,
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
                     ),
                   ],

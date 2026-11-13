@@ -18,6 +18,8 @@ class DashboardLayout {
   static const double _tyreMaxY = 0.6;
   static const double _portraitAccessoryShare = 0.11;
   static const double _landscapeAccessoryShare = 0.09;
+  static const double _landscapeDashboardHeightScale = 0.7;
+  static const double _landscapeDashboardAccessoryOverlap = 0.035;
 
   late final double ph, pw, left, top, speedRadius, rpmRadius;
   late final Offset speedOffset, rpmOffset;
@@ -52,7 +54,8 @@ class DashboardLayout {
   static double aspectFor(Vector2 screen) {
     if (screen.x <= 0 || screen.y <= 0) return aspect;
     if (!isPortrait(screen)) {
-      return tierOf(screen).pick(small: 0.245, medium: 0.225, large: aspect);
+      return tierOf(screen).pick(small: 0.245, medium: 0.225, large: aspect) *
+          _landscapeDashboardHeightScale;
     }
     final ratio = screen.x / screen.y;
     return math.min(0.34, aspect * (1 + (1 - ratio) * 1.2));
@@ -61,7 +64,8 @@ class DashboardLayout {
   /// Returns the largest share of the screen the dashboard may use.
   static double maxShareFor(Vector2 screen) {
     if (isPortrait(screen)) return 0.30;
-    return tierOf(screen).pick(small: 0.38, medium: 0.34, large: 0.32);
+    return tierOf(screen).pick(small: 0.38, medium: 0.34, large: 0.32) *
+        _landscapeDashboardHeightScale;
   }
 
   /// Returns the dashboard height for a screen.
@@ -81,7 +85,10 @@ class DashboardLayout {
   /// Returns the dashboard's top edge above the accessory strip.
   static double topFor(Vector2 screen) {
     final height = heightFor(screen);
-    return screen.y - height - accessoryArea(screen).height;
+    final overlap = isPortrait(screen)
+        ? 0.0
+        : screen.y * _landscapeDashboardAccessoryOverlap;
+    return screen.y - height - accessoryArea(screen).height + overlap;
   }
 
   /// Returns the dashboard's rectangle on screen.

@@ -16,8 +16,8 @@ class HandlebarPose {
   final bool leftHeld, rightHeld;
   final double leftOffset, rightOffset;
 
-  /// True while the right bar is held.
-  bool get throttle => rightHeld;
+  /// True while either gas grip is held.
+  bool get throttle => leftHeld || rightHeld;
 
   /// True while either bar is held.
   bool get anyHeld => leftHeld || rightHeld;

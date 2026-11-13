@@ -217,7 +217,7 @@
   "@volumeEffects": {
     "description": "Volume slider"
   },
-  "controlsHelp": "Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: the two handlebars move together. Hold the right handlebar (GAS) to ride and let go to brake. Drag either handlebar to turn: right bar down (left bar up) steers right, left bar down (right bar up) steers left. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.",
+  "controlsHelp": "Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold either handlebar (GAS) to ride and release both to brake. Drag either handlebar to turn: right bar down (left bar up) steers right, left bar down (right bar up) steers left. Use Boost and Attack in the accessory row below the dashboard while moving; Attack unlocks in level 4. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.",
   "@controlsHelp": {
     "description": "Controls help text"
   },
@@ -235,7 +235,28 @@
   },
   "hudGasLabel": "Gas",
   "@hudGasLabel": {
-    "description": "Label printed on the right handlebar grip"
+    "description": "Label printed on both handlebar grips"
+  },
+  "hudAttackLabel": "HIT",
+  "@hudAttackLabel": {
+    "description": "Label for the attack accessory control"
+  },
+  "hudBoostLabel": "BOOST",
+  "@hudBoostLabel": {
+    "description": "Label for the boost accessory control"
+  },
+  "hudItemLabel": "ITEM",
+  "@hudItemLabel": {
+    "description": "Label for an empty accessory item slot"
+  },
+  "hudItemSlot": "Empty item slot {slot}",
+  "@hudItemSlot": {
+    "description": "Accessible label for an empty accessory item slot",
+    "placeholders": {
+      "slot": {
+        "type": "int"
+      }
+    }
   },
   "hudLap": "LAP {lap}/{laps}",
   "@hudLap": {
@@ -362,11 +383,11 @@
   "@quitRace": {
     "description": "Close button label"
   },
-  "handlebarLeft": "Left handlebar: drag down to steer left, up to steer right",
+  "handlebarLeft": "Left handlebar, GAS: hold to ride; drag down to steer left, up to steer right",
   "@handlebarLeft": {
     "description": "Left handlebar label"
   },
-  "handlebarRight": "Right handlebar, the gas: hold to ride, release to brake, drag down to steer right",
+  "handlebarRight": "Right handlebar, GAS: hold to ride; release both grips to brake, drag down to steer right",
   "@handlebarRight": {
     "description": "Right handlebar label"
   },

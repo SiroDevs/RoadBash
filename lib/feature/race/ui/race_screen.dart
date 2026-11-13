@@ -14,6 +14,7 @@ import '../../../core/audio/audio_catalog.dart';
 import '../../../core/audio/audio_service.dart';
 import '../../../core/di/injectable.dart';
 import '../../../core/game/input/tilt/tilt_controller.dart';
+import '../../../core/game/hud/dashboard/dashboard_layout.dart';
 import '../../../core/game/road_game.dart';
 import '../../../core/router/route_names.dart';
 import '../../../domain/models/player_profile.dart';
@@ -24,8 +25,8 @@ import '../../settings/cubit/settings_cubit.dart';
 import '../cubit/race_cubit.dart';
 import 'hud_strings_l10n.dart';
 import 'level_briefing.dart';
-import 'widgets/attack_button.dart';
 import 'widgets/handlebar_pad.dart';
+import 'widgets/accessory_controls.dart';
 import 'widgets/race_controls_menu.dart';
 import 'widgets/race_pause_overlay.dart';
 import 'widgets/race_top_bar.dart';
@@ -60,6 +61,7 @@ class _RaceScreenState extends State<RaceScreen> {
     final profile = context.read<SettingsCubit>().state.profile;
     final race = context.read<RaceCubit>();
     final career = context.read<ProgressCubit>().state.career;
+    final strings = hudStringsFor(l10n);
     return RoadGame(
       scene: widget.scene,
       rules: career.rules,
@@ -69,7 +71,7 @@ class _RaceScreenState extends State<RaceScreen> {
       playerName: profile.displayName(l10n),
       onFinished: race.finish,
       onPauseKey: _togglePause,
-      strings: hudStringsFor(l10n),
+      strings: strings,
     );
   }
 
@@ -137,9 +139,6 @@ class _RaceScreenState extends State<RaceScreen> {
     final screenTouch = context.select<SettingsCubit, bool>(
       (c) => c.state.profile.useScreenTouch,
     );
-    final combat = context.select<ProgressCubit, bool>(
-      (c) => c.state.career.rules.combat,
-    );
     final showTouchUi = isTouchDevice || screenTouch;
     return MusicScope(
       track: MusicTrack.forScene(widget.scene),
@@ -165,29 +164,42 @@ class _RaceScreenState extends State<RaceScreen> {
             onPointerUp: (_) {
               if (_tilt.needsPermission.value) _tilt.requestPermission();
             },
-            child: Stack(
-              children: [
-                GameWidget(game: _game),
-                if (combat && showTouchUi) AttackButton(onHold: _game.setAttack),
-                Positioned.fill(
-                  child: HandlebarPad(
-                    key: ValueKey(_inputEpoch),
-                    onChanged: _game.setHandlebars,
-                  ),
-                ),
-                if (_paused)
-                  Positioned.fill(
-                    child: RacePauseOverlay(onTap: _togglePause),
-                  ),
-                RaceTopBar(
-                  game: _game,
-                  laps: _laps,
-                  paused: _paused,
-                  showTouchActions: showTouchUi,
-                  onTogglePause: _togglePause,
-                  onOpenControls: _openControls,
-                ),
-              ],
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final screen = Vector2(
+                  constraints.maxWidth,
+                  constraints.maxHeight,
+                );
+                final accessoryArea = DashboardLayout.accessoryArea(screen);
+                return Stack(
+                  children: [
+                    GameWidget(game: _game),
+                    Positioned.fill(
+                      child: HandlebarPad(
+                        key: ValueKey(_inputEpoch),
+                        onChanged: _game.setHandlebars,
+                      ),
+                    ),
+                    if (!accessoryArea.isEmpty)
+                      Positioned.fromRect(
+                        rect: accessoryArea,
+                        child: AccessoryControls(game: _game),
+                      ),
+                    if (_paused)
+                      Positioned.fill(
+                        child: RacePauseOverlay(onTap: _togglePause),
+                      ),
+                    RaceTopBar(
+                      game: _game,
+                      laps: _laps,
+                      paused: _paused,
+                      showTouchActions: showTouchUi,
+                      onTogglePause: _togglePause,
+                      onOpenControls: _openControls,
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),

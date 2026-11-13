@@ -18,6 +18,7 @@ class DashboardLayout {
   static const double visibleShare = 0.734;
 
   static const double _tyreMaxY = 0.6;
+  static const double _portraitAccessoryShare = 0.08;
 
   late final double ph, pw, left, top, speedRadius, rpmRadius;
   late final Offset speedOffset, rpmOffset;
@@ -29,7 +30,7 @@ class DashboardLayout {
     ph = heightFor(size);
     pw = ph / aspectFor(size);
     left = (size.x - pw) / 2;
-    top = size.y - ph * visibleShare;
+    top = topFor(size);
     speedOffset = Offset(left + pw * 0.31, top + ph * 0.5);
     speedRadius = ph * 0.35;
     rpmOffset = Offset(left + pw * 0.69, top + ph * 0.5);
@@ -70,27 +71,46 @@ class DashboardLayout {
 
   /// Returns the part of the dashboard that is visible.
   static double visibleHeight(Vector2 screen) =>
-      heightFor(screen) * visibleShare;
+      isPortrait(screen) ? heightFor(screen) : heightFor(screen) * visibleShare;
+
+  /// Returns the reserved accessory strip at the bottom of a portrait screen.
+  static Rect accessoryArea(Vector2 screen) {
+    if (!isPortrait(screen)) return Rect.zero;
+    final height = screen.y * _portraitAccessoryShare;
+    return Rect.fromLTWH(0, screen.y - height, screen.x, height);
+  }
+
+  /// Returns the dashboard's top edge, above its visible area and accessories.
+  static double topFor(Vector2 screen) {
+    final height = heightFor(screen);
+    if (isPortrait(screen)) {
+      return screen.y - height - accessoryArea(screen).height;
+    }
+    return screen.y - height * visibleShare;
+  }
 
   /// Returns the dashboard's rectangle on screen.
   static Rect footprint(Vector2 screen) {
     final height = heightFor(screen);
     final width = height / aspectFor(screen);
-    final visible = height * visibleShare;
+    final visible = visibleHeight(screen);
     return Rect.fromLTWH(
       (screen.x - width) / 2,
-      screen.y - visible,
+      topFor(screen),
       width,
       visible,
     );
   }
 
-  static const double _portraitReach = 0.34;
+  static const double _portraitReach = 0.45;
   static const double _roadFill = 0.62;
+  static const double _portraitRoadFill = 0.9;
+  static const double _portraitMinSpread = 0.2;
   static const double _maxSpread = 1.8;
 
   /// Returns the horizon's vertical position.
-  static double horizonY(Vector2 screen) => screen.y * RoadConfig.horizonRatio;
+  static double horizonY(Vector2 screen) =>
+      screen.y * RoadConfig.horizonRatioFor(screen.x, screen.y);
 
   /// Returns where the rider's tyres touch the ground.
   static double riderTyresGround(Vector2 screen) {
@@ -101,10 +121,13 @@ class DashboardLayout {
 
   /// Returns how far the road is widened to fill the screen.
   static double roadSpread(Vector2 screen) {
+    final portrait = isPortrait(screen);
     final below = riderTyresGround(screen) - horizonY(screen);
     if (below < 1) return 1;
-    return (screen.x * _roadFill / (2 * below))
-        .clamp(1.0, _maxSpread)
+    final roadFill = portrait ? _portraitRoadFill : _roadFill;
+    final minSpread = portrait ? _portraitMinSpread : 1.0;
+    return (screen.x * roadFill / (2 * below))
+        .clamp(minSpread, _maxSpread)
         .toDouble();
   }
 

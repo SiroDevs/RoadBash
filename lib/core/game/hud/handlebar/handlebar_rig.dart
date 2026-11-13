@@ -50,11 +50,11 @@ class HandlebarRig extends Component {
     _lean += (target - _lean) * math.min(1.0, dt * _followRate);
   }
 
-  /// True while the left grip is held.
-  bool get leftHeld => poseOf().leftHeld;
+  /// True when the left grip should glow as a gas control.
+  bool get leftGasOn => poseOf().leftHeld || road.throttle;
 
-  /// True when the right grip should glow: gas from the grip or the up key.
-  bool get gasOn => poseOf().rightHeld || road.throttle;
+  /// True when the right grip should glow as a gas control.
+  bool get rightGasOn => poseOf().rightHeld || road.throttle;
 
   /// How far the handlebar is turned right now, in radians.
   double get angle => layout?.tilt(_lean) ?? 0;

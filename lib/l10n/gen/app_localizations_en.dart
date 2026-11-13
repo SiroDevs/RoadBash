@@ -166,7 +166,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get controlsHelp =>
-      'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: the two handlebars move together. Hold the right handlebar (GAS) to ride and let go to brake. Drag either handlebar to turn: right bar down (left bar up) steers right, left bar down (right bar up) steers left. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.';
+      'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold either handlebar (GAS) to ride and release both to brake. Drag either handlebar to turn: right bar down (left bar up) steers right, left bar down (right bar up) steers left. Use Boost and Attack in the accessory row below the dashboard while moving; Attack unlocks in level 4. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.';
 
   @override
   String get hudGo => 'GO!';
@@ -179,6 +179,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hudGasLabel => 'Gas';
+
+  @override
+  String get hudAttackLabel => 'HIT';
+
+  @override
+  String get hudBoostLabel => 'BOOST';
+
+  @override
+  String get hudItemLabel => 'ITEM';
+
+  @override
+  String hudItemSlot(int slot) {
+    return 'Empty item slot $slot';
+  }
 
   @override
   String hudLap(int lap, int laps) {
@@ -256,11 +270,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get handlebarLeft =>
-      'Left handlebar: drag down to steer left, up to steer right';
+      'Left handlebar, GAS: hold to ride; drag down to steer left, up to steer right';
 
   @override
   String get handlebarRight =>
-      'Right handlebar, the gas: hold to ride, release to brake, drag down to steer right';
+      'Right handlebar, GAS: hold to ride; release both grips to brake, drag down to steer right';
 
   @override
   String get controlsTitle => 'Controls';

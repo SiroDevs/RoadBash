@@ -18,6 +18,7 @@ mixin RoadInput on FlameGame {
   double _tiltSteer = 0;
   bool _keyThrottle = false;
   bool _keyBrake = false;
+  bool _boost = false;
   bool attack = false;
   HandlebarPose _handlebars = HandlebarPose.rest;
   bool _handlebarsLatched = false;
@@ -44,7 +45,8 @@ mixin RoadInput on FlameGame {
       road
         ..steer = 0
         ..brake = true
-        ..throttle = false;
+        ..throttle = false
+        ..boost = false;
       return;
     }
     final barSteer = _handlebars.steer;
@@ -52,18 +54,24 @@ mixin RoadInput on FlameGame {
     road.steer = combined.clamp(-1.0, 1.0).toDouble();
     // Bars and tilt are already smooth, so the bike follows them directly.
     road.analogSteer = _keySteer == 0 && (barSteer != 0 || _tiltSteer != 0);
-    // Letting go of the right bar brakes.
+    // Releasing both gas grips brakes after either grip was used.
     final barBrake = _handlebarsLatched && !_handlebars.throttle;
     road.brake = _keyBrake || barBrake;
     road.throttle = (_keyThrottle || _handlebars.throttle) && !road.brake;
+    road.boost =
+        _boost &&
+        road.throttle &&
+        !road.locked &&
+        !road.crashed &&
+        !road.recovering;
   }
 
   /// Updates the key steering, throttle and brake from pressed keys.
   void readKeys(Set<LogicalKeyboardKey> keysPressed) {
     bool anyDown(List<LogicalKeyboardKey> keys) =>
         keys.any(keysPressed.contains);
-    _keySteer = (anyDown(_rightKeys) ? 1.0 : 0.0) -
-        (anyDown(_leftKeys) ? 1.0 : 0.0);
+    _keySteer =
+        (anyDown(_rightKeys) ? 1.0 : 0.0) - (anyDown(_leftKeys) ? 1.0 : 0.0);
     _keyThrottle = anyDown(_upKeys);
     _keyBrake = anyDown(_downKeys);
     attack = anyDown([_attackKey]);
@@ -77,6 +85,7 @@ mixin RoadInput on FlameGame {
     _tiltSteer = 0;
     _keyThrottle = false;
     _keyBrake = false;
+    _boost = false;
     attack = false;
     _handlebars = HandlebarPose.rest;
     _handlebarsLatched = false;
@@ -93,13 +102,19 @@ mixin RoadInput on FlameGame {
     attack = value;
   }
 
+  /// Holds boost while its accessory control is pressed.
+  void setBoost(bool value) {
+    _boost = value;
+    applyInput();
+  }
+
   /// The current handlebar pose.
   HandlebarPose get handlebars => _handlebars;
 
-  /// Applies the handlebar pose: the right bar is gas, either bar steers.
+  /// Applies the handlebar pose: either grip is gas and either steers.
   void setHandlebars(HandlebarPose pose) {
     _handlebars = pose;
-    if (pose.rightHeld) _handlebarsLatched = true;
+    if (pose.anyHeld) _handlebarsLatched = true;
     applyInput();
   }
 }

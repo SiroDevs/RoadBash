@@ -19,7 +19,6 @@ class HandlebarGripsHud extends Component {
   final String gasLabel;
 
   static const _labelColor = Color(0xFFFFFFFF);
-  static const _heldFill = Color(0xFF666666);
   static const _gasFill = Color(0xFF3DBB5A);
   static const double _labelSize = 0.6;
 
@@ -30,25 +29,36 @@ class HandlebarGripsHud extends Component {
       rig.art.paintLeftGrip(
         canvas,
         extension: extension,
-        fill: rig.leftHeld ? _heldFill : HandlebarArt.color000000,
+        fill: rig.leftGasOn ? _gasFill : HandlebarArt.color000000,
       );
       rig.art.paintRightGrip(
         canvas,
         extension: extension,
-        fill: rig.gasOn ? _gasFill : HandlebarArt.color000000,
+        fill: rig.rightGasOn ? _gasFill : HandlebarArt.color000000,
       );
     });
-    _paintGasLabel(canvas);
+    _paintGasLabels(canvas);
   }
 
-  /// Prints the gas label on the right grip, turned with the handlebar.
-  void _paintGasLabel(Canvas canvas) {
+  /// Prints the gas label on both grips, turned with the handlebar.
+  void _paintGasLabels(Canvas canvas) {
+    _paintGripLabel(canvas, gasLabel, HandlebarArt.leftGripCentre, false);
+    _paintGripLabel(canvas, gasLabel, HandlebarArt.rightGripCentre, true);
+  }
+
+  void _paintGripLabel(
+    Canvas canvas,
+    String label,
+    Offset gripCentre,
+    bool rightSide,
+  ) {
     final layout = rig.layout;
     if (layout == null) return;
+    final extension = layout.pipeExtension / 2;
     final centre = rig.toScreen(
       Offset(
-        HandlebarArt.rightGripCentre.dx + layout.pipeExtension / 2,
-        HandlebarArt.rightGripCentre.dy,
+        gripCentre.dx + (rightSide ? extension : -extension),
+        gripCentre.dy,
       ),
     );
     canvas.save();
@@ -56,7 +66,7 @@ class HandlebarGripsHud extends Component {
     canvas.rotate(rig.angle);
     paintText(
       canvas,
-      gasLabel.toUpperCase(),
+      label.toUpperCase(),
       Offset.zero,
       (HandlebarArt.gripThickness + HandlebarConfig.gripThicken) *
           layout.artScale *

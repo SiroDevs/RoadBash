@@ -217,7 +217,7 @@
   "@volumeEffects": {
     "description": "Volume slider"
   },
-  "controlsHelp": "Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: pande mbili za usukani husogea pamoja. Shikilia upande wa kulia (MAFUTA) kuendesha na uachilie kufunga breki. Buruta upande wowote kugeuka: kulia ukishuka (kushoto ukipanda) unaelekea kulia, kushoto ukishuka (kulia ukipanda) unaelekea kushoto. Unaweza pia kuinamisha kifaa kama usukani, au kuwasha Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa usukani wa skrini pekee.",
+  "controlsHelp": "Shikilia juu (au W) kuongeza kasi. Achilia na pikipiki itasimama polepole.\n\nKushoto na kulia (au A na D) huongoza. Chini au S hufunga breki, na Space husimamisha.\n\nSimu na tableti: shikilia mpini wowote (MAFUTA) kuendesha, na uachilie yote miwili kufunga breki. Buruta mpini wowote kugeuka: wa kulia ukishuka (wa kushoto ukipanda) unaelekea kulia; wa kushoto ukishuka (wa kulia ukipanda) unaelekea kushoto. Tumia vitufe vya kuongeza kasi na kushambulia kwenye safu ya vifaa chini ya dashibodi unapoendesha; kushambulia hufunguliwa kiwango cha 4. Unaweza pia kuinamisha kifaa kama usukani, au kuwasha Tumia Mguso wa Skrini kwenye menyu ya vidhibiti (juu kulia) kuelekeza kwa usukani wa skrini pekee.",
   "@controlsHelp": {
     "description": "Controls help text"
   },
@@ -234,6 +234,30 @@
     "description": "Hint when stopped"
   },
   "hudGasLabel": "Mafuta",
+  "@hudGasLabel": {
+    "description": "Label printed on both handlebar grips"
+  },
+  "hudAttackLabel": "PIGA",
+  "@hudAttackLabel": {
+    "description": "Label for the attack accessory control"
+  },
+  "hudBoostLabel": "ONGEZA",
+  "@hudBoostLabel": {
+    "description": "Label for the boost accessory control"
+  },
+  "hudItemLabel": "KITU",
+  "@hudItemLabel": {
+    "description": "Label for an empty accessory item slot"
+  },
+  "hudItemSlot": "Nafasi ya kitu {slot}",
+  "@hudItemSlot": {
+    "description": "Accessible label for an empty accessory item slot",
+    "placeholders": {
+      "slot": {
+        "type": "int"
+      }
+    }
+  },
   "hudLap": "MZUNGUKO {lap}/{laps}",
   "@hudLap": {
     "description": "Lap counter",
@@ -359,11 +383,11 @@
   "@quitRace": {
     "description": "Close button label"
   },
-  "handlebarLeft": "Upande wa kushoto wa usukani: buruta chini kuelekea kushoto, juu kuelekea kulia",
+  "handlebarLeft": "Upande wa kushoto wa usukani, MAFUTA: shikilia kuendesha; buruta chini kuelekea kushoto, juu kuelekea kulia",
   "@handlebarLeft": {
     "description": "Left handlebar label"
   },
-  "handlebarRight": "Upande wa kulia wa usukani, mafuta: shikilia kuendesha, achilia kufunga breki, buruta chini kuelekea kulia",
+  "handlebarRight": "Upande wa kulia wa usukani, MAFUTA: shikilia kuendesha; achilia mipini yote miwili kufunga breki, buruta chini kuelekea kulia",
   "@handlebarRight": {
     "description": "Right handlebar label"
   },

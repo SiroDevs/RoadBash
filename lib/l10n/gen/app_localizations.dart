@@ -365,7 +365,7 @@ abstract class AppLocalizations {
   /// Controls help text
   ///
   /// In en, this message translates to:
-  /// **'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: the two handlebars move together. Hold the right handlebar (GAS) to ride and let go to brake. Drag either handlebar to turn: right bar down (left bar up) steers right, left bar down (right bar up) steers left. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.'**
+  /// **'Hold up (or W) for the throttle. Let go and the bike rolls to a stop.\n\nLeft and right (or A and D) steer. Down or S brakes, and Space pauses.\n\nPhones and tablets: hold either handlebar (GAS) to ride and release both to brake. Drag either handlebar to turn: right bar down (left bar up) steers right, left bar down (right bar up) steers left. Use Boost and Attack in the accessory row below the dashboard while moving; Attack unlocks in level 4. You can also tilt the device like a steering wheel, or switch on Use Screentouch in the race controls menu (top right) to steer with the handlebars only.'**
   String get controlsHelp;
 
   /// Race start banner
@@ -386,11 +386,35 @@ abstract class AppLocalizations {
   /// **'Hold the gas to ride'**
   String get hudHoldGas;
 
-  /// Label printed on the right handlebar grip
+  /// Label printed on both handlebar grips
   ///
   /// In en, this message translates to:
   /// **'Gas'**
   String get hudGasLabel;
+
+  /// Label for the attack accessory control
+  ///
+  /// In en, this message translates to:
+  /// **'HIT'**
+  String get hudAttackLabel;
+
+  /// Label for the boost accessory control
+  ///
+  /// In en, this message translates to:
+  /// **'BOOST'**
+  String get hudBoostLabel;
+
+  /// Label for an empty accessory item slot
+  ///
+  /// In en, this message translates to:
+  /// **'ITEM'**
+  String get hudItemLabel;
+
+  /// Accessible label for an empty accessory item slot
+  ///
+  /// In en, this message translates to:
+  /// **'Empty item slot {slot}'**
+  String hudItemSlot(int slot);
 
   /// Lap counter
   ///
@@ -503,13 +527,13 @@ abstract class AppLocalizations {
   /// Left handlebar label
   ///
   /// In en, this message translates to:
-  /// **'Left handlebar: drag down to steer left, up to steer right'**
+  /// **'Left handlebar, GAS: hold to ride; drag down to steer left, up to steer right'**
   String get handlebarLeft;
 
   /// Right handlebar label
   ///
   /// In en, this message translates to:
-  /// **'Right handlebar, the gas: hold to ride, release to brake, drag down to steer right'**
+  /// **'Right handlebar, GAS: hold to ride; release both grips to brake, drag down to steer right'**
   String get handlebarRight;
 
   /// Controls menu title

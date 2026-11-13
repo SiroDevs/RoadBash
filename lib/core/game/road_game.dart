@@ -171,8 +171,7 @@ class RoadGame extends FlameGame with KeyboardEvents, RoadInput, RacePause {
   }
 
   /// True when the finish delay is over or every rival has settled.
-  bool get _fieldHome =>
-      _finishDelay < -3.6 || racers.every((r) => r.settled);
+  bool get _fieldHome => _finishDelay < -3.6 || racers.every((r) => r.settled);
 
   /// Applies a new player profile to the game and its audio.
   void updateMix(PlayerProfile profile) {

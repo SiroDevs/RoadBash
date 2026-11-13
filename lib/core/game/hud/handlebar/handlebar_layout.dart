@@ -32,8 +32,10 @@ class HandlebarLayout {
 
     pivotY = dashboard.top + height * (_pivotDepth - HandlebarConfig.raise);
     restGripY =
-        pivotY + (HandlebarArt.rightGripCentre.dy - HandlebarArt.pivot.dy) * artScale;
-    halfSpan = (HandlebarArt.rightGripCentre.dx -
+        pivotY +
+        (HandlebarArt.rightGripCentre.dy - HandlebarArt.pivot.dy) * artScale;
+    halfSpan =
+        (HandlebarArt.rightGripCentre.dx -
             HandlebarArt.pivot.dx +
             pipeExtension / 2) *
         artScale;
@@ -64,12 +66,14 @@ class HandlebarLayout {
   /// grip goes up, by [travel] pixels at full lean.
   double tilt(double lean) => math.atan2(lean * travel, halfSpan);
 
-  /// Returns the screen area that grabs a grip: its half of the screen, from
-  /// above the highest the grip can reach down to the bottom edge.
+  /// Returns the grip's touch area, ending above the portrait accessory row.
   Rect zone(HandlebarSide side) {
     final top = restGripY - travel - dashboard.ph * 0.2;
+    final bottom = DashboardLayout.isPortrait(screen)
+        ? DashboardLayout.accessoryArea(screen).top
+        : screen.y;
     return side == HandlebarSide.left
-        ? Rect.fromLTRB(0, top, centreX, screen.y)
-        : Rect.fromLTRB(centreX, top, screen.x, screen.y);
+        ? Rect.fromLTRB(0, top, centreX, bottom)
+        : Rect.fromLTRB(centreX, top, screen.x, bottom);
   }
 }

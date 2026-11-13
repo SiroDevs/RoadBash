@@ -143,9 +143,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get receptionControls => 'Controls';
 
   @override
-  String get receptionDone => 'Done';
-
-  @override
   String get nameHint =>
       'Pick the name shown on your dashboard and in the results.';
 

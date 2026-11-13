@@ -189,10 +189,6 @@
   "@receptionControls": {
     "description": "Reception item"
   },
-  "receptionDone": "Maliza",
-  "@receptionDone": {
-    "description": "Reception item"
-  },
   "nameHint": "Chagua jina litakaloonekana kwenye dashibodi na kwenye matokeo.",
   "@nameHint": {
     "description": "Name editor hint"

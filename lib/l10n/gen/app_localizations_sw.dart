@@ -143,9 +143,6 @@ class AppLocalizationsSw extends AppLocalizations {
   String get receptionControls => 'Vidhibiti';
 
   @override
-  String get receptionDone => 'Maliza';
-
-  @override
   String get nameHint =>
       'Chagua jina litakaloonekana kwenye dashibodi na kwenye matokeo.';
 

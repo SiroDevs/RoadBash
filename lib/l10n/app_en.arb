@@ -189,10 +189,6 @@
   "@receptionControls": {
     "description": "Reception item"
   },
-  "receptionDone": "Done",
-  "@receptionDone": {
-    "description": "Reception item"
-  },
   "nameHint": "Pick the name shown on your dashboard and in the results.",
   "@nameHint": {
     "description": "Name editor hint"

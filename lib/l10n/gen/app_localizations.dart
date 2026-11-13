@@ -320,12 +320,6 @@ abstract class AppLocalizations {
   /// **'Controls'**
   String get receptionControls;
 
-  /// Reception item
-  ///
-  /// In en, this message translates to:
-  /// **'Done'**
-  String get receptionDone;
-
   /// Name editor hint
   ///
   /// In en, this message translates to:

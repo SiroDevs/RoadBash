@@ -49,10 +49,7 @@ class MenuGrid extends StatelessWidget {
   /// The scenes container: the label above the grid.
   Widget _scenesPanel(BuildContext context, double cellWidth) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const _ScenesLabel(),
-      _sceneGrid(context, cellWidth),
-    ],
+    children: [const _ScenesLabel(), _sceneGrid(context, cellWidth)],
   ).decorated(color: Retro.panel);
 
   /// The scene entries, wrapped into rows of equal-width cells.
@@ -65,9 +62,9 @@ class MenuGrid extends StatelessWidget {
             label: menuLabel(l10n, item),
             selected: item == selected,
             hint: order.isLocked(item.scene!)
-                ? l10n.levelLabel(LevelRules.unlockLevelOf(item.scene!)).toUpperCase()
-                : item.scene == order.mostPlayed
-                ? l10n.mostPlayed
+                ? l10n
+                      .levelLabel(LevelRules.unlockLevelOf(item.scene!))
+                      .toUpperCase()
                 : null,
             onTap: () => onTap(item),
           ).constrained(width: cellWidth),

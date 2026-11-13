@@ -6,8 +6,7 @@ import '../../../../common/layout/retro_sizes.dart';
 import '../../../../common/widgets/retro/controls/retro_controls.dart';
 import '../../../../common/widgets/retro/retro_style.dart';
 
-/// One name in the menu grid, with an optional tiny hint above it (used for
-/// "most played").
+/// One name in the menu grid, with an optional unlock label above it.
 class MenuEntry extends StatelessWidget {
   const MenuEntry({
     super.key,

@@ -100,7 +100,7 @@ class _MenuScreenState extends State<MenuScreen> {
       menu.select(target);
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final menu = context.read<MenuCubit>();
@@ -167,8 +167,13 @@ class _MenuScreenState extends State<MenuScreen> {
       target: selected,
       km: id == null ? 0 : _km(id, laps),
       laps: laps,
+      canStartRide: id != null && order.rules.isOpen(id),
+      onStartRide: () => _open(menu, selected),
     );
-    final card = ScenePreview(sceneImg: menuAsset(selected), scene: selected.scene);
+    final card = ScenePreview(
+      sceneImg: menuAsset(selected),
+      scene: selected.scene,
+    );
     final title = RetroTitle(menuLabel(l10n, selected));
     final entries = MenuGrid(
       order: order,
@@ -201,9 +206,9 @@ class _MenuScreenState extends State<MenuScreen> {
             SizedBox(height: sizes.gap),
             info,
             SizedBox(height: sizes.gap),
-            const RiderBar(),
-            SizedBox(height: sizes.gapSmall),
             entries,
+            SizedBox(height: sizes.gapSmall),
+            const RiderBar(),
           ],
         ),
       ),

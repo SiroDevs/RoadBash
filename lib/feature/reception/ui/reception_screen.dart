@@ -38,6 +38,16 @@ class ReceptionScreen extends StatelessWidget {
       ReceptionTab.exit: l10n.exitLabel,
     };
     final sizes = context.sizes;
+    final header = Row(
+      children: [
+        RetroButton(
+          l10n.commonBack,
+          onTap: () => context.goNamed(RouteNames.menu),
+        ),
+        SizedBox(width: sizes.gapSmall),
+        Expanded(child: RetroTitle(l10n.receptionTitle)),
+      ],
+    );
     return RetroPage.gray(
       child: BlocBuilder<ReceptionCubit, ReceptionTab>(
         builder: (context, tab) {
@@ -48,13 +58,8 @@ class ReceptionScreen extends StatelessWidget {
                 selected: entry.key == tab,
                 onTap: () => _select(context, entry.key),
               ),
-            RetroMenuItem(
-              label: l10n.receptionDone,
-              selected: false,
-              onTap: () => context.goNamed(RouteNames.menu),
-            ),
           ];
-          final title = RetroTitle(l10n.receptionTitle);
+          final title = header;
           return ResponsiveLayoutBuilder(
             small: (_, __) => ResponsiveScrollBody(
               child: Column(

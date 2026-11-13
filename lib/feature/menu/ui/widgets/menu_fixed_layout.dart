@@ -56,9 +56,9 @@ class MenuFixedLayout extends StatelessWidget {
                 ),
         ).expanded(),
         SizedBox(height: sizes.gapSmall),
-        const RiderBar(),
-        SizedBox(height: sizes.gapSmall * 0.75),
         entries,
+        SizedBox(height: sizes.gapSmall * 0.75),
+        const RiderBar(),
       ],
     );
   }

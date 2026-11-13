@@ -266,12 +266,6 @@ abstract class AppLocalizations {
   /// **'Start race'**
   String get startRace;
 
-  /// Small badge on the scene the player has raced most
-  ///
-  /// In en, this message translates to:
-  /// **'Most played'**
-  String get mostPlayed;
-
   /// Enter button
   ///
   /// In en, this message translates to:
@@ -325,12 +319,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Controls'**
   String get receptionControls;
-
-  /// Reception item
-  ///
-  /// In en, this message translates to:
-  /// **'Done'**
-  String get receptionDone;
 
   /// Name editor hint
   ///
@@ -1001,8 +989,20 @@ abstract class AppLocalizations {
   /// Menu section label
   ///
   /// In en, this message translates to:
-  /// **'Scenes'**
+  /// **'Pick a scene to play'**
   String get menuScenes;
+
+  /// Starts the selected race from the main menu
+  ///
+  /// In en, this message translates to:
+  /// **'Start Ride'**
+  String get menuStartRide;
+
+  /// Opens the riding controls guide from the main menu
+  ///
+  /// In en, this message translates to:
+  /// **'How to Play'**
+  String get menuHowToPlay;
 
   /// Boardroom title
   ///

@@ -27,8 +27,8 @@ class HandlebarLayout {
     final outer = HandlebarArt.span + HandlebarConfig.gripThicken + 1.0;
     final reach = screen.x * (1 - 2 * _edgeInset);
     final fitted = math.min(height * _gripSize, reach / outer);
-    artScale = math.min(fitted * HandlebarConfig.scale, screen.x / outer);
-    pipeExtension = math.max(0.0, reach / artScale - outer);
+    artScale = fitted * HandlebarConfig.scale;
+    pipeExtension = reach / artScale - outer;
 
     pivotY = dashboard.top + height * (_pivotDepth - HandlebarConfig.raise);
     restGripY =

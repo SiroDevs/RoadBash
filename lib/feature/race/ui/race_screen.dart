@@ -14,6 +14,8 @@ import '../../../core/audio/audio_catalog.dart';
 import '../../../core/audio/audio_service.dart';
 import '../../../core/di/injectable.dart';
 import '../../../core/game/input/tilt/tilt_controller.dart';
+import '../../../core/game/input/gamepad_controls.dart';
+import '../../../core/game/input/gamepad_input.dart';
 import '../../../core/game/hud/dashboard/dashboard_layout.dart';
 import '../../../core/game/road_game.dart';
 import '../../../core/router/route_names.dart';
@@ -45,11 +47,15 @@ class RaceScreen extends StatefulWidget {
 class _RaceScreenState extends State<RaceScreen> {
   late final RoadGame _game = _buildGame();
   late final TiltController _tilt = TiltController(onSteer: _game.setTiltSteer);
+  late final GamepadInput _gamepad = GamepadInput(
+    onChanged: (controls) =>
+        _game.setGamepadControls(_paused ? GamepadControls.neutral : controls),
+    onPause: _togglePause,
+  );
 
   int _inputEpoch = 0;
   bool _menuOpen = false;
   bool _paused = false;
-
   late final Stream<int> _laps = Stream.periodic(
     const Duration(milliseconds: 250),
     (_) => _game.isLoaded ? _game.race.lap : 1,
@@ -78,6 +84,7 @@ class _RaceScreenState extends State<RaceScreen> {
   @override
   void initState() {
     super.initState();
+    _gamepad.start();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _syncTilt(context.read<SettingsCubit>().state.profile);
     });
@@ -129,6 +136,7 @@ class _RaceScreenState extends State<RaceScreen> {
 
   @override
   void dispose() {
+    _gamepad.dispose();
     _tilt.dispose();
     _game.shutdown();
     super.dispose();

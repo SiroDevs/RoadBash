@@ -1,7 +1,7 @@
 name: roadbash
 description: "Recreating our childhood Road Rash with Flutter's Flame Engine."
 publish_to: 'none'
-version: 1.0.37
+version: 1.0.38
 
 environment:
   sdk: ^3.13.5
@@ -12,6 +12,7 @@ dependencies:
   bloc: ^9.1.0                       # Business Logic Component state management core
   equatable: ^2.0.7                  # Simplify object equality comparisons
   flame: ^1.33.0                     # Lightweight game engine for Flutter
+  gamepads: ^0.1.15                  # Cross-platform gamepad input
   flutter:
     sdk: flutter                     # Flutter framework and core SDK
   flutter_bloc: ^9.1.1               # Integrate BLoC and Cubit state management with Flutter

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 // Project imports:
+import '../../../domain/models/scene_id.dart';
 import 'menu_memory.dart';
 import 'menu_target.dart';
 
@@ -17,12 +18,18 @@ class MenuCubit extends Cubit<MenuTarget?> {
 
   final MenuMemory _memory;
 
-  /// Highlights [target] without going anywhere.
-  void select(MenuTarget target) => emit(target);
+  /// Highlights [target] and remembers scene selections for reception returns.
+  void select(MenuTarget target) {
+    if (target.isScene) _memory.lastScene = target;
+    emit(target);
+  }
 
-  /// Highlights [target] and remembers it as the last place visited.
+  /// Highlights [target] and stores the next menu selection.
   void open(MenuTarget target) {
-    _memory.last = target;
+    if (target.isScene) _memory.lastScene = target;
+    _memory.last = target.isReception
+        ? _memory.lastScene ?? const MenuTarget.scene(SceneId.city)
+        : target;
     emit(target);
   }
 

@@ -139,6 +139,20 @@ Built with clean architecture and BLoC (`flutter_bloc`), dependency injection wi
 
 ## Deployment
 
+### Firebase Hosting (Flutter web)
+
+The `.github/workflows/deploy-firebase.yml` workflow builds and deploys to Firebase Hosting on every push to `main`. `firebase.json` serves the release build from `build/web` and rewrites app routes to `index.html`.
+
+Before the first deploy, enable Firebase Hosting for your Firebase project and add these values in the GitHub repository settings:
+
+- Repository variable `FIREBASE_PROJECT_ID` with the Firebase project ID.
+- Repository secret `FIREBASE_SERVICE_ACCOUNT` with a service account JSON key that can deploy to Firebase Hosting.
+- Repository secrets `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` for the online game features.
+
+The online game features continue to use Supabase; Firebase Hosting only serves the web app.
+
+### Vercel
+
 Pushes to `main` build the Flutter web app and deploy it to Vercel through GitHub Actions (`.github/workflows/deploy-vercel.yml`). Pull requests get a preview deployment.
 
 Add these repository secrets before the first run:

@@ -5,8 +5,8 @@
   "targets": {
     "roadbash-f431b": {
       "hosting": {
-        "roadbashed": [
-          "roadbashed"
+        "road-bash": [
+          "road-bash"
         ]
       }
     }

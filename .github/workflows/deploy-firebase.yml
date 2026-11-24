@@ -122,7 +122,7 @@ jobs:
         with:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           projectId: roadbash-f431b
-          target: roadbashed
+          target: road-bash
           channelId: live
 
       - name: Build release archive

@@ -1,0 +1,15 @@
+[
+  "layers/left/groups/back_part.dart",
+  "layers/left/groups/bike_tyre.dart",
+  "layers/left/groups/handle_bar.dart",
+  "layers/left/left_layer.dart",
+  "layers/right/groups/back_part.dart",
+  "layers/right/groups/bike_tyre.dart",
+  "layers/right/groups/handle_bar.dart",
+  "layers/right/right_layer.dart",
+  "layers/straight/groups/back_part.dart",
+  "layers/straight/groups/bike_tyre.dart",
+  "layers/straight/groups/handle_bar.dart",
+  "layers/straight/straight_layer.dart",
+  "riding_painter.dart"
+]

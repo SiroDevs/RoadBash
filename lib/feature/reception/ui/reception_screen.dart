@@ -40,12 +40,12 @@ class ReceptionScreen extends StatelessWidget {
     final sizes = context.sizes;
     final header = Row(
       children: [
+        Expanded(child: RetroTitle(l10n.receptionTitle)),
+        SizedBox(width: sizes.gapSmall),
         RetroButton(
           l10n.commonBack,
           onTap: () => context.goNamed(RouteNames.menu),
         ),
-        SizedBox(width: sizes.gapSmall),
-        Expanded(child: RetroTitle(l10n.receptionTitle)),
       ],
     );
     return RetroPage.gray(

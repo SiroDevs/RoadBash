@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       force:
-        description: "Build and release even if the pubspec version is not newer"
+        description: "Build and release"
         type: boolean
         default: false
 
@@ -121,8 +121,8 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: roadbash-f431b
-          target: road-bash
+          projectId: roadbash
+          target: roadbash
           channelId: live
 
       - name: Build release archive

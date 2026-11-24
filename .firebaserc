@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "roadbash-f431b"
+    "default": "roadbash"
   },
   "targets": {
-    "roadbash-f431b": {
+    "roadbash": {
       "hosting": {
-        "road-bash": [
-          "road-bash"
+        "roadbash": [
+          "roadbash"
         ]
       }
     }

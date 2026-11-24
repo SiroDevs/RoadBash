@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "target": "road-bash",
+    "target": "roadbash",
     "public": "build/web",
     "ignore": [
       "firebase.json",

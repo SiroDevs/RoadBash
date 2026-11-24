@@ -141,7 +141,7 @@ Built with clean architecture and BLoC (`flutter_bloc`), dependency injection wi
 
 ### Firebase Hosting (Flutter web)
 
-The `.github/workflows/deploy-firebase.yml` workflow builds and deploys to the `road-bash` Firebase Hosting site in project `roadbash-f431b` on every push to `main`. It also publishes a GitHub release when `pubspec.yaml` has a newer version. `firebase.json` serves the release build from `build/web` and rewrites app routes to `index.html`.
+The `.github/workflows/deploy-firebase.yml` workflow builds and deploys to the `roadbash` Firebase Hosting site in project `roadbash` on every push to `main`. It also publishes a GitHub release when `pubspec.yaml` has a newer version. `firebase.json` serves the release build from `build/web` and rewrites app routes to `index.html`.
 
 Add these repository secrets before the first run:
 

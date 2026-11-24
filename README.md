@@ -76,7 +76,7 @@ SUPABASE_URL=https://YOUR-PROJECT.supabase.co
 SUPABASE_ANON_KEY=YOUR-ANON-KEY
 ```
 
-The file is bundled as an asset, so it is readable inside the built app. That is fine for the anon key, which is public by design (never put the service role key here). `.env` is git-ignored, so a CI build such as Vercel has to create it first, for example from repository secrets, before `flutter build web`. `--dart-define=SUPABASE_URL=...` and `--dart-define=SUPABASE_ANON_KEY=...` still work as a fallback when a key is missing from `.env`.
+The file is bundled as an asset, so it is readable inside the built app. That is fine for the anon key, which is public by design (never put the service role key here). `.env` is git-ignored, so a CI build has to create it first from repository secrets before `flutter build web`. `--dart-define=SUPABASE_URL=...` and `--dart-define=SUPABASE_ANON_KEY=...` still work as a fallback when a key is missing from `.env`.
 
 Players can also choose **Play anonymously** on the sign-in screen. A dialog warns them that they will ride as `AnonPlayer`, will not appear on the leaderboard and will not have their games recorded. There is no account, and no saved games, but their visit and online presence are still counted.
 
@@ -141,27 +141,15 @@ Built with clean architecture and BLoC (`flutter_bloc`), dependency injection wi
 
 ### Firebase Hosting (Flutter web)
 
-The `.github/workflows/deploy-firebase.yml` workflow builds and deploys to Firebase Hosting on every push to `main`. `firebase.json` serves the release build from `build/web` and rewrites app routes to `index.html`.
-
-Before the first deploy, enable Firebase Hosting for your Firebase project and add these values in the GitHub repository settings:
-
-- Repository variable `FIREBASE_PROJECT_ID` with the Firebase project ID.
-- Repository secret `FIREBASE_SERVICE_ACCOUNT` with a service account JSON key that can deploy to Firebase Hosting.
-- Repository secrets `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` for the online game features.
-
-The online game features continue to use Supabase; Firebase Hosting only serves the web app.
-
-### Vercel
-
-Pushes to `main` build the Flutter web app and deploy it to Vercel through GitHub Actions (`.github/workflows/deploy-vercel.yml`). Pull requests get a preview deployment.
+The `.github/workflows/deploy-firebase.yml` workflow builds and deploys to the `roadbashed` Firebase Hosting site on every push to `main`. It also publishes a GitHub release when `pubspec.yaml` has a newer version. `firebase.json` serves the release build from `build/web` and rewrites app routes to `index.html`.
 
 Add these repository secrets before the first run:
 
-- `VERCEL_TOKEN`
-- `VERCEL_ORG_ID`
-- `VERCEL_PROJECT_ID`
+- `FIREBASE_PROJECT_ID` — `roadbash-f431b`
+- `FIREBASE_SERVICE_ACCOUNT` — the service account JSON key for Firebase Hosting deploys
+- `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` — used by the online game features
 
-The workflow writes `.vercel/output/config.json` with a `filesystem` handler ahead of the catch-all route. Without it, Vercel answers script requests with `index.html` and the game shows a white screen.
+The online game features continue to use Supabase; Firebase Hosting only serves the web app.
 
 ## Contributing
 

@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target": "roadbashed",
     "public": "build/web",
     "ignore": [
       "firebase.json",

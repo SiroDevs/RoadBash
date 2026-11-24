@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "roadbash-f431b"
+  },
+  "targets": {
+    "roadbash-f431b": {
+      "hosting": {
+        "roadbashed": [
+          "roadbashed"
+        ]
+      }
+    }
+  }
+}

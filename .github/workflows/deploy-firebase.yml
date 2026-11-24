@@ -1,13 +1,18 @@
-name: Deploy RoadBash to Firebase Hosting
+name: Build, Release & Deploy RoadBash
 
 on:
   push:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      force:
+        description: "Build and release even if the pubspec version is not newer"
+        type: boolean
+        default: false
 
 concurrency:
-  group: firebase-hosting-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -16,24 +21,71 @@ permissions:
 env:
   FLUTTER_VERSION: "3.47.6"
   FLUTTER_CHANNEL: stable
+  ENTRY: lib/main.dart
+  APP_NAME: RoadBash
 
 jobs:
-  deploy:
-    name: Build and deploy web app
+  check-version:
+    name: Check release version
     runs-on: ubuntu-latest
+    outputs:
+      should_release: ${{ steps.compare.outputs.should_release }}
+      version: ${{ steps.compare.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compare pubspec version with latest release
+        id: compare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          set -euo pipefail
+          VERSION=$(awk '/^version:/ {print $2; exit}' pubspec.yaml | tr -d "\"'\r")
+          VERSION="${VERSION%%+*}"
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Could not parse a x.y.z version from pubspec.yaml (got '$VERSION')"
+            exit 1
+          fi
+
+          LATEST=$(gh release list --repo "$GITHUB_REPOSITORY" --limit 200 --exclude-drafts \
+            --json tagName --jq '.[].tagName' | sed 's/^v//' | sort -V | tail -n1)
+          SHOULD_RELEASE=false
+          if [ -z "$LATEST" ]; then
+            SHOULD_RELEASE=true
+          elif [ "$VERSION" != "$LATEST" ] && \
+            [ "$(printf '%s\n%s\n' "$LATEST" "$VERSION" | sort -V | tail -n1)" = "$VERSION" ]; then
+            SHOULD_RELEASE=true
+          fi
+          if [ "${FORCE:-false}" = "true" ]; then SHOULD_RELEASE=true; fi
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "should_release=$SHOULD_RELEASE" >> "$GITHUB_OUTPUT"
+
+  build-deploy:
+    name: Build and deploy to Firebase
+    needs: check-version
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      VERSION: ${{ needs.check-version.outputs.version }}
+      SHOULD_RELEASE: ${{ needs.check-version.outputs.should_release }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Validate deployment configuration
         env:
-          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
         run: |
           if [ -z "$FIREBASE_PROJECT_ID" ]; then
-            echo "::error::Set the FIREBASE_PROJECT_ID repository variable."
+            echo "::error::Set the FIREBASE_PROJECT_ID repository secret."
             exit 1
           fi
           if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
@@ -68,11 +120,81 @@ jobs:
           dart run build_runner build --delete-conflicting-outputs
 
       - name: Build Flutter web
-        run: flutter build web --release -t lib/main.dart --no-tree-shake-icons
+        run: flutter build web --release -t "$ENTRY" --no-tree-shake-icons
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: ${{ vars.FIREBASE_PROJECT_ID }}
+          projectId: ${{ secrets.FIREBASE_PROJECT_ID }}
+          target: roadbashed
           channelId: live
+
+      - name: Build release archive
+        if: needs.check-version.outputs.should_release == 'true'
+        run: |
+          mkdir -p dist
+          (cd build/web && zip -qr "$GITHUB_WORKSPACE/dist/${APP_NAME}_${VERSION}_web.zip" .)
+
+      - name: Upload release archive
+        if: needs.check-version.outputs.should_release == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-web
+          path: dist/*
+          if-no-files-found: error
+
+  publish-release:
+    name: Publish GitHub release
+    needs: [check-version, build-deploy]
+    if: needs.check-version.outputs.should_release == 'true' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    env:
+      VERSION: ${{ needs.check-version.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download release archive
+        uses: actions/download-artifact@v4
+        with:
+          name: release-web
+          path: dist
+
+      - name: Generate checksums
+        run: |
+          cd dist
+          sha256sum * > SHA256SUMS.txt
+
+      - name: Build release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
+            --jq '[.[] | select(.merged_at != null)] | sort_by(.merged_at) | last | .number // empty' || true)
+          if [ -z "${PR:-}" ]; then
+            PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --state merged --base main \
+              --limit 1 --json number --jq '.[0].number // empty' || true)
+          fi
+          {
+            echo "## v$VERSION"
+            echo
+            if [ -n "${PR:-}" ]; then
+              gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json title,body,url \
+                --jq '"### " + .title + "\n\n" + (.body // "") + "\n\n" + .url'
+            else
+              echo "Release v$VERSION"
+            fi
+          } > release-notes.md
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.VERSION }}
+          target_commitish: ${{ github.sha }}
+          name: v${{ env.VERSION }}
+          body_path: release-notes.md
+          files: dist/*

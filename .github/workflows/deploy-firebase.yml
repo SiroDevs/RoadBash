@@ -79,15 +79,10 @@ jobs:
 
       - name: Validate deployment configuration
         env:
-          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
         run: |
-          if [ -z "$FIREBASE_PROJECT_ID" ]; then
-            echo "::error::Set the FIREBASE_PROJECT_ID repository secret."
-            exit 1
-          fi
           if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
             echo "::error::Set the FIREBASE_SERVICE_ACCOUNT repository secret."
             exit 1
@@ -126,7 +121,7 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: ${{ secrets.FIREBASE_PROJECT_ID }}
+          projectId: roadbash-f431b
           target: roadbashed
           channelId: live
 

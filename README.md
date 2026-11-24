@@ -141,13 +141,14 @@ Built with clean architecture and BLoC (`flutter_bloc`), dependency injection wi
 
 ### Firebase Hosting (Flutter web)
 
-The `.github/workflows/deploy-firebase.yml` workflow builds and deploys to the `roadbashed` Firebase Hosting site on every push to `main`. It also publishes a GitHub release when `pubspec.yaml` has a newer version. `firebase.json` serves the release build from `build/web` and rewrites app routes to `index.html`.
+The `.github/workflows/deploy-firebase.yml` workflow builds and deploys to the `roadbashed` Firebase Hosting site in project `roadbash-f431b` on every push to `main`. It also publishes a GitHub release when `pubspec.yaml` has a newer version. `firebase.json` serves the release build from `build/web` and rewrites app routes to `index.html`.
 
 Add these repository secrets before the first run:
 
-- `FIREBASE_PROJECT_ID` — `roadbash-f431b`
 - `FIREBASE_SERVICE_ACCOUNT` — the service account JSON key for Firebase Hosting deploys
 - `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` — used by the online game features
+
+The Firebase service account needs Firebase Hosting Admin, Service Usage Consumer, and Service Usage API Keys Viewer roles. Enable the Firebase Management API and Firebase Hosting API in the Google Cloud project.
 
 The online game features continue to use Supabase; Firebase Hosting only serves the web app.
 

@@ -88,7 +88,8 @@ jobs:
             exit 1
           fi
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_PUBLISHABLE_KEY" ]; then
-            echo "::warning::Supabase secrets are empty. Online features will be unavailable."
+            echo "::error::Set SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY before deploying."
+            exit 1
           fi
 
       - name: Create .env from secrets
